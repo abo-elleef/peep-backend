@@ -1,24 +1,21 @@
-# README
+# Peep Backend
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Salons and Spa Bookings and Inventory management  
 
-Things you may want to cover:
+### Apps
+- Demo https://testing.com
+- Frontend app https://github.com/abo-elleef/peep-frontend
+ 
+#### Engineering Rules
+- Every Gem with  version lock
+- Service Object 
+    1. controllers for CRUD and exception handling
+    2. Service object for business logic
+    3. Service with SRP (one public method class)
+- Swagger Docs for every endpoint as part of every PR 
 
-* Ruby version
+#### Product plan 
+- booking component (calendar)
+- Sales & Analytics  Component
+- Inventory Management Component
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
