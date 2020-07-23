@@ -19,3 +19,6 @@ Salons and Spa Bookings and Inventory management
 - Sales & Analytics  Component
 - Inventory Management Component
 
+
+### Branching plan 
+- we follow successful git branching article here https://nvie.com/posts/a-successful-git-branching-model/
