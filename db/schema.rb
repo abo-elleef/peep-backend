@@ -10,7 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_25_143924) do
+ActiveRecord::Schema.define(version: 2020_07_25_182914) do
+
+  create_table "clients", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "phone"
+    t.string "email"
+    t.integer "notify_method"
+    t.string "language"
+    t.integer "gender"
+    t.datetime "birthday"
+    t.string "notes"
+    t.boolean "global_notes"
+    t.integer "location_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["location_id"], name: "index_clients_on_location_id"
+  end
 
   create_table "closing_shifts", force: :cascade do |t|
     t.datetime "start_date"
@@ -48,4 +65,5 @@ ActiveRecord::Schema.define(version: 2020_07_25_143924) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "clients", "locations"
 end
