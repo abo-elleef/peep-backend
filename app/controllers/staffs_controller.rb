@@ -2,7 +2,7 @@ class StaffsController < ApplicationController
 
   def index
     staffs = Staff.all
-    render json: staffs, root: 'staffs', serializer: StaffSerializer
+    render json: staffs, status: :ok, root: 'staffs', serializer: StaffSerializer
   end
 
   def show

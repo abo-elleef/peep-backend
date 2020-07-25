@@ -10,7 +10,19 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_25_114345) do
+ActiveRecord::Schema.define(version: 2020_07_25_135524) do
+
+  create_table "shifts", force: :cascade do |t|
+    t.integer "day"
+    t.time "start_time"
+    t.time "end_time"
+    t.integer "staff_id"
+    t.integer "location_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["location_id"], name: "index_shifts_on_location_id"
+    t.index ["staff_id"], name: "index_shifts_on_staff_id"
+  end
 
   create_table "staffs", force: :cascade do |t|
     t.string "first_name"
