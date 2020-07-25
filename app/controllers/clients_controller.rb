@@ -1,39 +1,37 @@
 class ClientsController < ApplicationController
 
   def index
-    clients = Client.all
-    render json: clients,status: :ok, root: 'clients', serializer: ClientSerializer
+    pagy, clients = pagy(Client.all, page: page_param, items: page_size )
+    render json: ClientSerializer.new(clients, meta: pagy_meta_data(pagy)), status: :ok
   end
 
   def show
-    client = Client.find(client_params[:id])
-    render json: client,status: :ok, root: 'client', serializer: ClientSerializer
+    client = Client.find(params[:id])
+    render json: ClientSerializer.new(client), status: :ok
   end
 
   def create
-    client = Client.new(client_params[:id])
+    client = Client.new(client_params)
     if client.save
-      render json: client,status: :created, root: 'client', serializer: ClientSerializer
+      render json: ClientSerializer.new(client), status: :created
     else
-      render json: client.errors,status: :unprocessable_entity, root: 'client',
-             serializer: ClientSerializer
+      render json: client.errors,status: :unprocessable_entity
     end
   end
 
   def update
     client = Client.new(client_params[:id])
     if client.update(client_params)
-      render json: client,status: :ok, root: 'client', serializer: ClientSerializer
+      render json: ClientSerializer.new(client), status: :ok
     else
-      render json: client.errors,status: :unprocessable_entity, root: 'client',
-             serializer: ClientSerializer
+      render json: client.errors,status: :unprocessable_entity
     end
   end
 
   def destroy
-    client = Client.new(client_params[:id])
+    client = Client.find(params[:id])
     if @client.destroy
-      render json: client,status: :ok, root: 'client', serializer: ClientSerializer
+      render json: ClientSerializer.new(client), status: :ok
     else
       render json: {},status: :bad_request
     end
