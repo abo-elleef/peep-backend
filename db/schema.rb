@@ -13,8 +13,8 @@
 ActiveRecord::Schema.define(version: 2020_07_25_143924) do
 
   create_table "closing_shifts", force: :cascade do |t|
-    t.time "start_date"
-    t.time "end_date"
+    t.datetime "start_date"
+    t.datetime "end_date"
     t.integer "location_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
