@@ -6,7 +6,7 @@ class ShiftsController < ApplicationController
   end
 
   def show
-    shift = Shift.find(params[:id])
+    shift = Shift.find(shift_params[:id])
     render json: shift, status: :ok, root: 'shift', serializer: ShiftSerializer
   end
 
@@ -35,13 +35,13 @@ class ShiftsController < ApplicationController
     if shift.destroy
       render json: shift, status: :ok, root: 'shift', serializer: ShiftSerializer
     else
-      render json: shift, status: :bad_request, root: 'shift', serializer: ShiftSerializer
+      render json: {}, status: :bad_request
     end
   end
 
   private
 
     def shift_params
-      params.require(:shift).permit(:day, :start_time, :end_time, :staff)
+      params.require(:shift).permit(:id, :day, :start_time, :end_time, :staff)
     end
 end

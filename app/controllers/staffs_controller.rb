@@ -6,7 +6,7 @@ class StaffsController < ApplicationController
   end
 
   def show
-    staff = Staff.find(params[:id])
+    staff = Staff.find(staff_params[:id])
     render json: staff, status: :ok ,root: 'staff', serializer: StaffSerializer
   end
 
@@ -21,7 +21,7 @@ class StaffsController < ApplicationController
   end
 
   def update
-    staff = Staff.find(params[:id])
+    staff = Staff.find(staff_params[:id])
     if staff.update(staff_params)
       render json: staff, status: :created ,root: 'staff', serializer: StaffSerializer
     else
@@ -31,17 +31,16 @@ class StaffsController < ApplicationController
   end
 
   def destroy
-    staff = Staff.find(params[:id])
+    staff = Staff.find(staff_params[:id])
     staff.destroy
     render json: staff, status: :ok ,root: 'staff', serializer: StaffSerializer
   end
 
   private
-    # Only allow a trusted parameter "white list" through.
     def staff_params
       params.require(:staff).permit(
-        :first_name, :last_name, :phone, :email, :booking_enabled, :booking_color, :title,
-        :notes, :contract_start, :contract_end
+        :id, :first_name, :last_name, :phone, :email, :booking_enabled, :booking_color,
+        :title, :notes, :contract_start, :contract_end
       )
     end
 end
