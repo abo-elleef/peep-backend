@@ -1,0 +1,2 @@
+class ClosingShift < ApplicationRecord
+end
