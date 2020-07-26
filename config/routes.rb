@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :locations
+  resources :clients
   resources :closing_shifts
   resources :shifts
   resources :staffs

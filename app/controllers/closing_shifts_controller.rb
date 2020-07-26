@@ -2,38 +2,36 @@ class ClosingShiftsController < ApplicationController
 
   def index
     closing_shifts = ClosingShift.all
-    render json: closing_shifts, status: :ok, root: 'closing_shifts', serializer: ClosingShiftSerializer
+    render json: ClosingShiftSerializer.new(closing_shifts), status: :ok
   end
 
   def show
     closing_shift = ClosingShift.find(params[:id])
-    render json: closing_shift, status: :ok, root: 'closing_shift', serializer: ClosingShiftSerializer
+    render json: ClosingShiftSerializer.new(closing_shift), status: :ok
   end
 
   def create
     closing_shift = ClosingShift.new(closing_shift_params)
     if closing_shift.save
-      render json: closing_shift, status: :created, root: 'closing_shift', serializer: ClosingShiftSerializer
+      render json: ClosingShiftSerializer.new(closing_shift), status: :created
     else
-      render json: closing_shift.errors, status: :unprocessable_entity, root: 'closing_shift',
-             serializer: ClosingShiftSerializer
+      render json: closing_shift.errors, status: :unprocessable_entity
     end
   end
 
   def update
     closing_shift = ClosingShift.find(closing_shift_params[:id])
     if closing_shift.update(closing_shift_params)
-      render json: closing_shift, status: :ok, root: 'closing_shift', serializer: ClosingShiftSerializer
+      render json: ClosingShiftSerializer.new(closing_shift), status: :ok
     else
-      render json: closing_shift.errors, status: :unprocessable_entity, root: 'closing_shift',
-             serializer: ClosingShiftSerializer
+      render json: closing_shift.errors, status: :unprocessable_entity
     end
   end
 
   def destroy
-    closing_shift = ClosingShift.find(closing_shift_params[:id])
+    closing_shift = ClosingShift.find(params[:id])
     if closing_shift.destroy
-      render json: closing_shift, status: :ok, root: 'closing_shift', serializer: ClosingShiftSerializer
+      render json: ClosingShiftSerializer.new(closing_shift), status: :ok
     else
       render json: {}, status: :bad_request
     end

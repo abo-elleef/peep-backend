@@ -5,15 +5,25 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-Staff.create(
-  first_name: "first_name",
-  last_name: "last_name",
-  phone: "01003809143",
-  email: "email@gmail.com",
-  booking_enabled: true,
-  booking_color: "#ff0012",
-  title: "title",
-  notes: "notes",
-  contract_start: Time.zone.now - 1.year,
-  contract_end: Time.zone.now + 1.year
-)
+ActiveRecord::Base.logger = Logger.new(STDOUT)
+location = Location.create!({
+                             name: "first location", business_type: 1, phone: '01003809143',
+                             email: 'email@email.com', street: 'street', building: '45',
+                             city: 'cairo', state: 'cairo', zipcode: '123456789'
+
+                })
+30.times do |index|
+  Staff.create!({
+                 first_name: "#{index} first_name", last_name: " #{index} last_name",
+                 phone: "01003809143", email: "email@gmail.com", booking_enabled: true,
+                 booking_color: "#ff0012", title: "title", notes: "notes",
+                 contract_start: Time.zone.now - 1.year, contract_end: Time.zone.now + 1.year,
+               })
+  Client.create!({
+                  first_name: "#{index} first_name", last_name: " #{index} last_name",
+                  phone: "phone", email: "email@email.com", notify_method: "email", language: "en",
+                  gender: 1, birthday: Time.zone.now - 10.years, notes: "notes", global_notes: true,
+                  street: "street", suburb: "suburb", city: "city", state: "state",
+                  postal_code: "postal_code", location_id: location.id
+                })
+end

@@ -10,7 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_25_143924) do
+ActiveRecord::Schema.define(version: 2020_07_25_202907) do
+
+  create_table "clients", force: :cascade do |t|
+    t.string "first_name"
+    t.string "last_name"
+    t.string "phone"
+    t.string "email"
+    t.integer "notify_method"
+    t.string "language"
+    t.integer "gender"
+    t.datetime "birthday"
+    t.string "notes"
+    t.boolean "global_notes"
+    t.integer "location_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "street"
+    t.string "suburb"
+    t.string "city"
+    t.string "state"
+    t.string "postal_code"
+    t.index ["location_id"], name: "index_clients_on_location_id"
+  end
 
   create_table "closing_shifts", force: :cascade do |t|
     t.datetime "start_date"
@@ -19,6 +41,20 @@ ActiveRecord::Schema.define(version: 2020_07_25_143924) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["location_id"], name: "index_closing_shifts_on_location_id"
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.string "name"
+    t.integer "business_type"
+    t.string "phone"
+    t.string "email"
+    t.string "street"
+    t.string "building"
+    t.string "city"
+    t.string "state"
+    t.string "zipcode"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "shifts", force: :cascade do |t|
@@ -48,4 +84,5 @@ ActiveRecord::Schema.define(version: 2020_07_25_143924) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "clients", "locations"
 end

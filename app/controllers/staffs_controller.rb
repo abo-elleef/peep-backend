@@ -2,38 +2,39 @@ class StaffsController < ApplicationController
 
   def index
     staffs = Staff.all
-    render json: staffs, status: :ok, root: 'staffs', serializer: StaffSerializer
+    render json: StaffSerializer.new(staffs), status: :ok
   end
 
   def show
-    staff = Staff.find(staff_params[:id])
-    render json: staff, status: :ok ,root: 'staff', serializer: StaffSerializer
+    staff = Staff.find(params[:id])
+    render json: StaffSerializer.new(staff), status: :ok
   end
 
   def create
     staff = Staff.new(staff_params)
     if @staff.save
-      render json: staff, status: :created ,root: 'staff', serializer: StaffSerializer
+      render json: StaffSerializer.new(staff), status: :created
     else
-      render json: staff.errors, status: :unprocessable_entity ,root: 'staffs',
-             serializer: StaffSerializer
+      render json: staff.errors, status: :unprocessable_entity
     end
   end
 
   def update
     staff = Staff.find(staff_params[:id])
     if staff.update(staff_params)
-      render json: staff, status: :created ,root: 'staff', serializer: StaffSerializer
+      render json: StaffSerializer.new(staff), status: :created
     else
-      render json: staff.errors, status: :ok ,root: 'staffs',
-             serializer: StaffSerializer
+      render json: staff.errors, status: :ok
     end
   end
 
   def destroy
-    staff = Staff.find(staff_params[:id])
-    staff.destroy
-    render json: staff, status: :ok ,root: 'staff', serializer: StaffSerializer
+    staff = Staff.find(params[:id])
+    if staff.destroy
+      render json: StaffSerializer.new(staff), status: :ok
+    else
+      render json: {}, status: :bad_request
+    end
   end
 
   private
