@@ -20,6 +20,8 @@ gem 'turbolinks', '~> 5'
 gem 'fast_jsonapi', '~> 1.5'
 # pagination
 gem 'pagy',  '~> 3.8'
+# admin interface
+gem 'rails_admin', '~> 2.0'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
