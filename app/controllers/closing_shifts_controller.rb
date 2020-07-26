@@ -20,7 +20,7 @@ class ClosingShiftsController < ApplicationController
   end
 
   def update
-    closing_shift = ClosingShift.find(closing_shift_params[:id])
+    closing_shift = ClosingShift.find(params[:id])
     if closing_shift.update(closing_shift_params)
       render json: ClosingShiftSerializer.new(closing_shift), status: :ok
     else

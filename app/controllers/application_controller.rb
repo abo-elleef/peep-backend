@@ -1,12 +1,12 @@
 class ApplicationController < ActionController::Base
   include Pagy::Backend
+  AUTH_KEY="2777d517df9f50d7890a27bd737412a0"
+  after_action do
+    @current_user = nil
+  end
 
   private
     def current_location
-
-    end
-
-    def current_user
 
     end
 
@@ -26,5 +26,25 @@ class ApplicationController < ActionController::Base
     end
     def page_param
       params[:page] || 1
+    end
+
+    def auth_token
+      request.headers["authorization"]
+    end
+
+    def encoded_token(user)
+      payload = { user_id: user.id }
+      JWT.encode payload, AUTH_KEY, 'HS256'
+    end
+
+    def current_user
+      return @current_user if @current_user.present? || auth_token.blank?
+      data = JWT.decode(auth_token, AUTH_KEY, 'HS256').first
+      return nil unless data.present? && data['user_id'].present?
+      @current_user = User.find(data['user_id'])
+    end
+
+    def peep_authenticate
+      render json: {data: 'NOT AUTHORIZED'}, status: :unauthorized unless current_user
     end
 end

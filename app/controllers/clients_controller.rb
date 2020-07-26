@@ -20,7 +20,7 @@ class ClientsController < ApplicationController
   end
 
   def update
-    client = Client.new(client_params[:id])
+    client = Client.find(params[:id])
     if client.update(client_params)
       render json: ClientSerializer.new(client), status: :ok
     else

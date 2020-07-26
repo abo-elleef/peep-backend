@@ -20,7 +20,7 @@ class StaffsController < ApplicationController
   end
 
   def update
-    staff = Staff.find(staff_params[:id])
+    staff = Staff.find(params[:id])
     if staff.update(staff_params)
       render json: StaffSerializer.new(staff), status: :created
     else

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :users
+  mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   resources :locations
   resources :clients
   resources :closing_shifts
