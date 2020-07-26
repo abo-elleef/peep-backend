@@ -20,7 +20,7 @@ class LocationsController < ApplicationController
   end
 
   def update
-    location = Location.new(location_params[:id])
+    location = Location.find(params[:id])
     if @location.update(location_params)
       render json: location, status: :ok
     else

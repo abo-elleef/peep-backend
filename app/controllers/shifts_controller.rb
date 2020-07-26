@@ -20,7 +20,7 @@ class ShiftsController < ApplicationController
   end
 
   def update
-    shift = Shift.find(shift_params[:id])
+    shift = Shift.find(params[:id])
     if shift.update(shift_params)
       render json: ShiftSerializer.new(shift), status: :ok
     else
