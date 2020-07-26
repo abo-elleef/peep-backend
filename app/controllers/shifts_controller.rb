@@ -2,38 +2,36 @@ class ShiftsController < ApplicationController
 
   def index
     shifts = Shift.all
-    render json: shifts,status: :ok, root: 'shifts', serializer: ShiftSerializer
+    render json: ShiftSerializer.new(shifts), status: :ok
   end
 
   def show
-    shift = Shift.find(shift_params[:id])
-    render json: shift, status: :ok, root: 'shift', serializer: ShiftSerializer
+    shift = Shift.find(params[:id])
+    render json: ShiftSerializer.new(shift), status: :ok
   end
 
   def create
     shift = Shift.new(shift_params)
     if shift.save
-      render json: shift, status: :created, root: 'shift', serializer: ShiftSerializer
+      render json: ShiftSerializer.new(shift), status: :created
     else
-      render json: shift.errors, status: :unprocessable_entity ,root: 'shift',
-             serializer: ShiftSerializer
+      render json: shift.errors, status: :unprocessable_entity
     end
   end
 
   def update
     shift = Shift.find(shift_params[:id])
     if shift.update(shift_params)
-      render json: shift, status: :ok, root: 'shift', serializer: ShiftSerializer
+      render json: ShiftSerializer.new(shift), status: :ok
     else
-      render json: shift.errors, status: :unprocessable_entity ,root: 'shift',
-             serializer: ShiftSerializer
+      render json: shift.errors, status: :unprocessable_entity
     end
   end
 
   def destroy
-    shift = Shift.find(shift_params[:id])
+    shift = Shift.find(params[:id])
     if shift.destroy
-      render json: shift, status: :ok, root: 'shift', serializer: ShiftSerializer
+      render json: ShiftSerializer.new(shift), status: :ok
     else
       render json: {}, status: :bad_request
     end
