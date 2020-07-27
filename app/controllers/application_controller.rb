@@ -9,7 +9,8 @@ class ApplicationController < ActionController::Base
 
   private
     def current_location
-
+      # TODO : waiting discusion with business
+      Location.first
     end
 
     def pagy_meta_data(pagy)
