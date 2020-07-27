@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   include Pagy::Backend
   AUTH_KEY="2777d517df9f50d7890a27bd737412a0"
+  skip_before_action :verify_authenticity_token
+
   after_action do
     @current_user = nil
   end
