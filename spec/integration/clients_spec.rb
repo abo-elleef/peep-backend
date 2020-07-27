@@ -31,6 +31,26 @@ describe 'Pets API' do
       end
     end
   end
+
+  path '/clients/{id}' do
+    delete 'Retrieves a set of clients' do
+      tags 'clients'
+      produces 'application/json'
+      parameter name: :id, in: :path, type: :integer
+      response '200', 'client data' do
+        run_test!
+      end
+      response '401', 'not authorized' do
+        run_test!
+      end
+      response '404', 'client not found' do
+        run_test!
+      end
+      response '442', 'can not be deleted' do
+        run_test!
+      end
+    end
+  end
   path '/clients' do
     post 'create a client record' do
       tags 'clients'

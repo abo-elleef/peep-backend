@@ -102,6 +102,44 @@
             }
           }
         }
+      },
+      "delete": {
+        "summary": "Retrieves a set of clients",
+        "tags": [
+          "clients"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "client data",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "404": {
+            "description": "client not found",
+            "content": {
+            }
+          },
+          "442": {
+            "description": "can not be deleted",
+            "content": {
+            }
+          }
+        }
       }
     }
   }
