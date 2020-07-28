@@ -30,6 +30,8 @@ gem 'bcrypt', '~> 3.1.7'
 
 # for JWT encoding
 gem 'jwt', '~> 2.2'
+# accept requests from  other origins
+gem 'rack-cors', '~> 1.1'
 
 
 
