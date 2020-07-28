@@ -12,6 +12,7 @@ class ClientsController < ApplicationController
 
   def create
     client = Client.new(client_params)
+    client.location = current_location
     if client.save
       render json: ClientSerializer.new(client), status: :created
     else
@@ -30,7 +31,7 @@ class ClientsController < ApplicationController
 
   def destroy
     client = Client.find(params[:id])
-    if @client.destroy
+    if client.destroy
       render json: ClientSerializer.new(client), status: :ok
     else
       render json: {},status: :bad_request
