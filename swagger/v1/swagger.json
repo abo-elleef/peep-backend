@@ -296,6 +296,250 @@
           }
         }
       }
+    },
+    "/staffs": {
+      "get": {
+        "summary": "Retrieves a set of staffs",
+        "tags": [
+          "staffs"
+        ],
+        "responses": {
+          "200": {
+            "description": "staffs set",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "create a staff record",
+        "tags": [
+          "staffs"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "201": {
+            "description": "staff created",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "442": {
+            "description": "bad data or breaks validation ",
+            "content": {
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "staff": {
+                    "type": "object",
+                    "properties": {
+                      "first_name": {
+                        "type": "string"
+                      },
+                      "last_name": {
+                        "type": "string"
+                      },
+                      "phone": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "booking_enabled": {
+                        "type": "boolean"
+                      },
+                      "booking_color": {
+                        "type": "string"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "notes": {
+                        "type": "string"
+                      },
+                      "contract_start": {
+                        "type": "string"
+                      },
+                      "contract_end": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/staffs/{id}": {
+      "get": {
+        "summary": "show details of staff member",
+        "tags": [
+          "staffs"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "staffs data",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "404": {
+            "description": "staffs not found",
+            "content": {
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "delete staff member",
+        "tags": [
+          "staffs"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "staffs data",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "404": {
+            "description": "staff not found",
+            "content": {
+            }
+          },
+          "442": {
+            "description": "can not be deleted",
+            "content": {
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "update a staff record",
+        "tags": [
+          "staffs"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "staff created",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "442": {
+            "description": "bad data or breaks validation ",
+            "content": {
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "staff": {
+                    "type": "object",
+                    "properties": {
+                      "first_name": {
+                        "type": "string"
+                      },
+                      "last_name": {
+                        "type": "string"
+                      },
+                      "phone": {
+                        "type": "string"
+                      },
+                      "email": {
+                        "type": "string"
+                      },
+                      "booking_enabled": {
+                        "type": "boolean"
+                      },
+                      "booking_color": {
+                        "type": "string"
+                      },
+                      "title": {
+                        "type": "string"
+                      },
+                      "notes": {
+                        "type": "string"
+                      },
+                      "contract_start": {
+                        "type": "string"
+                      },
+                      "contract_end": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }
