@@ -7,9 +7,7 @@ class CreateServices < ActiveRecord::Migration[6.0]
       t.integer :available_for
       t.boolean :online_booking
       t.boolean :staff_commission
-      t.jsonb :extra_time
       t.timestamps
     end
-    add_index :services, :extra_time, using: :gin
   end
 end

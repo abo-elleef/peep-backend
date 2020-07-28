@@ -1,8 +1,7 @@
 class ServicesController < ApplicationController
-  before_action :set_service, only: [:show, :edit, :update, :destroy]
 
   def index
-    pagy, services = pagy(Service.all, page: page_param, items: page_size )
+    pagy, services = pagy(Service.all, page: page_param, items: page_size)
     render json: ServiceSerializer.new(services, meta: pagy_meta_data(pagy)), status: :ok
 
   end
@@ -17,7 +16,7 @@ class ServicesController < ApplicationController
     if service.save
       render json: ServiceSerializer.new(service), status: :created
     else
-      render json: service.errors,status: :unprocessable_entity
+      render json: service.errors, status: :unprocessable_entity
     end
   end
 
@@ -26,7 +25,7 @@ class ServicesController < ApplicationController
     if service.update(service_params)
       render json: ServiceSerializer.new(service), status: :ok
     else
-      render json: service.errors,status: :unprocessable_entity
+      render json: service.errors, status: :unprocessable_entity
     end
   end
 
@@ -35,14 +34,14 @@ class ServicesController < ApplicationController
     if service.destroy
       render json: ServiceSerializer.new(service), status: :ok
     else
-      render json: {},status: :bad_request
+      render json: {}, status: :bad_request
     end
   end
 
   private
 
-    def service_params
-      params.require(:service).permit(:name, :treatment_type, :description,
-                                      :available_for, :online_booking, :staff_commission, :extra_time)
-    end
+  def service_params
+    params.require(:service).permit(:name, :treatment_type, :description,
+                                    :available_for, :online_booking, :staff_commission)
+  end
 end
