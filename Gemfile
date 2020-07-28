@@ -30,6 +30,8 @@ gem 'bcrypt', '~> 3.1.7'
 
 # for JWT encoding
 gem 'jwt', '~> 2.2'
+# accept requests from  other origins
+gem 'rack-cors', '~> 1.1'
 
 
 
@@ -42,6 +44,8 @@ gem 'bootsnap', '>= 1.4.2', require: false
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
+  gem 'rspec-rails', '~> 4.0', '>= 4.0.1'
+  gem 'rswag', '~> 2.3', '>= 2.3.1'
 end
 
 group :development do
