@@ -12,7 +12,7 @@ class StaffsController < ApplicationController
 
   def create
     staff = Staff.new(staff_params)
-    if @staff.save
+    if staff.save
       render json: StaffSerializer.new(staff), status: :created
     else
       render json: staff.errors, status: :unprocessable_entity
