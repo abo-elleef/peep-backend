@@ -3,9 +3,9 @@ Rails.application.routes.draw do
   mount Rswag::Api::Engine => '/api-docs'
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   resources :users, only: [:create, :update, :show]
-  resources :locations
-  resources :closing_shifts
   resources :shifts
+  resources :closing_shifts
+  resources :locations
   resources :staffs
   resources :clients
   get "export/clients", to: "export#clients"
