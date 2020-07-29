@@ -1,8 +1,8 @@
 class ServicesController < ApplicationController
 
   def index
-    pagy, services = pagy(Service.all, page: page_param, items: page_size)
-    render json: ServiceSerializer.new(services, meta: pagy_meta_data(pagy)), status: :ok
+    services = Service.all
+    render json: ServiceSerializer.new(services), status: :ok
 
   end
 
