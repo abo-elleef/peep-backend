@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_26_095519) do
+ActiveRecord::Schema.define(version: 2020_07_29_173634) do
 
   create_table "clients", force: :cascade do |t|
     t.string "first_name"
@@ -55,6 +55,27 @@ ActiveRecord::Schema.define(version: 2020_07_26_095519) do
     t.string "zipcode"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "services", force: :cascade do |t|
+    t.string "name"
+    t.integer "treatment_type_id"
+    t.text "description"
+    t.integer "available_for"
+    t.boolean "online_booking"
+    t.boolean "staff_commission"
+    t.boolean "extra_time"
+    t.integer "extra_time_type"
+    t.integer "extra_time_duration"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "services_staffs", id: false, force: :cascade do |t|
+    t.integer "service_id", null: false
+    t.integer "staff_id", null: false
+    t.index ["service_id", "staff_id"], name: "index_services_staffs_on_service_id_and_staff_id"
+    t.index ["staff_id", "service_id"], name: "index_services_staffs_on_staff_id_and_service_id"
   end
 
   create_table "shifts", force: :cascade do |t|

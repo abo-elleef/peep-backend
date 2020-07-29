@@ -297,6 +297,26 @@
         }
       }
     },
+    "/services": {
+      "get": {
+        "summary": "Retrieves all services",
+        "tags": [
+          "services"
+        ],
+        "responses": {
+          "200": {
+            "description": "services found",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          }
+        }
+      }
+    },
     "/staffs": {
       "get": {
         "summary": "Retrieves a set of staffs",
