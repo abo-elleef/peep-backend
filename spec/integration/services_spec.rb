@@ -65,7 +65,6 @@ describe 'Services API' do
                       treatment_type_id: {type: :integer},
                       description: {type: :text},
                       available_for: {type: :integer},
-                      online_booking: {type: :boolean},
                       staff_commission: {type: :string},
                       extra_time: {type: :boolean},
                       extra_time_type: {type: :integer},
@@ -101,7 +100,6 @@ describe 'Services API' do
                       treatment_type_id: {type: :integer},
                       description: {type: :text},
                       available_for: {type: :integer},
-                      online_booking: {type: :boolean},
                       staff_commission: {type: :boolean},
                       extra_time: {type: :boolean},
                       extra_time_type: {type: :integer},
@@ -110,7 +108,7 @@ describe 'Services API' do
               }
           }
       }
-      response '201', 'service created' do
+      response '200', 'service updated' do
         run_test!
       end
       response '401', 'not authorized' do
