@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_29_173634) do
+ActiveRecord::Schema.define(version: 2020_07_29_181703) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,35 @@ ActiveRecord::Schema.define(version: 2020_07_29_173634) do
     t.string "zipcode"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "service_categories", force: :cascade do |t|
+    t.string "name"
+    t.string "appointment_color"
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "services", force: :cascade do |t|
+    t.string "name"
+    t.integer "treatment_type_id"
+    t.text "description"
+    t.integer "available_for"
+    t.boolean "online_booking"
+    t.boolean "staff_commission"
+    t.boolean "extra_time"
+    t.integer "extra_time_type"
+    t.integer "extra_time_duration"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "services_staffs", id: false, force: :cascade do |t|
+    t.bigint "service_id", null: false
+    t.bigint "staff_id", null: false
+    t.index ["service_id", "staff_id"], name: "index_services_staffs_on_service_id_and_staff_id"
+    t.index ["staff_id", "service_id"], name: "index_services_staffs_on_staff_id_and_service_id"
   end
 
   create_table "services", force: :cascade do |t|
