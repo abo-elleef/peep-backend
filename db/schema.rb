@@ -60,6 +60,14 @@ ActiveRecord::Schema.define(version: 2020_07_29_181703) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "service_categories", force: :cascade do |t|
+    t.string "name"
+    t.string "appointment_color"
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "services", force: :cascade do |t|
     t.string "name"
     t.integer "treatment_type_id"
@@ -70,14 +78,6 @@ ActiveRecord::Schema.define(version: 2020_07_29_181703) do
     t.boolean "extra_time"
     t.integer "extra_time_type"
     t.integer "extra_time_duration"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "services_categories", force: :cascade do |t|
-    t.string "name"
-    t.integer "appointment_color"
-    t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
