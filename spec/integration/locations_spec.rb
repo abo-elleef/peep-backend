@@ -113,7 +113,7 @@ describe 'Clients API' do
           }
         }
       }
-      response '201', 'location created' do
+      response '201', 'location updated' do
         run_test!
       end
       response '401', 'not authorized' do

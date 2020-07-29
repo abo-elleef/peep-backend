@@ -123,7 +123,7 @@ describe 'Clients API' do
           }
         }
       }
-      response '201', 'client created' do
+      response '201', 'client updated' do
         run_test!
       end
       response '401', 'not authorized' do
