@@ -317,7 +317,7 @@ DEPENDENCIES
   jwt (~> 2.2)
   listen (~> 3.2)
   pagy (~> 3.8)
-  pg
+  pg (~> 1.2.3)
   puma (~> 4.1)
   rack-cors (~> 1.1)
   rails (~> 6.0.0)
