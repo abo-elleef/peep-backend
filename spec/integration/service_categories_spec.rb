@@ -61,7 +61,7 @@ describe 'ServiceCategories API' do
                   type: :object,
                   properties: {
                       name: {type: :string},
-                      appointment_color: {type: :integer},
+                      appointment_color: {type: :string},
                       description: {type: :text}
                   }
               }
@@ -91,13 +91,13 @@ describe 'ServiceCategories API' do
                   type: :object,
                   properties: {
                       name: {type: :string},
-                      appointment_color: {type: :integer},
+                      appointment_color: {type: :string},
                       description: {type: :text}
                   }
               }
           }
       }
-      response '201', 'service category created' do
+      response '200', 'service category updated' do
         run_test!
       end
       response '401', 'not authorized' do
