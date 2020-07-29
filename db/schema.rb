@@ -73,7 +73,6 @@ ActiveRecord::Schema.define(version: 2020_07_29_181703) do
     t.integer "treatment_type_id"
     t.text "description"
     t.integer "available_for"
-    t.boolean "online_booking"
     t.boolean "staff_commission"
     t.boolean "extra_time"
     t.integer "extra_time_type"

@@ -1177,6 +1177,244 @@
         }
       }
     },
+    "/services": {
+      "get": {
+        "summary": "Retrieves a set of services",
+        "tags": [
+          "services"
+        ],
+        "responses": {
+          "200": {
+            "description": "services set",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "create a service record",
+        "tags": [
+          "services"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "201": {
+            "description": "service created",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "442": {
+            "description": "bad data or breaks validation ",
+            "content": {
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "service": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "treatment_type_id": {
+                        "type": "integer"
+                      },
+                      "description": {
+                        "type": "text"
+                      },
+                      "available_for": {
+                        "type": "integer"
+                      },
+                      "online_booking": {
+                        "type": "boolean"
+                      },
+                      "staff_commission": {
+                        "type": "string"
+                      },
+                      "extra_time": {
+                        "type": "boolean"
+                      },
+                      "extra_time_type": {
+                        "type": "integer"
+                      },
+                      "extra_time_duration": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/services/{id}": {
+      "get": {
+        "summary": "show details of a service",
+        "tags": [
+          "services"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "services data",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "404": {
+            "description": "services not found",
+            "content": {
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "delete service",
+        "tags": [
+          "services"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "services data",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "404": {
+            "description": "service not found",
+            "content": {
+            }
+          },
+          "442": {
+            "description": "can not be deleted",
+            "content": {
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "update a service record",
+        "tags": [
+          "services"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "service created",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "442": {
+            "description": "bad data or breaks validation ",
+            "content": {
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "service": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "treatment_type_id": {
+                        "type": "integer"
+                      },
+                      "description": {
+                        "type": "text"
+                      },
+                      "available_for": {
+                        "type": "integer"
+                      },
+                      "online_booking": {
+                        "type": "boolean"
+                      },
+                      "staff_commission": {
+                        "type": "boolean"
+                      },
+                      "extra_time": {
+                        "type": "boolean"
+                      },
+                      "extra_time_type": {
+                        "type": "integer"
+                      },
+                      "extra_time_duration": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/staffs": {
       "get": {
         "summary": "Retrieves a set of staffs",
