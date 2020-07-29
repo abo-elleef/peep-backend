@@ -2,7 +2,7 @@ class CreateServices < ActiveRecord::Migration[6.0]
   def change
     create_table :services do |t|
       t.string :name
-      t.integer :treatment_type
+      t.integer :treatment_type_id
       t.text :description
       t.integer :available_for
       t.boolean :staff_commission
