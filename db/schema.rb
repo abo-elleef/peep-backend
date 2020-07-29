@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 2020_07_29_173634) do
     t.datetime "birthday"
     t.string "notes"
     t.boolean "global_notes"
-    t.integer "location_id", null: false
+    t.bigint "location_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "street"
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 2020_07_29_173634) do
   create_table "closing_shifts", force: :cascade do |t|
     t.datetime "start_date"
     t.datetime "end_date"
-    t.integer "location_id"
+    t.bigint "location_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["location_id"], name: "index_closing_shifts_on_location_id"
@@ -75,8 +75,8 @@ ActiveRecord::Schema.define(version: 2020_07_29_173634) do
   end
 
   create_table "services_staffs", id: false, force: :cascade do |t|
-    t.integer "service_id", null: false
-    t.integer "staff_id", null: false
+    t.bigint "service_id", null: false
+    t.bigint "staff_id", null: false
     t.index ["service_id", "staff_id"], name: "index_services_staffs_on_service_id_and_staff_id"
     t.index ["staff_id", "service_id"], name: "index_services_staffs_on_staff_id_and_service_id"
   end
@@ -85,8 +85,8 @@ ActiveRecord::Schema.define(version: 2020_07_29_173634) do
     t.integer "day"
     t.time "start_time"
     t.time "end_time"
-    t.integer "staff_id"
-    t.integer "location_id"
+    t.bigint "staff_id"
+    t.bigint "location_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["location_id"], name: "index_shifts_on_location_id"
