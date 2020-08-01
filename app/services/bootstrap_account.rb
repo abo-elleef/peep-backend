@@ -23,6 +23,6 @@ class BootstrapAccount
     end
 
     def create_services(location, staff)
-      # create
+      # create example service
     end
 end
