@@ -20,6 +20,8 @@ jobs:
     services:
       db:
         image: postgres:11
+        PGUSER: postgres
+        POSTGRES_PASSWORD: postgres
         ports: ['5432:5432']
         options: >-
           --health-cmd pg_isready
@@ -45,6 +47,8 @@ jobs:
     - name: Run request tests
       env:
         DATABASE_URL: postgres://postgres:@localhost:5432/test
+        PGUSER: postgres
+        POSTGRES_PASSWORD: postgres
         REDIS_URL: redis://localhost:6379/0
         RAILS_ENV: test
       run: |
