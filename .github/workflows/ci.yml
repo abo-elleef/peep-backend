@@ -54,5 +54,8 @@ jobs:
         REDIS_URL: redis://localhost:6379/0
         RAILS_ENV: test
         RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
-      run: bundle exec rspec spec/requests/*
+      run: |
+        bundle install --jobs 4 --retry 3
+        bundle exec rails db:prepare
+        bundle exec rspec spec/requests/*
 
