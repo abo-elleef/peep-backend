@@ -21,7 +21,7 @@ jobs:
         image: postgres:11
         ports: ['5432:5432']
         env:
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_PASSWORD: reverse
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -44,7 +44,7 @@ jobs:
       - name: Build and run tests
         env:
           DATABASE_URL: postgres://postgres:@localhost:5432/test
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_PASSWORD: reverse
           REDIS_URL: redis://localhost:6379/0
           RAILS_ENV: test
           RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
