@@ -14,7 +14,7 @@ user = User.create({
 location = Location.create!({
                              name: "first location", business_type: 1, phone: '01003809143',
                              email: 'email@email.com', street: 'street', building: '45',
-                             city: 'cairo', state: 'cairo', zipcode: '123456789', user_id: user.d
+                             city: 'cairo', state: 'cairo', zipcode: '123456789', user_id: user.id
 
                 })
 30.times do |index|
