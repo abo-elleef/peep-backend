@@ -6,10 +6,15 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 ActiveRecord::Base.logger = Logger.new(STDOUT)
+user = User.create({
+                     first_name: 'test user',
+                     last_name: 'last test user '
+
+                   })
 location = Location.create!({
                              name: "first location", business_type: 1, phone: '01003809143',
                              email: 'email@email.com', street: 'street', building: '45',
-                             city: 'cairo', state: 'cairo', zipcode: '123456789'
+                             city: 'cairo', state: 'cairo', zipcode: '123456789', user_id: user.id
 
                 })
 30.times do |index|
