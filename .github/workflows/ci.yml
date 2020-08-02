@@ -34,6 +34,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
       - name: Setup Ruby
         uses: ruby/setup-ruby@ec106b438a1ff6ff109590de34ddc62c540232e0
         with:
@@ -42,12 +48,6 @@ jobs:
         with:
           cmd: install
       - name: Build and run tests
-        uses: actions/cache@v2
-          with:
-            path: vendor/bundle
-            key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-            restore-keys: |
-              ${{ runner.os }}-gems-
         env:
           DATABASE_URL: postgres://postgres:@localhost:5432/test
           REDIS_URL: redis://localhost:6379/0
