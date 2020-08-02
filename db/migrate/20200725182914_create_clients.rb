@@ -11,9 +11,10 @@ class CreateClients < ActiveRecord::Migration[6.0]
       t.datetime :birthday
       t.string :notes
       t.boolean :global_notes
-      t.belongs_to :location, null: false, foreign_key: true
+      t.integer :location_id
 
       t.timestamps
+      t.index :location_id
     end
   end
 end

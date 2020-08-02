@@ -46,6 +46,10 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails', '~> 4.0', '>= 4.0.1'
   gem 'rswag', '~> 2.3', '>= 2.3.1'
+  gem 'faker', '~> 1.6', '>= 1.6.6'
+  gem 'factory_bot_rails', '~> 6.1'
+  gem 'pry-rails', '~> 0.3.9'
+  gem 'pry-byebug', '~> 3.9'
 end
 
 group :development do
@@ -63,6 +67,9 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
+  gem 'database_cleaner-active_record', '~> 1.8'
+  gem 'shoulda-matchers', '~> 4.0'
+  gem 'shoulda-callback-matchers', '~> 1.1', '>= 1.1.4'
 end
 gem 'pronto', '~> 0.10.0'
 gem 'pronto-rubocop', require: false
