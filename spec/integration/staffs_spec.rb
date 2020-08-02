@@ -70,7 +70,6 @@ describe 'Staffs API' do
               notes: {type: :string},
               contract_start: {type: :string},
               contract_end: {type: :string},
-
             }
           }
         }
