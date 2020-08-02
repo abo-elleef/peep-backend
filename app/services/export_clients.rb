@@ -5,16 +5,23 @@ class ExportClients
   end
 
   def call
-    clients = Client.all
-    CSV.generate(headers: true) do |csv|
-      csv << client_csv_attributes.keys
+    build_file(fetch_clients)
+  end
 
-      clients.map do |client|
-        csv << client_csv_attributes.values.map { |attr| client.send(attr) }
+  private
+
+    def fetch_clients
+      Client.all
+    end
+
+    def build_file(clients)
+      CSV.generate(headers: true) do |csv|
+        csv << client_csv_attributes.keys
+        clients.map do |client|
+          csv << client_csv_attributes.values.map { |attr| client.send(attr) }
+        end
       end
     end
-  end
-  private
     def client_csv_attributes
       {
         first_name: :first_name,

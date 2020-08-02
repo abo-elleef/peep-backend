@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_07_26_095519) do
+ActiveRecord::Schema.define(version: 2020_08_02_180555) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 2020_07_26_095519) do
     t.datetime "birthday"
     t.string "notes"
     t.boolean "global_notes"
-    t.integer "location_id", null: false
+    t.bigint "location_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "street"
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 2020_07_26_095519) do
   create_table "closing_shifts", force: :cascade do |t|
     t.datetime "start_date"
     t.datetime "end_date"
-    t.integer "location_id"
+    t.bigint "location_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["location_id"], name: "index_closing_shifts_on_location_id"
@@ -58,14 +58,58 @@ ActiveRecord::Schema.define(version: 2020_07_26_095519) do
     t.string "zipcode"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_locations_on_user_id"
+  end
+
+  create_table "locations_services", force: :cascade do |t|
+    t.integer "service_id"
+    t.integer "location_id"
+    t.index ["location_id"], name: "index_locations_services_on_location_id"
+    t.index ["service_id"], name: "index_locations_services_on_service_id"
+  end
+
+  create_table "locations_staffs", force: :cascade do |t|
+    t.integer "location_id"
+    t.integer "staff_id"
+    t.index ["location_id"], name: "index_locations_staffs_on_location_id"
+    t.index ["staff_id"], name: "index_locations_staffs_on_staff_id"
+  end
+
+  create_table "service_categories", force: :cascade do |t|
+    t.string "name"
+    t.string "appointment_color"
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "services", force: :cascade do |t|
+    t.string "name"
+    t.integer "treatment_type_id"
+    t.text "description"
+    t.integer "available_for"
+    t.boolean "staff_commission"
+    t.boolean "extra_time"
+    t.integer "extra_time_type"
+    t.integer "extra_time_duration"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "services_staffs", id: false, force: :cascade do |t|
+    t.bigint "service_id", null: false
+    t.bigint "staff_id", null: false
+    t.index ["service_id", "staff_id"], name: "index_services_staffs_on_service_id_and_staff_id"
+    t.index ["staff_id", "service_id"], name: "index_services_staffs_on_staff_id_and_service_id"
   end
 
   create_table "shifts", force: :cascade do |t|
     t.integer "day"
     t.time "start_time"
     t.time "end_time"
-    t.integer "staff_id"
-    t.integer "location_id"
+    t.bigint "staff_id"
+    t.bigint "location_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["location_id"], name: "index_shifts_on_location_id"

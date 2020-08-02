@@ -21,7 +21,7 @@ class LocationsController < ApplicationController
 
   def update
     location = Location.find(params[:id])
-    if @location.update(location_params)
+    if location.update(location_params)
       render json: location, status: :ok
     else
       render json: location.errors,status: :unprocessable_entity

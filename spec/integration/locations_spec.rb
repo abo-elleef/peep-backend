@@ -1,13 +1,11 @@
 require 'swagger_helper'
 
 describe 'Clients API' do
-  path '/clients' do
-    get 'Retrieves a set of clients' do
-      tags 'clients'
+  path '/locations' do
+    get 'Retrieves a set of locations' do
+      tags 'locations'
       produces 'application/json'
-      parameter name: :page, in: :query, type: :integer, required: false
-      parameter name: :page_size, in: :query, type: :integer, required: false
-      response '200', 'clients set' do
+      response '200', 'locations set' do
         run_test!
       end
       response '401', 'not authorized' do
@@ -15,35 +13,35 @@ describe 'Clients API' do
       end
     end
   end
-  path '/clients/{id}' do
-    get 'Retrieves a set of clients' do
-      tags 'clients'
+  path '/locations/{id}' do
+    get ' single location data' do
+      tags 'locations'
       produces 'application/json'
       parameter name: :id, in: :path, type: :integer
-      response '200', 'client data' do
+      response '200', 'location data' do
         run_test!
       end
       response '401', 'not authorized' do
         run_test!
       end
-      response '404', 'client not found' do
+      response '404', 'location not found' do
         run_test!
       end
     end
   end
 
-  path '/clients/{id}' do
-    delete 'Retrieves a set of clients' do
-      tags 'clients'
+  path '/locations/{id}' do
+    delete 'delete location object' do
+      tags 'locations'
       produces 'application/json'
       parameter name: :id, in: :path, type: :integer
-      response '200', 'client data' do
+      response '200', 'location data' do
         run_test!
       end
       response '401', 'not authorized' do
         run_test!
       end
-      response '404', 'client not found' do
+      response '404', 'location not found' do
         run_test!
       end
       response '442', 'can not be deleted' do
@@ -52,36 +50,32 @@ describe 'Clients API' do
     end
   end
 
-  path '/clients' do
-    post 'create a client record' do
-      tags 'clients'
+  path '/locations' do
+    post 'create a location record' do
+      tags 'locations'
       consumes 'application/json'
       parameter name: :params, in: :body, schema: {
         type: :object,
         properties: {
-          client: {
+          location: {
             type: :object,
             properties: {
-              first_name: {type: :string},
-              last_name: {type: :string},
+              name: {type: :string},
+              business_type: {type: :string},
               phone: {type: :string},
               email: {type: :string},
-              notify_method: {type: :string},
-              language: {type: :string},
-              gender: {type: :integer},
-              birthday: {type: :string},
-              notes: {type: :string},
-              global_notes: {type: :boolean},
               street: {type: :string},
-              suburb: {type: :string},
+              building: {type: :string},
               city: {type: :string},
               state: {type: :string},
-              postal_code: {type: :string}
+              zipcode: {type: :string},
+              created_at: {type: :string},
+              updated_at: {type: :string},
             }
           }
         }
       }
-      response '201', 'client created' do
+      response '201', 'location created' do
         run_test!
       end
       response '401', 'not authorized' do
@@ -93,37 +87,33 @@ describe 'Clients API' do
     end
   end
 
-  path '/clients/{id}' do
-    put 'update a client record' do
-      tags 'clients'
+  path '/locations/{id}' do
+    put 'update a location record' do
+      tags 'locations'
       consumes 'application/json'
       parameter name: :id, in: :path, type: :integer
       parameter name: :params, in: :body, schema: {
         type: :object,
         properties: {
-          client: {
+          location: {
             type: :object,
             properties: {
-              first_name: {type: :string},
-              last_name: {type: :string},
+              name: {type: :string},
+              business_type: {type: :string},
               phone: {type: :string},
               email: {type: :string},
-              notify_method: {type: :string},
-              language: {type: :string},
-              gender: {type: :integer},
-              birthday: {type: :string},
-              notes: {type: :string},
-              global_notes: {type: :boolean},
               street: {type: :string},
-              suburb: {type: :string},
+              building: {type: :string},
               city: {type: :string},
               state: {type: :string},
-              postal_code: {type: :string}
+              zipcode: {type: :string},
+              created_at: {type: :string},
+              updated_at: {type: :string},
             }
           }
         }
       }
-      response '201', 'client updated' do
+      response '201', 'location updated' do
         run_test!
       end
       response '401', 'not authorized' do

@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   include Pagy::Backend
-  AUTH_KEY="2777d517df9f50d7890a27bd737412a0"
+
   skip_before_action :verify_authenticity_token
 
   after_action do
@@ -35,15 +35,10 @@ class ApplicationController < ActionController::Base
       request.headers["authorization"]
     end
 
-    def encoded_token(user)
-      payload = { user_id: user.id }
-      JWT.encode payload, AUTH_KEY, 'HS256'
-    end
 
     def current_user
       return @current_user if @current_user.present? || auth_token.blank?
-      data = JWT.decode(auth_token, AUTH_KEY, 'HS256').first
-      return nil unless data.present? && data['user_id'].present?
+      data = JwtService.decode(auth_token)
       @current_user = User.find(data['user_id'])
     end
 
