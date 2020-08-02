@@ -2,7 +2,12 @@ Rails.application.routes.draw do
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
-  resources :users, only: [:create, :update, :show]
+  resources :users, only: [:create, :update] do
+    collection do
+      get :whoami
+    end
+
+  end
   resources :shifts
   resources :closing_shifts
   resources :locations

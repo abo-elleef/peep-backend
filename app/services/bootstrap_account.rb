@@ -16,34 +16,22 @@ class BootstrapAccount
   private
 
     def create_location
-      t.string "first_name"
-      t.string "last_name"
-      t.string "email"
-      t.string "password_digest"
-      t.string "company_name"
-      t.integer "business_type"
-      t.datetime "created_at", precision: 6, null: false
-      t.datetime "updated_at", precision: 6, null: false
-
       Location.create!({
                          name: params[:company_name],
                          business_type: params[:business_type],
-                         phone: params[:business_type],
                          email: params[:business_type],
-                         street: params[:business_type],
-                         building: params[:business_type],
-                         city: params[:business_type],
-                         state: params[:business_type],
-                         zipcode: params[:business_type],
                          user_id: user.id
                        })
     end
 
     def create_staff(location)
-      # create example staff members
+      staffs = Staff.default_data.map do |staff_params| Staff.create(staff_params) end
+      location.staffs = staffs
     end
 
     def create_services(location, staff)
-      # create example service
+      services = Service.default_data.map do |service_data| Service.create(service_data) end
+      location.services = services
+      staff.map do |staff| staff.services  = services end
     end
 end
