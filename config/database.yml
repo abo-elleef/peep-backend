@@ -3,18 +3,21 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
   encoding: unicode
-  username:
-  password:
+  username: postgres
+  password: postgres
 
 development:
   <<: *default
   host: localhost
   database: peep_development
+  username:
+  password:
 
 test:
   <<: *default
-  host: localhost
   database: peep_test
+  username: postgres
+  password: postgres
 
 production:
   <<: *default

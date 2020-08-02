@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.7.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0.0'
+gem 'rails', '6.0.0'
 # Use postgres as the database for Active Record
 gem 'pg', '~> 1.2.3'
 # Use Puma as the app server
@@ -21,7 +21,7 @@ gem 'fast_jsonapi', '~> 1.5'
 # pagination
 gem 'pagy',  '~> 3.8'
 # admin interface
-gem 'rails_admin', '~> 2.0'
+gem 'rails_admin', '~> 2.0.2'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 
@@ -64,6 +64,7 @@ group :test do
   # Easy installation and use of web drivers to run system tests with browsers
   gem 'webdrivers'
 end
-
+gem 'pronto', '~> 0.10.0'
+gem 'pronto-rubocop', require: false
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
