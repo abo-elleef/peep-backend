@@ -1,7 +1,7 @@
 class ServicesController < ApplicationController
 
   def index
-    services = Service.all
+    services = Service.search(params[:search])
     render json: ServiceSerializer.new(services), status: :ok
 
   end
