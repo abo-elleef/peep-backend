@@ -5,14 +5,16 @@ FactoryBot.define do
     phone { Faker::PhoneNumber.cell_phone }
     email { Faker::Internet.email }
     notify_method { Client.notify_methods.values.first }
-    language { Faker::String.random( 2) }
+    language { Faker::String.random(2) }
     gender { Faker::Number.positive }
     birthday { Faker::Date.birthday }
-    global_notes {}
-    street {}
-    suburb {}
-    city {}
-    state {}
-    postal_code {}
+    notes { Faker::Lorem.paragraph(sentence_count: 4) }
+    global_notes { Faker::Boolean.boolean }
+    location_id { Faker::Number.positive }
+    street { Faker::Address.street_name }
+    suburb { Faker::Address.community }
+    city { Faker::Address.city }
+    state { Faker::Address.state }
+    postal_code { Faker::Address.postcode }
   end
 end
