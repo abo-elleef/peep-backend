@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_02_180555) do
+ActiveRecord::Schema.define(version: 2020_08_03_111317) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 2020_08_02_180555) do
     t.datetime "birthday"
     t.string "notes"
     t.boolean "global_notes"
-    t.integer "location_id"
+    t.bigint "location_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "street"
@@ -95,6 +95,8 @@ ActiveRecord::Schema.define(version: 2020_08_02_180555) do
     t.integer "extra_time_duration"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "service_category_id"
+    t.index ["service_category_id"], name: "index_services_on_service_category_id"
   end
 
   create_table "services_staffs", id: false, force: :cascade do |t|
@@ -142,4 +144,5 @@ ActiveRecord::Schema.define(version: 2020_08_02_180555) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "clients", "locations"
 end
