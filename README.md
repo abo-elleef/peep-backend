@@ -15,9 +15,9 @@ Salons and Spa Bookings and Inventory management
 - Swagger Docs for every endpoint as part of every PR 
 
 #### Product plan 
-- booking component (calendar)
+- booking component (calendar) data diagram => https://docs.google.com/drawings/d/1v0_-BNTcDMeoiZdi20jXQDnDSYDy3uisVvR1UUkSXPE/edit?usp=sharing
 - Sales & Analytics  Component
-- Inventory Management Component
+- Inventory Management Component , data digram => https://docs.google.com/drawings/d/1PiVdUJ0DEz_MmZ8fOSfk21O3QLwV0WXfbiY-iszHiAE/edit?usp=sharing
 
 
 ### Branching plan 

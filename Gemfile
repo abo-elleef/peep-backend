@@ -41,11 +41,13 @@ gem 'rack-cors', '~> 1.1'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.2', require: false
 
+gem 'rswag-api'
+gem 'rswag-ui'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'rspec-rails', '~> 4.0', '>= 4.0.1'
-  gem 'rswag', '~> 2.3', '>= 2.3.1'
+  gem 'rswag-specs'
   gem 'faker', '~> 1.6', '>= 1.6.6'
   gem 'factory_bot_rails', '~> 6.1'
   gem 'pry-rails', '~> 0.3.9'

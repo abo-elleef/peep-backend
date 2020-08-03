@@ -260,10 +260,6 @@ GEM
       rspec-mocks (~> 3.9)
       rspec-support (~> 3.9)
     rspec-support (3.9.3)
-    rswag (2.3.1)
-      rswag-api (= 2.3.1)
-      rswag-specs (= 2.3.1)
-      rswag-ui (= 2.3.1)
     rswag-api (2.3.1)
       railties (>= 3.1, < 7.0)
     rswag-specs (2.3.1)
@@ -375,7 +371,9 @@ DEPENDENCIES
   rails (= 6.0.0)
   rails_admin (~> 2.0.2)
   rspec-rails (~> 4.0, >= 4.0.1)
-  rswag (~> 2.3, >= 2.3.1)
+  rswag-api
+  rswag-specs
+  rswag-ui
   sass-rails (>= 6)
   selenium-webdriver
   shoulda-callback-matchers (~> 1.1, >= 1.1.4)
