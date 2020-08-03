@@ -20,9 +20,10 @@ RSpec.describe "Users API", type: :request do
     end
   end
   describe "#show" do
-    let(:user) {User.create }
+    let(:user) { User.create }
+    let(:location) { Location.create(user_id: user.id) }
     let(:token) do
-      payload = { user_id: user.id }
+      payload = { user_id: user.id, location_id: location.id}
       JWT.encode payload, JwtService::AUTH_KEY, 'HS256'
     end
     it "show user data" do
