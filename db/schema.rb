@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 2020_08_03_111317) do
     t.datetime "birthday"
     t.string "notes"
     t.boolean "global_notes"
-    t.bigint "location_id", null: false
+    t.integer "location_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "street"
@@ -144,5 +144,4 @@ ActiveRecord::Schema.define(version: 2020_08_03_111317) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key "clients", "locations"
 end
