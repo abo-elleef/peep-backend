@@ -42,6 +42,7 @@ class ServicesController < ApplicationController
 
   def service_params
     params.require(:service).permit( :name, :treatment_type_id, :description,
-                                    :available_for, :staff_commission, :extra_time, :extra_time_type, :extra_time_duration)
+                                    :available_for, :staff_commission, :extra_time,
+                                     :extra_time_type, :extra_time_duration, :service_category_id)
   end
 end
