@@ -3,7 +3,7 @@ class Service < ApplicationRecord
   enum extra_time_type: {processing_after: 0, blocking_after: 1 }
 
   has_and_belongs_to_many :staffs
-
+  belongs_to :service_category
 
   def self.default_data
     [
