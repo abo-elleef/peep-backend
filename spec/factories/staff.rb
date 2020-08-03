@@ -7,7 +7,7 @@ FactoryBot.define do
     booking_enabled { Faker::Boolean.boolean }
     booking_color { Faker::Color.hex_color }
     title { Faker::Job.title }
-    notes { Faker::Lorem.paragraph(sentence_count: 2) }
+    notes { Faker::Lorem.paragraph }
     contract_start { Time.zone.now - 10.days }
     contract_end { Time.zone.now + 12.months }
   end

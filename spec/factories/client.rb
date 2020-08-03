@@ -8,7 +8,7 @@ FactoryBot.define do
     language { Faker::String.random(2) }
     gender { Faker::Number.positive }
     birthday { Faker::Date.birthday }
-    notes { Faker::Lorem.paragraph(sentence_count: 4) }
+    notes { Faker::Lorem.paragraph }
     global_notes { Faker::Boolean.boolean }
     location_id { Faker::Number.positive }
     street { Faker::Address.street_name }

@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :service do
     name { Faker::Name.unique.name }
-    description { Faker::Lorem.paragraph(sentence_count: 4) }
+    description { Faker::Lorem.paragraph }
     online_booking { Faker::Boolean.boolean }
     staff_commission { Faker::Boolean.boolean }
     available { Faker::Boolean.boolean }
