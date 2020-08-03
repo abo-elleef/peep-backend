@@ -1,4 +1,5 @@
 class Service < ApplicationRecord
+  include Filterable
   enum available_for: {everyone: 0, males: 1, females: 2}
   enum extra_time_type: {processing_after: 0, blocking_after: 1 }
 
