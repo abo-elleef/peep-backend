@@ -1,4 +1,3 @@
-require "rswag"
 
 Rails.application.routes.draw do
   mount Rswag::Ui::Engine => '/api-docs'
