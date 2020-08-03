@@ -1491,6 +1491,18 @@
                       },
                       "contract_end": {
                         "type": "string"
+                      },
+                      "service_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer"
+                        }
+                      },
+                      "location_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer"
+                        }
                       }
                     }
                   }
@@ -1643,6 +1655,18 @@
                       },
                       "contract_end": {
                         "type": "string"
+                      },
+                      "service_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer"
+                        }
+                      },
+                      "location_ids": {
+                        "type": "array",
+                        "items": {
+                          "type": "integer"
+                        }
                       }
                     }
                   }

@@ -70,6 +70,14 @@ describe 'Staffs API' do
               notes: {type: :string},
               contract_start: {type: :string},
               contract_end: {type: :string},
+              service_ids: {
+                type: :array,
+                items: { type: :integer }
+              },
+              location_ids: {
+                type: :array,
+                items: { type: :integer }
+              }
             }
           }
         }
@@ -107,6 +115,14 @@ describe 'Staffs API' do
               notes: {type: :string},
               contract_start: {type: :string},
               contract_end: {type: :string},
+              service_ids: {
+                type: :array,
+                items: { type: :integer }
+              },
+              location_ids: {
+                type: :array,
+                items: { type: :integer }
+              }
             }
           }
         }
