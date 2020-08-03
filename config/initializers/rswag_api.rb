@@ -1,3 +1,5 @@
+require "rswag"
+
 Rswag::Api.configure do |c|
 
   # Specify a root folder where Swagger JSON files are located
