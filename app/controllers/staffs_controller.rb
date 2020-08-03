@@ -1,7 +1,8 @@
 class StaffsController < ApplicationController
+  before_action :peep_authenticate
 
   def index
-    staffs = Staff.all
+    staffs = current_location.staffs
     render json: StaffSerializer.new(staffs), status: :ok
   end
 
@@ -41,7 +42,7 @@ class StaffsController < ApplicationController
     def staff_params
       params.require(:staff).permit(
         :id, :first_name, :last_name, :phone, :email, :booking_enabled, :booking_color,
-        :title, :notes, :contract_start, :contract_end
+        :title, :notes, :contract_start, :contract_end, service_ids: [], location_ids: []
       )
     end
 end
