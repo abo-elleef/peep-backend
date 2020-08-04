@@ -1,7 +1,7 @@
 class ServiceCategoriesController < ApplicationController
 
   def index
-    service_categories = ServiceCategory.all
+    service_categories = ServiceCategory.filter(params.slice(:name))
     render json: ServiceCategorySerializer.new(service_categories, include: [:services]), status: :ok
   end
 

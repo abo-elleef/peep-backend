@@ -6,6 +6,5 @@ FactoryBot.define do
     staff_commission { true }
     extra_time { false }
     service_category factory: :service_category, strategy: :create
-
   end
 end
