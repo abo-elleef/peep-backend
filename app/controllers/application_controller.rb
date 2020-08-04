@@ -8,10 +8,6 @@ class ApplicationController < ActionController::Base
   end
 
   private
-    def current_location
-      # TODO : waiting discusion with business
-      Location.first
-    end
 
     def pagy_meta_data(pagy)
       {
@@ -35,6 +31,12 @@ class ApplicationController < ActionController::Base
       request.headers["authorization"]
     end
 
+  def current_location
+    Location.first
+    return @current_location if @current_location.present? || auth_token.blank?
+    data = JwtService.decode(auth_token)
+    @current_location = Location.find(data['location_id'])
+  end
 
     def current_user
       return @current_user if @current_user.present? || auth_token.blank?

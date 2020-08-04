@@ -1,9 +1,10 @@
 class Location < ApplicationRecord
   validates_presence_of :user_id
   belongs_to :user
-  has_many :locations_staffs
-  has_many :staffs, through: :locations_staffs
+
+  has_and_belongs_to_many :staffs
   has_and_belongs_to_many :services
+
   enum :business_type => {
     "hair_alon": 1,
     "beauty_salon": 4,
