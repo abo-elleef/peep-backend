@@ -32,7 +32,7 @@ class BootstrapAccount
   end
 
   def create_services(location, staff)
-    service_category = ServiceCategory.create(ServiceCategory.default_data)
+    service_category = ServiceCategory.default_data.map do |category_date| ServiceCategory.create(category_date) end
     services = Service.default_data.map do |service_data|
       Service.create(service_data.merge(service_category_id: service_category.id))
     end
