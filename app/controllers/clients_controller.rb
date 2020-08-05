@@ -35,7 +35,7 @@ class ClientsController < ApplicationController
     if client.destroy
       render json: ClientSerializer.new(client), status: :ok
     else
-      render json: {},status: :bad_request
+      render json: {}, status: :bad_request
     end
   end
 

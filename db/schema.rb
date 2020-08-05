@@ -15,6 +15,17 @@ ActiveRecord::Schema.define(version: 2020_08_03_111317) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "appointments", force: :cascade do |t|
+    t.integer "status"
+    t.integer "client_id"
+    t.text "notes"
+    t.date "date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["client_id"], name: "index_appointments_on_client_id"
+    t.index ["date"], name: "index_appointments_on_date"
+  end
+
   create_table "clients", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -40,7 +51,7 @@ ActiveRecord::Schema.define(version: 2020_08_03_111317) do
   create_table "closing_shifts", force: :cascade do |t|
     t.datetime "start_date"
     t.datetime "end_date"
-    t.bigint "location_id"
+    t.integer "location_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["location_id"], name: "index_closing_shifts_on_location_id"
@@ -110,8 +121,8 @@ ActiveRecord::Schema.define(version: 2020_08_03_111317) do
     t.integer "day"
     t.time "start_time"
     t.time "end_time"
-    t.bigint "staff_id"
-    t.bigint "location_id"
+    t.integer "staff_id"
+    t.integer "location_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["location_id"], name: "index_shifts_on_location_id"
