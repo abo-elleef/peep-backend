@@ -1,37 +1,37 @@
 class ServiceCategoriesController < ApplicationController
 
   def index
-    shifts = ServiceCategory.all
-    render json: ServiceCategorySerializer.new(shifts), status: :ok
+    service_categories = ServiceCategory.filter(params.slice(:name, :search))
+    render json: ServiceCategorySerializer.new(service_categories, include: [:services]), status: :ok
   end
 
   def show
-    shift = ServiceCategory.find(params[:id])
-    render json: ServiceCategorySerializer.new(shift), status: :ok
+    service_category = ServiceCategory.find(params[:id])
+    render json: ServiceCategorySerializer.new(service_category, include: [:services]), status: :ok
   end
 
   def create
-    shift = ServiceCategory.new(shift_params)
-    if shift.save
-      render json: ServiceCategorySerializer.new(shift), status: :created
+    service_category = ServiceCategory.new(service_category_params)
+    if service_category.save
+      render json: ServiceCategorySerializer.new(service_category), status: :created
     else
-      render json: shift.errors, status: :unprocessable_entity
+      render json: service_category.errors, status: :unprocessable_entity
     end
   end
 
   def update
-    shift = ServiceCategory.find(params[:id])
-    if shift.update(shift_params)
-      render json: ServiceCategorySerializer.new(shift), status: :ok
+    service_category = ServiceCategory.find(params[:id])
+    if service_category.update(service_category_params)
+      render json: ServiceCategorySerializer.new(service_category), status: :ok
     else
-      render json: shift.errors, status: :unprocessable_entity
+      render json: service_category.errors, status: :unprocessable_entity
     end
   end
 
   def destroy
-    shift = ServiceCategory.find(params[:id])
-    if shift.destroy
-      render json: ServiceCategorySerializer.new(shift), status: :ok
+    service_category = ServiceCategory.find(params[:id])
+    if service_category.destroy
+      render json: ServiceCategorySerializer.new(service_category), status: :ok
     else
       render json: {}, status: :bad_request
     end
@@ -39,7 +39,7 @@ class ServiceCategoriesController < ApplicationController
 
   private
 
-  def shift_params
-    params.require(:shift).permit(:id, :name, :appointment_color, :description)
+  def service_category_params
+    params.require(:service_category).permit( :name, :appointment_color, :description)
   end
 end

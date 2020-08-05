@@ -1,7 +1,7 @@
 class ServicesController < ApplicationController
 
   def index
-    services = Service.all
+    services = Service.filter(params.slice(:name, :search))
     render json: ServiceSerializer.new(services), status: :ok
 
   end
@@ -42,6 +42,7 @@ class ServicesController < ApplicationController
 
   def service_params
     params.require(:service).permit( :name, :treatment_type_id, :description,
-                                    :available_for, :staff_commission, :extra_time, :extra_time_type, :extra_time_duration)
+                                    :available_for, :staff_commission, :extra_time,
+                                     :extra_time_type, :extra_time_duration, :service_category_id)
   end
 end
