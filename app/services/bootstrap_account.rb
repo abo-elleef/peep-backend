@@ -34,7 +34,7 @@ class BootstrapAccount
   def create_services(location, staff)
     service_category = ServiceCategory.default_data.map do |category_date| ServiceCategory.create(category_date) end
     services = Service.default_data.map do |service_data|
-      Service.create(service_data.merge(service_category_id: service_category.id))
+      Service.create(service_data.merge(service_category_id: service_category.first.id))
     end
     location.services = services
     staff.map do |staff| staff.services = services end
