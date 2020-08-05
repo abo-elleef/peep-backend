@@ -5,7 +5,9 @@ class Service < ApplicationRecord
 
   has_and_belongs_to_many :staffs
   belongs_to :service_category
-  scope :filter_by_name, -> (name) { where name: name }
+  scope :filter_by_name, -> (name) { where("name ilike ?", name) }
+  scope :filter_by_search, -> (search) { where("name ilike ?", search).
+      or(where("description ilike ?", search)) }
 
   def self.default_data
     [

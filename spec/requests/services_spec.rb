@@ -4,19 +4,8 @@ require 'rails_helper'
 
 RSpec.describe "Services API", type: :request do
   let(:services) { create_list(:service, 5) }
-  let(:test_service) {create(:service)}
+  let(:test_service) { create(:service) }
   let(:test_category) { create(:service_category) }
-  let(:service_params) do
-    {
-        service: {
-            name: "test service creation",
-            description: "test description for creating service",
-            available_for: 'everyone',
-            staff_commission: true,
-            extra_time: false,
-            service_category_id: test_category.id
-        }}
-  end
 
   describe "GET /index" do
     it "returns a list of all services" do
@@ -29,14 +18,14 @@ RSpec.describe "Services API", type: :request do
     #searching test
     it "list all Services data that match search with name " do
       get "/services?name=#{services.first.name}"
-      expect(response.code).to eq("200")
+      expect(response).to have_http_status(:success)
       expect(parsed_response["data"].size).to eq(1)
     end
   end
 
   describe "GET /show" do
     context 'when valid request' do
-      it "returns http success" do
+      it "show service object " do
         get "/services/#{services.first.id}"
         expect(response).to have_http_status(:success)
         expect(parsed_response["data"]["id"].to_i).to eq(services.first.id)
@@ -46,7 +35,8 @@ RSpec.describe "Services API", type: :request do
 
   describe "POST /create" do
     it "create new service with the right params" do
-      expect { post "/services", params: service_params }.to change(Service, :count).by(+1)
+      expect { post "/services", params: {service: attributes_for(:service, service_category_id: test_category.id)} }.to change(Service, :count).by(+1)
+      expect(response).to have_http_status(:success)
       expect(Service.last.service_category_id).to eq(test_category.id)
     end
   end
