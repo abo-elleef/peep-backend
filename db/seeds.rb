@@ -32,3 +32,15 @@
 #                   postal_code: "postal_code", location_id: location.id
 #                 })
 # end
+#
+# 5.times do |index|
+#   service_category = ServiceCategory.create!({
+#                               name: "category_#{index} ", description: "description", appointment_color: "appointment_color"
+#                           })
+#   10.times do |service_index|
+#     Service.create!({
+#                         name: "#{service_index}_service_name", description: "description", staff_commission: true,
+#                         available_for: 0, service_category_id: service_category.id
+#                     })
+#   end
+# end

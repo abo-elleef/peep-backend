@@ -4,11 +4,11 @@ FactoryBot.define do
     last_name { Faker::Name.last_name }
     phone { Faker::PhoneNumber.cell_phone }
     email { Faker::Internet.email }
-    booking_enabled { true }
-    booking_color {"#ffff00"}
-    title {Faker::Name.name}
-    notes {Faker::Name.name}
-    contract_start {Time.zone.now}
-    contract_end {Time.zone.now + 1.year}
+    booking_enabled { Faker::Boolean.boolean }
+    booking_color { Faker::Color.hex_color }
+    title { Faker::Job.title }
+    notes { Faker::Lorem.paragraph }
+    contract_start { Time.zone.now - 10.days }
+    contract_end { Time.zone.now + 12.months }
   end
 end
