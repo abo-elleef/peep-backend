@@ -2,7 +2,7 @@ class ClientsController < ApplicationController
 
   def index
     clients = Client.search(params[:search])
-    pagy, clients = pagy(clients, page: page_param, items: page_size )
+    pagy, clients = pagy(clients, page: page_index, items: page_size )
     render json: ClientSerializer.new(clients, meta: pagy_meta_data(pagy)), status: :ok
   end
 
