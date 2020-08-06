@@ -14,7 +14,7 @@ class Appointment < ApplicationRecord
   validates_presence_of :location_id
 
   # == Scopes ===============================================================
-  scope :by_date, -> (start_time, end_time) { where("date => ? AND date <= ?  ", start_time, end_time) }
+  scope :by_date, -> (start_time, end_time) { where("date >= ? AND date <= ?  ", start_time, end_time) }
   scope :by_location, -> (location_ids) { where(location_id: location_ids) }
   scope :by_staff, -> (staff_ids){ joins(:lines).where(lines: { staff_id: staff_ids })}
   scope :by_service, -> (service_ids){ joins(:lines).where(lines: {service_id: service_ids} )}
