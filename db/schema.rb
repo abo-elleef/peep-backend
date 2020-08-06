@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_03_111317) do
+ActiveRecord::Schema.define(version: 2020_08_05_194211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,26 @@ ActiveRecord::Schema.define(version: 2020_08_03_111317) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["client_id"], name: "index_appointments_on_client_id"
     t.index ["date"], name: "index_appointments_on_date"
+  end
+
+  create_table "appointments_services", force: :cascade do |t|
+    t.integer "appointment_id"
+    t.integer "service_id"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["appointment_id"], name: "index_appointments_services_on_appointment_id"
+    t.index ["service_id"], name: "index_appointments_services_on_service_id"
+  end
+
+  create_table "appointments_staffs", force: :cascade do |t|
+    t.integer "appointment_id"
+    t.integer "staff_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["appointment_id"], name: "index_appointments_staffs_on_appointment_id"
+    t.index ["staff_id"], name: "index_appointments_staffs_on_staff_id"
   end
 
   create_table "clients", force: :cascade do |t|
@@ -51,10 +71,29 @@ ActiveRecord::Schema.define(version: 2020_08_03_111317) do
   create_table "closing_shifts", force: :cascade do |t|
     t.datetime "start_date"
     t.datetime "end_date"
-    t.integer "location_id"
+    t.bigint "location_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["location_id"], name: "index_closing_shifts_on_location_id"
+  end
+
+  create_table "lines", force: :cascade do |t|
+    t.integer "appointment_id"
+    t.integer "staff_id"
+    t.integer "client_id"
+    t.integer "service_id"
+    t.float "price"
+    t.float "original_price"
+    t.string "staff_name"
+    t.string "service_name"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["appointment_id"], name: "index_lines_on_appointment_id"
+    t.index ["client_id"], name: "index_lines_on_client_id"
+    t.index ["service_id"], name: "index_lines_on_service_id"
+    t.index ["staff_id"], name: "index_lines_on_staff_id"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -121,8 +160,8 @@ ActiveRecord::Schema.define(version: 2020_08_03_111317) do
     t.integer "day"
     t.time "start_time"
     t.time "end_time"
-    t.integer "staff_id"
-    t.integer "location_id"
+    t.bigint "staff_id"
+    t.bigint "location_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["location_id"], name: "index_shifts_on_location_id"
