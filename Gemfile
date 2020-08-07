@@ -75,5 +75,7 @@ group :test do
 end
 gem 'pronto', '~> 0.10.0'
 gem 'pronto-rubocop', require: false
+
+gem 'activerecord_json_validator', '~> 1.2'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]

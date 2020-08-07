@@ -1,0 +1,18 @@
+{
+  "definitions": {
+    "data": {
+      "type": "object",
+      "required": [ "service_id", "service_name", "staff_id", "staff_name", "price", "original_price", "starts_at", "ends_at" ],
+      "properties": {
+        "service_id": { "type": "integer" },
+        "service_name": { "type": "string" },
+        "staff_id": { "type": "integer" },
+        "staff_name": { "type": "string" },
+        "price": { "type": "integer" },
+        "original_price": { "type": "integer" },
+        "starts_at": { "type": "datetime" },
+        "ends_at": { "type": "datetime" }
+      }
+    }
+  }
+}

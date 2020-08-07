@@ -1,0 +1,15 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema",
+  "type": "object",
+  "required": [ "services"],
+  "properties": {
+    "services": {
+      "type": "array",
+      "items": {
+        "$ref": "services.json#/definitions/data"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    }
+  }
+}
