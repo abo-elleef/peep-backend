@@ -4,6 +4,7 @@ class Location < ApplicationRecord
 
   has_and_belongs_to_many :staffs
   has_and_belongs_to_many :services
+  has_many :appointments
 
   enum :business_type => {
     "hair_alon": 1,

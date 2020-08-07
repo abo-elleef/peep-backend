@@ -4,6 +4,7 @@ class Service < ApplicationRecord
   enum extra_time_type: {processing_after: 0, blocking_after: 1}
 
   has_and_belongs_to_many :staffs
+  has_and_belongs_to_many :appointments
   belongs_to :service_category
   scope :filter_by_name, -> (name) { where("name ilike ?", name) }
   scope :filter_by_search, -> (search) { where("name ilike ?", search).

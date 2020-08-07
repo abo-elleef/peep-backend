@@ -1,4 +1,4 @@
-class AppointmentDetailsSerializers
+class AppointmentDetailsSerializer
   def self.dump(hash)
     hash.to_json
   end

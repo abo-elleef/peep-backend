@@ -2,6 +2,8 @@ class Staff < ApplicationRecord
   has_and_belongs_to_many :services
   has_and_belongs_to_many :locations
 
+  has_and_belongs_to_many :appointments
+
   def self.default_data
     [
       {
