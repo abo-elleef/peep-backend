@@ -2,7 +2,7 @@ class Appointment < ApplicationRecord
 
   # == Constants ============================================================
 
-  DETAILS_SCHEMA = "#{Rails.root}/app/models/schemas/appointments_details.json"
+  DETAILS_SCHEMA = "#{Rails.root}/app/models/schemas/appointment_details.json"
 
   # == Extensions ===========================================================
 
@@ -11,14 +11,19 @@ class Appointment < ApplicationRecord
   store_accessor :details, :services
 
   # == Relationships ========================================================
+
   has_and_belongs_to_many :services
   has_and_belongs_to_many :staffs
   belongs_to :location
   belongs_to :client
 
+  # == Validations ==========================================================
+
   validates :details, presence: true, json: {schema: DETAILS_SCHEMA}
 
-
+  # == Scopes ===============================================================
+  #
+  scope :search, -> (search) { where("notes ilike ?", "%" + search + "%") }
   # SCHEMA = {
   #     'service' => ['service_id', 'service_name', 'staff_id', 'staff_name', 'price', 'original_price', 'starts_at', 'ends_at'],
   # }
