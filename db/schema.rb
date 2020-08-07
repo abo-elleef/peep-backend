@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_06_231858) do
+ActiveRecord::Schema.define(version: 2020_08_07_003345) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,24 @@ ActiveRecord::Schema.define(version: 2020_08_06_231858) do
     t.index ["client_id"], name: "index_appointments_on_client_id"
     t.index ["details"], name: "index_appointments_on_details", using: :gin
     t.index ["location_id"], name: "index_appointments_on_location_id"
+  end
+
+  create_table "appointments_services", force: :cascade do |t|
+    t.integer "appointment_id"
+    t.integer "service_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["appointment_id"], name: "index_appointments_services_on_appointment_id"
+    t.index ["service_id"], name: "index_appointments_services_on_service_id"
+  end
+
+  create_table "appointments_staffs", force: :cascade do |t|
+    t.integer "appointment_id"
+    t.integer "staff_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["appointment_id"], name: "index_appointments_staffs_on_appointment_id"
+    t.index ["staff_id"], name: "index_appointments_staffs_on_staff_id"
   end
 
   create_table "clients", force: :cascade do |t|
