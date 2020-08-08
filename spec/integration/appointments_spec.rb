@@ -69,6 +69,7 @@ describe 'Appointments API' do
                       client_id: {type: :integer},
                       location_id: {type: :integer},
                       notes: {type: :text},
+                      date: {type: :date},
                       lines_attributes: {
                           type: :array,
                           items: {
@@ -116,6 +117,7 @@ describe 'Appointments API' do
                       client_id: {type: :integer},
                       location_id: {type: :integer},
                       notes: {type: :text},
+                      date: {type: :date},
                       lines_attributes: {
                           type: :array,
                           items: {

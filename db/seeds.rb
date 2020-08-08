@@ -58,13 +58,11 @@ end
                                       date: days.sample
                                     })
   3.times do
-    client = clients.sample
     service = services.sample
     staff = staffs.sample
     price = (1..100).to_a.sample
     Line.create!({
                    appointment_id: appointment.id,
-                   client_id: client.id,
                    service_id: service.id,
                    staff_id: staff.id,
                    price: price,
