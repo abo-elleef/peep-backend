@@ -1,7 +1,7 @@
 class ServiceCategoriesController < ApplicationController
 
   def index
-    service_categories = ServiceCategory.filter(params.slice(:name, :search))
+    service_categories = ServiceCategory.peep_filter(params.slice(:name, :search))
     render json: ServiceCategorySerializer.new(service_categories, include: [:services]), status: :ok
   end
 
