@@ -1,7 +1,9 @@
 class ShiftsController < ApplicationController
 
   def index
-    shifts = Shift.all
+    # TODO add index for location_id
+    # TODO add compained index for location id and staff_id
+    shifts = Shift.includes(:staff).peep_filter(params.slice(:location_id, :staff_id, :date_time))
     render json: ShiftSerializer.new(shifts), status: :ok
   end
 
