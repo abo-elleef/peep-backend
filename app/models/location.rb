@@ -1,5 +1,7 @@
 class Location < ApplicationRecord
 
+  # == Constants ============================================================
+  # == Extensions ===========================================================
   enum :business_type => {
       "hair_alon": 1,
       "beauty_salon": 4,
@@ -17,6 +19,7 @@ class Location < ApplicationRecord
       "other": 14
   }
 
+  # == Relationships ========================================================
   belongs_to :user
   has_many :lines
   has_many :appointments, through: :lines
@@ -24,6 +27,12 @@ class Location < ApplicationRecord
   has_and_belongs_to_many :staffs
   has_and_belongs_to_many :services
 
+  # == Validations ==========================================================
   validates_presence_of :user_id
+
+  # == Scopes ===============================================================
+  # == Callbacks ============================================================
+  # == Class Methods ========================================================
+  # == Instance Methods =====================================================
 
 end
