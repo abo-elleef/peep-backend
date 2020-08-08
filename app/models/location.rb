@@ -20,12 +20,11 @@ class Location < ApplicationRecord
   }
 
   # == Relationships ========================================================
-  belongs_to :user
-  has_many :lines
-  has_many :appointments, through: :lines
-  has_many :clients
   has_and_belongs_to_many :staffs
   has_and_belongs_to_many :services
+  has_many :appointments
+  has_many :clients
+  belongs_to :user
 
   # == Validations ==========================================================
   validates_presence_of :user_id
