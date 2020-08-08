@@ -1,5 +1,5 @@
 class StaffsController < ApplicationController
-  before_action :peep_authenticate
+  # before_action :peep_authenticate
 
   def index
     staffs = current_location.staffs
