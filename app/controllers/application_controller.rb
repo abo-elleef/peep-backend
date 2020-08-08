@@ -33,9 +33,9 @@ class ApplicationController < ActionController::Base
 
   def current_location
     Location.first
-    return @current_location if @current_location.present? || auth_token.blank?
-    data = JwtService.decode(auth_token)
-    @current_location = Location.find(data['location_id'])
+    # return @current_location if @current_location.present? || auth_token.blank?
+    # data = JwtService.decode(auth_token)
+    # @current_location = Location.find(data['location_id'])
   end
 
     def current_user
