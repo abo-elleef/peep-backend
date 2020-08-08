@@ -68,8 +68,8 @@ describe 'Appointments API' do
                       status: {type: :integer},
                       client_id: {type: :integer},
                       location_id: {type: :integer},
-                      notes: {type: :text},
-                      date: {type: :date},
+                      notes: {type: :string},
+                      date: {type: :string},
                       lines_attributes: {
                           type: :array,
                           items: {
@@ -80,8 +80,8 @@ describe 'Appointments API' do
                                   service_name: {type: :integer},
                                   price: {type: :integer},
                                   original_price: {type: :integer},
-                                  starts_at: {type: :datetime},
-                                  ends_at: {type: :datetime}
+                                  starts_at: {type: :string},
+                                  ends_at: {type: :string}
                               }
                           }
                       }
@@ -116,8 +116,8 @@ describe 'Appointments API' do
                       status: {type: :integer},
                       client_id: {type: :integer},
                       location_id: {type: :integer},
-                      notes: {type: :text},
-                      date: {type: :date},
+                      notes: {type: :string},
+                      date: {type: :string},
                       lines_attributes: {
                           type: :array,
                           items: {
@@ -129,8 +129,8 @@ describe 'Appointments API' do
                                   service_name: {type: :integer},
                                   price: {type: :integer},
                                   original_price: {type: :integer},
-                                  starts_at: {type: :datetime},
-                                  ends_at: {type: :datetime}
+                                  starts_at: {type: :string},
+                                  ends_at: {type: :string}
                               }
                           }
                       }
