@@ -18,12 +18,14 @@ ActiveRecord::Schema.define(version: 2020_08_07_232937) do
   create_table "appointments", force: :cascade do |t|
     t.integer "status"
     t.integer "client_id"
+    t.integer "location_id"
     t.text "notes"
     t.date "date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["client_id"], name: "index_appointments_on_client_id"
     t.index ["date"], name: "index_appointments_on_date"
+    t.index ["location_id"], name: "index_appointments_on_location_id"
   end
 
   create_table "appointments_services", force: :cascade do |t|
@@ -80,7 +82,6 @@ ActiveRecord::Schema.define(version: 2020_08_07_232937) do
   create_table "lines", force: :cascade do |t|
     t.integer "appointment_id"
     t.integer "staff_id"
-    t.integer "client_id"
     t.integer "service_id"
     t.float "price"
     t.float "original_price"
@@ -91,7 +92,6 @@ ActiveRecord::Schema.define(version: 2020_08_07_232937) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["appointment_id"], name: "index_lines_on_appointment_id"
-    t.index ["client_id"], name: "index_lines_on_client_id"
     t.index ["service_id"], name: "index_lines_on_service_id"
     t.index ["staff_id"], name: "index_lines_on_staff_id"
   end

@@ -1,9 +1,9 @@
 class AppointmentsController < ApplicationController
-  before_action :set_appointment, only: [:show, :edit, :update, :destroy]
 
   def index
     appointments = Appointment.peep_filter(params.slice(:start_at, :end_at, :staff_ids, :location_id))
-    render json: AppointmentSerializer.new(appointments), status: :ok
+    pagy, appointments = pagy(appointments, page: page_index, items: page_size )
+    render json: AppointmentSerializer.new(appointments, include: [:lines], meta: pagy_meta_data(pagy)), status: :ok
   end
 
   def show
@@ -12,9 +12,9 @@ class AppointmentsController < ApplicationController
   end
 
   def create
-    appointment = Appointment.find(params[:id])
+    appointment = Appointment.new(appointment_params)
     if appointment.save
-      render json: AppointmentSerializer.new(appointment), status: :created
+      render json: AppointmentSerializer.new(appointment, include: [:lines]), status: :created
     else
       render json: appointment.errors, status: :unprocessable_entity
     end
@@ -23,7 +23,7 @@ class AppointmentsController < ApplicationController
   def update
     appointment = Appointment.find(params[:id])
     if appointment.update(appointment_params)
-      render json: AppointmentSerializer.new(appointment), status: :ok
+      render json: AppointmentSerializer.new(appointment, include: [:lines]), status: :ok
     else
       render json: appointment.errors, status: :unprocessable_entity
     end
@@ -42,6 +42,8 @@ class AppointmentsController < ApplicationController
   private
 
     def appointment_params
-      params.require(:appointment).permit(:status, :client_id, :notes, :date)
+      params.require(:appointment).permit(:status, :client_id, :location_id,
+                                          :notes, :date, lines_attributes: [:id, :appointment_id, :staff_id, :service_id, :price, :original_price, :staff_name,
+                                                                            :service_name, :starts_at, :ends_at])
     end
 end

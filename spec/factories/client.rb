@@ -6,7 +6,7 @@ FactoryBot.define do
     email { Faker::Internet.email }
     notify_method { Client.notify_methods.values.first }
     language { Faker::String.random(2) }
-    gender { Faker::Number.positive }
+    gender {  Client.genders.values.sample }
     birthday { Faker::Date.birthday }
     notes { Faker::Lorem.paragraph }
     global_notes { Faker::Boolean.boolean }

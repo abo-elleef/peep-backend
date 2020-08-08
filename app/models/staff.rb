@@ -7,10 +7,13 @@ class Staff < ApplicationRecord
   has_and_belongs_to_many :services
   has_and_belongs_to_many :locations
   has_many :shifts
+  has_many :lines
+  has_many :appointments, through: :lines
   # == Validations ==========================================================
   # == Scopes ===============================================================
   # == Callbacks ============================================================
   # == Class Methods ========================================================
+
   def self.default_data
     [
       {
