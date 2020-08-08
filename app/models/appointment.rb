@@ -5,10 +5,11 @@ class Appointment < ApplicationRecord
 
   # == Relationships ========================================================
   has_many :appointments_services
-  has_many :lines, dependent: :destroy
+  has_many :lines, inverse_of: :appointment, dependent: :destroy
   has_many :services, through: :lines
   has_many :staffs, through: :lines
 
+  accepts_nested_attributes_for :lines
 
   # == Validations ==========================================================
   validates_presence_of :location_id
@@ -20,9 +21,17 @@ class Appointment < ApplicationRecord
   scope :by_service, -> (service_ids){ joins(:lines).where(lines: {service_id: service_ids} )}
 
   # == Callbacks ============================================================
-  #
+
+  # before_create :create_related_lines
+
   # == Class Methods ========================================================
   #
   # == Instance Methods =====================================================
 
+
+  private
+
+  def create_related_lines
+    lines_attributes.map{|line| Line.create(line.merge(appointment_id: id))}
+  end
 end

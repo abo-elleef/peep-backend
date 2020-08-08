@@ -18,6 +18,9 @@ class Location < ApplicationRecord
   }
 
   belongs_to :user
+  has_many :lines
+  has_many :appointments, through: :lines
+  has_many :clients
   has_and_belongs_to_many :staffs
   has_and_belongs_to_many :services
 
