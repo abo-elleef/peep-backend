@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_05_194211) do
+ActiveRecord::Schema.define(version: 2020_08_07_232937) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -158,12 +158,12 @@ ActiveRecord::Schema.define(version: 2020_08_05_194211) do
 
   create_table "shifts", force: :cascade do |t|
     t.integer "day"
-    t.time "start_time"
-    t.time "end_time"
     t.bigint "staff_id"
     t.bigint "location_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.datetime "start_time"
+    t.datetime "end_time"
     t.index ["location_id"], name: "index_shifts_on_location_id"
     t.index ["staff_id"], name: "index_shifts_on_staff_id"
   end

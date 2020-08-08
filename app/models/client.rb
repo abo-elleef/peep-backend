@@ -12,9 +12,9 @@ class Client < ApplicationRecord
   validates_presence_of :first_name
 
   # == Scopes ===============================================================
-  scope :search, -> (search) { search.present? ?  where("first_name ilike ?", search).
-    or(where("last_name ilike ?", search)).
-    or(where(phone: search)) : all }
+  scope :search, -> (search) { search.present? ?  where("first_name ilike ?", "%" + search + "%").
+      or(where("last_name ilike ?", "%" + search + "%")).
+      or(where(phone: search)) : all }
 
   # == Callbacks ============================================================
 
