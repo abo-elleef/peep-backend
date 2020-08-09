@@ -1,8 +1,8 @@
 class ProductBrandsController < ApplicationController
 
   def index
-    brands = ProductBrand.search(params[:search])
-    pagy, brands = pagy(brands, page: page_param, items: page_size )
+    brands = ProductBrand.peep_filter(params.slice(:name))
+    pagy, brands = pagy(brands, page: page_index, items: page_size)
     render json: ProductBrandSerializer.new(brands, meta: pagy_meta_data(pagy)), status: :ok
   end
 
@@ -13,19 +13,29 @@ class ProductBrandsController < ApplicationController
 
   def create
     brand = ProductBrand.new(brand_params)
-    brand.save ? (render json: ProductBrandSerializer.new(brand), status: :created) :
-        (render json: brand.errors,status: :unprocessable_entity)
+    if brand.save
+      render json: ProductBrandSerializer.new(brand), status: :created
+    else
+      render json: brand.errors, status: :unprocessable_entity
+    end
   end
 
   def update
     brand = ProductBrand.find(params[:id])
-    brand.update(brand_params) ? (render json: ProductBrandSerializer.new(brand), status: :ok) :
-        (render json: brand.errors,status: :unprocessable_entity)
+    if brand.update(brand_params)
+      render json: ProductBrandSerializer.new(brand), status: :ok
+    else
+      render json: brand.errors, status: :unprocessable_entity
+    end
   end
 
   def destroy
     brand = ProductBrand.find(params[:id])
-    brand.destroy ? (render json: ProductBrandSerializer.new(brand), status: :ok) : (render json: {},status: :bad_request)
+    if brand.destroy
+      render json: ProductBrandSerializer.new(brand), status: :ok
+    else
+      render json: {}, status: :bad_request
+    end
   end
 
   private
