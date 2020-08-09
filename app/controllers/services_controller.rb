@@ -44,6 +44,6 @@ class ServicesController < ApplicationController
                                     :available_for, :staff_commission, :extra_time,
                                      :extra_time_type, :extra_time_duration, :service_category_id,
                                      service_prices_attributes: [:id, :service_id, :name, :duration,
-                                                                 :type, :price, :special_price])
+                                                                 :pricing_type, :price, :special_price])
   end
 end
