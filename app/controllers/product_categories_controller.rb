@@ -1,8 +1,8 @@
 class ProductCategoriesController < ApplicationController
 
   def index
-    categories = ProductCategory.search(params[:search])
-    pagy, categories = pagy(categories, page: page_param, items: page_size )
+    categories = ProductCategory.peep_filter(params.slice(:name))
+    pagy, categories = pagy(categories, page: page_index, items: page_size)
     render json: ProductCategorySerializer.new(categories, meta: pagy_meta_data(pagy)), status: :ok
   end
 
@@ -13,19 +13,29 @@ class ProductCategoriesController < ApplicationController
 
   def create
     category = ProductCategory.new(category_params)
-    category.save ? (render json: ProductCategorySerializer.new(category), status: :created) :
-        (render json: category.errors,status: :unprocessable_entity)
+    if category.save
+      render json: ProductCategorySerializer.new(category), status: :created
+    else
+      render json: category.errors, status: :unprocessable_entity
+    end
   end
 
   def update
     category = ProductCategory.find(params[:id])
-    category.update(category_params) ? (render json: ProductCategorySerializer.new(category), status: :ok) :
-        (render json: category.errors,status: :unprocessable_entity)
+    if category.update(category_params)
+      render json: ProductCategorySerializer.new(category), status: :ok
+    else
+      render json: category.errors, status: :unprocessable_entity
+    end
   end
 
   def destroy
     category = ProductCategory.find(params[:id])
-    category.destroy ? (render json: ProductCategorySerializer.new(category), status: :ok) : (render json: {},status: :bad_request)
+    if category.destroy
+      render json: ProductCategorySerializer.new(category), status: :ok
+    else
+      render json: {}, status: :bad_request
+    end
   end
 
   private
