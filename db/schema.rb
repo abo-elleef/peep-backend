@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_09_104547) do
+ActiveRecord::Schema.define(version: 2020_08_09_113347) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,11 +18,11 @@ ActiveRecord::Schema.define(version: 2020_08_09_104547) do
   create_table "appointments", force: :cascade do |t|
     t.integer "status"
     t.integer "client_id"
+    t.integer "location_id"
     t.text "notes"
     t.date "date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "location_id"
     t.index ["client_id"], name: "index_appointments_on_client_id"
     t.index ["date"], name: "index_appointments_on_date"
     t.index ["location_id"], name: "index_appointments_on_location_id"
@@ -92,6 +92,7 @@ ActiveRecord::Schema.define(version: 2020_08_09_104547) do
     t.datetime "ends_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "price_name"
     t.index ["appointment_id"], name: "index_lines_on_appointment_id"
     t.index ["service_id"], name: "index_lines_on_service_id"
     t.index ["staff_id"], name: "index_lines_on_staff_id"
@@ -147,6 +148,18 @@ ActiveRecord::Schema.define(version: 2020_08_09_104547) do
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "service_prices", force: :cascade do |t|
+    t.integer "service_id"
+    t.string "name"
+    t.integer "duration"
+    t.integer "pricing_type"
+    t.float "price", default: 0.0
+    t.float "special_price"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["service_id"], name: "index_service_prices_on_service_id"
   end
 
   create_table "services", force: :cascade do |t|

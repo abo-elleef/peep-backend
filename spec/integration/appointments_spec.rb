@@ -78,8 +78,9 @@ describe 'Appointments API' do
                                   staff_name: {type: :integer},
                                   service_id: {type: :integer},
                                   service_name: {type: :integer},
-                                  price: {type: :integer},
-                                  original_price: {type: :integer},
+                                  price_name: {type: :string},
+                                  price: {type: :number},
+                                  original_price: {type: :number},
                                   starts_at: {type: :string},
                                   ends_at: {type: :string}
                               }
@@ -127,8 +128,9 @@ describe 'Appointments API' do
                                   staff_name: {type: :integer},
                                   service_id: {type: :integer},
                                   service_name: {type: :integer},
-                                  price: {type: :integer},
-                                  original_price: {type: :integer},
+                                  price_name: {type: :string},
+                                  price: {type: :number},
+                                  original_price: {type: :number},
                                   starts_at: {type: :string},
                                   ends_at: {type: :string}
                               }

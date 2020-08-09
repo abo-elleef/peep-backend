@@ -68,10 +68,10 @@
                         "type": "integer"
                       },
                       "notes": {
-                        "type": "text"
+                        "type": "string"
                       },
                       "date": {
-                        "type": "date"
+                        "type": "string"
                       },
                       "lines_attributes": {
                         "type": "array",
@@ -89,17 +89,20 @@
                             "service_name": {
                               "type": "integer"
                             },
+                            "price_name": {
+                              "type": "string"
+                            },
                             "price": {
-                              "type": "integer"
+                              "type": "number"
                             },
                             "original_price": {
-                              "type": "integer"
+                              "type": "number"
                             },
                             "starts_at": {
-                              "type": "datetime"
+                              "type": "string"
                             },
                             "ends_at": {
-                              "type": "datetime"
+                              "type": "string"
                             }
                           }
                         }
@@ -236,10 +239,10 @@
                         "type": "integer"
                       },
                       "notes": {
-                        "type": "text"
+                        "type": "string"
                       },
                       "date": {
-                        "type": "date"
+                        "type": "string"
                       },
                       "lines_attributes": {
                         "type": "array",
@@ -260,17 +263,20 @@
                             "service_name": {
                               "type": "integer"
                             },
+                            "price_name": {
+                              "type": "string"
+                            },
                             "price": {
-                              "type": "integer"
+                              "type": "number"
                             },
                             "original_price": {
-                              "type": "integer"
+                              "type": "number"
                             },
                             "starts_at": {
-                              "type": "datetime"
+                              "type": "string"
                             },
                             "ends_at": {
-                              "type": "datetime"
+                              "type": "string"
                             }
                           }
                         }
@@ -1318,6 +1324,28 @@
                       },
                       "extra_time_duration": {
                         "type": "integer"
+                      },
+                      "service_prices_attributes": {
+                        "type": "array",
+                        "items": {
+                          "properties": {
+                            "name": {
+                              "type": "string"
+                            },
+                            "duration": {
+                              "type": "integer"
+                            },
+                            "pricing_type": {
+                              "type": "integer"
+                            },
+                            "price": {
+                              "type": "number"
+                            },
+                            "special_price": {
+                              "type": "number"
+                            }
+                          }
+                        }
                       }
                     }
                   }
@@ -1464,6 +1492,31 @@
                       },
                       "extra_time_duration": {
                         "type": "integer"
+                      },
+                      "service_prices_attributes": {
+                        "type": "array",
+                        "items": {
+                          "properties": {
+                            "service_id": {
+                              "type": "integer"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "duration": {
+                              "type": "integer"
+                            },
+                            "pricing_type": {
+                              "type": "integer"
+                            },
+                            "price": {
+                              "type": "number"
+                            },
+                            "special_price": {
+                              "type": "number"
+                            }
+                          }
+                        }
                       }
                     }
                   }
