@@ -25,7 +25,7 @@
         }
       },
       "post": {
-        "summary": "create a appointment record",
+        "summary": "create an appointment record",
         "tags": [
           "appointments"
         ],
@@ -68,10 +68,10 @@
                         "type": "integer"
                       },
                       "notes": {
-                        "type": "text"
+                        "type": "string"
                       },
                       "date": {
-                        "type": "date"
+                        "type": "string"
                       },
                       "lines_attributes": {
                         "type": "array",
@@ -96,10 +96,10 @@
                               "type": "integer"
                             },
                             "starts_at": {
-                              "type": "datetime"
+                              "type": "string"
                             },
                             "ends_at": {
-                              "type": "datetime"
+                              "type": "string"
                             }
                           }
                         }
@@ -186,7 +186,7 @@
         }
       },
       "put": {
-        "summary": "update a appointment record",
+        "summary": "update an appointment record",
         "tags": [
           "appointments"
         ],
@@ -236,10 +236,10 @@
                         "type": "integer"
                       },
                       "notes": {
-                        "type": "text"
+                        "type": "string"
                       },
                       "date": {
-                        "type": "date"
+                        "type": "string"
                       },
                       "lines_attributes": {
                         "type": "array",
@@ -267,10 +267,10 @@
                               "type": "integer"
                             },
                             "starts_at": {
-                              "type": "datetime"
+                              "type": "string"
                             },
                             "ends_at": {
-                              "type": "datetime"
+                              "type": "string"
                             }
                           }
                         }
@@ -279,6 +279,34 @@
                   }
                 }
               }
+            }
+          }
+        }
+      }
+    },
+    "appointments/check_hints": {
+      "put": {
+        "summary": "check appointment hints",
+        "tags": [
+          "appointments"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "200": {
+            "description": "show hint",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "404": {
+            "description": "hint not found",
+            "content": {
             }
           }
         }
