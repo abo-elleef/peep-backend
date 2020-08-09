@@ -68,7 +68,20 @@ describe 'Services API' do
                       staff_commission: {type: :string},
                       extra_time: {type: :boolean},
                       extra_time_type: {type: :integer},
-                      extra_time_duration: {type: :integer}
+                      extra_time_duration: {type: :integer},
+                      service_prices_attributes: {
+                          type: :array,
+                          items: {
+                              properties: {
+                                  service_id: {type: :integer},
+                                  name: {type: :string},
+                                  duration: {type: :string},
+                                  type: {type: :integer},
+                                  price: {type: :number},
+                                  special_price: {type: :number}
+                              }
+                          }
+                      }
                   }
               }
           }
@@ -103,7 +116,20 @@ describe 'Services API' do
                       staff_commission: {type: :boolean},
                       extra_time: {type: :boolean},
                       extra_time_type: {type: :integer},
-                      extra_time_duration: {type: :integer}
+                      extra_time_duration: {type: :integer},
+                      service_prices_attributes: {
+                          type: :array,
+                          items: {
+                              properties: {
+                                  service_id: {type: :integer},
+                                  name: {type: :string},
+                                  duration: {type: :string},
+                                  type: {type: :integer},
+                                  price: {type: :number},
+                                  special_price: {type: :number}
+                              }
+                          }
+                      }
                   }
               }
           }
