@@ -20,5 +20,6 @@ Rails.application.routes.draw do
   resources :product_brands
   resources :product_categories
   get "export/clients", to: "export#clients"
+  post "appointments/check_hints", to: "appointments#check_hints"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
