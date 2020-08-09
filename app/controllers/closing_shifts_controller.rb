@@ -1,7 +1,7 @@
 class ClosingShiftsController < ApplicationController
 
   def index
-    closing_shifts = ClosingShift.all
+    closing_shifts = ClosingShift.preload(:location).peep_filter(params.slice(:location_id))
     render json: ClosingShiftSerializer.new(closing_shifts), status: :ok
   end
 
