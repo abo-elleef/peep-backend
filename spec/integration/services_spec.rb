@@ -73,10 +73,9 @@ describe 'Services API' do
                           type: :array,
                           items: {
                               properties: {
-                                  service_id: {type: :integer},
                                   name: {type: :string},
-                                  duration: {type: :string},
-                                  type: {type: :integer},
+                                  duration: {type: :integer},
+                                  pricing_type: {type: :integer},
                                   price: {type: :number},
                                   special_price: {type: :number}
                               }
@@ -123,8 +122,8 @@ describe 'Services API' do
                               properties: {
                                   service_id: {type: :integer},
                                   name: {type: :string},
-                                  duration: {type: :string},
-                                  type: {type: :integer},
+                                  duration: {type: :integer},
+                                  pricing_type: {type: :integer},
                                   price: {type: :number},
                                   special_price: {type: :number}
                               }

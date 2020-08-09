@@ -1329,16 +1329,13 @@
                         "type": "array",
                         "items": {
                           "properties": {
-                            "service_id": {
-                              "type": "integer"
-                            },
                             "name": {
                               "type": "string"
                             },
                             "duration": {
-                              "type": "string"
+                              "type": "integer"
                             },
-                            "type": {
+                            "pricing_type": {
                               "type": "integer"
                             },
                             "price": {
@@ -1507,9 +1504,9 @@
                               "type": "string"
                             },
                             "duration": {
-                              "type": "string"
+                              "type": "integer"
                             },
-                            "type": {
+                            "pricing_type": {
                               "type": "integer"
                             },
                             "price": {
