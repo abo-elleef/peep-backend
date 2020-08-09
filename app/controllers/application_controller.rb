@@ -21,10 +21,16 @@ class ApplicationController < ActionController::Base
     end
 
     def page_size
-      params[:page_size] || 10
+      default_page_size = 30
+      if params[:page_size].blank?
+        default_page_size
+      else
+        [params[:page_size].to_i, default_page_size].min
+      end
     end
-    def page_param
-      params[:page] || 1
+
+    def page_index
+      [params[:page].to_i,  1].max
     end
 
     def auth_token
@@ -33,9 +39,9 @@ class ApplicationController < ActionController::Base
 
   def current_location
     Location.first
-    return @current_location if @current_location.present? || auth_token.blank?
-    data = JwtService.decode(auth_token)
-    @current_location = Location.find(data['location_id'])
+    # return @current_location if @current_location.present? || auth_token.blank?
+    # data = JwtService.decode(auth_token)
+    # @current_location = Location.find(data['location_id'])
   end
 
     def current_user
