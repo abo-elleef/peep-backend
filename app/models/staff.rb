@@ -42,4 +42,9 @@ class Staff < ApplicationRecord
   def name
     "#{first_name} #{last_name}"
   end
+
+  def has_service?(service)
+    self.services.include?(service)
+  end
+
 end
