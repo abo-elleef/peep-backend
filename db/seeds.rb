@@ -1,11 +1,11 @@
-# # This file should contain all the record creation needed to seed the database with its default values.
-# # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-# #
-# # Examples:
-# #
-# #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-# #   Character.create(name: 'Luke', movie: movies.first)
-# ActiveRecord::Base.logger = Logger.new(STDOUT)
+# # # This file should contain all the record creation needed to seed the database with its default values.
+# # # The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
+# # #
+# # # Examples:
+# # #
+# # #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
+# # #   Character.create(name: 'Luke', movie: movies.first)
+# # ActiveRecord::Base.logger = Logger.new(STDOUT)
 # user = User.create({
 #                      first_name: 'test user',
 #                      last_name: 'last test user '
@@ -44,3 +44,35 @@
 #                     })
 #   end
 # end
+#
+# clients = Client.all
+# services = Service.all
+# staffs = Staff.all
+# days = []
+# 6.times do |index|
+#   days << Date.today - index.day
+# end
+# (100000).times do |index|
+#   appointment = Appointment.create!({
+#                                       notes: " notes for appointment #{index + 23377}",
+#                                       date: days.sample
+#                                     })
+#   3.times do
+#     service = services.sample
+#     staff = staffs.sample
+#     price = (1..100).to_a.sample
+#     Line.create!({
+#                    appointment_id: appointment.id,
+#                    service_id: service.id,
+#                    staff_id: staff.id,
+#                    price: price,
+#                    original_price: price * 1.2,
+#                    staff_name: staff.first_name,
+#                    service_name: service.name,
+#                    starts_at: Time.zone.now,
+#                    ends_at: Time.zone.now + 1.hour
+#                  })
+#   end
+# end
+#
+#

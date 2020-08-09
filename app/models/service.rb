@@ -1,13 +1,17 @@
 class Service < ApplicationRecord
   include Filterable
+
   enum available_for: {everyone: 0, males: 1, females: 2}
   enum extra_time_type: {processing_after: 0, blocking_after: 1}
 
   has_and_belongs_to_many :staffs
   belongs_to :service_category
-  scope :filter_by_name, -> (name) { where("name ilike ?", name) }
-  scope :filter_by_search, -> (search) { where("name ilike ?", search).
-      or(where("description ilike ?", search)) }
+
+  validates_presence_of :name
+
+  scope :by_name, -> (name) { where("name ilike ?", "%" + name + "%") }
+  scope :by_search, -> (search) { where("name ilike ?", "%" + search + "%").
+      or(where("description ilike ?", "%" + search + "%")) }
 
   def self.default_data
     [
