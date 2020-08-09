@@ -31,11 +31,8 @@ class StaffsController < ApplicationController
 
   def destroy
     staff = Staff.find(params[:id])
-    if staff.destroy
-      render json: StaffSerializer.new(staff), status: :ok
-    else
-      render json: {}, status: :bad_request
-    end
+    status = staff.destroy ? :ok : :bad_request
+    render json: {}, status: status
   end
 
   private

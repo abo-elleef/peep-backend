@@ -33,7 +33,7 @@ class ClientsController < ApplicationController
   def destroy
     client = Client.find(params[:id])
     if client.destroy
-      render json: ClientSerializer.new(client), status: :ok
+      render json: {}, status: :ok
     else
       render json: {}, status: :bad_request
     end
