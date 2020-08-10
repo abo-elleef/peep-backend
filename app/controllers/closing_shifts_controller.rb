@@ -1,7 +1,7 @@
 class ClosingShiftsController < ApplicationController
 
   def index
-    closing_shifts = ClosingShift.preload(:location).peep_filter(params.slice(:location_id))
+    closing_shifts = ClosingShift.preload(:locations).peep_filter(params.slice(:location_id))
     render json: ClosingShiftSerializer.new(closing_shifts), status: :ok
   end
 
@@ -31,7 +31,7 @@ class ClosingShiftsController < ApplicationController
   def destroy
     closing_shift = ClosingShift.find(params[:id])
     if closing_shift.destroy
-      render json: ClosingShiftSerializer.new(closing_shift), status: :ok
+      render json: {}, status: :ok
     else
       render json: {}, status: :bad_request
     end
@@ -40,6 +40,8 @@ class ClosingShiftsController < ApplicationController
   private
 
   def closing_shift_params
-    params.require(:closing_shift).permit( :id, :start_date, :end_date, :location_id)
+    params.require(:closing_shift).permit(
+      :id, :start_date, :end_date, :desc, location_ids: []
+    )
   end
 end

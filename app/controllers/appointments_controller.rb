@@ -31,7 +31,7 @@ class AppointmentsController < ApplicationController
   def destroy
     appointment = Appointment.find(params[:id])
     if appointment.destroy
-      render json: AppointmentSerializer.new(appointment), status: :ok
+      render json: {}, status: :ok
     else
       render json: {}, status: :bad_request
     end
