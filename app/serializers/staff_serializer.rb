@@ -5,7 +5,6 @@ class StaffSerializer
              :discount_comm, :service_comm
 
   attribute :service_ids do |object, params|
-    debugger
     params[:show].present? ? object.service_ids : []
   end
   attribute :location_ids do |object, params|
