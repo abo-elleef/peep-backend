@@ -1,5 +1,6 @@
-class ExportClients
+class ExportCsvClients
   attr_reader :params
+
   def initialize(params)
     @params = params
   end
@@ -10,22 +11,25 @@ class ExportClients
 
   private
 
-    def fetch_clients
-      Client.all
-    end
+  def fetch_clients
+    Client.all
+  end
 
-    def build_file(clients)
-      CSV.generate(headers: true) do |csv|
-        csv << client_csv_attributes.keys
-        clients.map do |client|
-          csv << client_csv_attributes.values.map { |attr| client.send(attr) }
-        end
+  def build_file(clients)
+    CSV.generate(headers: true) do |csv|
+      csv << client_csv_attributes.keys
+      clients.map do |client|
+        csv << client_csv_attributes.values.map { |attr| client.send(attr) }
       end
     end
-    def client_csv_attributes
-      {
+  end
+
+  def client_csv_attributes
+    {
+        id: :id,
         first_name: :first_name,
         last_name: :last_name,
+        name: :name,
         phone: :phone,
         email: :email,
         language: :language,
@@ -38,7 +42,7 @@ class ExportClients
         state: :state,
         postal_code: :postal_code,
         added_at: :created_at,
-      }
-    end
+    }
+  end
 
 end

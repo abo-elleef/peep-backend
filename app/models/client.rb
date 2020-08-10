@@ -21,4 +21,7 @@ class Client < ApplicationRecord
   # == Class Methods ========================================================
 
   # == Instance Methods =====================================================
+  def name
+    "#{first_name} #{last_name}"
+  end
 end
