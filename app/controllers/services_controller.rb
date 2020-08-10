@@ -31,7 +31,7 @@ class ServicesController < ApplicationController
   def destroy
     service = Service.find(params[:id])
     if service.destroy
-      render json: ServiceSerializer.new(service), status: :ok
+      render json: {}, status: :ok
     else
       render json: {}, status: :bad_request
     end

@@ -31,7 +31,7 @@ class ServiceCategoriesController < ApplicationController
   def destroy
     service_category = ServiceCategory.find(params[:id])
     if service_category.destroy
-      render json: ServiceCategorySerializer.new(service_category), status: :ok
+      render json: {}, status: :ok
     else
       render json: {}, status: :bad_request
     end

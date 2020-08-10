@@ -33,7 +33,7 @@ class ShiftsController < ApplicationController
   def destroy
     shift = Shift.find(params[:id])
     if shift.destroy
-      render json: ShiftSerializer.new(shift), status: :ok
+      render json: {}, status: :ok
     else
       render json: {}, status: :bad_request
     end

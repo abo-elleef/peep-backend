@@ -32,7 +32,7 @@ class ProductCategoriesController < ApplicationController
   def destroy
     category = ProductCategory.find(params[:id])
     if category.destroy
-      render json: ProductCategorySerializer.new(category), status: :ok
+      render json: {}, status: :ok
     else
       render json: {}, status: :bad_request
     end
