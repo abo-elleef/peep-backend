@@ -56,7 +56,7 @@ describe 'Appointments API' do
 
   #Create appointment
   path '/appointments' do
-    post 'create a appointment record' do
+    post 'create an appointment record' do
       tags 'appointments'
       consumes 'application/json'
       parameter name: :params, in: :body, schema: {
@@ -78,8 +78,9 @@ describe 'Appointments API' do
                                   staff_name: {type: :integer},
                                   service_id: {type: :integer},
                                   service_name: {type: :integer},
-                                  price: {type: :integer},
-                                  original_price: {type: :integer},
+                                  price_name: {type: :string},
+                                  price: {type: :number},
+                                  original_price: {type: :number},
                                   starts_at: {type: :string},
                                   ends_at: {type: :string}
                               }
@@ -103,7 +104,7 @@ describe 'Appointments API' do
 
   #Update appointment
   path '/appointments/{id}' do
-    put 'update a appointment record' do
+    put 'update an appointment record' do
       tags 'appointments'
       consumes 'application/json'
       parameter name: :id, in: :path, type: :integer
@@ -127,8 +128,9 @@ describe 'Appointments API' do
                                   staff_name: {type: :integer},
                                   service_id: {type: :integer},
                                   service_name: {type: :integer},
-                                  price: {type: :integer},
-                                  original_price: {type: :integer},
+                                  price_name: {type: :string},
+                                  price: {type: :number},
+                                  original_price: {type: :number},
                                   starts_at: {type: :string},
                                   ends_at: {type: :string}
                               }
@@ -148,5 +150,33 @@ describe 'Appointments API' do
         run_test!
       end
     end
+  end
+
+  #Check Hints
+  path 'appointments/check_hints' do
+    put 'check appointment hints' do
+      tags 'appointments'
+      produces 'application/json'
+      parameter name: :params, in: :body, schema: {
+          type: :object,
+          properties: {
+              location_id: {type: :integer},
+              service_id: {type: :integer},
+              staff_id: {type: :integer},
+              duration: {type: :integer},
+              start_time: {type: :string}
+          }
+      }
+      response '200', 'show hint' do
+        run_test!
+      end
+      response '401', 'not authorized' do
+        run_test!
+      end
+      response '404', 'hint not found' do
+        run_test!
+      end
+    end
+
   end
 end
