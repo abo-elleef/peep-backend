@@ -1,31 +1,46 @@
 class ExportClients
   attr_reader :params
+
   def initialize(params)
     @params = params
   end
 
   def call
-    build_file(fetch_clients)
+    send("build_#{@params[:export_type]}_file", fetch_clients)
   end
 
   private
 
-    def fetch_clients
-      Client.all
-    end
+  def fetch_clients
+    @params[:location_ids].present? ? Client.where(location_id: params[:location_ids]) : Client.all
+  end
 
-    def build_file(clients)
-      CSV.generate(headers: true) do |csv|
-        csv << client_csv_attributes.keys
-        clients.map do |client|
-          csv << client_csv_attributes.values.map { |attr| client.send(attr) }
-        end
+  def build_xls_file(clients)
+    xls_package = Axlsx::Package.new
+    xls_package.workbook.add_worksheet(:name => "Clients") do |sheet|
+      sheet.add_row client_attributes.keys
+      clients.map do |client|
+        sheet.add_row client_attributes.values.map { |attr| client.send(attr) }
       end
     end
-    def client_csv_attributes
-      {
+
+  end
+
+  def build_csv_file(clients)
+    CSV.generate(headers: true) do |csv|
+      csv << client_attributes.keys
+      clients.map do |client|
+        csv << client_attributes.values.map { |attr| client.send(attr) }
+      end
+    end
+  end
+
+  def client_attributes
+    {
+        id: :id,
         first_name: :first_name,
         last_name: :last_name,
+        name: :name,
         phone: :phone,
         email: :email,
         language: :language,
@@ -38,7 +53,7 @@ class ExportClients
         state: :state,
         postal_code: :postal_code,
         added_at: :created_at,
-      }
-    end
+    }
+  end
 
 end
