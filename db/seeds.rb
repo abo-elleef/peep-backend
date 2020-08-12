@@ -74,5 +74,11 @@
 #                  })
 #   end
 # end
-#
-#
+# 55.times do |index|
+#   ProductBrand.create({
+#                            name: "#{index} Brand"
+#                          })
+#   ProductCategory.create({
+#                            name: "#{index} category"
+#                          })
+# end

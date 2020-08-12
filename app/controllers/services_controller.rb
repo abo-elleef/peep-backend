@@ -1,8 +1,9 @@
 class ServicesController < ApplicationController
 
   def index
-    services = Service.peep_filter(params.slice(:name, :search))
-    render json: ServiceSerializer.new(services, include: [:service_prices]), status: :ok
+    filters = params.slice(:name, :search).merge({location_id: current_location.id})
+    services = Service.preload(:service_prices).peep_filter(filters)
+    render json: ServiceSerializer.new(services, include: []), status: :ok
   end
 
   def show
@@ -43,6 +44,7 @@ class ServicesController < ApplicationController
     params.require(:service).permit( :name, :treatment_type_id, :description,
                                     :available_for, :staff_commission, :extra_time,
                                      :extra_time_type, :extra_time_duration, :service_category_id,
+                                     location_ids: [], staff_ids: [],
                                      service_prices_attributes: [:id, :service_id, :name, :duration,
                                                                  :pricing_type, :price, :special_price])
   end
