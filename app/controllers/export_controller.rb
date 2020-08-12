@@ -1,12 +1,13 @@
 class ExportController < ApplicationController
 
+  EXPORT_OPTIONS = %w(csv xls)
+
   def clients
-    options =
-        {
-            csv: ExportCsvClients,
-            xls: ExportXlsClients
-        }
-    send_data options[params[:export_type].to_sym].new(params).call, filename: "#{__method__}-#{Date.today}.#{params[:export_type]}"
+    if params[:export_type].in? EXPORT_OPTIONS
+      send_data ExportClients.new(params).call, filename: "#{__method__}-#{Date.today}.#{params[:export_type]}"
+    else
+      render json: {}, status: :unprocessable_entity
+    end
   end
 
 end
