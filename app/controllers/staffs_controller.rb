@@ -2,7 +2,7 @@ class StaffsController < ApplicationController
   # before_action :peep_authenticate
 
   def index
-    staffs = current_location.staffs
+    staffs = current_location.staffs.preload(:blocked_times)
     render json: StaffSerializer.new(staffs, include: [:blocked_times]), status: :ok
   end
 
