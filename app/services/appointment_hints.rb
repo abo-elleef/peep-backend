@@ -14,27 +14,18 @@ class AppointmentHints
   def staff_hints
     staff = Staff.find(params[:staff_id])
     service = Service.find(params[:service_id])
-    required_shift = {
-        staff_id: params[:staff_id],
-        location_id: params[:location_id],
-        start_at: params[:start_time].to_datetime,
-        end_at: (params[:start_time].to_datetime + (params[:duration].to_i).minutes)
+    location = Location.find(params[:location_id])
+    starts_at = params[:start_time].to_datetime
+    ends_at = (params[:start_time].to_datetime + (params[:duration].to_i).minutes)
+    location_closed = location.is_closing?(starts_at, ends_at)
+    statuses = staff.status_between(starts_at, ends_at)
+
+    {
+        no_shift: location_closed || statuses.include?("no_shift"),
+        no_service: staff.has_service?(service),
+        staff_busy: statuses.include?("busy"),
+        staff_off: statuses.include?("off")
     }
 
-    shift_hint = "#{staff.name} has another booking at #{required_shift[:start_at]}, but your staff can still double-book appointments for them."
-    service_hint = "#{staff.name} doesn’t provide #{service.name}, but your staff can still book appointments for them."
-
-    shift_overlap = Shift.overlaps?(required_shift)
-    staff_service = !staff.has_service?(service)
-
-    if shift_overlap && staff_service
-      shift_hint + ' ' + service_hint
-    elsif staff_service
-      service_hint
-    elsif shift_overlap
-      shift_hint
-    else
-      ''
-    end
   end
 end

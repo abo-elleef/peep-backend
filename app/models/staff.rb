@@ -17,28 +17,29 @@ class Staff < ApplicationRecord
 
   def self.default_data
     [
-      {
-        first_name: "Ahmed",
-        last_name: "Aboelleef",
-        booking_enabled: true,
-        booking_color: "#ff00ff",
-        title: "alpha",
-        notes: "committed employee",
-        contract_start: Time.zone.now,
-        contract_end: Time.zone.now + 1.year,
-      },
-      {
-        first_name: "Mo",
-        last_name: "Monier",
-        booking_enabled: true,
-        booking_color: "#0000ff",
-        title: "beta",
-        notes: "almost committed employee",
-        contract_start: Time.zone.now,
-        contract_end: Time.zone.now + 1.year,
-      }
+        {
+            first_name: "Ahmed",
+            last_name: "Aboelleef",
+            booking_enabled: true,
+            booking_color: "#ff00ff",
+            title: "alpha",
+            notes: "committed employee",
+            contract_start: Time.zone.now,
+            contract_end: Time.zone.now + 1.year,
+        },
+        {
+            first_name: "Mo",
+            last_name: "Monier",
+            booking_enabled: true,
+            booking_color: "#0000ff",
+            title: "beta",
+            notes: "almost committed employee",
+            contract_start: Time.zone.now,
+            contract_end: Time.zone.now + 1.year,
+        }
     ]
   end
+
   # == Instance Methods =====================================================
   def name
     "#{first_name} #{last_name}"
@@ -48,4 +49,19 @@ class Staff < ApplicationRecord
     self.services.include?(service)
   end
 
+  def status_between(starts_at, ends_at)
+    status = []
+    if self.shifts.overlaps?(starts_at, ends_at)
+      if self.lines.overlaps?(starts_at, ends_at)
+        status << :busy
+      end
+      if self.blocked_times.overlaps?(starts_at, ends_at)
+        status << :off
+      end
+      status << :available
+    else
+      status << :no_shift
+    end
+    status
+  end
 end

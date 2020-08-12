@@ -23,10 +23,8 @@ class Shift < ApplicationRecord
 
   # == Callbacks ============================================================
   # == Class Methods ========================================================
-  def self.overlaps?(required_shift)
-     where("staff_id = ? AND location_id = ? AND start_time <= ? AND ? <= end_time",
-           required_shift[:staff_id], required_shift[:location_id], required_shift[:end_at],
-           required_shift[:start_at]).any?
+  def self.overlaps?(starts_at, ends_at)
+     where("start_time <= ? AND end_time >= ?", starts_at, ends_at).any?
   end
 
   # == Instance Methods =====================================================
