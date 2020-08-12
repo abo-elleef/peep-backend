@@ -6,10 +6,12 @@ RSpec.describe "Services API", type: :request do
   let(:services) { create_list(:service, 5) }
   let(:test_service) { create(:service) }
   let(:test_category) { create(:service_category) }
+  let(:user) { create(:user) }
+  let(:location) { create(:location, user: user) }
 
   describe "GET /index" do
     it "returns a list of all services" do
-      services
+      location.services = services
       get "/services"
       expect(response).to have_http_status(:success)
       expect(parsed_response["data"].size).to eq(5)
@@ -17,6 +19,7 @@ RSpec.describe "Services API", type: :request do
 
     #searching test
     it "list all Services data that match search with name " do
+      location.services = services
       get "/services?name=#{services.first.name}"
       expect(response).to have_http_status(:success)
       expect(parsed_response["data"].size).to eq(1)

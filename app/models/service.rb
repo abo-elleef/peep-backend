@@ -18,6 +18,10 @@ class Service < ApplicationRecord
 
   # == Scopes ===============================================================
   scope :by_name, -> (name) { where("name ilike ?", "%" + name + "%") }
+  scope :by_location_id, -> (location_id) {
+    where(id: LocationsService.where(location_id: location_id)
+                .pluck(:service_id).uniq)
+  }
   scope :by_search, -> (search) { where("name ilike ?", "%" + search + "%").
       or(where("description ilike ?", "%" + search + "%")) }
 
