@@ -9,6 +9,7 @@ class Staff < ApplicationRecord
   has_many :shifts
   has_many :lines
   has_many :appointments, through: :lines
+  has_many :blocked_times
   # == Validations ==========================================================
   # == Scopes ===============================================================
   # == Callbacks ============================================================

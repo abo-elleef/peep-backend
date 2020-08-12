@@ -11,4 +11,6 @@ class StaffSerializer
     params[:show].present? ? object.location_ids : []
   end
 
+  has_many :blocked_times, serializer: BlockedTimeSerializer
+
 end

@@ -3,12 +3,12 @@ class StaffsController < ApplicationController
 
   def index
     staffs = current_location.staffs
-    render json: StaffSerializer.new(staffs), status: :ok
+    render json: StaffSerializer.new(staffs, include: [:blocked_times]), status: :ok
   end
 
   def show
     staff = Staff.find(params[:id])
-    render json: StaffSerializer.new(staff, {params: {show: true}}), status: :ok
+    render json: StaffSerializer.new(staff, {params: {show: true}, include: [:blocked_times]}), status: :ok
   end
 
   def create

@@ -318,6 +318,214 @@
         }
       }
     },
+    "/blocked_times": {
+      "get": {
+        "summary": "Retrieves a set of blocked_times",
+        "tags": [
+          "blocked_times"
+        ],
+        "responses": {
+          "200": {
+            "description": "blocked_times set",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "create a blocked_time record",
+        "tags": [
+          "blocked_times"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "201": {
+            "description": "blocked_time created",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "442": {
+            "description": "bad data or breaks validation ",
+            "content": {
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "blocked_time": {
+                    "type": "object",
+                    "properties": {
+                      "start_at": {
+                        "type": "string"
+                      },
+                      "end_at": {
+                        "type": "string"
+                      },
+                      "staff_id": {
+                        "type": "integer"
+                      },
+                      "reason": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/blocked_times/{id}": {
+      "get": {
+        "summary": " single blocked_time data",
+        "tags": [
+          "blocked_times"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "blocked_time data",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "404": {
+            "description": "blocked_time not found",
+            "content": {
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "delete blocked_time object",
+        "tags": [
+          "blocked_times"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "blocked_time data",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "404": {
+            "description": "blocked_time not found",
+            "content": {
+            }
+          },
+          "442": {
+            "description": "can not be deleted",
+            "content": {
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "update a blocked_time record",
+        "tags": [
+          "blocked_times"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "blocked_time updated",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "442": {
+            "description": "bad data or breaks validation ",
+            "content": {
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "blocked_time": {
+                    "type": "object",
+                    "properties": {
+                      "start_at": {
+                        "type": "string"
+                      },
+                      "end_at": {
+                        "type": "string"
+                      },
+                      "staff_id": {
+                        "type": "integer"
+                      },
+                      "reason": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/clients": {
       "get": {
         "summary": "Retrieves a set of clients",
