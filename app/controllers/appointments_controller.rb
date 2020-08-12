@@ -2,8 +2,7 @@ class AppointmentsController < ApplicationController
 
   def index
     appointments = Appointment.peep_filter(params.slice(:start_at, :end_at, :staff_ids, :location_id))
-    pagy, appointments = pagy(appointments, page: page_index, items: page_size)
-    render json: AppointmentSerializer.new(appointments, include: [:lines], meta: pagy_meta_data(pagy)), status: :ok
+    render json: AppointmentSerializer.new(appointments, include: [:lines]), status: :ok
   end
 
   def show
@@ -32,7 +31,7 @@ class AppointmentsController < ApplicationController
   def destroy
     appointment = Appointment.find(params[:id])
     if appointment.destroy
-      render json: AppointmentSerializer.new(appointment), status: :ok
+      render json: {}, status: :ok
     else
       render json: {}, status: :bad_request
     end

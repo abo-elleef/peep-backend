@@ -31,7 +31,7 @@ class LocationsController < ApplicationController
   def destroy
     location = Location.new(params[:id])
     if location.destroy
-      render json: LocationSerializer.new(location), status: :ok
+      render json: {}, status: :ok
     else
       render json: {}, status: :bad_request
     end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_09_113347) do
+ActiveRecord::Schema.define(version: 2020_08_12_060002) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,15 @@ ActiveRecord::Schema.define(version: 2020_08_09_113347) do
     t.index ["staff_id"], name: "index_appointments_staffs_on_staff_id"
   end
 
+  create_table "blocked_times", force: :cascade do |t|
+    t.integer "staff_id"
+    t.datetime "start_at"
+    t.datetime "end_at"
+    t.text "reason"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "clients", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
@@ -73,11 +82,16 @@ ActiveRecord::Schema.define(version: 2020_08_09_113347) do
   create_table "closing_shifts", force: :cascade do |t|
     t.datetime "start_date"
     t.datetime "end_date"
-    t.bigint "location_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "desc"
-    t.index ["location_id"], name: "index_closing_shifts_on_location_id"
+  end
+
+  create_table "closing_shifts_locations", force: :cascade do |t|
+    t.integer "location_id"
+    t.integer "closing_shift_id"
+    t.index ["closing_shift_id"], name: "index_closing_shifts_locations_on_closing_shift_id"
+    t.index ["location_id"], name: "index_closing_shifts_locations_on_location_id"
   end
 
   create_table "lines", force: :cascade do |t|
@@ -208,6 +222,9 @@ ActiveRecord::Schema.define(version: 2020_08_09_113347) do
     t.datetime "contract_end"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.float "product_comm", default: 0.0
+    t.float "discount_comm", default: 0.0
+    t.float "service_comm", default: 0.0
   end
 
   create_table "users", force: :cascade do |t|
