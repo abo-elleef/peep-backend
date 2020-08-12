@@ -44,6 +44,7 @@ class ServicesController < ApplicationController
     params.require(:service).permit( :name, :treatment_type_id, :description,
                                     :available_for, :staff_commission, :extra_time,
                                      :extra_time_type, :extra_time_duration, :service_category_id,
+                                     location_ids: [], staff_ids: [],
                                      service_prices_attributes: [:id, :service_id, :name, :duration,
                                                                  :pricing_type, :price, :special_price])
   end
