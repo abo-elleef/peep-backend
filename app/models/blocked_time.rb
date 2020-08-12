@@ -9,7 +9,7 @@ class BlockedTime < ApplicationRecord
 
   # == Scopes ===============================================================
   scope :by_staff_id, -> (staff_id) { where(staff_id: staff_id) }
-  scope :overlaps?, -> (starts_at, ends_at) { where("start_at <= ? AND ? <= end_at", ends_at, starts_at).exists?}
+  scope :overlaps?, -> (starts_at, ends_at) { where("start_at <= ? AND ? <= end_at", ends_at, starts_at).any?}
 
   # == Callbacks ============================================================
   # == Class Methods ========================================================
