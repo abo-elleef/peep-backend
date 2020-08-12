@@ -10,6 +10,8 @@ class Line < ApplicationRecord
             :service_name, presence: true
 
   # == Scopes ===============================================================
+  scope :overlaps?, -> (starts_at, ends_at) { where("starts_at <= ? AND ? <= ends_at", ends_at, starts_at).any? }
+
   # == Callbacks ============================================================
   # == Class Methods ========================================================
   # == Instance Methods =====================================================
