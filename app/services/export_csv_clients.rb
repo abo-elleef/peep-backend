@@ -12,7 +12,7 @@ class ExportCsvClients
   private
 
   def fetch_clients
-    Client.all
+    params[:location_ids].present? ? Client.where(location_id: params[:location_ids]) : Client.all
   end
 
   def build_file(clients)

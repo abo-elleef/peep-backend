@@ -12,19 +12,18 @@ class ExportXlsClients
   private
 
   def fetch_clients
-    Client.all
+    params[:location_ids].present? ? Client.where(location_id: params[:location_ids]) : Client.all
   end
 
   def build_file(clients)
-    p = Axlsx::Package.new
-    p.workbook.add_worksheet(:name => "Clients") do |sheet|
+    xls_package = Axlsx::Package.new
+    xls_package.workbook.add_worksheet(:name => "Clients") do |sheet|
       sheet.add_row client_xls_attributes.keys
       clients.map do |client|
         sheet.add_row client_xls_attributes.values.map { |attr| client.send(attr) }
       end
     end
-    #p.use_shared_strings = true
-    #p.serialize "clients-#{Date.today}.xlsx"
+
   end
 
   def client_xls_attributes
