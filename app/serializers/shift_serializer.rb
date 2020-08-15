@@ -1,6 +1,6 @@
 class ShiftSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :id, :start_time, :end_time, :staff_id
+  attributes :id, :start_time, :end_time, :staff_id, :location_id
 
   attribute :day do |object|
     object.start_time.wday
