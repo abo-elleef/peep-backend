@@ -37,7 +37,7 @@ class Location < ApplicationRecord
   # == Instance Methods =====================================================
 
   def closing?(starts_at, ends_at)
-    closing_shifts.where("start_date <= ? AND ? <= end_date", ends_at, starts_at).any?
+    closing_shifts.where("starts_at <= ? AND ? <= ends_at", ends_at, starts_at).any?
   end
 
 end
