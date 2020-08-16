@@ -23,4 +23,10 @@ class Discount < ApplicationRecord
   # == Class Methods ========================================================
 
   # == Instance Methods =====================================================
+  def status
+    return :expired if self.ends_at < Time.zone.now.end_of_day
+    return :scheduled if self.starts_at < Time.zone.now.end_of_day
+    return :active if (self.starts_at..self.ends_at).cover?(Time.zone.now)
+    ""
+  end
 end

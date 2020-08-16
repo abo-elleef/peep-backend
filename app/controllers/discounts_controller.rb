@@ -13,15 +13,15 @@ class DiscountsController < ApplicationController
   def create
     discount = Discount.new(discount_params)
     if discount.save
-      render json: DiscountSerializer.new(client), status: :created
+      render json: DiscountSerializer.new(discount), status: :created
     else
-      render json: client.errors, status: :unprocessable_entity
+      render json: discount.errors, status: :unprocessable_entity
     end
   end
 
   def update
     discount = Discount.find(params[:id])
-    if discount.update(client_params)
+    if discount.update(discount_params)
       render json: DiscountSerializer.new(discount), status: :ok
     else
       render json: discount.errors, status: :unprocessable_entity
