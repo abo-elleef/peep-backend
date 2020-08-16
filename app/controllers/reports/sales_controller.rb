@@ -1,16 +1,19 @@
 module Reports
   class SalesController < ApplicationController
 
+    def transaction_summary
+      data = Reports::Sales::TransactionSummary.new(params).perform
+      render json: {data: data}, status: :ok
+    end
 
-    def daily_sales
-      transactions = Reports::Sale.new(params).transaction_summary
-      cash_movement = Reports::Sale.new(params).cash_movement
-      render json: {transactions: transactions, cash_movement: cash_movement}, status: :ok
+    def cash_movement
+      data = Reports::Sales::CashMovement.new(params).perform
+      render json: {data: data}, status: :ok
     end
 
     def appointments_list
-      list = Reports::Sale.new(params).appointments_list
-      render json: list, status: :ok
+      data = Reports::Sales::AppointmentsList.new(params).perform
+      render json: {data: data}, status: :ok
     end
 
   end
