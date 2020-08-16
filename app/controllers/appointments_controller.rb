@@ -42,11 +42,22 @@ class AppointmentsController < ApplicationController
     render json: {hint: hint}, status: :ok
   end
 
+  def appointment_payment
+    appointment = Appointment.find(params[:appointment_id])
+    payment  = Payment.create(pay_type: params[:pay_type], amount: params[:amount],  )
+    appointment.payments << payment
+
+  end
+
   private
 
   def appointment_params
     params.require(:appointment).permit(:status, :client_id, :location_id,
-                                        :notes, :date, lines_attributes: [:id, :appointment_id, :staff_id, :service_id, :price, :original_price, :staff_name,
-                                                                          :service_name, :starts_at, :ends_at])
+                                        :notes, :date,
+                                        lines_attributes: [:id, :appointment_id,
+                                                           :staff_id, :service_id,
+                                                           :price, :original_price, :staff_name,
+                                                           :service_name, :starts_at, :ends_at],
+                                        payments_attributes: [:id, :appointment_id, :pay_type, :amount])
   end
 end

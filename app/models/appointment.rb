@@ -5,6 +5,7 @@ class Appointment < ApplicationRecord
 
   # == Relationships ========================================================
   has_many :appointments_services
+  has_many :payments, inverse_of: :appointment, dependent: :destroy
   has_many :lines, inverse_of: :appointment, dependent: :destroy
   has_many :services, through: :lines
   has_many :staffs, through: :lines
