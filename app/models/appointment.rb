@@ -3,6 +3,9 @@ class Appointment < ApplicationRecord
   # == Extensions ===========================================================
   include Filterable
 
+  # == Attributes ===========================================================
+  enum status: {fresh: 1, confirmed: 2, arrived: 3, started: 4, completed: 5, cancelled: 6, no_show: 7}
+
   # == Relationships ========================================================
   has_many :appointments_services
   has_many :lines, inverse_of: :appointment, dependent: :destroy
