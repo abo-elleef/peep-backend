@@ -10,13 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_12_060002) do
+ActiveRecord::Schema.define(version: 2020_08_16_074638) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "appointments", force: :cascade do |t|
-    t.integer "status"
+    t.integer "status", default: 1
     t.integer "client_id"
     t.integer "location_id"
     t.text "notes"
@@ -50,8 +50,8 @@ ActiveRecord::Schema.define(version: 2020_08_12_060002) do
 
   create_table "blocked_times", force: :cascade do |t|
     t.integer "staff_id"
-    t.datetime "start_at"
-    t.datetime "end_at"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
     t.text "reason"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -80,8 +80,8 @@ ActiveRecord::Schema.define(version: 2020_08_12_060002) do
   end
 
   create_table "closing_shifts", force: :cascade do |t|
-    t.datetime "start_date"
-    t.datetime "end_date"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "desc"
@@ -203,8 +203,8 @@ ActiveRecord::Schema.define(version: 2020_08_12_060002) do
     t.bigint "location_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.datetime "start_time"
-    t.datetime "end_time"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
     t.index ["location_id"], name: "index_shifts_on_location_id"
     t.index ["staff_id"], name: "index_shifts_on_staff_id"
   end
