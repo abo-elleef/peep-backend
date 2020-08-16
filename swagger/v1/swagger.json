@@ -244,6 +244,9 @@
                       "date": {
                         "type": "string"
                       },
+                      "cancellation_id": {
+                        "type": "integer"
+                      },
                       "lines_attributes": {
                         "type": "array",
                         "items": {
@@ -537,6 +540,196 @@
                         "type": "integer"
                       },
                       "reason": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cancellation_reasons": {
+      "get": {
+        "summary": "Retrieves a set of cancellation_reasons",
+        "tags": [
+          "cancellation_reasons"
+        ],
+        "responses": {
+          "200": {
+            "description": "cancellation_reasons set",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "create a cancellation_reason record",
+        "tags": [
+          "cancellation_reasons"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "201": {
+            "description": "cancellation_reason created",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "442": {
+            "description": "bad data or breaks validation ",
+            "content": {
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cancellation_reason": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cancellation_reasons/{id}": {
+      "get": {
+        "summary": "Retrieves data of cancellation_reasons",
+        "tags": [
+          "cancellation_reasons"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "cancellation_reason data",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "404": {
+            "description": "cancellation_reason not found",
+            "content": {
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "delete a cancellation_reasons",
+        "tags": [
+          "cancellation_reasons"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "cancellation_reason deleted",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "404": {
+            "description": "cancellation_reason not found",
+            "content": {
+            }
+          },
+          "442": {
+            "description": "can not be deleted",
+            "content": {
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "update a cancellation_reason record",
+        "tags": [
+          "cancellation_reasons"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "cancellation_reason updated",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "442": {
+            "description": "bad data or breaks validation ",
+            "content": {
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "cancellation_reason": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
                         "type": "string"
                       }
                     }

@@ -3,6 +3,9 @@ class Appointment < ApplicationRecord
   # == Extensions ===========================================================
   include Filterable
 
+  # == Attributes ===========================================================
+  enum status: {fresh: 1, confirmed: 2, arrived: 3, started: 4, completed: 5, cancelled: 6, no_show: 7}
+
   # == Relationships ========================================================
   has_many :appointments_services
   has_many :payments, inverse_of: :appointment, dependent: :destroy
@@ -10,6 +13,7 @@ class Appointment < ApplicationRecord
   has_many :services, through: :lines
   has_many :staffs, through: :lines
   belongs_to :location
+  belongs_to :cancellation_reason
 
   accepts_nested_attributes_for :lines
   accepts_nested_attributes_for :payments
