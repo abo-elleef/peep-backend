@@ -4,7 +4,7 @@ class CancellationReason < ApplicationRecord
   include Filterable
 
   # == Relationships ========================================================
-  has_many :appointments, foreign_key: :cancellation_id
+  has_many :appointments
 
   # == Validations ==========================================================
   # == Scopes ===============================================================
