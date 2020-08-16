@@ -1,7 +1,7 @@
 class AppointmentsController < ApplicationController
 
   def index
-    appointments = Appointment.peep_filter(params.slice(:start_at, :end_at, :staff_ids, :location_id))
+    appointments = Appointment.peep_filter(params.slice(:starts_at, :ends_at, :staff_ids, :location_id))
     render json: AppointmentSerializer.new(appointments, include: [:lines]), status: :ok
   end
 

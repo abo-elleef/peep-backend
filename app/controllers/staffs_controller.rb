@@ -14,6 +14,7 @@ class StaffsController < ApplicationController
   def create
     staff = Staff.new(staff_params)
     if staff.save
+      # TODO: create working hours if staff is booking_enabled
       render json: StaffSerializer.new(staff), status: :created
     else
       render json: staff.errors, status: :unprocessable_entity

@@ -60,8 +60,8 @@ describe 'Blocked Times API' do
               blocked_time: {
                   type: :object,
                   properties: {
-                      start_at: {type: :string},
-                      end_at: {type: :string},
+                      starts_at: {type: :string},
+                      ends_at: {type: :string},
                       staff_id: {type: :integer},
                       reason: {type: :string}
                   }
@@ -91,8 +91,8 @@ describe 'Blocked Times API' do
               blocked_time: {
                   type: :object,
                   properties: {
-                      start_at: {type: :string},
-                      end_at: {type: :string},
+                      starts_at: {type: :string},
+                      ends_at: {type: :string},
                       staff_id: {type: :integer},
                       reason: {type: :string}
                   }

@@ -165,7 +165,7 @@ describe 'Appointments API' do
               service_id: {type: :integer},
               staff_id: {type: :integer},
               duration: {type: :integer},
-              start_time: {type: :string}
+              starts_at: {type: :string}
           }
       }
       response '200', 'show hint' do
