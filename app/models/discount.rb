@@ -1,7 +1,7 @@
 class Discount < ApplicationRecord
   # == Constants ============================================================
   # == Extensions ===========================================================
-  includes Filterable
+  include Filterable
 
   enum deduct_type: { value: "value", percentage: "percentage" }
   enum apply_on: { services: "services", products: "products"}
@@ -23,7 +23,4 @@ class Discount < ApplicationRecord
   # == Class Methods ========================================================
 
   # == Instance Methods =====================================================
-  def name
-    "#{first_name} #{last_name}"
-  end
 end

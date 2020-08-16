@@ -1,8 +1,7 @@
 class DiscountsController < ApplicationController
 
   def index
-    @discounts = Discount.all
-    discounts = Client.peep_filter(params.slice([:name]))
+    discounts = Discount.peep_filter(params.slice([:name]))
     render json: DiscountSerializer.new(discounts), status: :ok
   end
 
@@ -21,7 +20,7 @@ class DiscountsController < ApplicationController
   end
 
   def update
-    discount = Client.find(params[:id])
+    discount = Discount.find(params[:id])
     if discount.update(client_params)
       render json: DiscountSerializer.new(discount), status: :ok
     else
