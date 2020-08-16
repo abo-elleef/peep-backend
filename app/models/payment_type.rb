@@ -1,16 +1,28 @@
-class Payment < ApplicationRecord
+class PaymentType < ApplicationRecord
   # == Constants ============================================================
   # == Extensions ===========================================================
-  # == Attributes ===========================================================
+  include Filterable
+
   # == Relationships ========================================================
-  belongs_to :appointment, inverse_of: :payments
-  belongs_to :payment_type
+  has_many :payments
 
   # == Validations ==========================================================
-  validates_presence_of :appointment
-
   # == Scopes ===============================================================
   # == Callbacks ============================================================
   # == Class Methods ========================================================
+  def self.default_data
+    [
+        {
+            name: "Cash"
+        },
+        {
+            name: "Card"
+        },
+        {
+            name: "Other"
+        }
+    ]
+  end
+
   # == Instance Methods =====================================================
 end

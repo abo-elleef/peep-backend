@@ -12,6 +12,7 @@ class Appointment < ApplicationRecord
   belongs_to :location
 
   accepts_nested_attributes_for :lines
+  accepts_nested_attributes_for :payments
 
   # == Validations ==========================================================
   validates_presence_of :location_id

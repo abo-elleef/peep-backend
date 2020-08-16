@@ -189,9 +189,9 @@
         }
       },
       "put": {
-        "summary": "update an appointment record",
+        "summary": "checkout an appointment ",
         "tags": [
-          "appointments"
+          "checkout appointments"
         ],
         "parameters": [
           {
@@ -205,7 +205,7 @@
         ],
         "responses": {
           "200": {
-            "description": "appointment updated",
+            "description": "checkout completed",
             "content": {
             }
           },
@@ -248,6 +248,9 @@
                         "type": "array",
                         "items": {
                           "properties": {
+                            "id": {
+                              "type": "integer"
+                            },
                             "appointment_id": {
                               "type": "integer"
                             },
@@ -277,6 +280,25 @@
                             },
                             "ends_at": {
                               "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "payments_attributes": {
+                        "type": "array",
+                        "items": {
+                          "properties": {
+                            "id": {
+                              "type": "integer"
+                            },
+                            "appointment_id": {
+                              "type": "integer"
+                            },
+                            "payment_type_id": {
+                              "type": "integer"
+                            },
+                            "amount": {
+                              "type": "number"
                             }
                           }
                         }
@@ -1271,6 +1293,196 @@
                         "type": "string"
                       },
                       "updated_at": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payment_types": {
+      "get": {
+        "summary": "Retrieves a set of payment_types",
+        "tags": [
+          "payment_types"
+        ],
+        "responses": {
+          "200": {
+            "description": "payment_types set",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "create a payment_type record",
+        "tags": [
+          "payment_types"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "201": {
+            "description": "payment_type created",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "442": {
+            "description": "bad data or breaks validation ",
+            "content": {
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "payment_type": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payment_types/{id}": {
+      "get": {
+        "summary": "Retrieves data of payment_types",
+        "tags": [
+          "payment_types"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "payment_type data",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "404": {
+            "description": "payment_type not found",
+            "content": {
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "delete a payment type",
+        "tags": [
+          "payment_types"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "payment_type deleted",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "404": {
+            "description": "payment_type not found",
+            "content": {
+            }
+          },
+          "442": {
+            "description": "can not be deleted",
+            "content": {
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "update a payment_type record",
+        "tags": [
+          "payment_types"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "payment_type updated",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "442": {
+            "description": "bad data or breaks validation ",
+            "content": {
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "payment_type": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
                         "type": "string"
                       }
                     }

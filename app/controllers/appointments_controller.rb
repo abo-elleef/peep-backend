@@ -42,13 +42,6 @@ class AppointmentsController < ApplicationController
     render json: {hint: hint}, status: :ok
   end
 
-  def appointment_payment
-    appointment = Appointment.find(params[:appointment_id])
-    payment  = Payment.create(pay_type: params[:pay_type], amount: params[:amount],  )
-    appointment.payments << payment
-
-  end
-
   private
 
   def appointment_params
@@ -58,6 +51,7 @@ class AppointmentsController < ApplicationController
                                                            :staff_id, :service_id,
                                                            :price, :original_price, :staff_name,
                                                            :service_name, :starts_at, :ends_at],
-                                        payments_attributes: [:id, :appointment_id, :pay_type, :amount])
+                                        payments_attributes: [:id, :appointment_id, :payment_type_id,
+                                                              :amount])
   end
 end
