@@ -1,4 +1,3 @@
-
 Rails.application.routes.draw do
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
@@ -21,5 +20,11 @@ Rails.application.routes.draw do
   resources :product_categories
   get "export/clients", to: "export#clients"
   post "appointments/check_hints", to: "appointments#check_hints"
+  # Reports Routes
+
+  namespace :reports do
+    get "sales/daily_sales", to: "sales#daily_sales"
+    get "sales/appointments_list", to: "sales#appointments_list"
+  end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
