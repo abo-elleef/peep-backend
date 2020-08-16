@@ -41,6 +41,6 @@ class BlockedTimesController < ApplicationController
 
   def blocked_time_params
     params.require(:blocked_time).permit(
-        :id, :start_at, :end_at, :reason, :staff_id)
+        :id, :starts_at, :ends_at, :reason, :staff_id)
   end
 end
