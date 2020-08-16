@@ -119,6 +119,7 @@ describe 'Appointments API' do
                       location_id: {type: :integer},
                       notes: {type: :string},
                       date: {type: :string},
+                      cancellation_id: {type: :integer},
                       lines_attributes: {
                           type: :array,
                           items: {
