@@ -371,10 +371,10 @@
                   "blocked_time": {
                     "type": "object",
                     "properties": {
-                      "start_at": {
+                      "starts_at": {
                         "type": "string"
                       },
-                      "end_at": {
+                      "ends_at": {
                         "type": "string"
                       },
                       "staff_id": {
@@ -505,10 +505,10 @@
                   "blocked_time": {
                     "type": "object",
                     "properties": {
-                      "start_at": {
+                      "starts_at": {
                         "type": "string"
                       },
-                      "end_at": {
+                      "ends_at": {
                         "type": "string"
                       },
                       "staff_id": {
@@ -874,10 +874,10 @@
                       "day": {
                         "type": "integer"
                       },
-                      "start_time": {
+                      "starts_at": {
                         "type": "string"
                       },
-                      "end_time": {
+                      "ends_at": {
                         "type": "string"
                       },
                       "staff_id": {
@@ -1011,10 +1011,10 @@
                       "day": {
                         "type": "integer"
                       },
-                      "start_time": {
+                      "starts_at": {
                         "type": "string"
                       },
-                      "end_time": {
+                      "ends_at": {
                         "type": "string"
                       },
                       "staff_id": {
@@ -1819,10 +1819,10 @@
                       "day": {
                         "type": "integer"
                       },
-                      "start_time": {
+                      "starts_at": {
                         "type": "string"
                       },
-                      "end_time": {
+                      "ends_at": {
                         "type": "string"
                       },
                       "staff_id": {
@@ -1956,10 +1956,10 @@
                       "day": {
                         "type": "integer"
                       },
-                      "start_time": {
+                      "starts_at": {
                         "type": "string"
                       },
-                      "end_time": {
+                      "ends_at": {
                         "type": "string"
                       },
                       "staff_id": {
