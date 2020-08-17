@@ -18,7 +18,6 @@ ActiveRecord::Schema.define(version: 2020_08_17_064728) do
   create_table "appointments", force: :cascade do |t|
     t.integer "status", default: 1
     t.integer "client_id"
-    t.integer "location_id"
     t.text "notes"
     t.date "date"
     t.datetime "created_at", precision: 6, null: false
