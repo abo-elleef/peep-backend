@@ -7,7 +7,11 @@ class PaymentType < ApplicationRecord
   has_many :payments
 
   # == Validations ==========================================================
+  validates_presence_of :name
+  
   # == Scopes ===============================================================
+  scope :search, -> (search) { where("name ilike ?", "%" + search + "%") }
+
   # == Callbacks ============================================================
   # == Class Methods ========================================================
   def self.default_data
