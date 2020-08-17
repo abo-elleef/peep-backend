@@ -7,6 +7,8 @@ class Client < ApplicationRecord
 
   # == Relationships ========================================================
   belongs_to :location, optional: true
+  has_many :appointments
+  has_many :lines
 
   # == Validations ==========================================================
   validates_presence_of :first_name

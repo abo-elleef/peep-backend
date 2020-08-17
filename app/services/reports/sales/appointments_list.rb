@@ -21,20 +21,20 @@ module Reports
 
       def build_appointments_list
         lines = if location_id.present? && staff_id.present?
-                  Line.includes(:appointment).where(appointments: {location_id: location_id}).where(staff_id: staff_id, created_at: DateTime.parse(starts_at)..DateTime.parse(ends_at))
+                  Line.preload(:client).includes(:appointment).where(appointments: {location_id: location_id}).where(staff_id: staff_id, created_at: DateTime.parse(starts_at)..DateTime.parse(ends_at))
                 elsif staff_id.present?
-                  Line.preload(:appointment).where(staff_id: staff_id, created_at: DateTime.parse(starts_at)..DateTime.parse(ends_at))
+                  Line.preload(:appointment, :client).where(staff_id: staff_id, created_at: DateTime.parse(starts_at)..DateTime.parse(ends_at))
                 elsif location_id.present?
-                  Line.includes(:appointment).where(appointments: {location_id: location_id}).where(created_at: DateTime.parse(starts_at)..DateTime.parse(ends_at))
+                  Line.preload(:client).includes(:appointment).where(appointments: {location_id: location_id}).where(created_at: DateTime.parse(starts_at)..DateTime.parse(ends_at))
                 else
-                  Line.preload(:appointment).where(created_at: DateTime.parse(starts_at)..DateTime.parse(ends_at))
+                  Line.preload(:appointment, :client).where(created_at: DateTime.parse(starts_at)..DateTime.parse(ends_at))
                 end
 
         lines.map do |line|
           {
               appointment_id: line.appointment_id,
-              client_id: line.appointment.client_id,
-              client_name: '',
+              client_id: line.client_id,
+              client_name: line.client.try(:name),
               service: line.service_name,
               date: line.appointment.date,
               staff_id: line.staff_id,
