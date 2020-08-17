@@ -129,7 +129,7 @@ ActiveRecord::Schema.define(version: 2020_08_17_164609) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "price_name"
-    t.string "price_id"
+    t.integer "price_id"
     t.index ["appointment_id"], name: "index_lines_on_appointment_id"
     t.index ["price_id"], name: "index_lines_on_price_id"
     t.index ["service_id"], name: "index_lines_on_service_id"
