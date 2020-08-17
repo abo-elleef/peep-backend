@@ -13,13 +13,13 @@ class Appointment < ApplicationRecord
   has_many :services, through: :lines
   has_many :staffs, through: :lines
   belongs_to :location
-  belongs_to :cancellation_reason
 
   accepts_nested_attributes_for :lines
   accepts_nested_attributes_for :payments
 
   # == Validations ==========================================================
   validates_presence_of :location_id
+  validates :cancellation_reason_id, presence: true, if: :cancelled?
 
   # == Scopes ===============================================================
   scope :by_date, -> (starts_at, ends_at) { where("date >= ? AND date <= ?  ", starts_at, ends_at) }

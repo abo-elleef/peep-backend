@@ -82,3 +82,21 @@
 #                            name: "#{index} category"
 #                          })
 # end
+#
+#
+# 40.times do |index|
+#   time = Time.zone.now  - (index * 5 + index).day
+#   Discount.create({name: "dicount #{index + 20 }", deduct_type: index.even? ? "value" : "percentage", deduct_value: index * 10 + 3, apply_on: "services", usage_limit: 100, uniq_per_client: false, starts_at: time , ends_at: time + 10.days})
+#   end
+#
+# 40.times do |index|
+#   time = Time.zone.now  - (index * 5 + index).day
+#   Subscription.create({name: "sub plan #{index + 1  }",
+#                        desc: index.even? ? "even desc" : "odd desc ",
+#                        pricing_value: index * 10 + 3,
+#                        pricing_type: index.even? ? "percentage" : "value",
+#                        available_for: 0,
+#                        starts_at: time ,
+#                        ends_at: time + 10.days
+#                       })
+#   end

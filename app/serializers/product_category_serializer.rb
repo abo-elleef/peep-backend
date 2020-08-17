@@ -1,7 +1,8 @@
 class ProductCategorySerializer
   include FastJsonapi::ObjectSerializer
   attributes :id, :name, :updated_at
-  attribute :products_count do
-    5
+  
+  attribute :products_count do |object|
+    object.products.size
   end
 end

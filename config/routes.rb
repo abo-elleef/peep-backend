@@ -1,5 +1,7 @@
 
 Rails.application.routes.draw do
+  resources :subscriptions
+  resources :discounts
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
@@ -20,7 +22,9 @@ Rails.application.routes.draw do
   resources :product_brands
   resources :product_categories
   resources :payment_types
+  resources :products
   resources :cancellation_reasons
+
   get "export/clients", to: "export#clients"
   post "appointments/check_hints", to: "appointments#check_hints"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
