@@ -10,19 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_16_071026) do
+
+ActiveRecord::Schema.define(version: 2020_08_17_064728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "appointments", force: :cascade do |t|
-    t.integer "status"
+    t.integer "status", default: 1
     t.integer "client_id"
     t.integer "location_id"
     t.text "notes"
     t.date "date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "location_id"
+    t.integer "cancellation_reason_id"
+    t.index ["cancellation_reason_id"], name: "index_appointments_on_cancellation_reason_id"
     t.index ["client_id"], name: "index_appointments_on_client_id"
     t.index ["date"], name: "index_appointments_on_date"
     t.index ["location_id"], name: "index_appointments_on_location_id"
@@ -53,6 +57,12 @@ ActiveRecord::Schema.define(version: 2020_08_16_071026) do
     t.datetime "starts_at"
     t.datetime "ends_at"
     t.text "reason"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "cancellation_reasons", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -92,6 +102,20 @@ ActiveRecord::Schema.define(version: 2020_08_16_071026) do
     t.integer "closing_shift_id"
     t.index ["closing_shift_id"], name: "index_closing_shifts_locations_on_closing_shift_id"
     t.index ["location_id"], name: "index_closing_shifts_locations_on_location_id"
+  end
+
+  create_table "discounts", force: :cascade do |t|
+    t.string "name"
+    t.string "deduct_type"
+    t.float "deduct_value"
+    t.string "apply_on"
+    t.integer "usage_limit"
+    t.boolean "uniq_per_client", default: false
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_discounts_on_name"
   end
 
   create_table "lines", force: :cascade do |t|
@@ -154,6 +178,29 @@ ActiveRecord::Schema.define(version: 2020_08_16_071026) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_product_categories_on_name"
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string "name"
+    t.integer "product_category_id"
+    t.integer "product_brand_id"
+    t.string "barcode"
+    t.string "sku"
+    t.text "description"
+    t.float "retail_price"
+    t.float "special_price"
+    t.float "supply_price"
+    t.integer "initial_stock"
+    t.integer "reorder_point"
+    t.integer "reorder_quantity"
+    t.boolean "enable_commission"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["barcode"], name: "index_products_on_barcode"
+    t.index ["name"], name: "index_products_on_name"
+    t.index ["product_brand_id"], name: "index_products_on_product_brand_id"
+    t.index ["product_category_id"], name: "index_products_on_product_category_id"
+    t.index ["sku"], name: "index_products_on_sku"
   end
 
   create_table "service_categories", force: :cascade do |t|
@@ -225,6 +272,18 @@ ActiveRecord::Schema.define(version: 2020_08_16_071026) do
     t.float "product_comm", default: 0.0
     t.float "discount_comm", default: 0.0
     t.float "service_comm", default: 0.0
+  end
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.string "name"
+    t.text "desc"
+    t.datetime "starts_at"
+    t.integer "available_for", default: 0
+    t.datetime "ends_at"
+    t.string "pricing_type"
+    t.float "pricing_value"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|

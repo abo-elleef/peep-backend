@@ -10,7 +10,7 @@ class BootstrapAccount
     location = create_location
     staff = create_staff(location)
     create_services(location, staff)
-
+    create_cancellation_reasons
   end
 
   private
@@ -39,4 +39,11 @@ class BootstrapAccount
     location.services = services
     staff.map do |staff| staff.services = services end
   end
+
+  def create_cancellation_reasons
+    CancellationReason.default_data.map do |reason|
+      CancellationReason.create(reason)
+    end
+  end
+
 end

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :subscriptions
+  resources :discounts
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
@@ -18,6 +20,9 @@ Rails.application.routes.draw do
   resources :appointments
   resources :product_brands
   resources :product_categories
+  resources :products
+  resources :cancellation_reasons
+
   get "export/clients", to: "export#clients"
   post "appointments/check_hints", to: "appointments#check_hints"
 
