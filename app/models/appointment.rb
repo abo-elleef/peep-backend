@@ -8,12 +8,14 @@ class Appointment < ApplicationRecord
 
   # == Relationships ========================================================
   has_many :appointments_services
+  has_many :payments, inverse_of: :appointment, dependent: :destroy
   has_many :lines, inverse_of: :appointment, dependent: :destroy
   has_many :services, through: :lines
   has_many :staffs, through: :lines
   belongs_to :location
 
   accepts_nested_attributes_for :lines
+  accepts_nested_attributes_for :payments
 
   # == Validations ==========================================================
   validates_presence_of :location_id
