@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   resources :product_categories
   resources :products
   resources :cancellation_reasons
+
   get "export/clients", to: "export#clients"
   post "appointments/check_hints", to: "appointments#check_hints"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
