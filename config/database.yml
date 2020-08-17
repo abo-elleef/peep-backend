@@ -9,8 +9,8 @@ development:
   <<: *default
   host: localhost
   database: peep_development
-  username: accredible
-  password: reverse
+  username: postgres
+  password: postgres
 
 test:
   <<: *default
