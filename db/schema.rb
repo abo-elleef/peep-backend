@@ -10,19 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_16_071026) do
+ActiveRecord::Schema.define(version: 2020_08_16_082120) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "appointments", force: :cascade do |t|
-    t.integer "status"
+    t.integer "status", default: 1
     t.integer "client_id"
-    t.integer "location_id"
     t.text "notes"
     t.date "date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "cancellation_reason_id"
+    t.index ["cancellation_reason_id"], name: "index_appointments_on_cancellation_reason_id"
+    t.integer "location_id"
     t.index ["client_id"], name: "index_appointments_on_client_id"
     t.index ["date"], name: "index_appointments_on_date"
     t.index ["location_id"], name: "index_appointments_on_location_id"
@@ -53,6 +55,12 @@ ActiveRecord::Schema.define(version: 2020_08_16_071026) do
     t.datetime "starts_at"
     t.datetime "ends_at"
     t.text "reason"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "cancellation_reasons", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -92,6 +100,20 @@ ActiveRecord::Schema.define(version: 2020_08_16_071026) do
     t.integer "closing_shift_id"
     t.index ["closing_shift_id"], name: "index_closing_shifts_locations_on_closing_shift_id"
     t.index ["location_id"], name: "index_closing_shifts_locations_on_location_id"
+  end
+
+  create_table "discounts", force: :cascade do |t|
+    t.string "name"
+    t.string "deduct_type"
+    t.float "deduct_value"
+    t.string "apply_on"
+    t.integer "usage_limit"
+    t.boolean "uniq_per_client", default: false
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_discounts_on_name"
   end
 
   create_table "lines", force: :cascade do |t|

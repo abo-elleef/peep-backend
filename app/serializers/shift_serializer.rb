@@ -8,4 +8,7 @@ class ShiftSerializer
   attribute :staff_name do |object|
     object.staff.name
   end
+  attribute :booking_color do |object|
+    object.staff.booking_color
+  end
 end

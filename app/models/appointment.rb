@@ -3,6 +3,9 @@ class Appointment < ApplicationRecord
   # == Extensions ===========================================================
   include Filterable
 
+  # == Attributes ===========================================================
+  enum status: {fresh: 1, confirmed: 2, arrived: 3, started: 4, completed: 5, cancelled: 6, no_show: 7}
+
   # == Relationships ========================================================
   has_many :appointments_services
   has_many :lines, inverse_of: :appointment, dependent: :destroy
@@ -14,6 +17,7 @@ class Appointment < ApplicationRecord
 
   # == Validations ==========================================================
   validates_presence_of :location_id
+  validates :cancellation_reason_id, presence: true, if: :cancelled?
 
   # == Scopes ===============================================================
   scope :by_date, -> (starts_at, ends_at) { where("date >= ? AND date <= ?  ", starts_at, ends_at) }
