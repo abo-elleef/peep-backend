@@ -100,22 +100,22 @@
 #                        ends_at: time + 10.days
 #                       })
 #   end
-brands = ProductBrand.all
-categories = ProductCategory.all
-100.times do |index|
-  Product.create!({
-                      name: "name #{index}",
-                      product_category_id: categories.sample.id,
-                      product_brand_id: brands.sample.id,
-                      barcode: "barcode #{index}",
-                      sku: "sku #{index}",
-                      description: "desc #{index}",
-                      retail_price: (1..100).to_a.sample,
-                      special_price: (1..100).to_a.sample,
-                      supply_price: (1..100).to_a.sample,
-                      initial_stock: (1..100).to_a.sample,
-                      reorder_point: (1..100).to_a.sample,
-                      reorder_quantity: (1..100).to_a.sample,
-                      enable_commission: true
-                  })
-end
+# brands = ProductBrand.all
+# categories = ProductCategory.all
+# 100.times do |index|
+#   Product.create!({
+#                       name: "name #{index}",
+#                       product_category_id: categories.sample.id,
+#                       product_brand_id: brands.sample.id,
+#                       barcode: "barcode #{index}",
+#                       sku: "sku #{index}",
+#                       description: "desc #{index}",
+#                       retail_price: (1..100).to_a.sample,
+#                       special_price: (1..100).to_a.sample,
+#                       supply_price: (1..100).to_a.sample,
+#                       initial_stock: (1..100).to_a.sample,
+#                       reorder_point: (1..100).to_a.sample,
+#                       reorder_quantity: (1..100).to_a.sample,
+#                       enable_commission: true
+#                   })
+# end
