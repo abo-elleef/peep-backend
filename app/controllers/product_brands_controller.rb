@@ -1,7 +1,7 @@
 class ProductBrandsController < ApplicationController
 
   def index
-    brands = ProductBrand.peep_filter(params.slice(:name))
+    brands = ProductBrand.preload(:products).peep_filter(params.slice(:name))
     pagy, brands = pagy(brands, page: page_index, items: page_size)
     render json: ProductBrandSerializer.new(brands, meta: pagy_meta_data(pagy)), status: :ok
   end

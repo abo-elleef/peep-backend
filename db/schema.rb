@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_16_082120) do
+ActiveRecord::Schema.define(version: 2020_08_17_170450) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,13 +18,13 @@ ActiveRecord::Schema.define(version: 2020_08_16_082120) do
   create_table "appointments", force: :cascade do |t|
     t.integer "status", default: 1
     t.integer "client_id"
+    t.integer "location_id"
     t.text "notes"
     t.date "date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "cancellation_reason_id"
     t.index ["cancellation_reason_id"], name: "index_appointments_on_cancellation_reason_id"
-    t.integer "location_id"
     t.index ["client_id"], name: "index_appointments_on_client_id"
     t.index ["date"], name: "index_appointments_on_date"
     t.index ["location_id"], name: "index_appointments_on_location_id"
@@ -129,7 +129,11 @@ ActiveRecord::Schema.define(version: 2020_08_16_082120) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "price_name"
+    t.integer "price_id"
+    t.integer "client_id"
     t.index ["appointment_id"], name: "index_lines_on_appointment_id"
+    t.index ["client_id"], name: "index_lines_on_client_id"
+    t.index ["price_id"], name: "index_lines_on_price_id"
     t.index ["service_id"], name: "index_lines_on_service_id"
     t.index ["staff_id"], name: "index_lines_on_staff_id"
   end
@@ -164,6 +168,22 @@ ActiveRecord::Schema.define(version: 2020_08_16_082120) do
     t.index ["staff_id"], name: "index_locations_staffs_on_staff_id"
   end
 
+  create_table "payment_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.integer "appointment_id"
+    t.integer "payment_type_id"
+    t.float "amount"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["appointment_id"], name: "index_payments_on_appointment_id"
+    t.index ["payment_type_id"], name: "index_payments_on_payment_type_id"
+  end
+
   create_table "product_brands", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -176,6 +196,29 @@ ActiveRecord::Schema.define(version: 2020_08_16_082120) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_product_categories_on_name"
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string "name"
+    t.integer "product_category_id"
+    t.integer "product_brand_id"
+    t.string "barcode"
+    t.string "sku"
+    t.text "description"
+    t.float "retail_price"
+    t.float "special_price"
+    t.float "supply_price"
+    t.integer "initial_stock"
+    t.integer "reorder_point"
+    t.integer "reorder_quantity"
+    t.boolean "enable_commission"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["barcode"], name: "index_products_on_barcode"
+    t.index ["name"], name: "index_products_on_name"
+    t.index ["product_brand_id"], name: "index_products_on_product_brand_id"
+    t.index ["product_category_id"], name: "index_products_on_product_category_id"
+    t.index ["sku"], name: "index_products_on_sku"
   end
 
   create_table "service_categories", force: :cascade do |t|

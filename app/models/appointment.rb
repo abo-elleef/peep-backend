@@ -12,6 +12,7 @@ class Appointment < ApplicationRecord
   has_many :services, through: :lines
   has_many :staffs, through: :lines
   belongs_to :location
+  belongs_to :client
 
   accepts_nested_attributes_for :lines
 
