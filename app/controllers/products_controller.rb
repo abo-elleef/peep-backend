@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
 
   def index
-    products = Product.peep_filter(params.slice(:search))
+    products = Product.peep_filter(params.slice(:search, :product_category_id, :product_brand_id))
     pagy, products = pagy(products, page: page_index, items: page_size)
     render json: ProductSerializer.new(products, meta: pagy_meta_data(pagy)), status: :ok
   end

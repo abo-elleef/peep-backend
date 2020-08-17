@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_14_053356) do
+ActiveRecord::Schema.define(version: 2020_08_17_064728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -169,10 +169,14 @@ ActiveRecord::Schema.define(version: 2020_08_14_053356) do
     t.integer "initial_stock"
     t.integer "reorder_point"
     t.integer "reorder_quantity"
-    t.boolean "tax_included"
     t.boolean "enable_commission"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["barcode"], name: "index_products_on_barcode"
+    t.index ["name"], name: "index_products_on_name"
+    t.index ["product_brand_id"], name: "index_products_on_product_brand_id"
+    t.index ["product_category_id"], name: "index_products_on_product_category_id"
+    t.index ["sku"], name: "index_products_on_sku"
   end
 
   create_table "service_categories", force: :cascade do |t|
