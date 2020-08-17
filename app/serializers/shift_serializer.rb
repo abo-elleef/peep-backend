@@ -12,3 +12,4 @@ class ShiftSerializer
     object.staff.booking_color
   end
 end
+
