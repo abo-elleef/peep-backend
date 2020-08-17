@@ -61,8 +61,8 @@ describe 'Shifts API' do
             type: :object,
             properties: {
               day: {type: :integer},
-              start_time: {type: :string},
-              end_time: {type: :string},
+              starts_at: {type: :string},
+              ends_at: {type: :string},
               staff_id: {type: :integer},
               location_id: {type: :integer},
             }
@@ -93,8 +93,8 @@ describe 'Shifts API' do
             type: :object,
             properties: {
               day: {type: :integer},
-              start_time: {type: :string},
-              end_time: {type: :string},
+              starts_at: {type: :string},
+              ends_at: {type: :string},
               staff_id: {type: :integer},
               location_id: {type: :integer},
             }

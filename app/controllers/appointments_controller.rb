@@ -1,7 +1,7 @@
 class AppointmentsController < ApplicationController
 
   def index
-    appointments = Appointment.peep_filter(params.slice(:start_at, :end_at, :staff_ids, :location_id))
+    appointments = Appointment.peep_filter(params.slice(:starts_at, :ends_at, :staff_ids, :location_id))
     render json: AppointmentSerializer.new(appointments, include: [:lines]), status: :ok
   end
 
@@ -46,7 +46,7 @@ class AppointmentsController < ApplicationController
 
   def appointment_params
     params.require(:appointment).permit(:status, :client_id, :location_id,
-                                        :notes, :date, lines_attributes: [:id, :appointment_id, :staff_id, :service_id, :price, :original_price, :staff_name,
+                                        :notes, :date, :cancellation_reason_id, lines_attributes: [:id, :appointment_id, :staff_id, :service_id, :price, :original_price, :staff_name,
                                                                           :service_name, :starts_at, :ends_at])
   end
 end

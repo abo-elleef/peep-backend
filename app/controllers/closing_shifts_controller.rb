@@ -41,7 +41,7 @@ class ClosingShiftsController < ApplicationController
 
   def closing_shift_params
     params.require(:closing_shift).permit(
-      :id, :start_date, :end_date, :desc, location_ids: []
+      :id, :starts_at, :ends_at, :desc, location_ids: []
     )
   end
 end
