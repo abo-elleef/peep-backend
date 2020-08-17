@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   resources :appointments
   resources :product_brands
   resources :product_categories
+  resources :payment_types
   resources :products
   resources :cancellation_reasons
 
