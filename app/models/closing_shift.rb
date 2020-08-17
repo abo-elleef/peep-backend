@@ -6,7 +6,7 @@ class ClosingShift < ApplicationRecord
   has_and_belongs_to_many :locations
 
   # == Validations ==========================================================
-  validates_presence_of :end_date, :start_date, :desc
+  validates_presence_of :ends_at, :starts_at, :desc
   # == Scopes ===============================================================
   scope :by_location_id, -> (location_id) {
     where(id: ClosingShiftsLocation.where(location_id: location_id)

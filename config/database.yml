@@ -9,8 +9,8 @@ development:
   <<: *default
   host: localhost
   database: peep_development
-  username:
-  password:
+  username: accredible
+  password: reverse
 
 test:
   <<: *default
