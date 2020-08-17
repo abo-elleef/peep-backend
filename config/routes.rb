@@ -1,4 +1,3 @@
-
 Rails.application.routes.draw do
   resources :subscriptions
   resources :discounts
@@ -27,5 +26,13 @@ Rails.application.routes.draw do
 
   get "export/clients", to: "export#clients"
   post "appointments/check_hints", to: "appointments#check_hints"
+
+  # Reports Routes
+  namespace :reports do
+    # sales routes
+    get "sales/transaction_summary", to: "sales#transaction_summary"
+    get "sales/cash_movement", to: "sales#cash_movement"
+    get "sales/appointments_list", to: "sales#appointments_list"
+  end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
