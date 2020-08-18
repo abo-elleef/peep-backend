@@ -86,6 +86,7 @@
 #
 # 40.times do |index|
 #   time = Time.zone.now  - (index * 5 + index).day
+#   Voucher.create({name: "dicount #{index + 20 }", deduct_type: index.even? ? "value" : "percentage", deduct_value: index * 10 + 3, apply_on: "services", usage_limit: 100, uniq_per_client: false, starts_at: time , ends_at: time + 10.days})
 #   Discount.create({name: "dicount #{index + 20 }", deduct_type: index.even? ? "value" : "percentage", deduct_value: index * 10 + 3, apply_on: "services", usage_limit: 100, uniq_per_client: false, starts_at: time , ends_at: time + 10.days})
 #   end
 #
