@@ -6,6 +6,7 @@ class Supplier < ApplicationRecord
   # == Attributes ===========================================================
   # if any enums
   # == Relationships ========================================================
+  has_many :products
 
   # == Validations ==========================================================
   validates_presence_of :name

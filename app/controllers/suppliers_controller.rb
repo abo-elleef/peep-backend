@@ -2,7 +2,7 @@ class SuppliersController < ApplicationController
 
 
   def index
-    suppliers = Supplier.peep_filter(params.slice(:search))
+    suppliers = Supplier.peep_filter(params.slice(:name))
     pagy, suppliers = pagy(suppliers, page: page_index, items: page_size )
     render json: SupplierSerializer.new(suppliers, meta: pagy_meta_data(pagy)), status: :ok
   end
