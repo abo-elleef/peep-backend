@@ -12,9 +12,9 @@ FactoryBot.define do
     global_notes { Faker::Boolean.boolean }
     location_id { Faker::Number.positive }
     street { Faker::Address.street_name }
-    suburb { Faker::Address.community }
-    city { Faker::Address.city }
-    state { Faker::Address.state }
-    postal_code { Faker::Address.postcode }
+    area { Faker::Address.city }
+    block { Faker::Address.city }
+    avenue { Faker::Address.community }
+    building { Faker::Address.building_number }
   end
 end

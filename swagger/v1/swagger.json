@@ -86,6 +86,9 @@
                             "service_id": {
                               "type": "integer"
                             },
+                            "client_id": {
+                              "type": "integer"
+                            },
                             "service_name": {
                               "type": "integer"
                             },
@@ -243,9 +246,6 @@
                       },
                       "date": {
                         "type": "string"
-                      },
-                      "cancellation_id": {
-                        "type": "integer"
                       },
                       "lines_attributes": {
                         "type": "array",
@@ -845,16 +845,16 @@
                       "street": {
                         "type": "string"
                       },
-                      "suburb": {
+                      "area": {
                         "type": "string"
                       },
-                      "city": {
+                      "block": {
                         "type": "string"
                       },
-                      "state": {
+                      "avenue": {
                         "type": "string"
                       },
-                      "postal_code": {
+                      "building": {
                         "type": "string"
                       }
                     }
@@ -1012,16 +1012,16 @@
                       "street": {
                         "type": "string"
                       },
-                      "suburb": {
+                      "area": {
                         "type": "string"
                       },
-                      "city": {
+                      "block": {
                         "type": "string"
                       },
-                      "state": {
+                      "avenue": {
                         "type": "string"
                       },
-                      "postal_code": {
+                      "building": {
                         "type": "string"
                       }
                     }

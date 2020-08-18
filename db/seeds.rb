@@ -28,8 +28,8 @@
 #                   first_name: "#{index} first_name", last_name: " #{index} last_name",
 #                   phone: "phone", email: "email@email.com", notify_method: "email", language: "en",
 #                   gender: 1, birthday: Time.zone.now - 10.years, notes: "notes", global_notes: true,
-#                   street: "street", suburb: "suburb", city: "city", state: "state",
-#                   postal_code: "postal_code", location_id: location.id
+#                   street: "street", area: "area", block: "block", avenue: "avenue",
+#                   building: "building", location_id: location.id
 #                 })
 # end
 #
