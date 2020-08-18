@@ -845,16 +845,16 @@
                       "street": {
                         "type": "string"
                       },
-                      "suburb": {
+                      "area": {
                         "type": "string"
                       },
-                      "city": {
+                      "block": {
                         "type": "string"
                       },
-                      "state": {
+                      "avenue": {
                         "type": "string"
                       },
-                      "postal_code": {
+                      "building": {
                         "type": "string"
                       }
                     }
@@ -1012,16 +1012,16 @@
                       "street": {
                         "type": "string"
                       },
-                      "suburb": {
+                      "area": {
                         "type": "string"
                       },
-                      "city": {
+                      "block": {
                         "type": "string"
                       },
-                      "state": {
+                      "avenue": {
                         "type": "string"
                       },
-                      "postal_code": {
+                      "building": {
                         "type": "string"
                       }
                     }

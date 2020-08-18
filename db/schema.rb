@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_18_142232) do
+ActiveRecord::Schema.define(version: 2020_08_18_135300) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -114,14 +114,6 @@ ActiveRecord::Schema.define(version: 2020_08_18_142232) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_discounts_on_name"
-  end
-
-  create_table "invoice_sequences", force: :cascade do |t|
-    t.integer "location_id"
-    t.string "num_prefix"
-    t.integer "next_num"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "lines", force: :cascade do |t|

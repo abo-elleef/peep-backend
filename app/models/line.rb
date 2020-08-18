@@ -4,11 +4,12 @@ class Line < ApplicationRecord
   # == Relationships ========================================================
   belongs_to :appointment, inverse_of: :lines
   belongs_to :client
+  belongs_to :service_price
 
   # == Validations ==========================================================
   validates_presence_of :appointment
-  validates :staff_id, :service_id, :client_id, :price, :original_price, :staff_name,
-            :service_name, presence: true
+  validates :staff_id, :service_id, :client_id, :service_price_id, :price_name,
+            :price, :original_price, :staff_name, :service_name, presence: true
 
   # == Scopes ===============================================================
   scope :overlaps?, -> (starts_at, ends_at) { where("starts_at <= ? AND ? <= ends_at", ends_at, starts_at).any? }

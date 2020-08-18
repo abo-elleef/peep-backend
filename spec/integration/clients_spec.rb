@@ -73,10 +73,10 @@ describe 'Clients API' do
               notes: {type: :string},
               global_notes: {type: :boolean},
               street: {type: :string},
-              suburb: {type: :string},
-              city: {type: :string},
-              state: {type: :string},
-              postal_code: {type: :string}
+              area: {type: :string},
+              block: {type: :string},
+              avenue: {type: :string},
+              building: {type: :string}
             }
           }
         }
@@ -115,10 +115,10 @@ describe 'Clients API' do
               notes: {type: :string},
               global_notes: {type: :boolean},
               street: {type: :string},
-              suburb: {type: :string},
-              city: {type: :string},
-              state: {type: :string},
-              postal_code: {type: :string}
+              area: {type: :string},
+              block: {type: :string},
+              avenue: {type: :string},
+              building: {type: :string}
             }
           }
         }
