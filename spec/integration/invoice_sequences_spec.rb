@@ -62,7 +62,6 @@ describe 'Invoice Sequence  API' do
                   type: :object,
                   properties: {
                       location_id: {type: :integer},
-                      location_name: {type: :string},
                       num_prefix: {type: :string},
                       next_num: {type: :integer}
                   }
@@ -93,7 +92,6 @@ describe 'Invoice Sequence  API' do
                   type: :object,
                   properties: {
                       location_id: {type: :integer},
-                      location_name: {type: :string},
                       num_prefix: {type: :string},
                       next_num: {type: :integer}
                   }

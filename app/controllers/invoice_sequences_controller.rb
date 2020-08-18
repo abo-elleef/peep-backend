@@ -40,6 +40,6 @@ class InvoiceSequencesController < ApplicationController
   private
 
   def invoice_sequence_params
-    params.require(:invoice_sequence).permit(:location_id, :location_name, :num_prefix, :next_num)
+    params.require(:invoice_sequence).permit(:location_id, :num_prefix, :next_num)
   end
 end

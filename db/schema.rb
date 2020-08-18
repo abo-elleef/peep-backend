@@ -118,7 +118,6 @@ ActiveRecord::Schema.define(version: 2020_08_18_142232) do
 
   create_table "invoice_sequences", force: :cascade do |t|
     t.integer "location_id"
-    t.string "location_name"
     t.string "num_prefix"
     t.integer "next_num"
     t.datetime "created_at", precision: 6, null: false
