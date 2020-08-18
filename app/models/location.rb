@@ -25,7 +25,7 @@ class Location < ApplicationRecord
   has_and_belongs_to_many :closing_shifts
   has_many :appointments
   has_many :clients
-
+  has_one :invoice_sequence
   belongs_to :user
 
   # == Validations ==========================================================

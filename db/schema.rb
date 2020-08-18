@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_18_012708) do
+ActiveRecord::Schema.define(version: 2020_08_18_142232) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,11 +18,11 @@ ActiveRecord::Schema.define(version: 2020_08_18_012708) do
   create_table "appointments", force: :cascade do |t|
     t.integer "status", default: 1
     t.integer "client_id"
+    t.integer "location_id"
     t.text "notes"
     t.date "date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "location_id"
     t.integer "cancellation_reason_id"
     t.index ["cancellation_reason_id"], name: "index_appointments_on_cancellation_reason_id"
     t.index ["client_id"], name: "index_appointments_on_client_id"
@@ -80,10 +80,10 @@ ActiveRecord::Schema.define(version: 2020_08_18_012708) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "street"
-    t.string "suburb"
-    t.string "city"
-    t.string "state"
-    t.string "postal_code"
+    t.string "area"
+    t.string "block"
+    t.string "avenue"
+    t.string "building"
     t.index ["location_id"], name: "index_clients_on_location_id"
   end
 
@@ -116,6 +116,15 @@ ActiveRecord::Schema.define(version: 2020_08_18_012708) do
     t.index ["name"], name: "index_discounts_on_name"
   end
 
+  create_table "invoice_sequences", force: :cascade do |t|
+    t.integer "location_id"
+    t.string "location_name"
+    t.string "num_prefix"
+    t.integer "next_num"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "lines", force: :cascade do |t|
     t.integer "appointment_id"
     t.integer "staff_id"
@@ -129,9 +138,12 @@ ActiveRecord::Schema.define(version: 2020_08_18_012708) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "price_name"
+    t.integer "price_id"
     t.integer "client_id"
+    t.integer "service_price_id"
     t.index ["appointment_id"], name: "index_lines_on_appointment_id"
     t.index ["client_id"], name: "index_lines_on_client_id"
+    t.index ["price_id"], name: "index_lines_on_price_id"
     t.index ["service_id"], name: "index_lines_on_service_id"
     t.index ["staff_id"], name: "index_lines_on_staff_id"
   end

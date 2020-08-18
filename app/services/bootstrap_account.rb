@@ -9,6 +9,7 @@ class BootstrapAccount
   def call
     location = create_location
     staff = create_staff(location)
+    create_invoice_sequence(location)
     create_services(location, staff)
     create_payment_types
     create_cancellation_reasons
@@ -32,13 +33,21 @@ class BootstrapAccount
     location.staffs = staffs
   end
 
+  def create_invoice_sequence(location)
+    InvoiceSequence.create(default_data.merge(location_id: location.id, location_name: location.name))
+  end
+
   def create_services(location, staff)
-    service_category = ServiceCategory.default_data.map do |category_date| ServiceCategory.create(category_date) end
+    service_category = ServiceCategory.default_data.map do |category_date|
+      ServiceCategory.create(category_date)
+    end
     services = Service.default_data.map do |service_data|
       Service.create(service_data.merge(service_category_id: service_category.first.id))
     end
     location.services = services
-    staff.map do |staff| staff.services = services end
+    staff.map do |staff|
+      staff.services = services
+    end
   end
 
   def create_payment_types
