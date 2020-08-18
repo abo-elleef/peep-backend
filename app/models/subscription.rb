@@ -1,29 +1,30 @@
-class Client < ApplicationRecord
+class Subscription < ApplicationRecord
   # == Constants ============================================================
+  DAY_SECONDS = (60 * 60 * 24 )
   # == Extensions ===========================================================
+  include Filterable
 
-  enum notify_method: { email: 1 }
-  enum gender: { female: 1, male: 2}
+
+
+  # == Attributes ===========================================================
+  enum available_for: {everyone: 0, males: 1, females: 2}
+  enum pricing_type:  {value: "value", percentage: "percentage"}
 
   # == Relationships ========================================================
-  belongs_to :location, optional: true
-  has_many :appointments
-  has_many :lines
 
   # == Validations ==========================================================
-  validates_presence_of :first_name
+  validates_presence_of :name
 
   # == Scopes ===============================================================
-  scope :search, -> (search) { search.present? ?  where("first_name ilike ?", "%" + search + "%").
-      or(where("last_name ilike ?", "%" + search + "%")).
-      or(where(phone: search)) : all }
+  scope :by_name, -> (name) { where("name ilike ?", "%" + name + "%") }
 
   # == Callbacks ============================================================
-
   # == Class Methods ========================================================
 
   # == Instance Methods =====================================================
-  def name
-    "#{first_name} #{last_name}"
+
+  def duration
+    ((ends_at - starts_at).to_f / DAY_SECONDS).ceil
   end
 end
+

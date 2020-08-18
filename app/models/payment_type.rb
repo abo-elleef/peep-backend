@@ -1,29 +1,32 @@
-class Client < ApplicationRecord
+class PaymentType < ApplicationRecord
   # == Constants ============================================================
   # == Extensions ===========================================================
-
-  enum notify_method: { email: 1 }
-  enum gender: { female: 1, male: 2}
+  include Filterable
 
   # == Relationships ========================================================
-  belongs_to :location, optional: true
-  has_many :appointments
-  has_many :lines
+  has_many :payments
 
   # == Validations ==========================================================
-  validates_presence_of :first_name
-
+  validates_presence_of :name
+  
   # == Scopes ===============================================================
-  scope :search, -> (search) { search.present? ?  where("first_name ilike ?", "%" + search + "%").
-      or(where("last_name ilike ?", "%" + search + "%")).
-      or(where(phone: search)) : all }
+  scope :search, -> (search) { where("name ilike ?", "%" + search + "%") }
 
   # == Callbacks ============================================================
-
   # == Class Methods ========================================================
+  def self.default_data
+    [
+        {
+            name: "Cash"
+        },
+        {
+            name: "Card"
+        },
+        {
+            name: "Other"
+        }
+    ]
+  end
 
   # == Instance Methods =====================================================
-  def name
-    "#{first_name} #{last_name}"
-  end
 end

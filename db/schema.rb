@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_16_082707) do
+ActiveRecord::Schema.define(version: 2020_08_18_012708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -129,7 +129,9 @@ ActiveRecord::Schema.define(version: 2020_08_16_082707) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "price_name"
+    t.integer "client_id"
     t.index ["appointment_id"], name: "index_lines_on_appointment_id"
+    t.index ["client_id"], name: "index_lines_on_client_id"
     t.index ["service_id"], name: "index_lines_on_service_id"
     t.index ["staff_id"], name: "index_lines_on_staff_id"
   end
@@ -164,6 +166,22 @@ ActiveRecord::Schema.define(version: 2020_08_16_082707) do
     t.index ["staff_id"], name: "index_locations_staffs_on_staff_id"
   end
 
+  create_table "payment_types", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "payments", force: :cascade do |t|
+    t.integer "appointment_id"
+    t.integer "payment_type_id"
+    t.float "amount"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["appointment_id"], name: "index_payments_on_appointment_id"
+    t.index ["payment_type_id"], name: "index_payments_on_payment_type_id"
+  end
+
   create_table "product_brands", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -176,6 +194,31 @@ ActiveRecord::Schema.define(version: 2020_08_16_082707) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_product_categories_on_name"
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string "name"
+    t.integer "product_category_id"
+    t.integer "product_brand_id"
+    t.string "barcode"
+    t.string "sku"
+    t.text "description"
+    t.float "retail_price"
+    t.float "special_price"
+    t.float "supply_price"
+    t.integer "initial_stock"
+    t.integer "reorder_point"
+    t.integer "reorder_quantity"
+    t.boolean "enable_commission"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "supplier_id"
+    t.index ["barcode"], name: "index_products_on_barcode"
+    t.index ["name"], name: "index_products_on_name"
+    t.index ["product_brand_id"], name: "index_products_on_product_brand_id"
+    t.index ["product_category_id"], name: "index_products_on_product_category_id"
+    t.index ["sku"], name: "index_products_on_sku"
+    t.index ["supplier_id"], name: "index_products_on_supplier_id"
   end
 
   create_table "service_categories", force: :cascade do |t|
@@ -247,6 +290,35 @@ ActiveRecord::Schema.define(version: 2020_08_16_082707) do
     t.float "product_comm", default: 0.0
     t.float "discount_comm", default: 0.0
     t.float "service_comm", default: 0.0
+  end
+
+  create_table "subscriptions", force: :cascade do |t|
+    t.string "name"
+    t.text "desc"
+    t.datetime "starts_at"
+    t.integer "available_for", default: 0
+    t.datetime "ends_at"
+    t.string "pricing_type"
+    t.float "pricing_value"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "suppliers", force: :cascade do |t|
+    t.string "name"
+    t.text "desc"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email"
+    t.string "phone"
+    t.string "website"
+    t.string "area"
+    t.string "block"
+    t.string "avenue"
+    t.string "building"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_suppliers_on_name"
   end
 
   create_table "users", force: :cascade do |t|

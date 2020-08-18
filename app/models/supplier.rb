@@ -1,29 +1,24 @@
-class Client < ApplicationRecord
+class Supplier < ApplicationRecord
   # == Constants ============================================================
   # == Extensions ===========================================================
+  include Filterable
 
-  enum notify_method: { email: 1 }
-  enum gender: { female: 1, male: 2}
-
+  # == Attributes ===========================================================
+  # if any enums
   # == Relationships ========================================================
-  belongs_to :location, optional: true
-  has_many :appointments
-  has_many :lines
+  has_many :products
 
   # == Validations ==========================================================
-  validates_presence_of :first_name
+  validates_presence_of :name
 
   # == Scopes ===============================================================
-  scope :search, -> (search) { search.present? ?  where("first_name ilike ?", "%" + search + "%").
-      or(where("last_name ilike ?", "%" + search + "%")).
-      or(where(phone: search)) : all }
+  scope :by_name, -> (name) { where("name ilike ?", "%" + name + "%") }
 
   # == Callbacks ============================================================
-
   # == Class Methods ========================================================
 
   # == Instance Methods =====================================================
-  def name
-    "#{first_name} #{last_name}"
-  end
+
 end
+
+

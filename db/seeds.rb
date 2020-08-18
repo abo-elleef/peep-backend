@@ -88,3 +88,49 @@
 #   time = Time.zone.now  - (index * 5 + index).day
 #   Discount.create({name: "dicount #{index + 20 }", deduct_type: index.even? ? "value" : "percentage", deduct_value: index * 10 + 3, apply_on: "services", usage_limit: 100, uniq_per_client: false, starts_at: time , ends_at: time + 10.days})
 #   end
+#
+# 40.times do |index|
+#   time = Time.zone.now  - (index * 5 + index).day
+#   Subscription.create({name: "sub plan #{index + 1  }",
+#                        desc: index.even? ? "even desc" : "odd desc ",
+#                        pricing_value: index * 10 + 3,
+#                        pricing_type: index.even? ? "percentage" : "value",
+#                        available_for: 0,
+#                        starts_at: time ,
+#                        ends_at: time + 10.days
+#                       })
+#   end
+# brands = ProductBrand.all
+# categories = ProductCategory.all
+# 100.times do |index|
+#   Product.create!({
+#                       name: "name #{index}",
+#                       product_category_id: categories.sample.id,
+#                       product_brand_id: brands.sample.id,
+#                       barcode: "barcode #{index}",
+#                       sku: "sku #{index}",
+#                       description: "desc #{index}",
+#                       retail_price: (1..100).to_a.sample,
+#                       special_price: (1..100).to_a.sample,
+#                       supply_price: (1..100).to_a.sample,
+#                       initial_stock: (1..100).to_a.sample,
+#                       reorder_point: (1..100).to_a.sample,
+#                       reorder_quantity: (1..100).to_a.sample,
+#                       enable_commission: true
+#                   })
+# end
+# 100.times do |index|
+#   Supplier.create!({
+#                        name: "name #{index}",
+#                        desc: "desc #{index}",
+#                        first_name: "first_name #{index}",
+#                        last_name: "last_name #{index}",
+#                        email: "email #{index}",
+#                        phone: "phone #{index}",
+#                        website: "website #{index}",
+#                        area: "area #{index}",
+#                        block: "block #{index}",
+#                        avenue: "avenue #{index}",
+#                        building: "building #{index}",
+#                    })
+# end

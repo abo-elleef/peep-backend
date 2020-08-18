@@ -10,6 +10,7 @@ class BootstrapAccount
     location = create_location
     staff = create_staff(location)
     create_services(location, staff)
+    create_payment_types
     create_cancellation_reasons
   end
 
@@ -38,6 +39,12 @@ class BootstrapAccount
     end
     location.services = services
     staff.map do |staff| staff.services = services end
+  end
+
+  def create_payment_types
+    PaymentType.default_data.map do |type|
+      PaymentType.create(type)
+    end
   end
 
   def create_cancellation_reasons
