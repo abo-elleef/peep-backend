@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_17_170450) do
+ActiveRecord::Schema.define(version: 2020_08_18_012708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -212,11 +212,13 @@ ActiveRecord::Schema.define(version: 2020_08_17_170450) do
     t.boolean "enable_commission"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "supplier_id"
     t.index ["barcode"], name: "index_products_on_barcode"
     t.index ["name"], name: "index_products_on_name"
     t.index ["product_brand_id"], name: "index_products_on_product_brand_id"
     t.index ["product_category_id"], name: "index_products_on_product_category_id"
     t.index ["sku"], name: "index_products_on_sku"
+    t.index ["supplier_id"], name: "index_products_on_supplier_id"
   end
 
   create_table "service_categories", force: :cascade do |t|
@@ -300,6 +302,23 @@ ActiveRecord::Schema.define(version: 2020_08_17_170450) do
     t.float "pricing_value"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "suppliers", force: :cascade do |t|
+    t.string "name"
+    t.text "desc"
+    t.string "first_name"
+    t.string "last_name"
+    t.string "email"
+    t.string "phone"
+    t.string "website"
+    t.string "area"
+    t.string "block"
+    t.string "avenue"
+    t.string "building"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_suppliers_on_name"
   end
 
   create_table "users", force: :cascade do |t|
