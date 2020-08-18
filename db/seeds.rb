@@ -119,3 +119,18 @@
 #                       enable_commission: true
 #                   })
 # end
+# 100.times do |index|
+#   Supplier.create!({
+#                        name: "name #{index}",
+#                        desc: "desc #{index}",
+#                        first_name: "first_name #{index}",
+#                        last_name: "last_name #{index}",
+#                        email: "email #{index}",
+#                        phone: "phone #{index}",
+#                        website: "website #{index}",
+#                        area: "area #{index}",
+#                        block: "block #{index}",
+#                        avenue: "avenue #{index}",
+#                        building: "building #{index}",
+#                    })
+# end

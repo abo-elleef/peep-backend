@@ -2,6 +2,7 @@ class Product < ApplicationRecord
   include Filterable
   belongs_to :product_category
   belongs_to :product_brand
+  belongs_to :supplier
 
   validates_presence_of :name
   validates_uniqueness_of :name, :barcode

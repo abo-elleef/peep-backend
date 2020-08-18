@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :suppliers
   resources :subscriptions
   resources :discounts
   mount Rswag::Ui::Engine => '/api-docs'
