@@ -48,11 +48,11 @@ class ExportClients
         birthday: :birthday,
         notes: :notes,
         street: :street,
-        suburb: :suburb,
-        city: :city,
-        state: :state,
-        postal_code: :postal_code,
-        added_at: :created_at,
+        area: :area,
+        block: :block,
+        avenue: :avenue,
+        building: :building,
+        added_at: :created_at
     }
   end
 
