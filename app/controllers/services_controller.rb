@@ -1,7 +1,7 @@
 class ServicesController < ApplicationController
 
   def index
-    filters = params.slice(:name, :search).merge({location_id: current_location.id})
+    filters = params.slice(:name, :search)
     services = Service.preload(:service_prices).peep_filter(filters)
     render json: ServiceSerializer.new(services, include: []), status: :ok
   end
