@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   resources :cancellation_reasons
 
   get "export/clients", to: "export#clients"
+  get "export/products", to: "export#products"
   post "appointments/check_hints", to: "appointments#check_hints"
 
   # Reports Routes
