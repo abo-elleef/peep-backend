@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_18_012708) do
+ActiveRecord::Schema.define(version: 2020_08_18_215850) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -80,10 +80,10 @@ ActiveRecord::Schema.define(version: 2020_08_18_012708) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "street"
-    t.string "suburb"
-    t.string "city"
-    t.string "state"
-    t.string "postal_code"
+    t.string "area"
+    t.string "block"
+    t.string "avenue"
+    t.string "building"
     t.index ["location_id"], name: "index_clients_on_location_id"
   end
 
@@ -102,7 +102,7 @@ ActiveRecord::Schema.define(version: 2020_08_18_012708) do
     t.index ["location_id"], name: "index_closing_shifts_locations_on_location_id"
   end
 
-  create_table "discounts", force: :cascade do |t|
+  create_table "deductions", force: :cascade do |t|
     t.string "name"
     t.string "deduct_type"
     t.float "deduct_value"
@@ -113,7 +113,10 @@ ActiveRecord::Schema.define(version: 2020_08_18_012708) do
     t.datetime "ends_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["name"], name: "index_discounts_on_name"
+    t.string "type"
+    t.float "start_value"
+    t.float "current_value"
+    t.index ["name"], name: "index_deductions_on_name"
   end
 
   create_table "lines", force: :cascade do |t|
@@ -130,6 +133,7 @@ ActiveRecord::Schema.define(version: 2020_08_18_012708) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "price_name"
     t.integer "client_id"
+    t.integer "service_price_id"
     t.index ["appointment_id"], name: "index_lines_on_appointment_id"
     t.index ["client_id"], name: "index_lines_on_client_id"
     t.index ["service_id"], name: "index_lines_on_service_id"
