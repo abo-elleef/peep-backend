@@ -34,7 +34,7 @@ class BootstrapAccount
   end
 
   def create_invoice_sequence(location)
-    InvoiceSequence.create(default_data.merge(location_id: location.id))
+    InvoiceSequence.create(InvoiceSequence.default_data.merge(location_id: location.id))
   end
 
   def create_services(location, staff)
