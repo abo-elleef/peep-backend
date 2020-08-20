@@ -29,7 +29,7 @@ class LocationsController < ApplicationController
   end
 
   def destroy
-    location = Location.new(params[:id])
+    location = Location.find(params[:id])
     if location.destroy
       render json: {}, status: :ok
     else
