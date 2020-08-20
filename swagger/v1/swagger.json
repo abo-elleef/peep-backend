@@ -1247,6 +1247,214 @@
         }
       }
     },
+    "/invoice_sequences": {
+      "get": {
+        "summary": "Retrieves a set of invoice_sequences",
+        "tags": [
+          "invoice_sequences"
+        ],
+        "responses": {
+          "200": {
+            "description": "invoice_sequences set",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "create a invoice_sequence record",
+        "tags": [
+          "invoice_sequences"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "201": {
+            "description": "invoice_sequence created",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "442": {
+            "description": "bad data or breaks validation ",
+            "content": {
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "invoice_sequence": {
+                    "type": "object",
+                    "properties": {
+                      "location_id": {
+                        "type": "integer"
+                      },
+                      "location_name": {
+                        "type": "string"
+                      },
+                      "num_prefix": {
+                        "type": "string"
+                      },
+                      "next_num": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/invoice_sequences/{id}": {
+      "get": {
+        "summary": "Retrieves data of invoice_sequences",
+        "tags": [
+          "invoice_sequences"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "invoice_sequence data",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "404": {
+            "description": "invoice_sequence not found",
+            "content": {
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "delete a invoice_sequences",
+        "tags": [
+          "invoice_sequences"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "invoice_sequence deleted",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "404": {
+            "description": "invoice_sequence not found",
+            "content": {
+            }
+          },
+          "442": {
+            "description": "can not be deleted",
+            "content": {
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "update a invoice_sequence record",
+        "tags": [
+          "invoice_sequences"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "invoice_sequence updated",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "442": {
+            "description": "bad data or breaks validation ",
+            "content": {
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "invoice_sequence": {
+                    "type": "object",
+                    "properties": {
+                      "location_id": {
+                        "type": "integer"
+                      },
+                      "location_name": {
+                        "type": "string"
+                      },
+                      "num_prefix": {
+                        "type": "string"
+                      },
+                      "next_num": {
+                        "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/locations": {
       "get": {
         "summary": "Retrieves a set of locations",
