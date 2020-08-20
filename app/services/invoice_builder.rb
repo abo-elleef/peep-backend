@@ -31,23 +31,13 @@ class InvoiceBuilder
 
   def lines_data(values)
     values.map do |data|
-      {
-          staff_name: data.staff_name,
-          service_name: data.service_name,
-          starts_at: data.starts_at,
-          ends_at: data.ends_at,
-          price: data.price,
-          original_price: data.original_price
-      }
+      data.slice('staff_name', 'service_name', 'starts_at' , 'ends_at', 'price', 'original_price')
     end
   end
 
   def payments_data(values)
     values.map do |data|
-      {
-          payment_type_id: data.payment_type_id,
-          amount: data.amount
-      }
+      data.slice('payment_type_id', 'amount' )
     end
   end
 
