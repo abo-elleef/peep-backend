@@ -25,7 +25,7 @@ Rails.application.routes.draw do
   resources :subscriptions
   resources :discounts
   resources :vouchers
-
+  resources :invoices, only: [:index]
   get "export/clients", to: "export#clients"
   post "appointments/check_hints", to: "appointments#check_hints"
 
@@ -36,7 +36,5 @@ Rails.application.routes.draw do
     get "sales/cash_movement", to: "sales#cash_movement"
     get "sales/appointments_list", to: "sales#appointments_list"
   end
-
-  get "invoices/build_invoices", to: "invoices#build_invoices"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

@@ -4,6 +4,7 @@ class CreateInvoices < ActiveRecord::Migration[6.0]
       t.string :sequence
       t.integer :appointment_id
       t.timestamps
+      t.index :appointment_id
     end
   end
 end

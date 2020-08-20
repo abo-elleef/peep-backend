@@ -10,9 +10,11 @@ class InvoiceBuilder
     build_invoice(appointment_data)
   end
 
+  private
+
   def build_appointment_hash
     Appointment.joins(:payments, :lines)
-        .select("appointments.id as appointment_id, payments.payment_type_id, payments.amount as amount,lines.appointment_id,
+        .select("appointments.id as appointment_id, payments.payment_type_id, payments.amount as amount,
                                        lines.price as price, lines.original_price, lines.staff_name,lines.service_name, lines.starts_at, lines.ends_at")
         .where("appointments.id IN (?)", appointments_ids)
         .group_by(&:appointment_id)
