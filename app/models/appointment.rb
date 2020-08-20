@@ -14,6 +14,7 @@ class Appointment < ApplicationRecord
   has_many :staffs, through: :lines
   belongs_to :location
   belongs_to :client
+  has_one :invoice
 
   accepts_nested_attributes_for :lines
   accepts_nested_attributes_for :payments
