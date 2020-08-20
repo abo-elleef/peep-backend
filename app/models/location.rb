@@ -26,10 +26,11 @@ class Location < ApplicationRecord
   has_many :appointments
   has_many :clients
 
-  belongs_to :user
+  belongs_to :user, optional: true
 
   # == Validations ==========================================================
-  validates_presence_of :user_id
+  # TODO enable this validation back after adding authentication
+  # validates_presence_of :user_id
 
   # == Scopes ===============================================================
   # == Callbacks ============================================================
