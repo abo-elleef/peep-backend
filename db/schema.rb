@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_18_135300) do
+ActiveRecord::Schema.define(version: 2020_08_18_215850) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,7 +102,7 @@ ActiveRecord::Schema.define(version: 2020_08_18_135300) do
     t.index ["location_id"], name: "index_closing_shifts_locations_on_location_id"
   end
 
-  create_table "discounts", force: :cascade do |t|
+  create_table "deductions", force: :cascade do |t|
     t.string "name"
     t.string "deduct_type"
     t.float "deduct_value"
@@ -113,7 +113,25 @@ ActiveRecord::Schema.define(version: 2020_08_18_135300) do
     t.datetime "ends_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["name"], name: "index_discounts_on_name"
+    t.string "type"
+    t.float "start_value"
+    t.float "current_value"
+    t.index ["name"], name: "index_deductions_on_name"
+  end
+
+  create_table "invoice_sequences", force: :cascade do |t|
+    t.integer "location_id"
+    t.string "num_prefix"
+    t.integer "next_num"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "invoices", force: :cascade do |t|
+    t.string "sequence"
+    t.integer "appointment_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "lines", force: :cascade do |t|

@@ -22,6 +22,7 @@ class AppointmentsController < ApplicationController
   def update
     appointment = Appointment.find(params[:id])
     if appointment.update(appointment_params)
+      create_appointment_invoice(appointment.id) if params[:payments_attributes].present?
       render json: AppointmentSerializer.new(appointment, include: [:lines]), status: :ok
     else
       render json: appointment.errors, status: :unprocessable_entity
@@ -44,6 +45,12 @@ class AppointmentsController < ApplicationController
 
   private
 
+  def create_appointment_invoice(appointment_id)
+    unless Invoice.find_by(appointment_id: appointment_id).present?
+      Invoice.create(appointment_id: appointment_id, sequence: Invoice.next_sequence)
+    end
+  end
+
   def appointment_params
     params.require(:appointment).permit(:status, :client_id, :location_id,
                                         :notes, :date, :cancellation_reason_id,
@@ -52,6 +59,6 @@ class AppointmentsController < ApplicationController
                                                            :client_id, :price, :original_price,
                                                            :staff_name, :service_name, :starts_at, :ends_at],
                                         payments_attributes: [:id, :appointment_id, :payment_type_id,
-                                                                                                                                                               :amount])
+                                                              :amount])
   end
 end

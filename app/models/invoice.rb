@@ -8,5 +8,8 @@ class Invoice < ApplicationRecord
   # == Scopes ===============================================================
   # == Callbacks ============================================================
   # == Class Methods ========================================================
+  def self.next_sequence
+    (Invoice.last.try(:sequence).to_i  + 1) || 1
+  end
   # == Instance Methods =====================================================
 end
