@@ -19,7 +19,7 @@ class InvoiceBuilder
         .map { |appointment_id, values|
           {
               appointment_id: appointment_id,
-              line: lines_data(values),
+              lines: lines_data(values),
               payments: payments_data(values),
               total: values.sum(&:price),
               balance: (values.sum(&:price) - values.sum(&:amount)).round(2)
