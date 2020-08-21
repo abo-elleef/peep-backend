@@ -7,7 +7,10 @@ class Deduction < ApplicationRecord
   enum apply_on: { services: "services", products: "products"}
 
   # == Relationships ========================================================
-
+  has_many :deduction_usages
+  has_many :clients, through: :deduction_usages
+  has_many :lines, through: :deduction_usages
+  has_many :appointments, through: :lines
   # == Validations ==========================================================
   validates_presence_of :name, :starts_at, :ends_at
 

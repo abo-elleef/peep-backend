@@ -5,6 +5,8 @@ class Line < ApplicationRecord
   belongs_to :appointment, inverse_of: :lines
   belongs_to :client
   belongs_to :service_price
+  has_many :deduction_usages
+  has_many :deductions, through: :deduction_usages
 
   # == Validations ==========================================================
   validates_presence_of :appointment
