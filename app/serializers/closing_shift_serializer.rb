@@ -1,5 +1,5 @@
-class ClosingShiftSerializer
-  include FastJsonapi::ObjectSerializer
+class ClosingShiftSerializer < ActiveModel::Serializer
+  # include FastJsonapi::ObjectSerializer
   attributes :id, :starts_at, :ends_at, :desc, :location_ids
 
   attribute :number_of_days do |object|

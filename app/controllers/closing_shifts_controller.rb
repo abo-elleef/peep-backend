@@ -2,18 +2,18 @@ class ClosingShiftsController < ApplicationController
 
   def index
     closing_shifts = ClosingShift.preload(:locations).peep_filter(params.slice(:location_id))
-    render json: ClosingShiftSerializer.new(closing_shifts), status: :ok
+    render json: {data: closing_shifts}, each_serializer: ClosingShiftSerializer, status: :ok
   end
 
   def show
     closing_shift = ClosingShift.find(params[:id])
-    render json: ClosingShiftSerializer.new(closing_shift), status: :ok
+    render json: {data: closing_shift}, each_serializer: ClosingShiftSerializer, status: :ok
   end
 
   def create
     closing_shift = ClosingShift.new(closing_shift_params)
     if closing_shift.save
-      render json: ClosingShiftSerializer.new(closing_shift), status: :created
+      render json: {data: closing_shift}, each_serializer: ClosingShiftSerializer, status: :created
     else
       render json: closing_shift.errors, status: :unprocessable_entity
     end
@@ -22,7 +22,7 @@ class ClosingShiftsController < ApplicationController
   def update
     closing_shift = ClosingShift.find(params[:id])
     if closing_shift.update(closing_shift_params)
-      render json: ClosingShiftSerializer.new(closing_shift), status: :ok
+      render json: {data: closing_shift}, each_serializer: ClosingShiftSerializer, status: :ok
     else
       render json: closing_shift.errors, status: :unprocessable_entity
     end

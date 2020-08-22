@@ -2,14 +2,14 @@ class UsersController < ApplicationController
   before_action :peep_authenticate, except: :create
 
   def whoami
-    render json: UserSerializer.new(current_user, {include: [:locations]}), status: :ok
+    render json: {data: current_user},  each_serializer: UserSerializer, status: :ok
   end
 
   def create
     user = User.new(user_params)
     if user.save
       BootstrapAccount.new(user, user_params).call
-      render json: UserSerializer.new(user, {include: [:locations]}), status: :created
+      render json: {data: user},  each_serializer: UserSerializer, status: :created
     else
       render json: user.errors, status: :unprocessable_entity
     end
@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   def update
     user = User.find(params[:id])
     if user.update(user_params)
-      render json: user, status: :ok
+      render json: {data: user},  each_serializer: UserSerializer,  status: :ok
     else
       render json: user.errors, status: :unprocessable_entity
     end
