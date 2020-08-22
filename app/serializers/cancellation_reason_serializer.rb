@@ -1,4 +1,4 @@
-class CancellationReasonSerializer
-  include FastJsonapi::ObjectSerializer
+class CancellationReasonSerializer < ActiveModel::Serializer
+  # include FastJsonapi::ObjectSerializer
   attributes :id, :name, :created_at, :updated_at
 end

@@ -3,19 +3,19 @@ class StaffsController < ApplicationController
 
   def index
     staffs = Staff.preload(:blocked_times).all
-    render json: StaffSerializer.new(staffs, include: [:blocked_times]), status: :ok
+    render json: {data: staffs},  each_serializer: ShiftSerializer, status: :ok
   end
 
   def show
     staff = Staff.find(params[:id])
-    render json: StaffSerializer.new(staff, {params: {show: true}, include: [:blocked_times]}), status: :ok
+    render json: {data: staff},  each_serializer: ShiftSerializer, status: :ok
   end
 
   def create
     staff = Staff.new(staff_params)
     if staff.save
       # TODO: create working hours if staff is booking_enabled
-      render json: StaffSerializer.new(staff), status: :created
+      render json: {data: staff},  each_serializer: ShiftSerializer, status: :created
     else
       render json: staff.errors, status: :unprocessable_entity
     end
@@ -24,7 +24,7 @@ class StaffsController < ApplicationController
   def update
     staff = Staff.find(params[:id])
     if staff.update(staff_params)
-      render json: StaffSerializer.new(staff), status: :created
+      render json: {data: staff},  each_serializer: ShiftSerializer, status: :created
     else
       render json: staff.errors, status: :ok
     end

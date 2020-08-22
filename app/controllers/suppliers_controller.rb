@@ -4,19 +4,21 @@ class SuppliersController < ApplicationController
   def index
     suppliers = Supplier.peep_filter(params.slice(:name))
     pagy, suppliers = pagy(suppliers, page: page_index, items: page_size )
-    render json: SupplierSerializer.new(suppliers, meta: pagy_meta_data(pagy)), status: :ok
+    render json: {data: suppliers, meta: pagy_meta_data(pagy)},  each_serializer: SupplierSerializer,
+           status: :ok
   end
 
   def show
     supplier = Supplier.find(params[:id])
-    render json: SupplierSerializer.new(supplier), status: :ok
+    render json: {data: supplier},  each_serializer: SupplierSerializer, status: :ok
+
   end
 
   def create
     supplier = Supplier.new(supplier_params)
 
     if supplier.save
-      render json: SupplierSerializer.new(supplier), status: :created
+      render json: {data: supplier},  each_serializer: SupplierSerializer, status: :created
     else
       render json: supplier.errors, status: :unprocessable_entity
     end
@@ -25,7 +27,7 @@ class SuppliersController < ApplicationController
   def update
     supplier = Supplier.find(params[:id])
     if supplier.update(supplier_params)
-      render json: SupplierSerializer.new(supplier), status: :ok
+      render json: {data: supplier},  each_serializer: SupplierSerializer, status: :ok
     else
       render json: supplier.errors, status: :unprocessable_entity
     end

@@ -3,18 +3,18 @@ class ProductsController < ApplicationController
   def index
     products = Product.peep_filter(params.slice(:search, :product_category_id, :product_brand_id))
     pagy, products = pagy(products, page: page_index, items: page_size)
-    render json: ProductSerializer.new(products, meta: pagy_meta_data(pagy)), status: :ok
+    render  json: {data: products, meta: pagy_meta_data(pagy)}, each_serializer: ProductSerializer
   end
 
   def show
     product = Product.find(params[:id])
-    render json: ProductSerializer.new(product), status: :ok
+    render json: {data: product}, status: :ok, each_serializer: ProductSerializer
   end
 
   def create
     product = Product.new(product_params)
     if product.save
-      render json: ProductSerializer.new(product), status: :created
+      render json: {data: product}, each_serializer: ProductSerializer, status: :created
     else
       render json: product.errors, status: :unprocessable_entity
     end
@@ -22,8 +22,8 @@ class ProductsController < ApplicationController
 
   def update
     product = Product.find(params[:id])
-    if product.update(product_params.except(:initial_stock))
-      render json: ProductSerializer.new(product), status: :ok
+    if product.update(product_params)
+      render json: {data: product},  each_serializer: ProductSerializer, status: :ok
     else
       render json: product.errors, status: :unprocessable_entity
     end
