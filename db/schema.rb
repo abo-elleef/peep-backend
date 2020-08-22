@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_22_075108) do
+ActiveRecord::Schema.define(version: 2020_08_22_081621) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -137,6 +137,17 @@ ActiveRecord::Schema.define(version: 2020_08_22_075108) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "items", force: :cascade do |t|
+    t.integer "order_id"
+    t.float "received_price"
+    t.float "received_quantity"
+    t.float "requested_quantity"
+    t.float "requested_price"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["order_id"], name: "index_items_on_order_id"
+  end
+
   create_table "lines", force: :cascade do |t|
     t.integer "appointment_id"
     t.integer "staff_id"
@@ -200,6 +211,15 @@ ActiveRecord::Schema.define(version: 2020_08_22_075108) do
     t.integer "staff_id"
     t.index ["location_id"], name: "index_locations_staffs_on_location_id"
     t.index ["staff_id"], name: "index_locations_staffs_on_staff_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer "status"
+    t.float "total_cost"
+    t.integer "supplier_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["supplier_id"], name: "index_orders_on_supplier_id"
   end
 
   create_table "payment_types", force: :cascade do |t|
