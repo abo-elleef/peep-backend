@@ -3,19 +3,19 @@ class ProductBrandsController < ApplicationController
   def index
     brands = ProductBrand.preload(:products).peep_filter(params.slice(:name))
     pagy, brands = pagy(brands, page: page_index, items: page_size)
-    render json: {data: brands, meta: pagy_meta_data(pagy)},
-           each_serializer: ProductBrandSerializer, status: :ok
+    serializers = ActiveModel::Serializer::ArraySerializer.new(brands, each_serializer: ProductBrandSerializer)
+    render json: {data: serializers, meta: pagy_meta_data(pagy)},  status: :ok
   end
 
   def show
     brand = ProductBrand.find(params[:id])
-    render json: {data: brand}, each_serializer: ProductBrandSerializer, status: :ok
+    render json: {data: ProductBrandSerializer.new(brand)}, status: :ok
   end
 
   def create
     brand = ProductBrand.new(brand_params)
     if brand.save
-      render json: {data: brand}, each_serializer: ProductBrandSerializer, status: :created
+      render json: {data: ProductBrandSerializer.new(brand)}, status: :created
     else
       render json: brand.errors, status: :unprocessable_entity
     end
@@ -24,7 +24,7 @@ class ProductBrandsController < ApplicationController
   def update
     brand = ProductBrand.find(params[:id])
     if brand.update(brand_params)
-      render json: {data: brand}, each_serializer: ProductBrandSerializer, status: :ok
+      render json: {data: ProductBrandSerializer.new(brand)}, status: :ok
     else
       render json: brand.errors, status: :unprocessable_entity
     end

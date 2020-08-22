@@ -2,18 +2,19 @@ class DiscountsController < ApplicationController
 
   def index
     discounts = Discount.peep_filter(params.slice([:name]))
-    render json: {data: discounts}, each_serializer: DiscountSerializer,status: :ok
+    serializers = ActiveModel::Serializer::ArraySerializer.new(discounts, each_serializer: DiscountSerializer)
+    render json: {data: serializers},  status: :ok
   end
 
   def show
     discount = Discount.find(params[:id])
-    render json: {data: discount}, each_serializer: DiscountSerializer, status: :ok
+    render json: {data: DiscountSerializer.new(discount)}, status: :ok
   end
 
   def create
     discount = Discount.new(discount_params)
     if discount.save
-      render json: {data: discount}, each_serializer: DiscountSerializer, status: :created
+      render json: {data: DiscountSerializer.new(discount)}, status: :created
     else
       render json: discount.errors, status: :unprocessable_entity
     end
@@ -22,7 +23,7 @@ class DiscountsController < ApplicationController
   def update
     discount = Discount.find(params[:id])
     if discount.update(discount_params)
-      render json: {data: discount}, each_serializer: DiscountSerializer, status: :ok
+      render json: {data: DiscountSerializer.new(discount)}, status: :ok
     else
       render json: discount.errors, status: :unprocessable_entity
     end

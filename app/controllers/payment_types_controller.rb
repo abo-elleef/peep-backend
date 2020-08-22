@@ -2,18 +2,19 @@ class PaymentTypesController < ApplicationController
 
   def index
     payment_types = PaymentType.peep_filter(params.slice(:search, :name))
-    render json: {data: payment_types}, each_serializer: PaymentTypeSerializer, status: :ok
+    serializers = ActiveModel::Serializer::ArraySerializer.new(payment_types, each_serializer: PaymentTypeSerializer)
+    render json: {data: serializers},  status: :ok
   end
 
   def show
     payment_type = PaymentType.find(params[:id])
-    render json: {data: payment_type}, each_serializer: PaymentTypeSerializer, status: :ok
+    render json: {data: PaymentTypeSerializer.new(payment_type)}, status: :ok
   end
 
   def create
     payment_type = PaymentType.new(payment_type_params)
     if payment_type.save
-      render json: {data: payment_type}, each_serializer: PaymentTypeSerializer, status: :created
+      render json: {data: PaymentTypeSerializer.new(payment_type)}, status: :created
     else
       render json: payment_type.errors, status: :unprocessable_entity
     end
@@ -22,7 +23,7 @@ class PaymentTypesController < ApplicationController
   def update
     payment_type = PaymentType.find(params[:id])
     if payment_type.update(payment_type_params)
-      render json: {data: payment_type}, each_serializer: PaymentTypeSerializer, status: :ok
+      render json: {data: PaymentTypeSerializer.new(payment_type)}, status: :ok
     else
       render json: payment_type.errors, status: :unprocessable_entity
     end

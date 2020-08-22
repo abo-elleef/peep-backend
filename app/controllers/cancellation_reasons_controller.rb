@@ -2,21 +2,19 @@ class CancellationReasonsController < ApplicationController
 
   def index
     cancellation_reasons = CancellationReason.peep_filter(params.slice(:search, :name))
-    render json: {data: cancellation_reasons}, each_serializer: CancellationReasonSerializer,
-           status: :ok
+    serializers = ActiveModel::Serializer::ArraySerializer.new(cancellation_reasons, each_serializer: CancellationReasonSerializer)
+    render json: {data: serializers},  status: :ok
   end
 
   def show
     cancellation_reason = CancellationReason.find(params[:id])
-    render json: {data: cancellation_reason}, each_serializer: CancellationReasonSerializer,
-           status: :ok
+    render json: {data: CancellationReasonSerializer.new(cancellation_reason)}, status: :ok
   end
 
   def create
     cancellation_reason = CancellationReason.new(cancellation_reason_params)
     if cancellation_reason.save
-      render json: {data: cancellation_reason}, each_serializer: CancellationReasonSerializer,
-             status: :created
+      render json: {data: CancellationReasonSerializer.new(cancellation_reason)}, status: :created
     else
       render json: cancellation_reason.errors, status: :unprocessable_entity
     end
@@ -25,8 +23,7 @@ class CancellationReasonsController < ApplicationController
   def update
     cancellation_reason = CancellationReason.find(params[:id])
     if cancellation_reason.update(cancellation_reason_params)
-      render json: {data: cancellation_reason}, each_serializer: CancellationReasonSerializer,
-             status: :ok
+      render json: {data: CancellationReasonSerializer.new(cancellation_reason)}, status: :ok
     else
       render json: cancellation_reason.errors, status: :unprocessable_entity
     end

@@ -3,18 +3,19 @@ class ServicesController < ApplicationController
   def index
     filters = params.slice(:name, :search)
     services = Service.preload(:service_prices).peep_filter(filters)
-    render json: {data: services},  each_serializer: ServiceSerializer, status: :ok
+    serializers = ActiveModel::Serializer::ArraySerializer.new(services, each_serializer: ServiceSerializer)
+    render json: {data: serializers},  status: :ok
   end
 
   def show
     service = Service.find(params[:id])
-    render json: {data: service},  each_serializer: ServiceSerializer, status: :ok
+    render json: {data: ServiceSerializer.new(service)}, status: :ok
   end
 
   def create
     service = Service.new(service_params)
     if service.save
-      render json: {data: service},  each_serializer: ServiceSerializer, status: :created
+      render json: {data: ServiceSerializer.new(service)}, status: :created
     else
       render json: service.errors, status: :unprocessable_entity
     end
@@ -23,7 +24,7 @@ class ServicesController < ApplicationController
   def update
     service = Service.find(params[:id])
     if service.update(service_params)
-      render json: {data: service},  each_serializer: ServiceSerializer, status: :ok
+      render json: {data: ServiceSerializer.new(service)}, status: :ok
     else
       render json: service.errors, status: :unprocessable_entity
     end

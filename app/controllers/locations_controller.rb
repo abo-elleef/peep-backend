@@ -2,18 +2,19 @@ class LocationsController < ApplicationController
 
   def index
     locations = Location.all
-    render json: {data: locations}, each_serializer: LocationSerializer,status: :ok
+    serializers = ActiveModel::Serializer::ArraySerializer.new(locations, each_serializer: LocationSerializer)
+    render json: {data: serializers},  status: :ok
   end
 
   def show
     location = Location.find(params[:id])
-    render json: {data: location}, each_serializer: LocationSerializer, status: :ok
+    render json: {data: LocationSerializer.new(location)}, status: :ok
   end
 
   def create
     location = Location.new(location_params)
     if location.save
-      render json: {data: location}, each_serializer: LocationSerializer, status: :created
+      render json: {data: LocationSerializer.new(location)}, status: :created
     else
       render json: location.errors, status: :unprocessable_entity
     end
@@ -22,7 +23,7 @@ class LocationsController < ApplicationController
   def update
     location = Location.find(params[:id])
     if location.update(location_params)
-      render json: {data: location}, each_serializer: LocationSerializer
+      render json: {data: LocationSerializer.new(location)}, status: :ok
     else
       render json: location.errors,status: :unprocessable_entity
     end

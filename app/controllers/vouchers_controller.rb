@@ -2,18 +2,19 @@ class VouchersController < ApplicationController
 
   def index
     vouchers = Voucher.peep_filter(params.slice([:name]))
-    render json: {data: vouchers},  each_serializer: VoucherSerializer, status: :ok
+    serializers = ActiveModel::Serializer::ArraySerializer.new(vouchers, each_serializer: VoucherSerializer)
+    render json: {data: serializers},  status: :ok
   end
 
   def show
     voucher = Voucher.find(params[:id])
-    render json: {data: voucher},  each_serializer: VoucherSerializer, status: :ok
+    render json: {data: VoucherSerializer.new(voucher)}, status: :ok
   end
 
   def create
     voucher = Voucher.new(voucher_params)
     if voucher.save
-      render json: {data: voucher},  each_serializer: VoucherSerializer, status: :created
+      render json: {data: VoucherSerializer.new(voucher)}, status: :created
     else
       render json: voucher.errors, status: :unprocessable_entity
     end
@@ -22,7 +23,7 @@ class VouchersController < ApplicationController
   def update
     voucher = Voucher.find(params[:id])
     if voucher.update(voucher_params)
-      render json: {data: voucher},  each_serializer: VoucherSerializer, status: :ok
+      render json: {data: VoucherSerializer.new(voucher)}, status: :ok
     else
       render json: voucher.errors, status: :unprocessable_entity
     end

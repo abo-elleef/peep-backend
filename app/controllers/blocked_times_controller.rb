@@ -2,18 +2,19 @@ class BlockedTimesController < ApplicationController
 
   def index
     blocked_times = BlockedTime.peep_filter(params.slice(:staff_id))
-    render json: {data: blocked_times}, each_serializer: BlockedTimeSerializer,  status: :ok
+    serializers = ActiveModel::Serializer::ArraySerializer.new(blocked_times, each_serializer: BlockedTimeSerializer)
+    render json: {data: serializers},  status: :ok
   end
 
   def show
     blocked_time = BlockedTime.find(params[:id])
-    render json: {data: blocked_time}, each_serializer: BlockedTimeSerializer, status: :ok
+    render json: {data: BlockedTimeSerializer.new(blocked_time)}, status: :ok
   end
 
   def create
     blocked_time = BlockedTime.new(blocked_time_params)
     if blocked_time.save
-      render json: {data: blocked_time}, each_serializer: BlockedTimeSerializer, status: :created
+      render json: {data: BlockedTimeSerializer.new(blocked_time)}, status: :created
     else
       render json: blocked_time.errors, status: :unprocessable_entity
     end
@@ -22,7 +23,7 @@ class BlockedTimesController < ApplicationController
   def update
     blocked_time = BlockedTime.find(params[:id])
     if blocked_time.update(blocked_time_params)
-      render json: {data: blocked_time}, each_serializer: BlockedTimeSerializer, status: :ok
+      render json: {data: BlockedTimeSerializer.new(blocked_time)}, status: :ok
     else
       render json: blocked_time.errors, status: :unprocessable_entity
     end

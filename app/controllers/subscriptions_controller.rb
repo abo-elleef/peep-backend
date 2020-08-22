@@ -2,18 +2,19 @@ class SubscriptionsController < ApplicationController
 
   def index
     subscriptions = Subscription.peep_filter(params.slice(:name))
-    render json: {data: subscriptions},  each_serializer: SubscriptionSerializer, status: :ok
+    serializers = ActiveModel::Serializer::ArraySerializer.new(subscriptions, each_serializer: SubscriptionSerializer)
+    render json: {data: serializers},  status: :ok
   end
 
   def show
     subscription = Subscription.find(params[:id])
-    render json: {data: subscription},  each_serializer: SubscriptionSerializer, status: :ok
+    render json: {data: SubscriptionSerializer.new(subscription)}, status: :ok
   end
 
   def create
     subscription = Subscription.new(subscription_params)
     if subscription.save
-      render json: {data: subscription},  each_serializer: SubscriptionSerializer, status: :created
+      render json: {data: SubscriptionSerializer.new(subscription)}, status: :created
     else
       render json: subscription.errors, status: :unprocessable_entity
     end
@@ -23,7 +24,7 @@ class SubscriptionsController < ApplicationController
     subscription = Subscription.find(params[:id])
 
     if subscription.update(subscription_params)
-      render json: {data: subscription},  each_serializer: SubscriptionSerializer, status: :ok
+      render json: {data: SubscriptionSerializer.new(subscription)}, status: :ok
     else
       render json: subscription.errors, status: :unprocessable_entity
     end
