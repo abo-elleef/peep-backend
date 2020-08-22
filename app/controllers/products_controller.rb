@@ -44,7 +44,7 @@ class ProductsController < ApplicationController
     params.require(:product).permit(
         :name, :product_category_id, :product_brand_id, :barcode, :sku, :description,
         :retail_price, :special_price, :tax_included, :enable_commission, :supply_price,
-        :supplier_id, locations_products_attributes: [
+        :retail, :stock_control, :supplier_id, locations_products_attributes: [
         :id, :initial_stock, :reorder_point, :reorder_quantity
     ],
     )
