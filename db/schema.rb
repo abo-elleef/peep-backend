@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_20_182031) do
+ActiveRecord::Schema.define(version: 2020_08_22_075108) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,11 +18,11 @@ ActiveRecord::Schema.define(version: 2020_08_20_182031) do
   create_table "appointments", force: :cascade do |t|
     t.integer "status", default: 1
     t.integer "client_id"
-    t.integer "location_id"
     t.text "notes"
     t.date "date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "location_id"
     t.integer "cancellation_reason_id"
     t.index ["cancellation_reason_id"], name: "index_appointments_on_cancellation_reason_id"
     t.index ["client_id"], name: "index_appointments_on_client_id"
@@ -102,6 +102,17 @@ ActiveRecord::Schema.define(version: 2020_08_20_182031) do
     t.index ["location_id"], name: "index_closing_shifts_locations_on_location_id"
   end
 
+  create_table "deduction_usages", force: :cascade do |t|
+    t.integer "line_id"
+    t.integer "deduction_id"
+    t.integer "client_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["client_id"], name: "index_deduction_usages_on_client_id"
+    t.index ["deduction_id"], name: "index_deduction_usages_on_deduction_id"
+    t.index ["line_id"], name: "index_deduction_usages_on_line_id"
+  end
+
   create_table "deductions", force: :cascade do |t|
     t.string "name"
     t.string "deduct_type"
@@ -124,7 +135,6 @@ ActiveRecord::Schema.define(version: 2020_08_20_182031) do
     t.integer "appointment_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["appointment_id"], name: "index_invoices_on_appointment_id"
   end
 
   create_table "lines", force: :cascade do |t|
@@ -140,12 +150,10 @@ ActiveRecord::Schema.define(version: 2020_08_20_182031) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "price_name"
-    t.integer "price_id"
     t.integer "client_id"
     t.integer "service_price_id"
     t.index ["appointment_id"], name: "index_lines_on_appointment_id"
     t.index ["client_id"], name: "index_lines_on_client_id"
-    t.index ["price_id"], name: "index_lines_on_price_id"
     t.index ["service_id"], name: "index_lines_on_service_id"
     t.index ["staff_id"], name: "index_lines_on_staff_id"
   end
@@ -166,6 +174,18 @@ ActiveRecord::Schema.define(version: 2020_08_20_182031) do
     t.string "num_prefix"
     t.integer "next_num"
     t.index ["user_id"], name: "index_locations_on_user_id"
+  end
+
+  create_table "locations_products", force: :cascade do |t|
+    t.integer "location_id"
+    t.integer "product_id"
+    t.float "initial_stock"
+    t.float "reorder_point"
+    t.float "reorder_quantity"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["location_id"], name: "index_locations_products_on_location_id"
+    t.index ["product_id"], name: "index_locations_products_on_product_id"
   end
 
   create_table "locations_services", force: :cascade do |t|
@@ -229,6 +249,8 @@ ActiveRecord::Schema.define(version: 2020_08_20_182031) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "supplier_id"
+    t.boolean "retail", default: true
+    t.boolean "stock_control", default: true
     t.index ["barcode"], name: "index_products_on_barcode"
     t.index ["name"], name: "index_products_on_name"
     t.index ["product_brand_id"], name: "index_products_on_product_brand_id"
