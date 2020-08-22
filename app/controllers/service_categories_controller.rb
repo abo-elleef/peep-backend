@@ -2,20 +2,19 @@ class ServiceCategoriesController < ApplicationController
 
   def index
     service_categories = ServiceCategory.preload(services: [:service_prices]).peep_filter(params.slice(:name, :search)).limit(10)
-    render json: {data: service_categories}, each_serializer: ProductCategorySerializer,  status: :ok
+    render json: {data: service_categories}, each_serializer: ServiceCategorySerializer,  status: :ok
   end
 
   def show
     service_category = ServiceCategory.find(params[:id])
-    render json: {data: service_category},  each_serializer: ServiceCategorySerializer, status: :ok
+    render json: {data: ServiceCategorySerializer.new(service_category)}, status: :ok
 
   end
 
   def create
     service_category = ServiceCategory.new(service_category_params)
     if service_category.save
-      render json: {data: service_category},  each_serializer: ServiceCategorySerializer,
-             status: :created
+      render json: {data: ServiceCategorySerializer.new(service_category)}, status: :created
     else
       render json: service_category.errors, status: :unprocessable_entity
     end
@@ -24,8 +23,7 @@ class ServiceCategoriesController < ApplicationController
   def update
     service_category = ServiceCategory.find(params[:id])
     if service_category.update(service_category_params)
-      render json: {data: service_category},  each_serializer: ServiceCategorySerializer,
-             status: :ok
+      render json: {data: ServiceCategorySerializer.new(service_category)}, status: :ok
     else
       render json: service_category.errors, status: :unprocessable_entity
     end
