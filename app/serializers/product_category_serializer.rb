@@ -3,6 +3,6 @@ class ProductCategorySerializer < ActiveModel::Serializer
   attributes :id, :name, :updated_at
   
   attribute :products_count do |object|
-    object.products.size
+    object.object.products.size
   end
 end
