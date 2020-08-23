@@ -2,7 +2,7 @@ class ServicesController < ApplicationController
 
   def index
     filters = params.slice(:name, :search)
-    services = Service.preload(:service_prices).peep_filter(filters)
+    services = Service.preload(:service_category, :service_prices).peep_filter(filters)
     serializers = ActiveModel::Serializer::ArraySerializer.new(services, each_serializer: ServiceSerializer)
     render json: {data: serializers},  status: :ok
   end
