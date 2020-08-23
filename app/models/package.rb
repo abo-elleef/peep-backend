@@ -9,7 +9,8 @@ class Package < ApplicationRecord
   enum schedule_type: {sequence: 0, parallel: 1}
 
   # == Relationships ========================================================
-  has_and_belongs_to_many :services
+  has_and_belongs_to_many :service_prices
+  has_many :services, through: :service_prices
 
   # == Validations ==========================================================
   validates :name, :available_for, :schedule_type, :pricing_type, presence: true

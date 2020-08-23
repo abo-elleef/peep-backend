@@ -2,18 +2,20 @@ class PackagesController < ApplicationController
 
   def index
     packages = Package.peep_filter(params.slice(:name, :search))
-    render json: PackageSerializer.new(packages, include: []), status: :ok
+    serializers = ActiveModel::Serializer::ArraySerializer.new(packages, each_serializer: PackageSerializer)
+    render json: {data: serializers},  status: :ok
   end
 
   def show
     package = Package.find(params[:id])
-    render json: PackageSerializer.new(package), status: :ok
+    render  json: {data: PackageSerializer.new(package)}, status: :ok
   end
 
   def create
-    package = Package.new(package_params)
+    package = PackagePricing.new(Package.new(package_params), params).call
+    package.service_prices << ServicePrice.where(id: params[:service_prices].pluck(:id))
     if package.save
-      render json: PackageSerializer.new(package), status: :created
+      render json: {data: PackageSerializer.new(package)}, status: :created
     else
       render json: package.errors, status: :unprocessable_entity
     end
@@ -21,8 +23,9 @@ class PackagesController < ApplicationController
 
   def update
     package = Package.find(params[:id])
+    package = PackagePricing.new(package, params).call if package.pricing_type != params[:pricing_type]
     if package.update(package_params)
-      render json: PackageSerializer.new(package), status: :ok
+      render json: {data: PackageSerializer.new(package)}, status: :ok
     else
       render json: package.errors, status: :unprocessable_entity
     end
