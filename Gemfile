@@ -18,6 +18,8 @@ gem 'turbolinks', '~> 5'
 
 # json serialization
 gem 'fast_jsonapi', '~> 1.5'
+gem 'active_model_serializers', '~> 0.10.0'
+
 # pagination
 gem 'pagy',  '~> 3.8'
 # admin interface

@@ -2,18 +2,19 @@ class AppointmentsController < ApplicationController
 
   def index
     appointments = Appointment.peep_filter(params.slice(:starts_at, :ends_at, :staff_ids, :location_id))
-    render json: AppointmentSerializer.new(appointments, include: [:lines]), status: :ok
+    serializers = ActiveModel::Serializer::ArraySerializer.new(appointments, each_serializer: AppointmentSerializer)
+    render json: {data: serializers},  status: :ok
   end
 
   def show
     appointment = Appointment.find(params[:id])
-    render json: AppointmentSerializer.new(appointment, include: [:lines]), status: :ok
+    render json: {data: AppointmentSerializer.new(appointment)}, status: :ok
   end
 
   def create
     appointment = Appointment.new(appointment_params)
     if appointment.save
-      render json: AppointmentSerializer.new(appointment, include: [:lines]), status: :created
+      render json: {data: AppointmentSerializer.new(appointment)}, status: :created
     else
       render json: appointment.errors, status: :unprocessable_entity
     end
@@ -23,7 +24,7 @@ class AppointmentsController < ApplicationController
     appointment = Appointment.find(params[:id])
     if appointment.update(appointment_params)
       create_appointment_invoice(appointment.id, params[:location_id]) if params[:payments_attributes].present?
-      render json: AppointmentSerializer.new(appointment, include: [:lines]), status: :ok
+      render json: {data: AppointmentSerializer.new(appointment)}, status: :ok
     else
       render json: appointment.errors, status: :unprocessable_entity
     end

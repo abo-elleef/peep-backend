@@ -23,6 +23,8 @@ class Location < ApplicationRecord
   has_and_belongs_to_many :staffs
   has_and_belongs_to_many :services
   has_and_belongs_to_many :closing_shifts
+  has_many :locations_products
+  has_many :products, through: :locations_products
   has_many :appointments
   has_many :clients
   has_one :invoice_sequence
