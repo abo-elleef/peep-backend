@@ -8,7 +8,7 @@ class Product < ApplicationRecord
 
   belongs_to :product_category
   belongs_to :product_brand
-  belongs_to :supplier
+  belongs_to :supplier, optional:  true
   has_many :locations_products
   has_many :locations, through: :locations_products
 

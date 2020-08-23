@@ -1,14 +1,14 @@
 class ProductsController < ApplicationController
 
   def index
-    products = Product.peep_filter(params.slice(:search, :product_category_id, :product_brand_id))
+    products = Product.preload(locations_products: :location).peep_filter(params.slice(:search, :product_category_id, :product_brand_id))
     pagy, products = pagy(products, page: page_index, items: page_size)
     serializers = ActiveModel::Serializer::ArraySerializer.new(products, each_serializer: ProductSerializer)
     render json: {data: serializers, meta: pagy_meta_data(pagy)},  status: :ok
   end
 
   def show
-    product = Product.find(params[:id])
+    product = Product.preload(locations_products: :location).find(params[:id])
     render json: {data: ProductSerializer.new(product)}, status: :ok
   end
 

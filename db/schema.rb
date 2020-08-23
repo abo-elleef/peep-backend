@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_22_081621) do
+ActiveRecord::Schema.define(version: 2020_08_23_105557) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -262,9 +262,6 @@ ActiveRecord::Schema.define(version: 2020_08_22_081621) do
     t.float "retail_price"
     t.float "special_price"
     t.float "supply_price"
-    t.integer "initial_stock"
-    t.integer "reorder_point"
-    t.integer "reorder_quantity"
     t.boolean "enable_commission"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
