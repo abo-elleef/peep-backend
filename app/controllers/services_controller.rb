@@ -25,7 +25,6 @@ class ServicesController < ApplicationController
   def update
     service = Service.find(params[:id])
     if service.update(service_params)
-      debugger
       service.staff_ids = service_params[:staff_ids]
       render json: {data: ServiceSerializer.new(service)}, status: :ok
     else
