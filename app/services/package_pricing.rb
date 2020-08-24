@@ -14,7 +14,7 @@ class PackagePricing
   private
 
   def calculate_price_and_deduction
-    services_prices =  ServicePrice.where(id: params[:service_prices].pluck(:id)).pluck(:price).inject(:+)
+    services_prices =  ServicePrice.where(id: params[:service_prices].pluck(:id)).pluck(:price).sum
     if package.service?
       package.deduction_amount = 0
       package.final_price = services_prices
