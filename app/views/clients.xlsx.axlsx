@@ -1,0 +1,9 @@
+xlsx_package = Axlsx::Package.new
+    xlsx_package.workbook.add_worksheet(:name => "Clients") do |sheet|
+      sheet.add_row  ['id', 'first_name', 'last_name', 'name', 'phone',  'email',  'language', 'gender', 'birthday', 'notes', 'street', 'area',  'block', 'avenue',  'building', 'added_at' ]
+
+      @clients.map do |client|
+        sheet.add_row [client.id, client.first_name, client.last_name, client.name, client.phone, client.email, client.language, client.gender, client.birthday,client.notes,
+                         client.street,client.area, client.block,client.avenue, client.building,client.created_at]
+      end
+    end

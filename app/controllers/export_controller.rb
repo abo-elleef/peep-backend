@@ -4,11 +4,8 @@ class ExportController < ApplicationController
     if params[:export_type] == 'csv'
       send_data ExportClients.new(params).call, filename: "#{__method__}-#{Date.today}.csv"
     elsif params[:export_type] == 'xlsx'
-      filename = "#{Rails.root}/public/#{__method__}-#{Date.today}.xlsx"
-      ExportClients.new(params.merge(filename: filename)).call
-      respond_to do |format|
-        format.json { render json: {name: filename} }
-      end
+      @clients =   params[:location_ids].present? ? Client.where(location_id: params[:location_ids]) : Client.all
+      render xlsx: "#{__method__}-List-#{DateTime.now.strftime('%Y-%m-%d-%H:%M:%S')}.xlsx", template: "clients.xlsx.axlsx"
     else
       render json: {}, status: :unprocessable_entity
     end
