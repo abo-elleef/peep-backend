@@ -15,17 +15,6 @@ class ExportClients
     @params[:location_ids].present? ? Client.where(location_id: params[:location_ids]) : Client.all
   end
 
-  def build_xls_file(clients)
-    xls_package = Axlsx::Package.new
-    xls_package.workbook.add_worksheet(:name => "Clients") do |sheet|
-      sheet.add_row client_attributes.keys
-      clients.map do |client|
-        sheet.add_row client_attributes.values.map { |attr| client.send(attr) }
-      end
-    end
-
-  end
-
   def build_csv_file(clients)
     CSV.generate(headers: true) do |csv|
       csv << client_attributes.keys
