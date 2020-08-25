@@ -1,9 +1,13 @@
 class Order < ApplicationRecord
   # == Constants ============================================================
   # == Extensions ===========================================================
+  include Filterable
+  # == Attributes ===========================================================
+  enum status: {requested: 1, received: 2 }
   # == Relationships ========================================================
 
   belongs_to :supplier
+  belongs_to :location
   has_many :items
 
   # == Validations ==========================================================
