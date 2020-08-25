@@ -4,18 +4,19 @@ class ShiftsController < ApplicationController
     # TODO add index for location_id
     # TODO add compained index for location id and staff_id
     shifts = Shift.includes(:staff).peep_filter(params.slice(:location_id, :staff_id, :starts_at, :ends_at))
-    render json: ShiftSerializer.new(shifts), status: :ok
+    serializers = ActiveModel::Serializer::ArraySerializer.new(shifts, each_serializer: ShiftSerializer)
+    render json: {data: serializers},  status: :ok
   end
 
   def show
     shift = Shift.find(params[:id])
-    render json: ShiftSerializer.new(shift), status: :ok
+    render json: {data: ShiftSerializer.new(shift)}, status: :ok
   end
 
   def create
     shift = Shift.new(shift_params)
     if shift.save
-      render json: ShiftSerializer.new(shift), status: :created
+      render json: {data: ShiftSerializer.new(shift)}, status: :created
     else
       render json: shift.errors, status: :unprocessable_entity
     end
@@ -24,7 +25,7 @@ class ShiftsController < ApplicationController
   def update
     shift = Shift.find(params[:id])
     if shift.update(shift_params)
-      render json: ShiftSerializer.new(shift), status: :ok
+      render json: {data: ShiftSerializer.new(shift)}, status: :ok
     else
       render json: shift.errors, status: :unprocessable_entity
     end

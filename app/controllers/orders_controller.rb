@@ -3,18 +3,19 @@ class OrdersController < ApplicationController
   def index
     orders = Order.peep_filter(params.slice(:search, :order_category_id, :order_brand_id))
     pagy, orders = pagy(orders, page: page_index, items: page_size)
-    render json: OrderSerializer.new(orders, meta: pagy_meta_data(pagy)), status: :ok
+    serializers = ActiveModel::Serializer::ArraySerializer.new(orders, each_serializer: OrderSerializer)
+    render json: {data: serializers, meta: pagy_meta_data(pagy)},  status: :ok
   end
 
   def show
     order = Order.find(params[:id])
-    render json: OrderSerializer.new(order), status: :ok
+    render json: {data:OrderSerializer.new(order)}, status: :ok
   end
 
   def create
     order = Order.new(order_params)
     if order.save
-      render json: OrderSerializer.new(order), status: :created
+      render json: {data:OrderSerializer.new(order)}, status: :created
     else
       render json: order.errors, status: :unprocessable_entity
     end
@@ -23,7 +24,7 @@ class OrdersController < ApplicationController
   def update
     order = Order.find(params[:id])
     if order.update(order_params)
-      render json: OrderSerializer.new(order), status: :ok
+      render json: {data:OrderSerializer.new(order)}, status: :ok
     else
       render json: order.errors, status: :unprocessable_entity
     end

@@ -3,19 +3,21 @@ class ClientsController < ApplicationController
   def index
     clients = Client.search(params[:search])
     pagy, clients = pagy(clients, page: page_index, items: page_size )
-    render json: ClientSerializer.new(clients, meta: pagy_meta_data(pagy)), status: :ok
+    serializers = ActiveModel::Serializer::ArraySerializer.new(clients, each_serializer: ClientSerializer)
+    render json: {data: serializers, meta: pagy_meta_data(pagy)},  status: :ok
+
   end
 
   def show
     client = Client.find(params[:id])
-    render json: ClientSerializer.new(client), status: :ok
+    render json: { data: ClientSerializer.new(client) },  status: :ok
   end
 
   def create
     client = Client.new(client_params)
     client.location = current_location
     if client.save
-      render json: ClientSerializer.new(client), status: :created
+      render json: { data: ClientSerializer.new(client) }, status: :created
     else
       render json: client.errors,status: :unprocessable_entity
     end
@@ -24,7 +26,7 @@ class ClientsController < ApplicationController
   def update
     client = Client.find(params[:id])
     if client.update(client_params)
-      render json: ClientSerializer.new(client), status: :ok
+      render json: { data: ClientSerializer.new(client) },  status: :ok
     else
       render json: client.errors,status: :unprocessable_entity
     end

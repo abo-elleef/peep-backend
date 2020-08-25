@@ -2,19 +2,21 @@ class ServicesController < ApplicationController
 
   def index
     filters = params.slice(:name, :search)
-    services = Service.preload(:service_prices).peep_filter(filters)
-    render json: ServiceSerializer.new(services, include: []), status: :ok
+    services = Service.preload(:service_category, :service_prices, :staffs).peep_filter(filters)
+    serializers = ActiveModel::Serializer::ArraySerializer.new(services, each_serializer: ServiceSerializer)
+    render json: {data: serializers},  status: :ok
   end
 
   def show
     service = Service.find(params[:id])
-    render json: ServiceSerializer.new(service, include: [:service_prices]), status: :ok
+    render json: {data: ServiceSerializer.new(service)}, status: :ok
   end
 
   def create
     service = Service.new(service_params)
     if service.save
-      render json: ServiceSerializer.new(service, include: [:service_prices]), status: :created
+      service.staff_ids = service_params[:staff_ids]
+      render json: {data: ServiceSerializer.new(service)}, status: :created
     else
       render json: service.errors, status: :unprocessable_entity
     end
@@ -23,7 +25,9 @@ class ServicesController < ApplicationController
   def update
     service = Service.find(params[:id])
     if service.update(service_params)
-      render json: ServiceSerializer.new(service, include: [:service_prices]), status: :ok
+      debugger
+      service.staff_ids = service_params[:staff_ids]
+      render json: {data: ServiceSerializer.new(service)}, status: :ok
     else
       render json: service.errors, status: :unprocessable_entity
     end
@@ -45,7 +49,8 @@ class ServicesController < ApplicationController
                                     :available_for, :staff_commission, :extra_time,
                                      :extra_time_type, :extra_time_duration, :service_category_id,
                                      location_ids: [], staff_ids: [],
-                                     service_prices_attributes: [:id, :service_id, :name, :duration,
-                                                                 :pricing_type, :price, :special_price])
+                                     service_prices_attributes: [
+                                         :id, :service_id, :name, :duration, :pricing_type,
+                                         :price, :special_price, :_destroy])
   end
 end
