@@ -5,7 +5,7 @@ class PackageSerializer < ActiveModel::Serializer
 
   def percentage_deduction_value
     if object.pricing_type == 2
-      (object.try(:deduction_amount) / (object.try(:deduction_amount) + object.try(:final_price))) * 100
+      (object.try(:deduction_amount).to_f / (object.try(:deduction_amount).to_f + object.try(:final_price).to_f)) * 100
     end
   end
 
