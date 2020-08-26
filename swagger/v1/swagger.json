@@ -269,6 +269,9 @@
                             "service_name": {
                               "type": "integer"
                             },
+                            "service_price_id": {
+                              "type": "integer"
+                            },
                             "price_name": {
                               "type": "string"
                             },
@@ -315,8 +318,8 @@
         }
       }
     },
-    "appointments/check_hints": {
-      "put": {
+    "/appointments/check_hints": {
+      "post": {
         "summary": "check appointment hints",
         "tags": [
           "appointments"
@@ -338,6 +341,32 @@
           "404": {
             "description": "hint not found",
             "content": {
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "location_id": {
+                    "type": "integer"
+                  },
+                  "service_id": {
+                    "type": "integer"
+                  },
+                  "staff_id": {
+                    "type": "integer"
+                  },
+                  "duration": {
+                    "type": "integer"
+                  },
+                  "starts_at": {
+                    "type": "string"
+                  }
+                }
+              }
             }
           }
         }
@@ -1303,9 +1332,6 @@
                       "location_id": {
                         "type": "integer"
                       },
-                      "location_name": {
-                        "type": "string"
-                      },
                       "num_prefix": {
                         "type": "string"
                       },
@@ -1436,9 +1462,6 @@
                     "properties": {
                       "location_id": {
                         "type": "integer"
-                      },
-                      "location_name": {
-                        "type": "string"
                       },
                       "num_prefix": {
                         "type": "string"
