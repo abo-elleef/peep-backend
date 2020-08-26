@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   resources :subscriptions
   resources :discounts
   resources :vouchers
+  resources :packages
   resources :invoices, only: [:index]
   get "export/clients", to: "export#clients"
   get "export/services", to: "export#services"
