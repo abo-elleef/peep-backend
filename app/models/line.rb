@@ -5,6 +5,7 @@ class Line < ApplicationRecord
   belongs_to :appointment, inverse_of: :lines
   belongs_to :client
   belongs_to :service_price
+  belongs_to :staff
 
   # == Validations ==========================================================
   validates_presence_of :appointment

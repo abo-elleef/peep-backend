@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   resources :services
   resources :service_categories
   resources :appointments
+  resources :orders
   resources :product_brands
   resources :product_categories
   resources :payment_types

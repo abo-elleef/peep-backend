@@ -3,6 +3,7 @@ class Item < ApplicationRecord
   # == Extensions ===========================================================
   # == Relationships ========================================================
   belongs_to :order
+  belongs_to :product
   # == Validations ==========================================================
   validates :requested_price, :requested_quantity,  presence:  true
   # == Scopes ===============================================================
