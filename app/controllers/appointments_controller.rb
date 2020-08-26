@@ -1,7 +1,7 @@
 class AppointmentsController < ApplicationController
 
   def index
-    appointments = Appointment.peep_filter(params.slice(:starts_at, :ends_at, :staff_ids, :location_id))
+    appointments = Appointment.preload(:payments, lines: :staff).peep_filter(params.slice(:starts_at, :ends_at, :staff_ids, :location_id))
     serializers = ActiveModel::Serializer::ArraySerializer.new(appointments, each_serializer: AppointmentSerializer)
     render json: {data: serializers},  status: :ok
   end
