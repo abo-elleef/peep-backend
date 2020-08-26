@@ -19,8 +19,8 @@ class PackagePricing
       package.deduction_amount = 0
       package.final_price = services_prices
     elsif package.custom?
-      package.deduction_amount= services_prices - params[:total_price]
-      package.final_price = params[:total_price]
+      package.deduction_amount= services_prices - params[:final_price]
+      package.final_price = params[:final_price]
     elsif package.percentage?
       package.deduction_amount = (params[:deduction_percentage] * services_prices) / 100
       package.final_price  = services_prices - ((params[:deduction_percentage] * services_prices) / 100)

@@ -1,7 +1,7 @@
 class PackagesController < ApplicationController
 
   def index
-    packages = Package.peep_filter(params.slice(:name, :search))
+    packages = Package.preload(:service_prices, :services).peep_filter(params.slice(:name, :search))
     serializers = ActiveModel::Serializer::ArraySerializer.new(packages, each_serializer: PackageSerializer)
     render json: {data: serializers}, status: :ok
   end

@@ -269,6 +269,9 @@
                             "service_name": {
                               "type": "integer"
                             },
+                            "service_price_id": {
+                              "type": "integer"
+                            },
                             "price_name": {
                               "type": "string"
                             },
@@ -1303,9 +1306,6 @@
                       "location_id": {
                         "type": "integer"
                       },
-                      "location_name": {
-                        "type": "string"
-                      },
                       "num_prefix": {
                         "type": "string"
                       },
@@ -1436,9 +1436,6 @@
                     "properties": {
                       "location_id": {
                         "type": "integer"
-                      },
-                      "location_name": {
-                        "type": "string"
                       },
                       "num_prefix": {
                         "type": "string"
@@ -1695,6 +1692,252 @@
                       },
                       "updated_at": {
                         "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/packages": {
+      "get": {
+        "summary": "Retrieves a set of packages",
+        "tags": [
+          "packages"
+        ],
+        "responses": {
+          "200": {
+            "description": "packages set",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "create an package record",
+        "tags": [
+          "packages"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "201": {
+            "description": "package created",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "442": {
+            "description": "bad data or breaks validation ",
+            "content": {
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "package": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "available_for": {
+                        "type": "integer"
+                      },
+                      "pricing_type": {
+                        "type": "integer"
+                      },
+                      "deduction_amount": {
+                        "type": "number"
+                      },
+                      "final_price": {
+                        "type": "number"
+                      },
+                      "schedule_type": {
+                        "type": "integer"
+                      },
+                      "service_prices": {
+                        "type": "array",
+                        "items": {
+                          "properties": {
+                            "id": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/packages/{id}": {
+      "get": {
+        "summary": "show details of a package",
+        "tags": [
+          "packages"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "packages data",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "404": {
+            "description": "packages not found",
+            "content": {
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "delete package",
+        "tags": [
+          "packages"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "packages data",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "404": {
+            "description": "package not found",
+            "content": {
+            }
+          },
+          "442": {
+            "description": "can not be deleted",
+            "content": {
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "update an package record",
+        "tags": [
+          "packages"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "package updated",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "442": {
+            "description": "bad data or breaks validation ",
+            "content": {
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "package": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "description": {
+                        "type": "string"
+                      },
+                      "available_for": {
+                        "type": "integer"
+                      },
+                      "pricing_type": {
+                        "type": "integer"
+                      },
+                      "deduction_percentage": {
+                        "type": "number"
+                      },
+                      "final_price": {
+                        "type": "number"
+                      },
+                      "schedule_type": {
+                        "type": "integer"
+                      },
+                      "service_prices": {
+                        "type": "array",
+                        "items": {
+                          "properties": {
+                            "id": {
+                              "type": "integer"
+                            }
+                          }
+                        }
                       }
                     }
                   }
