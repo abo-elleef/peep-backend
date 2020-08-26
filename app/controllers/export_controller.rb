@@ -11,4 +11,15 @@ class ExportController < ApplicationController
     end
   end
 
+
+  def services
+    services = ServicePrice.preload(service: :service_category)
+    respond_to do |format|
+      format.pdf do
+        pdf = Exports::ServicesPdf.new(services)
+        send_data pdf.render, filename: "Services-List-#{DateTime.now.strftime('%Y-%m-%d-%H:%M:%S')}", type: "application/pdf", disposition: "inline"
+      end
+    end
+  end
+
 end
