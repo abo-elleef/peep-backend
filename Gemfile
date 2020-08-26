@@ -39,6 +39,10 @@ gem 'rack-cors', '~> 1.1'
 gem 'caxlsx', '~> 3.0', '>= 3.0.2'
 gem 'caxlsx_rails', '~> 0.6.2'
 
+#exporting pdf
+gem 'prawn', '~> 2.1'
+gem 'prawn-table', '~> 0.2.2'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

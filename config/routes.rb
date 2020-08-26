@@ -27,6 +27,7 @@ Rails.application.routes.draw do
   resources :vouchers
   resources :invoices, only: [:index]
   get "export/clients", to: "export#clients"
+  get "export/services", to: "export#services"
   post "appointments/check_hints", to: "appointments#check_hints"
 
   # Reports Routes
