@@ -12,7 +12,7 @@ class ExportController < ApplicationController
 
 
   def services
-    services = ServicePrice.includes(service: :service_category)
+    services = ServicePrice.preload(service: :service_category)
     respond_to do |format|
       format.pdf do
         pdf = Exports::ServicesPdf.new(services)

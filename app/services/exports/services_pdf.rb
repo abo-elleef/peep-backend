@@ -3,7 +3,7 @@ module Exports
   class ServicesPdf < Prawn::Document
 
     def initialize(services)
-      super(top_margin: 70, page_size: 'A3')
+      super(top_margin: 70, page_size: 'A4')
       @services = services
       export_text
       services_table
