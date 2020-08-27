@@ -168,3 +168,61 @@
 #   order.update({total_cost: items.map(&:product).flatten.map(&:retail_price).flatten.sum})
 #
 # end
+# ========== create service prices =================================================================
+# services = Service.all;
+# 200.times do |index|
+#   ServicePrice.create!({
+#                           service_id: services.sample.id,
+#                           price: rand(10..100),
+#                           name: " price #{index}",
+#                           duration: rand(60..120),
+#                           pricing_type: rand(1..3)
+#                       })
+# end
+# ========== create Appointments with lines  =======================================================
+# start_date = Date.new(2020, 8, 15);
+# hours = (6..18).to_a;
+# days = [];
+# staffs = Staff.all;
+# clients = Client.all;
+# locations = Location.all;
+# prices = ServicePrice.all
+# 21.times {|index| days << start_date + index.day };
+# 1000.times do |appointment_index|
+#   location = locations.sample
+#   staff = staffs.sample
+#   client = clients.sample
+#   service_price = prices.sample
+#   day = days.sample
+#   time = day + hours.sample.hour
+#   lines = []
+#   rand(1..3).times do |index|
+#     start_time = time + rand(1..3).hour
+#     end_time = start_time + rand(60..120).minute
+#     lines << {
+#         staff_id: staff.id,
+#         client_id: client.id,
+#         price: service_price.price * 0.8,
+#         starts_at: start_time,
+#         ends_at: end_time,
+#         original_price: service_price.price,
+#         staff_name: staff.name,
+#         service_name: service_price.service.name,
+#         service_id: service_price.service.id,
+#         service_price_id: service_price.id,
+#         price_name: service_price.name.presence || "blank price name ",
+#         created_at: time,
+#         updated_at: time
+#     }
+#   end
+#   Appointment.create!({
+#                           status: rand(1...6),
+#                           client_id: client.id,
+#                           location_id: location.id,
+#                           notes: " #{appointment_index}-- long appointment notes",
+#                           date: day,
+#                           created_at: time,
+#                           updated_at: time,
+#                           lines_attributes: lines
+#                       })
+# end
