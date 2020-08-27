@@ -3,12 +3,6 @@ module Exports
     class Services
 
       def self.perform(services, packages)
-        build_csv_file(services, packages)
-      end
-
-      private
-
-      def self.build_csv_file(services, packages)
         CSV.generate(headers: true) do |csv|
           csv << ['Service ID', 'Service Name', 'Retail Price', 'Duration', 'Extra Time', 'Description', 'Category Name', 'Treatment Type', 'AvailableFor',
                   'Commissions']
@@ -23,6 +17,7 @@ module Exports
           end
         end
       end
+
     end
   end
 end

@@ -3,12 +3,6 @@ module Exports
     class Staffs
 
       def self.perform(staffs)
-        build_csv_file(staffs)
-      end
-
-      private
-
-      def self.build_csv_file(staffs)
         CSV.generate(headers: true) do |csv|
           csv << ['Id', 'First Name', 'Last Name', 'Mobile Number', 'Email', 'Appointments', 'Start Date', 'End Date', 'Notes', 'Service Commission', 'Product Commission', 'Voucher Commission']
           staffs.map do |staff|
@@ -17,6 +11,7 @@ module Exports
           end
         end
       end
+
     end
   end
 end

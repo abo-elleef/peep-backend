@@ -3,12 +3,6 @@ module Exports
     class Clients
 
       def self.perform(clients)
-        build_csv_file(clients)
-      end
-
-      private
-
-      def self.build_csv_file(clients)
         CSV.generate(headers: true) do |csv|
           csv << client_attributes.keys
           clients.map do |client|
@@ -16,6 +10,8 @@ module Exports
           end
         end
       end
+
+      private
 
       def self.client_attributes
         {

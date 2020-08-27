@@ -3,12 +3,7 @@ module Exports
     class Products
 
       def self.perform(products)
-        build_csv_file(products)
-      end
-
-      private
-      # TODO   add  For Lost, Location count,  Total stock
-      def self.build_csv_file(products)
+        # TODO   add  For Lost, Location count,  Total stock
         CSV.generate(headers: true) do |csv|
           csv << ['Product name', 'SKU', 'Barcode', 'Description', 'Cost price', 'Full price', 'Special Price', 'Category', 'Brand', 'Supplier']
           products.map do |product|
@@ -17,6 +12,7 @@ module Exports
           end
         end
       end
+
     end
   end
 end
