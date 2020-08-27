@@ -19,12 +19,8 @@ class ExportController < ApplicationController
     elsif params[:export_type] == 'xlsx'
       render xlsx: @file_name, template: "xlsx_generators/services.xlsx.axlsx"
     elsif params[:export_type] == 'pdf'
-      respond_to do |format|
-        format.pdf do
-          pdf = Exports::PdfGenerators::Services.new(@services)
-          send_data pdf.render, filename: @file_name, type: "application/pdf", disposition: "inline"
-        end
-      end
+      pdf = Exports::PdfGenerators::Services.new(@services)
+      send_data pdf.render, filename: @file_name
     else
       render json: {}, status: :unprocessable_entity
     end
@@ -43,8 +39,9 @@ class ExportController < ApplicationController
   end
 
   private
+
   def set_file_name
-    @file_name =  "#{action_name}-List-#{DateTime.now.strftime('%Y-%m-%d-%H:%M:%S')}.#{params[:export_type]}"
+    @file_name = "#{action_name}-List-#{DateTime.now.strftime('%Y-%m-%d-%H:%M:%S')}.#{params[:export_type]}"
   end
 
 end
