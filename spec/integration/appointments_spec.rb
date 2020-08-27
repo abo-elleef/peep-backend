@@ -15,7 +15,7 @@ describe 'Appointments API' do
     end
   end
 
-  #Shoow appointment
+  #Show appointment
   path '/appointments/{id}' do
     get 'show details of a appointment' do
       tags 'appointments'
@@ -79,6 +79,7 @@ describe 'Appointments API' do
                                   service_id: {type: :integer},
                                   client_id: {type: :integer},
                                   service_name: {type: :integer},
+                                  service_price_id: {type: :integer},
                                   price_name: {type: :string},
                                   price: {type: :number},
                                   original_price: {type: :number},
@@ -222,10 +223,10 @@ describe 'Appointments API' do
   end
 
   #Check Hints
-  path 'appointments/check_hints' do
-    put 'check appointment hints' do
+  path '/appointments/check_hints' do
+    post 'check appointment hints' do
       tags 'appointments'
-      produces 'application/json'
+      consumes 'application/json'
       parameter name: :params, in: :body, schema: {
           type: :object,
           properties: {

@@ -1,0 +1,13 @@
+xlsx_package = Axlsx::Package.new
+    xlsx_package.workbook.add_worksheet(:name => "Services") do |sheet|
+      sheet.add_row ['Service ID', 'Service Name', 'Retail Price', 'Duration', 'Extra Time', 'Description', 'Category Name', 'Treatment Type', 'AvailableFor', 'Commissions']
+      @packages.map do |package|
+      service = package.services.first
+        sheet.add_row  [package.id, package.name, package.final_price, package.full_duration, service.try(:extra_time), package.description,
+                          service.try(:service_category).try(:name), 'Inherited from services', service.try(:available_for), service.try(:staff_commission)]
+      end
+      @services.map do |item|
+        sheet.add_row  [item.service_id, item.service.name, item.price, item.duration, item.service.extra_time, item.service.description,
+                                   item.service.service_category.name, item.service.treatment_type_id, item.service.available_for, item.service.staff_commission]
+      end
+    end
