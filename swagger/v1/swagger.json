@@ -92,6 +92,9 @@
                             "service_name": {
                               "type": "integer"
                             },
+                            "service_price_id": {
+                              "type": "integer"
+                            },
                             "price_name": {
                               "type": "string"
                             },

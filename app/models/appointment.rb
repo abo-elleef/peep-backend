@@ -22,6 +22,7 @@ class Appointment < ApplicationRecord
   # == Validations ==========================================================
   validates_presence_of :location_id
   validates :cancellation_reason_id, presence: true, if: :cancelled?
+  validates :lines, presence: true
 
   # == Scopes ===============================================================
   scope :by_date, -> (starts_at, ends_at) { where("date >= ? AND date <= ?  ", starts_at, ends_at) }
