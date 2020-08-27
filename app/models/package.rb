@@ -15,6 +15,7 @@ class Package < ApplicationRecord
   # == Validations ==========================================================
   validates :name, :available_for, :schedule_type, :pricing_type, presence: true
   validates :deduction_amount, presence: true, if: [:custom?, :percentage?]
+  validates :service_prices, presence: true
 
   # == Scopes ===============================================================
   scope :by_search, -> (search) { where("name ilike ?", "%" + search + "%").
