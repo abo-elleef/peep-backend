@@ -1,8 +1,8 @@
 class LineSerializer < ActiveModel::Serializer
   # include FastJsonapi::ObjectSerializer
-  attributes :id, :appointment_id, :staff_id, :service_id, :service_price_id,
-             :price_name, :price, :original_price, :staff_name, :staff_name, :starts_at,
-             :ends_at
+  attributes :id, :appointment_id, :staff_id, :service_id, :client_id, :service_name,
+             :service_price_id, :price_name, :price, :original_price, :staff_name, :starts_at, :ends_at
+
   attribute :color do |serializer|
     serializer.object.staff.booking_color
   end
