@@ -1,5 +1,5 @@
 xlsx_package = Axlsx::Package.new
-    xlsx_package.workbook.add_worksheet(:name => "Staffs") do |sheet|
+    xlsx_package.workbook.add_worksheet(:name => "Services") do |sheet|
       sheet.add_row ['Service ID', 'Service Name', 'Retail Price', 'Duration', 'Extra Time', 'Description', 'Category Name', 'Treatment Type', 'AvailableFor', 'Commissions']
       @packages.map do |package|
       service = package.services.first

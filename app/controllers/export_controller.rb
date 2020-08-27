@@ -39,6 +39,17 @@ class ExportController < ApplicationController
     end
   end
 
+  def products
+    @products = Product.preload(:supplier, :product_brand, :product_category)
+    if params[:export_type] == 'csv'
+      send_data Exports::CsvGenerators::Products.perform(@products), filename: @file_name
+    elsif params[:export_type] == 'xlsx'
+      render xlsx: @file_name, template: "xlsx_generators/products.xlsx.axlsx"
+    else
+      render json: {}, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def set_file_name
