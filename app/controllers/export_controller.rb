@@ -2,7 +2,7 @@ class ExportController < ApplicationController
   before_action :set_file_name
 
   def clients
-    @clients = params[:location_ids].present? ? Client.where(location_id: params[:location_ids]) : Client.all
+    @clients = params[:location_id].present? ? Client.where(location_id: params[:location_id]) : Client.all
     if params[:export_type] == 'csv'
       send_data Exports::CsvGenerators::Clients.perform(@clients), filename: @file_name
     elsif params[:export_type] == 'xlsx'
@@ -29,7 +29,7 @@ class ExportController < ApplicationController
   end
 
   def staffs
-    @staffs = params[:location_ids].present? ? Staff.where(location_id: params[:location_ids]) : Staff.all
+    @staffs = params[:location_id].present? ? Staff.where(location_id: params[:location_id]) : Staff.all
     if params[:export_type] == 'csv'
       send_data Exports::CsvGenerators::Staffs.perform(@staffs), filename: @file_name
     elsif params[:export_type] == 'xlsx'
