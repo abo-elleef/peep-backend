@@ -4,7 +4,7 @@ module Exports
     class Services < Prawn::Document
 
       def initialize(services)
-        super(top_margin: 70, page_size: 'A4')
+        super(margin: 70, page_size: 'A4',  page_layout: :landscape)
         @services = services
         export_text
         services_table
@@ -22,8 +22,9 @@ module Exports
         move_down 20
         table services_table_rows do
           row(0).font_style = :bold
-          columns(1..-1).align = :center
+          columns(0..-1).align = :center
           self.header = true
+          self.cell_style = { size: 7 }
         end
 
       end

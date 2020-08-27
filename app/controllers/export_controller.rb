@@ -20,7 +20,7 @@ class ExportController < ApplicationController
       render xlsx: @file_name, template: "xlsx_generators/services.xlsx.axlsx"
     elsif params[:export_type] == 'pdf'
       pdf = Exports::PdfGenerators::Services.new(@services)
-      send_data pdf.render, filename: @file_name
+      send_data pdf.render, filename: @file_name, disposition: :inline
     else
       render json: {}, status: :unprocessable_entity
     end
