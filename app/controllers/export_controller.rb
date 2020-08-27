@@ -14,12 +14,13 @@ class ExportController < ApplicationController
 
   def services
     @services = ServicePrice.preload(service: :service_category)
+    @packages = Package.preload(service_prices: {service: :service_category})
     if params[:export_type] == 'csv'
-      send_data Exports::CsvGenerators::Services.perform(@services), filename: @file_name
+      send_data Exports::CsvGenerators::Services.perform(@services, @packages), filename: @file_name
     elsif params[:export_type] == 'xlsx'
       render xlsx: @file_name, template: "xlsx_generators/services.xlsx.axlsx"
     elsif params[:export_type] == 'pdf'
-      pdf = Exports::PdfGenerators::Services.new(@services)
+      pdf = Exports::PdfGenerators::Services.new(@services, @packages)
       send_data pdf.render, filename: @file_name, disposition: :inline
     else
       render json: {}, status: :unprocessable_entity

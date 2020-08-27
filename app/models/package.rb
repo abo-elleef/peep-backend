@@ -25,4 +25,8 @@ class Package < ApplicationRecord
   # == Class Methods ========================================================
   # == Instance Methods =====================================================
 
+  def full_duration
+    self.sequence? ? self.service_prices.maximum(:duration) : self.service_prices.sum(:duration)
+  end
+
 end
