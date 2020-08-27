@@ -50,6 +50,19 @@ class ExportController < ApplicationController
     end
   end
 
+  def orders
+    # TODO  add locations and types
+    @orders = Order.preload(:supplier).peep_filter(params.slice(:supplier_id, :status))
+    if params[:export_type] == 'csv'
+      send_data Exports::CsvGenerators::Orders.perform(@orders), filename: @file_name
+    elsif params[:export_type] == 'xlsx'
+      render xlsx: @file_name, template: "xlsx_generators/orders.xlsx.axlsx"
+    else
+      render json: {}, status: :unprocessable_entity
+    end
+
+  end
+
   private
 
   def set_file_name

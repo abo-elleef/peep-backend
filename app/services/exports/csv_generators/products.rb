@@ -7,7 +7,7 @@ module Exports
       end
 
       private
-
+      # TODO   add  For Lost, Location count,  Total stock
       def self.build_csv_file(products)
         CSV.generate(headers: true) do |csv|
           csv << ['Product name', 'SKU', 'Barcode', 'Description', 'Cost price', 'Full price', 'Special Price', 'Category', 'Brand', 'Supplier']
