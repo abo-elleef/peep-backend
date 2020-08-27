@@ -79,6 +79,7 @@ describe 'Appointments API' do
                                   service_id: {type: :integer},
                                   client_id: {type: :integer},
                                   service_name: {type: :integer},
+                                  service_price_id: {type: :integer},
                                   price_name: {type: :string},
                                   price: {type: :number},
                                   original_price: {type: :number},
