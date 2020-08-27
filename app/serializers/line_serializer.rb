@@ -6,4 +6,7 @@ class LineSerializer < ActiveModel::Serializer
   attribute :color do |serializer|
     serializer.object.staff.booking_color
   end
+  attribute :client_name do |serializer|
+    serializer.object.client.try(:name)
+  end
 end
