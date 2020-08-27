@@ -30,6 +30,9 @@ Rails.application.routes.draw do
   resources :invoices, only: [:index]
   get "export/clients", to: "export#clients"
   get "export/services", to: "export#services"
+  get "export/staffs", to: "export#staffs"
+  get "export/products", to: "export#products"
+  get "export/orders", to: "export#orders"
   post "appointments/check_hints", to: "appointments#check_hints"
 
   # Reports Routes
