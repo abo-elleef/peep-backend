@@ -16,6 +16,9 @@ class Order < ApplicationRecord
   validates_presence_of :status
 
   # == Scopes ===============================================================
+  scope :by_supplier_id, -> (supplier_id) { where(supplier_id: supplier_id) }
+  scope :by_status, -> (status) {where(status: status)}
+
   # == Callbacks ============================================================
   before_validation :fill_status
   after_commit :calculate_total_cost, on: [:create, :update]

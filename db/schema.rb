@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_26_002554) do
+ActiveRecord::Schema.define(version: 2020_08_27_235109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -224,6 +224,25 @@ ActiveRecord::Schema.define(version: 2020_08_26_002554) do
     t.integer "location_id"
     t.index ["location_id"], name: "index_orders_on_location_id"
     t.index ["supplier_id"], name: "index_orders_on_supplier_id"
+  end
+
+  create_table "packages", force: :cascade do |t|
+    t.string "name"
+    t.text "description"
+    t.integer "available_for"
+    t.integer "pricing_type"
+    t.float "deduction_amount"
+    t.float "final_price"
+    t.integer "schedule_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "packages_service_prices", id: false, force: :cascade do |t|
+    t.bigint "package_id", null: false
+    t.bigint "service_price_id", null: false
+    t.index ["package_id"], name: "index_packages_service_prices_on_package_id"
+    t.index ["service_price_id"], name: "index_packages_service_prices_on_service_price_id"
   end
 
   create_table "payment_types", force: :cascade do |t|
