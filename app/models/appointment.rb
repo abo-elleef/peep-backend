@@ -26,8 +26,8 @@ class Appointment < ApplicationRecord
 
   # == Scopes ===============================================================
   scope :by_date, -> (starts_at, ends_at) { where("date >= ? AND date <= ?  ", starts_at, ends_at) }
-  scope :by_location, -> (location_ids) { where(location_id: location_ids) }
-  scope :by_staff, -> (staff_ids){ joins(:lines).where(lines: { staff_id: staff_ids })}
+  scope :by_location_id, -> (location_ids) { where(location_id: location_ids) }
+  scope :by_staff_ids, -> (staff_ids){ joins(:lines).where(lines: { staff_id: staff_ids })}
   scope :by_service, -> (service_ids){ joins(:lines).where(lines: {service_id: service_ids} )}
 
   # == Callbacks ============================================================
