@@ -23,8 +23,11 @@ class Product < ApplicationRecord
   scope :by_search, -> (search) { where("name ilike ?", "%" + search + "%").
       or(where("barcode ilike ?",  "%" + search + "%")).
       or(where("sku ilike ?",  "%" + search + "%")) }
-  scope :by_product_category_id, -> (product_category_id) { where(product_category_id: product_category_id) }
-  scope :by_product_brand_id, -> (product_brand_id) { where(product_brand_id: product_brand_id) }
+  scope :by_product_category_ids, -> (product_category_id) { where(product_category_id: product_category_id) }
+  scope :by_product_brand_ids, -> (product_brand_id) { where(product_brand_id: product_brand_id) }
+  scope :by_supplier_ids, -> (supplier_id) { where(supplier_id: supplier_id) }
+  scope :by_location_ids, -> (location_id) { joins(:locations).where(locations:{id: location_id}).
+      distinct }
 
   # == Callbacks ============================================================
   # == Class Methods ========================================================
