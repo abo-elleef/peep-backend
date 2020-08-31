@@ -16,5 +16,10 @@ module Reports
       render json: {data: data}, status: :ok
     end
 
+    def sales_report
+      date = Reports::Sales::SalesReport.new(params).perform
+      render json: {data: data}, status: :ok
+    end
+
   end
 end
