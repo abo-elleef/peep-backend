@@ -2,10 +2,12 @@ class Line < ApplicationRecord
   # == Constants ============================================================
   # == Extensions ===========================================================
   # == Relationships ========================================================
+
   belongs_to :appointment, inverse_of: :lines
   belongs_to :client
   belongs_to :service_price
   belongs_to :staff
+  belongs_to :sellable, polymorphic: true
 
   # == Validations ==========================================================
   validates_presence_of :appointment
