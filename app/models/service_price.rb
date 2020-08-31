@@ -6,7 +6,7 @@ class ServicePrice < ApplicationRecord
 
   # == Relationships ========================================================
   belongs_to :service, inverse_of: :service_prices
-  has_many :lines
+  has_many :lines, as: :sellable
   has_many :packages
 
   # == Validations ==========================================================

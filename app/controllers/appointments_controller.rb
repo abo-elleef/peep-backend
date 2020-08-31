@@ -56,7 +56,7 @@ class AppointmentsController < ApplicationController
     params.require(:appointment).permit(
         :status, :client_id, :location_id, :notes, :date, :cancellation_reason_id,
         lines_attributes: [:id, :appointment_id, :staff_id, :service_id, :client_id,
-                           :service_name, :service_price_id, :price_name, :price,
+                           :service_name, :sellable_id, :sellable_type, :sellable_name, :price,
                            :original_price, :staff_name, :starts_at, :ends_at
         ],
         payments_attributes: [:id, :appointment_id, :payment_type_id, :amount],
