@@ -16,10 +16,29 @@ module Reports
       render json: {data: data}, status: :ok
     end
 
-    def sales_report
-      date = Reports::Sales::SalesReport.new(params).perform
-      render json: {data: data}, status: :ok
+    def sales_by_product
+      results = Reports::Sales::SalesReport.new(params).sales_by_product
+      render json: {sales: results}, status: :ok
     end
 
+    def sales_by_service
+      results = Reports::Sales::SalesReport.new(params).sales_by_service
+      render json: {sales: results}, status: :ok
+    end
+
+    def sales_by_location
+      results = Reports::Sales::SalesReport.new(params).sales_by_location
+      render json: {sales: results}, status: :ok
+    end
+
+    def sales_by_client
+      results = Reports::Sales::SalesReport.new(params).sales_by_client
+      render json: {sales: results}, status: :ok
+    end
+
+    def sales_by_staff
+      results = Reports::Sales::SalesReport.new(params).sales_by_staff
+      render json: {sales: results}, status: :ok
+    end
   end
 end
