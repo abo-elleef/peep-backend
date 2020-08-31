@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_27_235109) do
+ActiveRecord::Schema.define(version: 2020_08_31_025543) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -162,9 +162,10 @@ ActiveRecord::Schema.define(version: 2020_08_27_235109) do
     t.datetime "ends_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "price_name"
+    t.string "sellable_name"
     t.integer "client_id"
-    t.integer "service_price_id"
+    t.string "sellable_type"
+    t.integer "sellable_id"
     t.index ["appointment_id"], name: "index_lines_on_appointment_id"
     t.index ["client_id"], name: "index_lines_on_client_id"
     t.index ["service_id"], name: "index_lines_on_service_id"
@@ -396,6 +397,14 @@ ActiveRecord::Schema.define(version: 2020_08_27_235109) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_suppliers_on_name"
+  end
+
+  create_table "tips", force: :cascade do |t|
+    t.integer "appointment_id"
+    t.integer "staff_id"
+    t.float "value"
+    t.index ["appointment_id"], name: "index_tips_on_appointment_id"
+    t.index ["staff_id"], name: "index_tips_on_staff_id"
   end
 
   create_table "users", force: :cascade do |t|
