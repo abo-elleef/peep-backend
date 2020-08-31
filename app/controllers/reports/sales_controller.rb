@@ -16,6 +16,7 @@ module Reports
       render json: {data: data}, status: :ok
     end
 
+    #TODO add sales log endpoint
     def sales_by_product
       results = Reports::Sales::SalesReport.new(params).sales_by_product
       render json: {sales: results}, status: :ok
