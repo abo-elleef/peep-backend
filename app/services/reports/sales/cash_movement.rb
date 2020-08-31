@@ -17,7 +17,7 @@ module Reports
       end
 
       private
-
+      #TODO add missing data
       def build_cash_data
         {
             total: "",
