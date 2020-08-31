@@ -1,20 +1,17 @@
-class ServicePrice < ApplicationRecord
+class Tip < ApplicationRecord
   # == Constants ============================================================
   # == Extensions ===========================================================
   # == Attributes ===========================================================
-  enum pricing_type: {free: 1, start: 2, fixed: 3}
-
+  # if any enums
   # == Relationships ========================================================
-  belongs_to :service, inverse_of: :service_prices
-  has_many :lines, as: :sellable
-  has_many :packages
-
+  belongs_to :staff
+  belongs_to :appointment
   # == Validations ==========================================================
-  validates_presence_of :service
-  validates :duration, :pricing_type, presence: true
-
+  validates_presence_of :value
   # == Scopes ===============================================================
   # == Callbacks ============================================================
   # == Class Methods ========================================================
   # == Instance Methods =====================================================
 end
+
+

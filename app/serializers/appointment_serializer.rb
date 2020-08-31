@@ -4,5 +4,6 @@ class AppointmentSerializer < ActiveModel::Serializer
   attributes :id, :status, :client_id, :location_id, :notes, :date,
              :created_at, :cancellation_reason_id
   has_many :lines
+  has_many :tips, serializer: TipSerializer
   has_many :payments
 end

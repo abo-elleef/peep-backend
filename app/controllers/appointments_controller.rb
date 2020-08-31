@@ -1,7 +1,7 @@
 class AppointmentsController < ApplicationController
 
   def index
-    appointments = Appointment.preload(:payments, lines: :staff).peep_filter(params.slice(:starts_at, :ends_at, :staff_ids, :location_id)).limit(200)
+    appointments = Appointment.preload(:payments, lines: :staff).peep_filter(params.slice(:starts_at, :ends_at, :staff_ids, :location_id)).limit(1000)
     serializers = ActiveModel::Serializer::ArraySerializer.new(appointments, each_serializer: AppointmentSerializer)
     render json: {data: serializers},  status: :ok
   end
@@ -53,12 +53,13 @@ class AppointmentsController < ApplicationController
   end
 
   def appointment_params
-    params.require(:appointment).permit(:status, :client_id, :location_id,
-                                        :notes, :date, :cancellation_reason_id,
-                                        lines_attributes: [:id, :appointment_id, :staff_id, :service_id,
-                                                           :client_id, :service_name, :service_price_id, :price_name,
-                                                           :price, :original_price, :staff_name, :starts_at, :ends_at],
-                                        payments_attributes: [:id, :appointment_id, :payment_type_id,
-                                                              :amount])
+    params.require(:appointment).permit(
+        :status, :client_id, :location_id, :notes, :date, :cancellation_reason_id,
+        lines_attributes: [:id, :appointment_id, :staff_id, :service_id, :client_id,
+                           :service_name, :sellable_id, :sellable_type, :sellable_name, :price,
+                           :original_price, :staff_name, :starts_at, :ends_at
+        ],
+        payments_attributes: [:id, :appointment_id, :payment_type_id, :amount],
+        tips_attributes: [:id, :staff_id, :value, :_destroy ])
   end
 end

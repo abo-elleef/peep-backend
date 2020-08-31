@@ -209,8 +209,9 @@
 #         staff_name: staff.name,
 #         service_name: service_price.service.name,
 #         service_id: service_price.service.id,
-#         service_price_id: service_price.id,
-#         price_name: service_price.name.presence || "blank price name ",
+#         sellable_id: service_price.id,
+#         sellable_type: "ServicePrice",
+#         sellable_name: service_price.name.presence || "blank price name ",
 #         created_at: time,
 #         updated_at: time
 #     }
