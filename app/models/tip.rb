@@ -1,23 +1,17 @@
-class Supplier < ApplicationRecord
+class Tip < ApplicationRecord
   # == Constants ============================================================
   # == Extensions ===========================================================
-  include Filterable
-
   # == Attributes ===========================================================
   # if any enums
   # == Relationships ========================================================
-  has_many :products
-
+  belongs_to :staff
+  belongs_to :appointment
   # == Validations ==========================================================
-  validates_presence_of :name
-
+  validates_presence_of :value
   # == Scopes ===============================================================
-  scope :by_name, -> (name) { where("name ilike ?", "%" + name + "%") }
-
   # == Callbacks ============================================================
   # == Class Methods ========================================================
   # == Instance Methods =====================================================
-
 end
 
 

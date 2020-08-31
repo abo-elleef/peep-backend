@@ -399,6 +399,14 @@ ActiveRecord::Schema.define(version: 2020_08_31_020900) do
     t.index ["name"], name: "index_suppliers_on_name"
   end
 
+  create_table "tips", force: :cascade do |t|
+    t.integer "appointment_id"
+    t.integer "staff_id"
+    t.float "value"
+    t.index ["appointment_id"], name: "index_tips_on_appointment_id"
+    t.index ["staff_id"], name: "index_tips_on_staff_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"
