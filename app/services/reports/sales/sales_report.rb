@@ -13,7 +13,7 @@ module Reports
         Line.joins(:appointment).select("count(lines.sellable_id) AS items_sold, ROUND(sum(lines.price)::numeric, 3) AS net_sales, ROUND(sum(lines.original_price)::numeric, 3) AS gross_sales,
                             ROUND(sum(lines.original_price - lines.price)::numeric, 3) AS discounts, lines.service_name")
             .where("lines.sellable_type = 'ServicePrice'")
-            .where('lines.created_at::date > ? AND lines.created_at::date < ?', starts_at, ends_at)
+            .where('lines.created_at::date >= ? AND lines.created_at::date <= ?', starts_at, ends_at)
             .where("appointments.location_id = #{location_id}")
             .group("lines.service_name")
       end
@@ -22,7 +22,7 @@ module Reports
         Line.joins(:appointment).select("count(lines.sellable_id) AS items_sold, ROUND(sum(lines.price)::numeric, 3) AS net_sales, ROUND(sum(lines.original_price)::numeric, 3) AS gross_sales,
                             ROUND(sum(lines.original_price - lines.price)::numeric, 3) AS discounts, lines.sellable_name")
             .where("lines.sellable_type = 'Product'")
-            .where('lines.created_at::date >= ? AND lines.created_at::date < ?', starts_at, ends_at)
+            .where('lines.created_at::date >= ? AND lines.created_at::date <= ?', starts_at, ends_at)
             .where("appointments.location_id = #{location_id}")
             .group("lines.sellable_name")
       end
@@ -31,7 +31,7 @@ module Reports
         Line.joins(:appointment).select("appointments.location_id, count(*) AS items_sold, ROUND(sum(lines.price)::numeric, 3) AS net_sales,
                                                              ROUND(sum(lines.original_price)::numeric, 3) AS gross_sales, ROUND(sum(lines.original_price - lines.price)::numeric, 3) AS discounts")
             .where("appointments.location_id = #{location_id}")
-            .where('lines.created_at::date >= ? AND lines.created_at::date < ?', starts_at, ends_at)
+            .where('lines.created_at::date >= ? AND lines.created_at::date <= ?', starts_at, ends_at)
             .group("appointments.location_id")
       end
 
@@ -39,7 +39,7 @@ module Reports
         Line.joins(:appointment, :client).select("lines.client_id, clients.first_name,count(*) AS items_sold, ROUND(sum(lines.price)::numeric, 3) AS net_sales,
                                                              ROUND(sum(lines.original_price)::numeric, 3) AS gross_sales, ROUND(sum(lines.original_price - lines.price)::numeric, 3) AS discounts")
             .where("appointments.location_id = #{location_id}")
-            .where('lines.created_at::date >= ? AND lines.created_at::date < ?', starts_at, ends_at)
+            .where('lines.created_at::date >= ? AND lines.created_at::date <= ?', starts_at, ends_at)
             .group("lines.client_id, clients.first_name")
       end
 
@@ -47,7 +47,7 @@ module Reports
         Line.joins(:appointment).select("lines.staff_id, lines.staff_name, count(*) AS items_sold, ROUND(sum(lines.price)::numeric, 3) AS net_sales,
                                                              ROUND(sum(lines.original_price)::numeric, 3) AS gross_sales, ROUND(sum(lines.original_price - lines.price)::numeric, 3) AS discounts")
             .where("appointments.location_id = #{location_id}")
-            .where('lines.created_at::date >= ? AND lines.created_at::date < ?', starts_at, ends_at)
+            .where('lines.created_at::date >= ? AND lines.created_at::date <= ?', starts_at, ends_at)
             .group("lines.staff_id, lines.staff_name")
       end
 
