@@ -41,6 +41,11 @@ Rails.application.routes.draw do
     get "sales/transaction_summary", to: "sales#transaction_summary"
     get "sales/cash_movement", to: "sales#cash_movement"
     get "sales/appointments_list", to: "sales#appointments_list"
+    get "sales/sales_by_product", to: "sales#sales_by_product"
+    get "sales/sales_by_service", to: "sales#sales_by_service"
+    get "sales/sales_by_location", to: "sales#sales_by_location"
+    get "sales/sales_by_client", to: "sales#sales_by_client"
+    get "sales/sales_by_staff", to: "sales#sales_by_staff"
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
