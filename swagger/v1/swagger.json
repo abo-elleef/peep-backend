@@ -92,10 +92,13 @@
                             "service_name": {
                               "type": "integer"
                             },
-                            "service_price_id": {
+                            "sellable_id": {
                               "type": "integer"
                             },
-                            "price_name": {
+                            "sellable_type": {
+                              "type": "string"
+                            },
+                            "sellable_name": {
                               "type": "string"
                             },
                             "price": {
@@ -272,10 +275,13 @@
                             "service_name": {
                               "type": "integer"
                             },
-                            "service_price_id": {
+                            "sellable_id": {
                               "type": "integer"
                             },
-                            "price_name": {
+                            "sellable_type": {
+                              "type": "string"
+                            },
+                            "sellable_name": {
                               "type": "string"
                             },
                             "price": {
@@ -2162,6 +2168,374 @@
                   }
                 }
               }
+            }
+          }
+        }
+      }
+    },
+    "/reports/sales/transaction_summary": {
+      "get": {
+        "summary": "get the transaction summary",
+        "tags": [
+          "sales"
+        ],
+        "parameters": [
+          {
+            "name": "starts_at",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ends_at",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "location_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transaction Summary Data",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          }
+        }
+      }
+    },
+    "/reports/sales/cash_movement": {
+      "get": {
+        "summary": "get the cash movement",
+        "tags": [
+          "sales"
+        ],
+        "parameters": [
+          {
+            "name": "starts_at",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ends_at",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "location_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Cash Movement Data",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          }
+        }
+      }
+    },
+    "/reports/sales/appointments_list": {
+      "get": {
+        "summary": "get the appointments list",
+        "tags": [
+          "sales"
+        ],
+        "parameters": [
+          {
+            "name": "starts_at",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ends_at",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "location_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Appointment List",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          }
+        }
+      }
+    },
+    "/reports/sales/sales_by_product": {
+      "get": {
+        "summary": "group sales by product",
+        "tags": [
+          "sales"
+        ],
+        "parameters": [
+          {
+            "name": "starts_at",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ends_at",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "location_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "sales by product",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          }
+        }
+      }
+    },
+    "/reports/sales/sales_by_service": {
+      "get": {
+        "summary": "group sales by service",
+        "tags": [
+          "sales"
+        ],
+        "parameters": [
+          {
+            "name": "starts_at",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ends_at",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "location_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "sales by service",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          }
+        }
+      }
+    },
+    "/reports/sales/sales_by_location": {
+      "get": {
+        "summary": "group sales by location",
+        "tags": [
+          "sales"
+        ],
+        "parameters": [
+          {
+            "name": "starts_at",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ends_at",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "location_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "sales by location",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          }
+        }
+      }
+    },
+    "/reports/sales/sales_by_client": {
+      "get": {
+        "summary": "group sales by client",
+        "tags": [
+          "sales"
+        ],
+        "parameters": [
+          {
+            "name": "starts_at",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ends_at",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "location_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "sales by client",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          }
+        }
+      }
+    },
+    "/reports/sales/sales_by_staff": {
+      "get": {
+        "summary": "group sales by staff",
+        "tags": [
+          "sales"
+        ],
+        "parameters": [
+          {
+            "name": "starts_at",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "ends_at",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "location_id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "sales by staff",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
             }
           }
         }
