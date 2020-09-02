@@ -8,6 +8,7 @@ class Order < ApplicationRecord
 
   belongs_to :supplier
   belongs_to :location
+  belongs_to :staff
   has_many :items
   accepts_nested_attributes_for :items, reject_if: :all_blank
 

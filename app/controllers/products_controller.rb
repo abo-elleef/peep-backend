@@ -19,6 +19,14 @@ class ProductsController < ApplicationController
     render json: {data: ProductSerializer.new(product)}, status: :ok
   end
 
+  def stock_history
+    product = Product.find(params[:id])
+    lines = Line.where(sellable_id: product.id, sellable_type: 'Product')
+    orders = Item.joins(:order).where(product_id: product, orders: {status: :received})
+
+    render json: {data: StockPresenter.new([lines, orders]).present}, status: :ok
+  end
+
   def create
     product = Product.new(product_params)
     if product.save
