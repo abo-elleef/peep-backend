@@ -22,4 +22,23 @@ class Line < ApplicationRecord
   # == Class Methods ========================================================
   # == Instance Methods =====================================================
 
+  def staff_name
+    staff.name
+  end
+  def location_name
+    location.name
+  end
+  def action_type
+    'invoice'
+  end
+  def action_id
+    appointment.invoice.id
+  end
+
+  def quantity_change
+    quantity.to_i * -1
+  end
+  def cost_price
+    price
+  end
 end

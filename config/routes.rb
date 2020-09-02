@@ -20,7 +20,11 @@ Rails.application.routes.draw do
   resources :product_brands
   resources :product_categories
   resources :payment_types
-  resources :products
+  resources :products do
+    member do
+      get :stock_history
+    end
+  end
   resources :cancellation_reasons
   resources :suppliers
   resources :subscriptions
