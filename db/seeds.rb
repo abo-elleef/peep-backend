@@ -84,12 +84,15 @@
 # end
 #
 #
+# service_prices = ServicePrice.all
 # 40.times do |index|
+#   price = (100..500).to_a.sample
+#   final_price = price - ( index / 100.0 * price)
 #   time = Time.zone.now  - (index * 5 + index).day
 #   Voucher.create({name: "dicount #{index + 20 }", deduct_type: index.even? ? "value" : "percentage", deduct_value: index * 10 + 3, apply_on: "services", usage_limit: 100, uniq_per_client: false, starts_at: time , ends_at: time + 10.days})
 #   Discount.create({name: "dicount #{index + 20 }", deduct_type: index.even? ? "value" : "percentage", deduct_value: index * 10 + 3, apply_on: "services", usage_limit: 100, uniq_per_client: false, starts_at: time , ends_at: time + 10.days})
-#   end
-#
+#   Package.create!({name: "Package name #{index}", description: "Package description #{index}", available_for: :everyone, pricing_type: :percentage, deduction_amount: index, final_price: final_price, schedule_type: :sequence,service_price_ids: service_prices.sample(2).pluck(:id) })
+# end
 # 40.times do |index|
 #   time = Time.zone.now  - (index * 5 + index).day
 #   Subscription.create({name: "sub plan #{index + 1  }",
@@ -140,34 +143,36 @@
 # end
 #
 # =================== create orders sample data ====================
-# products = Product.all
-# suppliers = Supplier.all
-# locations = Location.all
-#
-# 100.times do |index|
-#   order = Order.create!({
-#                             status: 1,
-#                             location_id: locations.sample.id,
-#                             supplier_id: suppliers.sample.id
-#                         })
-#   items = []
-#   [3, 4, 5, 6].sample.times do |item_index|
-#     product = products.sample
-#     request = [20, 24, 35, 65, 78, 81].sample
-#     items << Item.create!({
-#                     order_id: order.id,
-#                     product_id: product.id,
-#                     received_price: product.retail_price,
-#                     received_quantity: request,
-#                     requested_quantity: item_index.even? ? request : (request * 0.8).ceil ,
-#                     requested_price: product.retail_price
-#                 })
-#
-#   end
-#   order.items = items
-#   order.update({total_cost: items.map(&:product).flatten.map(&:retail_price).flatten.sum})
-#
-# end
+products = Product.all
+suppliers = Supplier.all
+locations = Location.all
+staffs =  Staff.all
+
+100.times do |index|
+  order = Order.create!({
+                            status: 1,
+                            location_id: locations.sample.id,
+                            supplier_id: suppliers.sample.id,
+                            staff_id: staffs.sample.id
+                        })
+  items = []
+  [3, 4, 5, 6].sample.times do |item_index|
+    product = products.sample
+    request = [20, 24, 35, 65, 78, 81].sample
+    items << Item.create!({
+                    order_id: order.id,
+                    product_id: product.id,
+                    received_price: product.retail_price,
+                    received_quantity: request,
+                    requested_quantity: item_index.even? ? request : (request * 0.8).ceil ,
+                    requested_price: product.retail_price
+                })
+
+  end
+  order.items = items
+  order.update({total_cost: items.map(&:product).flatten.map(&:retail_price).flatten.sum})
+
+end
 # ========== create service prices =================================================================
 # services = Service.all;
 # 200.times do |index|
