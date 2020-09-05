@@ -143,36 +143,36 @@
 # end
 #
 # =================== create orders sample data ====================
-products = Product.all
-suppliers = Supplier.all
-locations = Location.all
-staffs =  Staff.all
-
-100.times do |index|
-  order = Order.create!({
-                            status: 1,
-                            location_id: locations.sample.id,
-                            supplier_id: suppliers.sample.id,
-                            staff_id: staffs.sample.id
-                        })
-  items = []
-  [3, 4, 5, 6].sample.times do |item_index|
-    product = products.sample
-    request = [20, 24, 35, 65, 78, 81].sample
-    items << Item.create!({
-                    order_id: order.id,
-                    product_id: product.id,
-                    received_price: product.retail_price,
-                    received_quantity: request,
-                    requested_quantity: item_index.even? ? request : (request * 0.8).ceil ,
-                    requested_price: product.retail_price
-                })
-
-  end
-  order.items = items
-  order.update({total_cost: items.map(&:product).flatten.map(&:retail_price).flatten.sum})
-
-end
+# products = Product.all
+# suppliers = Supplier.all
+# locations = Location.all
+# staffs =  Staff.all
+#
+# 100.times do |index|
+#   order = Order.create!({
+#                             status: 1,
+#                             location_id: locations.sample.id,
+#                             supplier_id: suppliers.sample.id,
+#                             staff_id: staffs.sample.id
+#                         })
+#   items = []
+#   [3, 4, 5, 6].sample.times do |item_index|
+#     product = products.sample
+#     request = [20, 24, 35, 65, 78, 81].sample
+#     items << Item.create!({
+#                     order_id: order.id,
+#                     product_id: product.id,
+#                     received_price: product.retail_price,
+#                     received_quantity: request,
+#                     requested_quantity: item_index.even? ? request : (request * 0.8).ceil ,
+#                     requested_price: product.retail_price
+#                 })
+#
+#   end
+#   order.items = items
+#   order.update({total_cost: items.map(&:product).flatten.map(&:retail_price).flatten.sum})
+#
+# end
 # ========== create service prices =================================================================
 # services = Service.all;
 # 200.times do |index|
