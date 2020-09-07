@@ -7,6 +7,17 @@ class ServicesController < ApplicationController
     render json: {data: serializers},  status: :ok
   end
 
+  def top
+    data = [
+        {name: "service 0 ", current_month: 23, last_month: 12},
+        {name: "service 1 ", current_month: 23, last_month: 12},
+        {name: "service 2 ", current_month: 23, last_month: 12},
+        {name: "service 3 ", current_month: 23, last_month: 12},
+        {name: "service 4 ", current_month: 23, last_month: 12},
+    ]
+    render json: {data: data}, status: :ok
+  end
+
   def show
     service = Service.find(params[:id])
     render json: {data: ServiceSerializer.new(service)}, status: :ok

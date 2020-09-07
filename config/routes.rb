@@ -11,9 +11,17 @@ Rails.application.routes.draw do
   resources :shifts
   resources :closing_shifts
   resources :locations
-  resources :staffs
+  resources :staffs do
+    collection do
+      get :top
+    end
+  end
   resources :clients
-  resources :services
+  resources :services do
+    collection do
+      get :top
+    end
+  end
   resources :service_categories
   resources :appointments
   resources :orders
@@ -32,11 +40,13 @@ Rails.application.routes.draw do
   resources :vouchers
   resources :packages
   resources :invoices, only: [:index]
+
   get "export/clients", to: "export#clients"
   get "export/services", to: "export#services"
   get "export/staffs", to: "export#staffs"
   get "export/products", to: "export#products"
   get "export/orders", to: "export#orders"
+
   post "appointments/check_hints", to: "appointments#check_hints"
 
   # Reports Routes
@@ -50,6 +60,7 @@ Rails.application.routes.draw do
     get "sales/sales_by_location", to: "sales#sales_by_location"
     get "sales/sales_by_client", to: "sales#sales_by_client"
     get "sales/sales_by_staff", to: "sales#sales_by_staff"
+    get "sales/recent_sales", to: "sales#recent_sales"
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

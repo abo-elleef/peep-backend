@@ -185,7 +185,7 @@
 #                       })
 # end
 # ========== create Appointments with lines  =======================================================
-# start_date = Date.new(2020, 8, 15);
+# start_date = Date.new(2020, 8, 29);
 # hours = (6..18).to_a;
 # days = [];
 # staffs = Staff.all;

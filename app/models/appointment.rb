@@ -28,10 +28,10 @@ class Appointment < ApplicationRecord
   validates :lines, presence: true
 
   # == Scopes ===============================================================
-  scope :by_ends_at, -> (ends_at) { where("date <= ?  ", ends_at) }
-  scope :by_starts_at, -> (starts_at) { where("date >= ?", starts_at) }
+  scope :by_ends_at, -> (ends_at) { where("appointments.created_at <= ?  ", ends_at) }
+  scope :by_starts_at, -> (starts_at) { where("appointments.created_at >= ?", starts_at) }
 
-  scope :by_location_id, -> (location_ids) { where(location_id: location_ids) }
+  scope :by_location_ids, -> (location_ids) { where(location_id: location_ids) }
   scope :by_staff_ids, -> (staff_ids){ joins(:lines).where(lines: { staff_id: staff_ids })}
   scope :by_service, -> (service_ids){ joins(:lines).where(lines: {service_id: service_ids} )}
 
