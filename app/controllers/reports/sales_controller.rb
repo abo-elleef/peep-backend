@@ -54,6 +54,14 @@ module Reports
       render json: {data: data}, status: :ok
     end
 
+    def appointments
+      lines = Line.preload(:staff, :sellable, appointment: :location).
+          peep_filter(params.slice(:starts_at, :ends_at, :staff_ids, :location_ids))
+      pagy, lines = pagy(lines, page: page_index, items: page_size )
+      serializers = ActiveModel::Serializer::ArraySerializer.new(lines, serializer: LineSalesSerializer)
+      render json: {data: serializers, meta: pagy_meta_data(pagy)},  status: :ok
+    end
+
 
     # def recent_sales
     #   results = Reports::Sales::RecentSalesReport.new(params).sales_by_staff

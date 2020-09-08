@@ -61,6 +61,8 @@ Rails.application.routes.draw do
     get "sales/sales_by_client", to: "sales#sales_by_client"
     get "sales/sales_by_staff", to: "sales#sales_by_staff"
     get "sales/recent_sales", to: "sales#recent_sales"
+    get "sales/appointments", to: "sales#appointments"
+
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

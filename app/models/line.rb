@@ -1,6 +1,7 @@
 class Line < ApplicationRecord
   # == Constants ============================================================
   # == Extensions ===========================================================
+  include Filterable
   # == Relationships ========================================================
 
   belongs_to :appointment, inverse_of: :lines
@@ -17,6 +18,14 @@ class Line < ApplicationRecord
 
   # == Scopes ===============================================================
   scope :overlaps?, -> (starts_at, ends_at) { where("starts_at <= ? AND ? <= ends_at", ends_at, starts_at).any? }
+
+  scope :by_ends_at, -> (ends_at) { where("lines.created_at <= ?  ", ends_at) }
+  scope :by_starts_at, -> (starts_at) { where("lines.created_at >= ?", starts_at) }
+
+  scope :by_location_ids, -> (location_ids) {
+    joins(:appointment).where(appointments:{location_id: location_ids})
+  }
+  scope :by_staff_ids, -> (staff_ids){ where(staff_id: staff_ids )}
 
   # == Callbacks ============================================================
   # == Class Methods ========================================================
