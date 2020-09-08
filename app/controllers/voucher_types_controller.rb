@@ -3,7 +3,7 @@ class VoucherTypesController < ApplicationController
   def index
     voucher_types = VoucherType.peep_filter(params.slice([:name]))
     serializers = ActiveModel::Serializer::ArraySerializer.new(voucher_types, each_serializer: VoucherTypeSerializer)
-    render json: {data: serializers},  status: :ok
+    render json: {data: serializers}, status: :ok
   end
 
   def show
@@ -14,6 +14,8 @@ class VoucherTypesController < ApplicationController
   def create
     voucher_type = VoucherType.new(voucher_type_params)
     if voucher_type.save
+      services = params[:services_ids].empty? ? Service.all : Service.where(id: params[:services_ids])
+      voucher_type.services << services
       render json: {data: VoucherTypeSerializer.new(voucher_type)}, status: :created
     else
       render json: voucher_type.errors, status: :unprocessable_entity
@@ -38,29 +40,37 @@ class VoucherTypesController < ApplicationController
     end
   end
 
+  #TODO
   def sell_voucher
     # {
-    #     voucher_type_id:  voucher_type_id,
-    #     quantity: 2,
-    #     payments_attributes: [
+    #     "voucher_type_id": 1,
+    #     "payment": [
     #         {
-    #             payment_type_id: 1,
-    #             amount: 12
+    #             "quantity": 1,
+    #             "payment_type_id": 1,
+    #             "amount": 120
     #         }
+    #     ],
+    #     "tips_attributes": [
+    #         {
+    #             "staff_id": 2,
+    #             "value": 2
+    #         }
+    #     ]
     # }
-    # 1-  Generate Voucher Code voucher_code
-    # VoucherType.generate_voucher_code
-    # Digest::MD5.hexdigest "#{SecureRandom.hex(10)}-#{DateTime.now.to_s}"
-    #  2- Create Voucher record  {code: voucher_code, current_value: voucher_type.value, voucher_type_id: voucher_type.id }
-    #  3-
+    voucher_type = VoucherType.find(params[:voucher_type_id])
+    voucher_type.sold_amount += params[:quantity]
+    voucher_type.save!
+    voucher_code = VoucherType.generate_voucher_code
+    Voucher.create(code: voucher_code, current_value: voucher_type.value, voucher_type_id: voucher_type.id)
   end
 
   private
   def voucher_type_params
     params.require(:voucher_type).permit(
-        :name,  :value, :price, :sales_amount,
+        :name, :value, :price, :sales_amount,
         :sold_amount, :expire, :expiring_reason, :title, :desc, :notes,
-        :color, :starts_at, :ends_at
+        :color, :starts_at, :ends_at, :services_ids
     )
   end
 end
