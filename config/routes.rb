@@ -37,7 +37,7 @@ Rails.application.routes.draw do
   resources :suppliers
   resources :subscriptions
   resources :discounts
-  resources :vouchers
+  resources :voucher_types
   resources :packages
   resources :invoices, only: [:index]
 
@@ -64,5 +64,8 @@ Rails.application.routes.draw do
     get "sales/appointments", to: "sales#appointments"
 
   end
+
+  post "voucher_types/sell_voucher", to: "voucher_types#sell_voucher"
+  post "vouchers/check_voucher_validity", to: "vouchers#check_voucher_validity"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

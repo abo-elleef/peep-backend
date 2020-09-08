@@ -9,6 +9,7 @@ class Line < ApplicationRecord
   # belongs_to :service_price
   belongs_to :staff
   belongs_to :sellable, polymorphic: true
+  has_one   :voucher_usage,  as: :usable
 
   # == Validations ==========================================================
   validates_presence_of :appointment

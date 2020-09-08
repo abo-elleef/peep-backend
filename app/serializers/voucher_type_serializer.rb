@@ -1,0 +1,3 @@
+class VoucherTypeSerializer < DeductionSerializer
+
+end

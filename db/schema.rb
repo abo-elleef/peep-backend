@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_02_015011) do
+ActiveRecord::Schema.define(version: 2020_09_08_123605) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,11 +18,11 @@ ActiveRecord::Schema.define(version: 2020_09_02_015011) do
   create_table "appointments", force: :cascade do |t|
     t.integer "status", default: 1
     t.integer "client_id"
+    t.integer "location_id"
     t.text "notes"
     t.date "date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "location_id"
     t.integer "cancellation_reason_id"
     t.index ["cancellation_reason_id"], name: "index_appointments_on_cancellation_reason_id"
     t.index ["client_id"], name: "index_appointments_on_client_id"
@@ -135,6 +135,7 @@ ActiveRecord::Schema.define(version: 2020_09_02_015011) do
     t.integer "appointment_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["appointment_id"], name: "index_invoices_on_appointment_id"
   end
 
   create_table "items", force: :cascade do |t|
@@ -289,6 +290,9 @@ ActiveRecord::Schema.define(version: 2020_09_02_015011) do
     t.float "retail_price"
     t.float "special_price"
     t.float "supply_price"
+    t.integer "initial_stock"
+    t.integer "reorder_point"
+    t.integer "reorder_quantity"
     t.boolean "enable_commission"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -342,6 +346,13 @@ ActiveRecord::Schema.define(version: 2020_09_02_015011) do
     t.bigint "staff_id", null: false
     t.index ["service_id", "staff_id"], name: "index_services_staffs_on_service_id_and_staff_id"
     t.index ["staff_id", "service_id"], name: "index_services_staffs_on_staff_id_and_service_id"
+  end
+
+  create_table "services_voucher_types", id: false, force: :cascade do |t|
+    t.bigint "voucher_type_id", null: false
+    t.bigint "service_id", null: false
+    t.index ["service_id"], name: "index_services_voucher_types_on_service_id"
+    t.index ["voucher_type_id"], name: "index_services_voucher_types_on_voucher_type_id"
   end
 
   create_table "shifts", force: :cascade do |t|
@@ -417,6 +428,47 @@ ActiveRecord::Schema.define(version: 2020_09_02_015011) do
     t.string "password_digest"
     t.string "company_name"
     t.integer "business_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "voucher_types", force: :cascade do |t|
+    t.string "name"
+    t.float "value"
+    t.float "price"
+    t.integer "sales_amount"
+    t.integer "sold_amount"
+    t.boolean "expire"
+    t.integer "expiring_reason"
+    t.string "title"
+    t.text "desc"
+    t.text "notes"
+    t.string "color"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "voucher_usages", force: :cascade do |t|
+    t.integer "voucher_id"
+    t.integer "client_id"
+    t.integer "usable_id"
+    t.string "usable_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["client_id"], name: "index_voucher_usages_on_client_id"
+    t.index ["usable_id"], name: "index_voucher_usages_on_usable_id"
+    t.index ["usable_type"], name: "index_voucher_usages_on_usable_type"
+    t.index ["voucher_id"], name: "index_voucher_usages_on_voucher_id"
+  end
+
+  create_table "vouchers", force: :cascade do |t|
+    t.integer "voucher_type_id"
+    t.string "code"
+    t.float "current_value"
+    t.boolean "expire"
+    t.integer "expiring_reason"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

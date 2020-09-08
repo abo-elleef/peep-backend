@@ -1,28 +1,33 @@
-class Voucher < ApplicationRecord
+class VoucherType < ApplicationRecord
   # == Constants ============================================================
   # == Extensions ===========================================================
+  include Filterable
+
   # == Attributes ===========================================================
-     enum expiring_reason: {full_redemption: 0, time_exceeding: 1, other: 2}
+  enum expiring_reason: {sold: 0, time_exceeding: 1, other: 2}
 
   # == Relationships ========================================================
-  belongs_to :voucher_type
-  has_many   :voucher_usages
+  has_and_belongs_to_many :services
+  has_many :vouchers
+  has_one   :voucher_usage,  as: :usable
 
   # == Validations ==========================================================
-  validates_uniqueness_of :code
-
   # == Scopes ===============================================================
   # == Callbacks ============================================================
   # == Class Methods ========================================================
-  # == Instance Methods =====================================================
+  def self.generate_voucher_code
+    Digest::MD5.hexdigest("#{SecureRandom.hex(8)}-#{DateTime.now.to_s}")[0, 8].upcase
+  end
 
+  # == Instance Methods =====================================================
   def expire?
     unless self.expire
-      if current_value == 0 || Datetime.now >= self.voucher_type.ends_at
+      if sold_amount == sales_amount || Datetime.now >= self.ends_at
         self.expire = true
         self.save!
       end
     end
     self.expire
   end
+
 end
