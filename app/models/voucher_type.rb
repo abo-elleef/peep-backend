@@ -12,6 +12,8 @@ class VoucherType < ApplicationRecord
   has_one   :voucher_usage,  as: :usable
 
   # == Validations ==========================================================
+  validates :name, :value, :price, :sales_amount, :title, :color, :starts_at, :ends_at, presence: true
+
   # == Scopes ===============================================================
   # == Callbacks ============================================================
   # == Class Methods ========================================================

@@ -437,8 +437,8 @@ ActiveRecord::Schema.define(version: 2020_09_08_123605) do
     t.float "value"
     t.float "price"
     t.integer "sales_amount"
-    t.integer "sold_amount"
-    t.boolean "expire"
+    t.integer "sold_amount", default: 0
+    t.boolean "expire", default: false
     t.integer "expiring_reason"
     t.string "title"
     t.text "desc"
