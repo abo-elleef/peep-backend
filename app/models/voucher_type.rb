@@ -10,6 +10,9 @@ class VoucherType < ApplicationRecord
   has_and_belongs_to_many :services
   has_many :vouchers
   has_one   :voucher_usage,  as: :usable
+  #has_one :invoice, as: :invoiceable
+  has_many :invoice_items, as: :payable
+
 
   # == Validations ==========================================================
   validates :name, :value, :price, :sales_amount, :title, :color, :starts_at, :ends_at, presence: true
@@ -17,10 +20,6 @@ class VoucherType < ApplicationRecord
   # == Scopes ===============================================================
   # == Callbacks ============================================================
   # == Class Methods ========================================================
-  def self.generate_voucher_code
-    Digest::MD5.hexdigest("#{SecureRandom.hex(8)}-#{DateTime.now.to_s}")[0, 8].upcase
-  end
-
   # == Instance Methods =====================================================
   def expire?
     unless self.expire

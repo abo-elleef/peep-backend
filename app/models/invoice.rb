@@ -1,8 +1,16 @@
 class Invoice < ApplicationRecord
   # == Constants ============================================================
   # == Extensions ===========================================================
+  # == Attributes ===========================================================
+  enum status: {not_paid: 1, parted: 2, completed: 3}
+
   # == Relationships ========================================================
   belongs_to :appointment
+  belongs_to :invoiceable, polymorphic: true
+  has_many :payments
+  has_many :invoice_items
+  has_many :tips
+  has_many :vouchers
 
   # == Validations ==========================================================
   # == Scopes ===============================================================

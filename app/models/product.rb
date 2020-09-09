@@ -12,6 +12,7 @@ class Product < ApplicationRecord
   has_many :lines, as: :sellable
   has_many :locations_products
   has_many :locations, through: :locations_products
+  has_many :invoice_items, as: :payable
 
   # == Validations ==========================================================
 

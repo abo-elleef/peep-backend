@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_08_123605) do
+ActiveRecord::Schema.define(version: 2020_09_09_113401) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -130,12 +130,33 @@ ActiveRecord::Schema.define(version: 2020_09_08_123605) do
     t.index ["name"], name: "index_deductions_on_name"
   end
 
+  create_table "invoice_items", force: :cascade do |t|
+    t.integer "invoice_id"
+    t.integer "payable_id"
+    t.string "payable_type"
+    t.integer "quantity"
+    t.float "unit_price"
+    t.float "original_unit_price"
+    t.integer "staff_id"
+  end
+
   create_table "invoices", force: :cascade do |t|
     t.string "sequence"
     t.integer "appointment_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "invoiceable_id"
+    t.string "invoiceable_type"
+    t.integer "status"
+    t.text "notes"
+    t.integer "client_id"
+    t.integer "location_id"
     t.index ["appointment_id"], name: "index_invoices_on_appointment_id"
+    t.index ["client_id"], name: "index_invoices_on_client_id"
+    t.index ["invoiceable_id"], name: "index_invoices_on_invoiceable_id"
+    t.index ["invoiceable_type"], name: "index_invoices_on_invoiceable_type"
+    t.index ["location_id"], name: "index_invoices_on_location_id"
+    t.index ["status"], name: "index_invoices_on_status"
   end
 
   create_table "items", force: :cascade do |t|
@@ -262,6 +283,8 @@ ActiveRecord::Schema.define(version: 2020_09_08_123605) do
     t.float "amount"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "invoice_id"
+    t.integer "staff_id"
     t.index ["appointment_id"], name: "index_payments_on_appointment_id"
     t.index ["payment_type_id"], name: "index_payments_on_payment_type_id"
   end
@@ -417,6 +440,7 @@ ActiveRecord::Schema.define(version: 2020_09_08_123605) do
     t.integer "appointment_id"
     t.integer "staff_id"
     t.float "value"
+    t.integer "invoice_id"
     t.index ["appointment_id"], name: "index_tips_on_appointment_id"
     t.index ["staff_id"], name: "index_tips_on_staff_id"
   end
@@ -471,6 +495,7 @@ ActiveRecord::Schema.define(version: 2020_09_08_123605) do
     t.integer "expiring_reason"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "invoice_id"
   end
 
 end

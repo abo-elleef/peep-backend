@@ -1,18 +1,12 @@
-class Tip < ApplicationRecord
+class InvoiceItem < ApplicationRecord
   # == Constants ============================================================
   # == Extensions ===========================================================
-  # == Attributes ===========================================================
-  # if any enums
   # == Relationships ========================================================
-  belongs_to :staff
-  belongs_to :appointment
   belongs_to :invoice
+  belongs_to :payable, polymorphic: :true
   # == Validations ==========================================================
-  validates_presence_of :value
   # == Scopes ===============================================================
   # == Callbacks ============================================================
   # == Class Methods ========================================================
   # == Instance Methods =====================================================
 end
-
-

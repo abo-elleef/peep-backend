@@ -40,32 +40,10 @@ class VoucherTypesController < ApplicationController
     end
   end
 
-  #TODO
-  def sell_voucher
-    # {
-    #     "voucher_type_id": 1,
-    #     "payment": [
-    #         {
-    #             "quantity": 1,
-    #             "payment_type_id": 1,
-    #             "amount": 120
-    #         }
-    #     ],
-    #     "tips_attributes": [
-    #         {
-    #             "staff_id": 2,
-    #             "value": 2
-    #         }
-    #     ]
-    # }
-    voucher_type = VoucherType.find(params[:voucher_type_id])
-    voucher_type.sold_amount += params[:quantity]
-    voucher_type.save!
-    voucher_code = VoucherType.generate_voucher_code
-    Voucher.create(code: voucher_code, current_value: voucher_type.value, voucher_type_id: voucher_type.id)
-  end
 
   private
+
+
   def voucher_type_params
     params.require(:voucher_type).permit(
         :name, :value, :price, :sales_amount,
