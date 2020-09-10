@@ -23,7 +23,7 @@ class VoucherType < ApplicationRecord
   # == Instance Methods =====================================================
   def expire?
     unless self.expire
-      if sold_amount == sales_amount || Datetime.now >= self.ends_at
+      if sold_amount == sales_amount || DateTime.now >= self.ends_at
         self.expire = true
         self.save!
       end

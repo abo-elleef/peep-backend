@@ -2,7 +2,7 @@ class InvoiceItem < ApplicationRecord
   # == Constants ============================================================
   # == Extensions ===========================================================
   # == Relationships ========================================================
-  belongs_to :invoice
+  belongs_to :invoice, dependent: :destroy
   belongs_to :payable, polymorphic: :true
   # == Validations ==========================================================
   # == Scopes ===============================================================

@@ -14,6 +14,7 @@ class Product < ApplicationRecord
   has_many :locations, through: :locations_products
   has_many :invoice_items, as: :payable
 
+
   # == Validations ==========================================================
 
   validates_presence_of :name

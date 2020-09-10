@@ -27,6 +27,7 @@ class Location < ApplicationRecord
   has_many :products, through: :locations_products
   has_many :appointments
   has_many :clients
+  has_many :invoices
   has_one :invoice_sequence
   belongs_to :user, optional: true
 

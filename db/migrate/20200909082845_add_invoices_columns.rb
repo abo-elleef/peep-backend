@@ -6,6 +6,9 @@ class AddInvoicesColumns < ActiveRecord::Migration[6.0]
     add_column :invoices, :notes, :text
     add_column :invoices, :client_id, :integer
     add_column :invoices, :location_id, :integer
+    add_column :invoices, :sub_total, :float
+    add_column :invoices, :total, :float
+    add_column :invoices, :balance, :float
     add_index :invoices, :client_id
     add_index :invoices, :location_id
     add_index :invoices, :status

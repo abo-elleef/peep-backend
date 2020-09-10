@@ -5,8 +5,8 @@ class Tip < ApplicationRecord
   # if any enums
   # == Relationships ========================================================
   belongs_to :staff
-  belongs_to :appointment
-  belongs_to :invoice
+  #belongs_to :appointment
+  belongs_to :invoice, dependent: :destroy
   # == Validations ==========================================================
   validates_presence_of :value
   # == Scopes ===============================================================

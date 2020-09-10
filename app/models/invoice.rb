@@ -1,19 +1,24 @@
 class Invoice < ApplicationRecord
   # == Constants ============================================================
   # == Extensions ===========================================================
+  include Filterable
   # == Attributes ===========================================================
-  enum status: {not_paid: 1, parted: 2, completed: 3}
+  enum status: {not_paid: 1, part_paid: 2, completed: 3, voided: 4, refund: 5}
 
   # == Relationships ========================================================
-  belongs_to :appointment
   belongs_to :invoiceable, polymorphic: true
+  belongs_to :client
   has_many :payments
   has_many :invoice_items
   has_many :tips
   has_many :vouchers
+  belongs_to :location
 
   # == Validations ==========================================================
   # == Scopes ===============================================================
+  scope :search, -> (search) { search.present? ? where("sequence ?", "%" + search + "%") : all }
+  scope :by_location_id, -> (location_id) { where(location_id: location_id ) }
+
   # == Callbacks ============================================================
   # == Class Methods ========================================================
   def self.next_sequence(location_id)
@@ -24,4 +29,12 @@ class Invoice < ApplicationRecord
   end
 
   # == Instance Methods =====================================================
+
+  def client_name
+    client.name
+  end
+
+  def location_name
+    location.name
+  end
 end
