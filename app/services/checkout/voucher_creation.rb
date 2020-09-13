@@ -9,7 +9,7 @@ module Checkout
 
     def call
       voucher_items.map do |voucher_item|
-        voucher_type = VoucherType.find(voucher_item[:payable_id])
+        voucher_type = VoucherType.find(voucher_item[:sellable_id])
         if voucher_type_available?(voucher_type, voucher_item[:quantity])
           create_vouchers(voucher_item, voucher_type)
         end

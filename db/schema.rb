@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_13_095638) do
+ActiveRecord::Schema.define(version: 2020_09_13_122306) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,7 @@ ActiveRecord::Schema.define(version: 2020_09_13_095638) do
     t.datetime "ends_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "staff_id"
     t.index ["appointment_id"], name: "index_appointments_services_on_appointment_id"
     t.index ["service_id"], name: "index_appointments_services_on_service_id"
   end
@@ -166,13 +167,10 @@ ActiveRecord::Schema.define(version: 2020_09_13_095638) do
   end
 
   create_table "lines", force: :cascade do |t|
-    t.integer "appointment_id"
     t.integer "staff_id"
-    t.integer "service_id"
     t.float "unit_price"
     t.float "original_unit_price"
     t.string "staff_name"
-    t.string "service_name"
     t.datetime "starts_at"
     t.datetime "ends_at"
     t.datetime "created_at", precision: 6, null: false
@@ -182,8 +180,6 @@ ActiveRecord::Schema.define(version: 2020_09_13_095638) do
     t.integer "sellable_id"
     t.integer "quantity", default: 1
     t.integer "invoice_id"
-    t.index ["appointment_id"], name: "index_lines_on_appointment_id"
-    t.index ["service_id"], name: "index_lines_on_service_id"
     t.index ["staff_id"], name: "index_lines_on_staff_id"
   end
 

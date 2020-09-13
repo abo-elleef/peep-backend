@@ -10,7 +10,7 @@ class VoucherType < ApplicationRecord
   has_and_belongs_to_many :services
   has_many :vouchers
   has_one   :voucher_usage,  as: :usable
-  has_many :invoice_items, as: :payable
+  has_many :lines, as: :sellable
 
 
   # == Validations ==========================================================

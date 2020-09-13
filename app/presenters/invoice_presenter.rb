@@ -27,7 +27,7 @@ class InvoicePresenter
         date: invoice.created_at,
         location: invoice.location_id,
         tips: invoice.tips,
-        lines: invoice.lines.map { |line| {invoice_item: line, sellable_line: line.sellable} },
+        lines: invoice.lines.map { |line| {line: line, line_sellable: line.sellable }},
         vouchers: invoice.vouchers,
         payments: invoice.payments,
         total: invoice.total
