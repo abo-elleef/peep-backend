@@ -3,12 +3,9 @@ class Line < ApplicationRecord
   # == Extensions ===========================================================
   include Filterable
   # == Relationships ========================================================
-  # belongs_to :appointment, inverse_of: :lines
-  #belongs_to :client
   # belongs_to :service_price
   belongs_to :staff
   belongs_to :sellable, polymorphic: true
-  has_one   :voucher_usage,  as: :usable
   belongs_to :invoice
 
   # == Validations ==========================================================
