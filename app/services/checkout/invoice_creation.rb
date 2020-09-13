@@ -10,7 +10,7 @@ module Checkout
       values = calculate_invoice
       invoice = create_invoice(values)
       create_invoice_payment(invoice.id, params[:payments])
-      create_invoice_items(invoice.id, params[:items])
+      create_invoice_lines(invoice.id, params[:lines])
       create_invoice_tips(invoice.id, params[:tips])
       invoice
     end
@@ -29,8 +29,7 @@ module Checkout
     end
 
     def create_invoice(values)
-      Invoice.create!(invoiceable_id: params[:invoiceable_id], invoiceable_type: params[:invoiceable_type],
-                      sequence: next_sequence(params[:location_id]), notes: params[:notes], client_id: params[:client_id],
+      Invoice.create!(sequence: next_sequence(params[:location_id]), notes: params[:notes], client_id: params[:client_id],
                       location_id: params[:location_id], status: params[:status], sub_total: values[:total], total: values[:total], balance: values[:balance])
     end
 
@@ -47,19 +46,22 @@ module Checkout
       end
     end
 
-    def create_invoice_items(invoice_id, items)
-      items.map do |item|
-        InvoiceItem.create!(invoice_id: invoice_id, payable_id: item[:payable_id], payable_type: item[:payable_type],
-                            quantity: item[:quantity], unit_price: item[:unit_price], original_unit_price: item[:original_unit_price],
-                            staff_id: item[:staff_id])
+    def create_invoice_lines(invoice_id, lines)
+      lines.map do |line|
+        Line.create!(invoice_id: invoice_id, sellable_id: line[:sellable_id], sellable_type: line[:sellable_type],
+                     quantity: line[:quantity], unit_price: line[:unit_price], original_unit_price: line[:original_unit_price],
+                     staff_id: line[:staff_id])
       end
+      # items.map do |item|
+      #   InvoiceItem.create!(invoice_id: invoice_id, payable_id: item[:payable_id], payable_type: item[:payable_type],
+      #                       quantity: item[:quantity], unit_price: item[:unit_price], original_unit_price: item[:original_unit_price],
+      #                       staff_id: item[:staff_id])
+      # end
     end
 
     def create_invoice_tips(invoice_id, tips)
       tips.map do |tip|
-        # TODO add the case of percentage
-        tip_value = tip[:type] == 'percentage' ? '' : tip[:value]
-        Tip.create!(invoice_id: invoice_id, value: tip_value, staff_id: tip[:staff_id])
+        Tip.create!(invoice_id: invoice_id, value: tip[:value], staff_id: tip[:staff_id])
       end
     end
   end

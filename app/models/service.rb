@@ -14,6 +14,8 @@ class Service < ApplicationRecord
   accepts_nested_attributes_for :service_prices
   has_many :packages, through: :service_prices
   has_and_belongs_to_many :voucher_types
+  has_many :appointments_services
+  has_many :appointments, through: :appointments_services
 
   # == Validations ==========================================================
   validates_presence_of :name

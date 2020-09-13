@@ -10,13 +10,12 @@ class Appointment < ApplicationRecord
   has_many :appointments_services
   has_many :payments, inverse_of: :appointment, dependent: :destroy
   has_many :lines, inverse_of: :appointment, dependent: :destroy
-  has_many :services, through: :lines
+  has_many :services, through: :appointments_services
   has_many :staffs, through: :lines
   has_many :tips
   has_many :tipped_staff, through: :tips, source: :staff
   belongs_to :location
   belongs_to :client
-  has_one :invoice, as: :invoiceable
 
   accepts_nested_attributes_for :lines
   accepts_nested_attributes_for :payments

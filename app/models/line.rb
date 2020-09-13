@@ -3,14 +3,13 @@ class Line < ApplicationRecord
   # == Extensions ===========================================================
   include Filterable
   # == Relationships ========================================================
-
   belongs_to :appointment, inverse_of: :lines
   belongs_to :client
   # belongs_to :service_price
   belongs_to :staff
   belongs_to :sellable, polymorphic: true
   has_one   :voucher_usage,  as: :usable
-  has_many :invoice_items, as: :payable
+  belongs_to :invoice
 
   # == Validations ==========================================================
   validates_presence_of :appointment

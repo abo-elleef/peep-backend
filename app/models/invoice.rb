@@ -3,13 +3,12 @@ class Invoice < ApplicationRecord
   # == Extensions ===========================================================
   include Filterable
   # == Attributes ===========================================================
-  enum status: {not_paid: 1, part_paid: 2, completed: 3, voided: 4, refund: 5}
+  enum status: {not_paid: 1, part_paid: 2, completed: 3, voided: 4}
 
   # == Relationships ========================================================
-  belongs_to :invoiceable, polymorphic: true
   belongs_to :client
+  has_many :lines
   has_many :payments
-  has_many :invoice_items
   has_many :tips
   has_many :vouchers
   belongs_to :location
@@ -17,7 +16,7 @@ class Invoice < ApplicationRecord
   # == Validations ==========================================================
   # == Scopes ===============================================================
   scope :search, -> (search) { search.present? ? where("sequence ?", "%" + search + "%") : all }
-  scope :by_location_id, -> (location_id) { where(location_id: location_id ) }
+  scope :by_location_id, -> (location_id) { where(location_id: location_id) }
 
   # == Callbacks ============================================================
   # == Class Methods ========================================================

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_09_113401) do
+ActiveRecord::Schema.define(version: 2020_09_13_095638) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -130,16 +130,6 @@ ActiveRecord::Schema.define(version: 2020_09_09_113401) do
     t.index ["name"], name: "index_deductions_on_name"
   end
 
-  create_table "invoice_items", force: :cascade do |t|
-    t.integer "invoice_id"
-    t.integer "payable_id"
-    t.string "payable_type"
-    t.integer "quantity"
-    t.float "unit_price"
-    t.float "original_unit_price"
-    t.integer "staff_id"
-  end
-
   create_table "invoices", force: :cascade do |t|
     t.string "sequence"
     t.integer "appointment_id"
@@ -179,8 +169,8 @@ ActiveRecord::Schema.define(version: 2020_09_09_113401) do
     t.integer "appointment_id"
     t.integer "staff_id"
     t.integer "service_id"
-    t.float "price"
-    t.float "original_price"
+    t.float "unit_price"
+    t.float "original_unit_price"
     t.string "staff_name"
     t.string "service_name"
     t.datetime "starts_at"
@@ -188,12 +178,11 @@ ActiveRecord::Schema.define(version: 2020_09_09_113401) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "sellable_name"
-    t.integer "client_id"
     t.string "sellable_type"
     t.integer "sellable_id"
     t.integer "quantity", default: 1
+    t.integer "invoice_id"
     t.index ["appointment_id"], name: "index_lines_on_appointment_id"
-    t.index ["client_id"], name: "index_lines_on_client_id"
     t.index ["service_id"], name: "index_lines_on_service_id"
     t.index ["staff_id"], name: "index_lines_on_staff_id"
   end
@@ -287,7 +276,6 @@ ActiveRecord::Schema.define(version: 2020_09_09_113401) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "invoice_id"
-    t.integer "staff_id"
     t.index ["appointment_id"], name: "index_payments_on_appointment_id"
     t.index ["payment_type_id"], name: "index_payments_on_payment_type_id"
   end
