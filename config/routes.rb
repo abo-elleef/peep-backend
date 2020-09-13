@@ -46,7 +46,6 @@ Rails.application.routes.draw do
   get "export/staffs", to: "export#staffs"
   get "export/products", to: "export#products"
   get "export/orders", to: "export#orders"
-
   post "appointments/check_hints", to: "appointments#check_hints"
 
   # Reports Routes
@@ -62,6 +61,7 @@ Rails.application.routes.draw do
     get "sales/sales_by_staff", to: "sales#sales_by_staff"
     get "sales/recent_sales", to: "sales#recent_sales"
     get "sales/appointments", to: "sales#appointments"
+    get "sales/vouchers", to: "sales#vouchers"
 
   end
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
