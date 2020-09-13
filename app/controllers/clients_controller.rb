@@ -13,6 +13,42 @@ class ClientsController < ApplicationController
     render json: { data: ClientSerializer.new(client) },  status: :ok
   end
 
+  def appointments
+    client = Client.find(params[:id])
+    appointments = client.appointments.order("appointments.id DESC").preload(:payments, :tips,  lines: :staff).limit(10)
+    serializers = ActiveModel::Serializer::ArraySerializer.new(appointments, serializer: AppointmentSerializer)
+    render json: {data: serializers},  status: :ok
+  end
+
+  def invoices
+    # client = Client.find(params[:id])
+    # invoices = client.invoices.order("invoices.id DESC").limit(10)
+    # serializers = ActiveModel::Serializer::ArraySerializer.new(invoices, serializer: InvoiceSerializer)
+    render json: {data: []},  status: :ok
+  end
+
+  def products
+    # TODO @monier get only last 10 products purchased by client
+    # client = Client.find(params[:id])
+    # invoices = client.invoices.order("invoices.id DESC").limit(10)
+    # serializers = ActiveModel::Serializer::ArraySerializer.new(invoices, serializer: InvoiceSerializer)
+    render json: {data: []},  status: :ok
+  end
+
+  def vouchers
+    # client = Client.find(params[:id])
+    # invoices = client.voucher_usages.order(id: :desc).limit(10)
+    # serializers = ActiveModel::Serializer::ArraySerializer.new(invoices, serializer: InvoiceSerializer)
+    render json: {data: []},  status: :ok
+  end
+
+  def subscriptions
+    # client = Client.find(params[:id])
+    # invoices = client.subscription_usages.order(id: :desc).limit(10)
+    # serializers = ActiveModel::Serializer::ArraySerializer.new(invoices, serializer: InvoiceSerializer)
+    render json: {data: []},  status: :ok
+  end
+
   def create
     client = Client.new(client_params)
     client.location = current_location

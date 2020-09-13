@@ -8,7 +8,7 @@ class ServiceSerializer < ActiveModel::Serializer
   end
 
   attribute :appointment_color do |serializer|
-    serializer.object.service_category.appointment_color
+    serializer.object&.service_category&.appointment_color
   end
 
   has_many :service_prices, serializer: ServicePriceSerializer
