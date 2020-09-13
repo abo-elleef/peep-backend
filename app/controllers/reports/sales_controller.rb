@@ -43,6 +43,7 @@ module Reports
     end
 
     def recent_sales
+      # TODO @monier we need to dynamic this values
       data = {
           appointment_count: 23,
           appointment_value: 1023,
@@ -63,6 +64,22 @@ module Reports
     end
 
     def vouchers
+      # TODO @monier we should return teh following data
+      # {
+      #     data: [
+      #         {
+      #             'issue_date': 'issue_date',
+      #             'expiry_date': 'expiry_date',
+      #             'invoice_number': 'invoice_number',
+      #             'client': 'client',
+      #             'status': 'status',
+      #             'code': 'code',
+      #             'total': 'total',
+      #             'redeemed': 'redeemed',
+      #             'remaining': 'remaining'
+      #         }
+      #     ]
+      # }
       # lines = Line.preload(:staff, :sellable, appointment: :location).
       #     peep_filter(params.slice(:starts_at, :ends_at, :staff_ids, :location_ids))
       # pagy, lines = pagy(lines, page: page_index, items: page_size )
