@@ -37,9 +37,9 @@ Rails.application.routes.draw do
   resources :suppliers
   resources :subscriptions
   resources :discounts
-  resources :vouchers
+  resources :voucher_types
   resources :packages
-  resources :invoices, only: [:index]
+  resources :invoices, only: [:index, :show, :update]
 
   get "export/clients", to: "export#clients"
   get "export/services", to: "export#services"
@@ -47,7 +47,7 @@ Rails.application.routes.draw do
   get "export/products", to: "export#products"
   get "export/orders", to: "export#orders"
   post "appointments/check_hints", to: "appointments#check_hints"
-
+  post "/checkout", to: "invoices#checkout"
   # Reports Routes
   namespace :reports do
     # sales routes
@@ -64,5 +64,8 @@ Rails.application.routes.draw do
     get "sales/vouchers", to: "sales#vouchers"
 
   end
+
+  post "voucher_types/sell_voucher", to: "voucher_types#sell_voucher"
+  post "vouchers/check_voucher_validity", to: "vouchers#check_voucher_validity"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

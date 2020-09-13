@@ -1,18 +1,14 @@
-class Tip < ApplicationRecord
+class VoucherUsage < ApplicationRecord
   # == Constants ============================================================
   # == Extensions ===========================================================
-  # == Attributes ===========================================================
-  # if any enums
   # == Relationships ========================================================
-  belongs_to :staff
-  #belongs_to :appointment
-  belongs_to :invoice, dependent: :destroy
+  belongs_to :voucher
+  belongs_to :usable, polymorphic: true
+
   # == Validations ==========================================================
-  validates_presence_of :value
   # == Scopes ===============================================================
   # == Callbacks ============================================================
   # == Class Methods ========================================================
   # == Instance Methods =====================================================
-end
 
-
+  end
