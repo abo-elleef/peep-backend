@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_13_122306) do
+ActiveRecord::Schema.define(version: 2020_09_14_104317) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -103,32 +103,25 @@ ActiveRecord::Schema.define(version: 2020_09_13_122306) do
     t.index ["location_id"], name: "index_closing_shifts_locations_on_location_id"
   end
 
-  create_table "deduction_usages", force: :cascade do |t|
+  create_table "discount_usages", force: :cascade do |t|
     t.integer "line_id"
-    t.integer "deduction_id"
-    t.integer "client_id"
+    t.integer "discount_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["client_id"], name: "index_deduction_usages_on_client_id"
-    t.index ["deduction_id"], name: "index_deduction_usages_on_deduction_id"
-    t.index ["line_id"], name: "index_deduction_usages_on_line_id"
+    t.index ["discount_id"], name: "index_discount_usages_on_discount_id"
+    t.index ["line_id"], name: "index_discount_usages_on_line_id"
   end
 
-  create_table "deductions", force: :cascade do |t|
+  create_table "discounts", force: :cascade do |t|
     t.string "name"
     t.string "deduct_type"
     t.float "deduct_value"
     t.string "apply_on"
-    t.integer "usage_limit"
     t.boolean "uniq_per_client", default: false
-    t.datetime "starts_at"
-    t.datetime "ends_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "type"
-    t.float "start_value"
-    t.float "current_value"
-    t.index ["name"], name: "index_deductions_on_name"
+    t.boolean "active"
+    t.index ["name"], name: "index_discounts_on_name"
   end
 
   create_table "invoices", force: :cascade do |t|

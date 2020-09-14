@@ -1,3 +1,3 @@
-class DiscountSerializer < DeductionSerializer
+class DiscountSerializer <  ActiveModel::Serializer
 
 end

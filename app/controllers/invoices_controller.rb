@@ -26,6 +26,7 @@ class InvoicesController < ApplicationController
       render json: invoice.errors, status: :unprocessable_entity
     end
   end
+
   # update just in case of the new payment
   def update
     invoice = Invoice.find(params[:id])
@@ -45,7 +46,8 @@ class InvoicesController < ApplicationController
         :sequence, :notes, :client_id, :location_id, :status, :sub_total, :total, :balance, :staff_id,
         lines_attributes: [:id, :invoice_id, :staff_id,
                            :sellable_id, :sellable_type, :sellable_name, :unit_price,
-                           :original_unit_price, :starts_at, :ends_at, :quantity],
+                           :original_unit_price, :starts_at, :ends_at, :quantity,
+                           discount_usage_attributes: :discount_id],
         payments_attributes: [:id, :invoice_id, :payment_type_id, :amount],
         tips_attributes: [:id, :staff_id, :value, :_destroy])
   end
