@@ -89,7 +89,7 @@
 #   price = (100..500).to_a.sample
 #   final_price = price - ( index / 100.0 * price)
 #   time = Time.zone.now  - (index * 5 + index).day
-#   Voucher.create({name: "dicount #{index + 20 }", deduct_type: index.even? ? "value" : "percentage", deduct_value: index * 10 + 3, apply_on: "services", usage_limit: 100, uniq_per_client: false, starts_at: time , ends_at: time + 10.days})
+#   VoucherType.create({name: "Voucher #{index + 20 }", price: 200, sales_amount: 300, sold_amount: 23, value: index * 10 + 3, title: "voucher title", desc: "voucher desc", notes: "notes", color: "#f0f0f0", starts_at: time , ends_at: time + 10.days})
 #   Discount.create({name: "dicount #{index + 20 }", deduct_type: index.even? ? "value" : "percentage", deduct_value: index * 10 + 3, apply_on: "services", usage_limit: 100, uniq_per_client: false, starts_at: time , ends_at: time + 10.days})
 #   Package.create!({name: "Package name #{index}", description: "Package description #{index}", available_for: :everyone, pricing_type: :percentage, deduction_amount: index, final_price: final_price, schedule_type: :sequence,service_price_ids: service_prices.sample(2).pluck(:id) })
 # end

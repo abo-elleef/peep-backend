@@ -18,11 +18,11 @@ ActiveRecord::Schema.define(version: 2020_09_14_104317) do
   create_table "appointments", force: :cascade do |t|
     t.integer "status", default: 1
     t.integer "client_id"
-    t.integer "location_id"
     t.text "notes"
     t.date "date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "location_id"
     t.integer "cancellation_reason_id"
     t.index ["cancellation_reason_id"], name: "index_appointments_on_cancellation_reason_id"
     t.index ["client_id"], name: "index_appointments_on_client_id"
@@ -138,7 +138,6 @@ ActiveRecord::Schema.define(version: 2020_09_14_104317) do
     t.float "sub_total"
     t.float "total"
     t.float "balance"
-    t.index ["appointment_id"], name: "index_invoices_on_appointment_id"
     t.index ["client_id"], name: "index_invoices_on_client_id"
     t.index ["invoiceable_id"], name: "index_invoices_on_invoiceable_id"
     t.index ["invoiceable_type"], name: "index_invoices_on_invoiceable_type"
@@ -293,9 +292,6 @@ ActiveRecord::Schema.define(version: 2020_09_14_104317) do
     t.float "retail_price"
     t.float "special_price"
     t.float "supply_price"
-    t.integer "initial_stock"
-    t.integer "reorder_point"
-    t.integer "reorder_quantity"
     t.boolean "enable_commission"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

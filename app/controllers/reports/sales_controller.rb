@@ -56,6 +56,7 @@ module Reports
     end
 
     def appointments
+      # @monier invoices
       lines = Line.preload(:staff, :sellable, appointment: :location).
           peep_filter(params.slice(:starts_at, :ends_at, :staff_ids, :location_ids))
       pagy, lines = pagy(lines, page: page_index, items: page_size )
