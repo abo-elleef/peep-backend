@@ -2,12 +2,15 @@ class Line < ApplicationRecord
   # == Constants ============================================================
   # == Extensions ===========================================================
   include Filterable
+  # == Attributes ===========================================================
   # == Relationships ========================================================
   # belongs_to :service_price
   belongs_to :staff
   belongs_to :sellable, polymorphic: true
   belongs_to :invoice
+  has_one :discount_usage
 
+  accepts_nested_attributes_for :discount_usage
   # == Validations ==========================================================
   # validates_presence_of :appointment
   validates :staff_id, :sellable_type, :sellable_id, :unit_price, :original_unit_price, presence: true
