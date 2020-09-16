@@ -48,7 +48,7 @@ class AppointmentsController < ApplicationController
   def appointment_params
     params.require(:appointment).permit(
         :status, :client_id, :location_id, :notes, :date, :cancellation_reason_id,
-        appointments_services_attributes: [:id, :appointment_id, :staff_id, :service_id, :starts_at, :ends_at]
+        appointment_services_attributes: [:id, :appointment_id, :staff_id, :service_id, :service_price_id, :starts_at, :ends_at]
     )
   end
 end
