@@ -24,7 +24,7 @@ class Appointment < ApplicationRecord
   scope :by_starts_at, -> (starts_at) { where("appointments.created_at::date >= ?", starts_at.to_date) }
 
   scope :by_location_ids, -> (location_ids) { where(location_id: location_ids) }
-  scope :by_staff_ids, -> (staff_ids) { joins(:appointment_services).where(staff_id: staff_ids) }
+  scope :by_staff_ids, -> (staff_ids) { joins(:appointment_services).where("appointment_services.staff_id = #{staff_ids}") }
   scope :by_service, -> (service_ids) { joins(:appointment_services).where(service_id: service_ids) }
 
   # == Callbacks ============================================================
