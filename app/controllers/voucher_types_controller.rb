@@ -14,8 +14,6 @@ class VoucherTypesController < ApplicationController
   def create
     voucher_type = VoucherType.new(voucher_type_params)
     if voucher_type.save
-      services = params[:services_ids].empty? ? Service.all : Service.where(id: params[:services_ids])
-      voucher_type.services << services
       render json: {data: VoucherTypeSerializer.new(voucher_type)}, status: :created
     else
       render json: voucher_type.errors, status: :unprocessable_entity
@@ -48,7 +46,7 @@ class VoucherTypesController < ApplicationController
     params.require(:voucher_type).permit(
         :name, :value, :price, :sales_amount,
         :sold_amount, :expire, :expiring_reason, :title, :desc, :notes,
-        :color, :starts_at, :ends_at, :services_ids
+        :color, :starts_at, :ends_at, :service_price_ids
     )
   end
 end

@@ -12,8 +12,8 @@ class PackagesController < ApplicationController
   end
 
   def create
-    package = PackagePricing.new(Package.new(package_params), params).call
-    package.service_prices << ServicePrice.where(id: params[:service_prices].pluck(:id))
+    package = PackagePricing.new(Package.new(package_params), package_params).call
+    package.service_price_ids << package_params[:service_price_ids]
     if package.save
       render json: {data: PackageSerializer.new(package)}, status: :created
     else
@@ -23,8 +23,8 @@ class PackagesController < ApplicationController
 
   def update
     package = Package.find(params[:id])
-    package = PackagePricing.new(package, params).call if package.pricing_type != params[:pricing_type]
-    update_service_prices(package, params)
+    package = PackagePricing.new(package, package_params).call if package.pricing_type != params[:package][:pricing_type]
+    update_service_prices(package)
     if package.update(package_params)
       render json: {data: PackageSerializer.new(package)}, status: :ok
     else
@@ -44,11 +44,12 @@ class PackagesController < ApplicationController
   private
 
   def package_params
-    params.require(:package).permit(:name, :description, :available_for, :pricing_type, :deduction_amount,
-                                    :final_price, :schedule_type)
+    params.require(:package).permit(
+        :name, :description, :available_for, :pricing_type, :deduction_amount,
+        :final_price, :schedule_type, service_price_ids: [])
   end
 
-  def update_service_prices(package, params)
-    package.service_prices  =  ServicePrice.where(id: params[:service_prices].pluck(:id))
+  def update_service_prices(package)
+    package.service_price_ids  =  package_params[:service_price_ids]
   end
 end
