@@ -4,14 +4,12 @@ class Subscription < ApplicationRecord
   # == Extensions ===========================================================
   include Filterable
 
-
-
   # == Attributes ===========================================================
-  enum available_for: {everyone: 0, males: 1, females: 2}
+  enum available_for: {everyone: 0, male: 1, female: 2}
   enum pricing_type:  {value: "value", percentage: "percentage"}
 
   # == Relationships ========================================================
-
+  has_and_belongs_to_many :service_prices
   # == Validations ==========================================================
   validates_presence_of :name
 
