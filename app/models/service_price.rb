@@ -8,6 +8,7 @@ class ServicePrice < ApplicationRecord
   belongs_to :service, inverse_of: :service_prices
   has_many :lines, as: :sellable
   has_many :packages
+  has_and_belongs_to_many :subscriptions
 
   # == Validations ==========================================================
   validates_presence_of :service
