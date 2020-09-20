@@ -9,6 +9,8 @@ class Invoice < ApplicationRecord
   belongs_to :client
   belongs_to :location
   has_many :vouchers
+  has_one :appointment
+  has_many :vouchers
   has_many :tips
   has_many :payments, dependent: :destroy
   has_many :lines, dependent: :destroy

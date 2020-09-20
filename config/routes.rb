@@ -17,8 +17,16 @@ Rails.application.routes.draw do
       get :top
     end
   end
-  resources :clients
   resources :service_prices, only: :index
+  resources :clients do
+    member do
+      get :appointments
+      get :vouchers
+      get :subscriptions
+      get :products
+      get :invoices
+    end
+  end
   resources :services do
     collection do
       get :top
