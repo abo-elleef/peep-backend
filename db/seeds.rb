@@ -89,7 +89,7 @@
 #   price = (100..500).to_a.sample
 #   final_price = price - ( index / 100.0 * price)
 #   time = Time.zone.now  - (index * 5 + index).day
-#   Voucher.create({name: "dicount #{index + 20 }", deduct_type: index.even? ? "value" : "percentage", deduct_value: index * 10 + 3, apply_on: "services", usage_limit: 100, uniq_per_client: false, starts_at: time , ends_at: time + 10.days})
+#   VoucherType.create({name: "Voucher #{index + 20 }", price: 200, sales_amount: 300, sold_amount: 23, value: index * 10 + 3, title: "voucher title", desc: "voucher desc", notes: "notes", color: "#f0f0f0", starts_at: time , ends_at: time + 10.days})
 #   Discount.create({name: "dicount #{index + 20 }", deduct_type: index.even? ? "value" : "percentage", deduct_value: index * 10 + 3, apply_on: "services", usage_limit: 100, uniq_per_client: false, starts_at: time , ends_at: time + 10.days})
 #   Package.create!({name: "Package name #{index}", description: "Package description #{index}", available_for: :everyone, pricing_type: :percentage, deduction_amount: index, final_price: final_price, schedule_type: :sequence,service_price_ids: service_prices.sample(2).pluck(:id) })
 # end
@@ -200,23 +200,16 @@
 #   service_price = prices.sample
 #   day = days.sample
 #   time = day + hours.sample.hour
-#   lines = []
+#   appointment_services = []
 #   rand(1..3).times do |index|
 #     start_time = time + rand(1..3).hour
 #     end_time = start_time + rand(60..120).minute
-#     lines << {
+#     appointment_services << {
 #         staff_id: staff.id,
-#         client_id: client.id,
-#         price: service_price.price * 0.8,
 #         starts_at: start_time,
 #         ends_at: end_time,
-#         original_price: service_price.price,
-#         staff_name: staff.name,
-#         service_name: service_price.service.name,
 #         service_id: service_price.service.id,
-#         sellable_id: service_price.id,
-#         sellable_type: "ServicePrice",
-#         sellable_name: service_price.name.presence || "blank price name ",
+#         service_price_id: service_price.id,
 #         created_at: time,
 #         updated_at: time
 #     }
@@ -229,6 +222,6 @@
 #                           date: day,
 #                           created_at: time,
 #                           updated_at: time,
-#                           lines_attributes: lines
+#                           appointment_services_attributes: appointment_services
 #                       })
 # end

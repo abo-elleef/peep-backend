@@ -4,7 +4,6 @@ class Line < ApplicationRecord
   include Filterable
   # == Attributes ===========================================================
   # == Relationships ========================================================
-  # belongs_to :service_price
   belongs_to :staff
   belongs_to :sellable, polymorphic: true
   belongs_to :invoice
