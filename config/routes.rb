@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   end
   resources :shifts
+  resources :blocked_times
   resources :closing_shifts
   resources :locations
   resources :staffs do
