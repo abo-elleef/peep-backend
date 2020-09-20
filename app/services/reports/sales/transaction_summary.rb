@@ -31,20 +31,15 @@ module Reports
       end
 
       def build_vouchers
-        # TODO @monier build the right query
-        {name: :vouchers}.merge!({
-            quantity: 23,
-            total_price: 123345
-        })
+        {name: :vouchers}.merge!(build_lines("VoucherType"))
       end
-
 
       def build_lines(type)
         lines = Line.where(created_at: starts_at..ends_at).where(sellable_type: type)
         if location_id.present?
-          lines = lines.includes(:appointment).where(appointments: {location_id: location_id})
+          lines = lines.joins(:invoice).where(invoices: {location_id: location_id})
         end
-        lines = lines.pluck("count(lines.id), SUM(lines.price)").flatten
+        lines = lines.pluck("count(lines.id), SUM(lines.unit_price)").flatten
         {
             quantity: lines.first.to_f,
             total_price: lines.last.to_f

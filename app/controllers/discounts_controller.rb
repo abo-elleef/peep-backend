@@ -42,8 +42,8 @@ class DiscountsController < ApplicationController
 
   def discount_params
     params.require(:discount).permit(
-        :name, :deduct_type, :deduct_value, :apply_on, :usage_limit,
-        :uniq_per_client, :starts_at, :ends_at
+        :name, :deduct_type, :deduct_value, :apply_on, :limit,
+        :uniq_per_client, :starts_at, :ends_at, service_price_ids: []
     )
   end
 end

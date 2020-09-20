@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_02_015011) do
+ActiveRecord::Schema.define(version: 2020_09_20_110139) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "appointment_services", force: :cascade do |t|
+    t.integer "appointment_id"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "staff_id"
+    t.integer "service_price_id"
+    t.index ["appointment_id"], name: "index_appointment_services_on_appointment_id"
+    t.index ["service_price_id"], name: "index_appointment_services_on_service_price_id"
+  end
 
   create_table "appointments", force: :cascade do |t|
     t.integer "status", default: 1
@@ -24,21 +36,11 @@ ActiveRecord::Schema.define(version: 2020_09_02_015011) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "location_id"
     t.integer "cancellation_reason_id"
+    t.integer "invoice_id"
     t.index ["cancellation_reason_id"], name: "index_appointments_on_cancellation_reason_id"
     t.index ["client_id"], name: "index_appointments_on_client_id"
     t.index ["date"], name: "index_appointments_on_date"
     t.index ["location_id"], name: "index_appointments_on_location_id"
-  end
-
-  create_table "appointments_services", force: :cascade do |t|
-    t.integer "appointment_id"
-    t.integer "service_id"
-    t.datetime "starts_at"
-    t.datetime "ends_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["appointment_id"], name: "index_appointments_services_on_appointment_id"
-    t.index ["service_id"], name: "index_appointments_services_on_service_id"
   end
 
   create_table "appointments_staffs", force: :cascade do |t|
@@ -102,39 +104,44 @@ ActiveRecord::Schema.define(version: 2020_09_02_015011) do
     t.index ["location_id"], name: "index_closing_shifts_locations_on_location_id"
   end
 
-  create_table "deduction_usages", force: :cascade do |t|
+  create_table "discount_usages", force: :cascade do |t|
     t.integer "line_id"
-    t.integer "deduction_id"
-    t.integer "client_id"
+    t.integer "discount_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["client_id"], name: "index_deduction_usages_on_client_id"
-    t.index ["deduction_id"], name: "index_deduction_usages_on_deduction_id"
-    t.index ["line_id"], name: "index_deduction_usages_on_line_id"
+    t.index ["discount_id"], name: "index_discount_usages_on_discount_id"
+    t.index ["line_id"], name: "index_discount_usages_on_line_id"
   end
 
-  create_table "deductions", force: :cascade do |t|
+  create_table "discounts", force: :cascade do |t|
     t.string "name"
     t.string "deduct_type"
     t.float "deduct_value"
     t.string "apply_on"
-    t.integer "usage_limit"
     t.boolean "uniq_per_client", default: false
-    t.datetime "starts_at"
-    t.datetime "ends_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "type"
-    t.float "start_value"
-    t.float "current_value"
-    t.index ["name"], name: "index_deductions_on_name"
+    t.boolean "active"
+    t.integer "limit", default: 1
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.index ["name"], name: "index_discounts_on_name"
   end
 
   create_table "invoices", force: :cascade do |t|
     t.string "sequence"
-    t.integer "appointment_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "status"
+    t.text "notes"
+    t.integer "client_id"
+    t.integer "location_id"
+    t.float "sub_total"
+    t.float "total"
+    t.float "balance"
+    t.index ["client_id"], name: "index_invoices_on_client_id"
+    t.index ["location_id"], name: "index_invoices_on_location_id"
+    t.index ["status"], name: "index_invoices_on_status"
   end
 
   create_table "items", force: :cascade do |t|
@@ -151,25 +158,17 @@ ActiveRecord::Schema.define(version: 2020_09_02_015011) do
   end
 
   create_table "lines", force: :cascade do |t|
-    t.integer "appointment_id"
     t.integer "staff_id"
-    t.integer "service_id"
-    t.float "price"
-    t.float "original_price"
+    t.float "unit_price"
+    t.float "original_unit_price"
     t.string "staff_name"
-    t.string "service_name"
-    t.datetime "starts_at"
-    t.datetime "ends_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "sellable_name"
-    t.integer "client_id"
     t.string "sellable_type"
     t.integer "sellable_id"
     t.integer "quantity", default: 1
-    t.index ["appointment_id"], name: "index_lines_on_appointment_id"
-    t.index ["client_id"], name: "index_lines_on_client_id"
-    t.index ["service_id"], name: "index_lines_on_service_id"
+    t.integer "invoice_id"
     t.index ["staff_id"], name: "index_lines_on_staff_id"
   end
 
@@ -256,12 +255,11 @@ ActiveRecord::Schema.define(version: 2020_09_02_015011) do
   end
 
   create_table "payments", force: :cascade do |t|
-    t.integer "appointment_id"
     t.integer "payment_type_id"
     t.float "amount"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["appointment_id"], name: "index_payments_on_appointment_id"
+    t.integer "invoice_id"
     t.index ["payment_type_id"], name: "index_payments_on_payment_type_id"
   end
 
@@ -322,6 +320,13 @@ ActiveRecord::Schema.define(version: 2020_09_02_015011) do
     t.index ["service_id"], name: "index_service_prices_on_service_id"
   end
 
+  create_table "service_prices_subscriptions", force: :cascade do |t|
+    t.integer "subscription_id"
+    t.integer "service_price_id"
+    t.index ["service_price_id"], name: "index_service_prices_subscriptions_on_service_price_id"
+    t.index ["subscription_id"], name: "index_service_prices_subscriptions_on_subscription_id"
+  end
+
   create_table "services", force: :cascade do |t|
     t.string "name"
     t.integer "treatment_type_id"
@@ -342,6 +347,13 @@ ActiveRecord::Schema.define(version: 2020_09_02_015011) do
     t.bigint "staff_id", null: false
     t.index ["service_id", "staff_id"], name: "index_services_staffs_on_service_id_and_staff_id"
     t.index ["staff_id", "service_id"], name: "index_services_staffs_on_staff_id_and_service_id"
+  end
+
+  create_table "services_voucher_types", id: false, force: :cascade do |t|
+    t.bigint "voucher_type_id", null: false
+    t.bigint "service_id", null: false
+    t.index ["service_id"], name: "index_services_voucher_types_on_service_id"
+    t.index ["voucher_type_id"], name: "index_services_voucher_types_on_voucher_type_id"
   end
 
   create_table "shifts", force: :cascade do |t|
@@ -383,6 +395,7 @@ ActiveRecord::Schema.define(version: 2020_09_02_015011) do
     t.float "pricing_value"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "limit", default: 1
   end
 
   create_table "suppliers", force: :cascade do |t|
@@ -403,10 +416,9 @@ ActiveRecord::Schema.define(version: 2020_09_02_015011) do
   end
 
   create_table "tips", force: :cascade do |t|
-    t.integer "appointment_id"
     t.integer "staff_id"
     t.float "value"
-    t.index ["appointment_id"], name: "index_tips_on_appointment_id"
+    t.integer "invoice_id"
     t.index ["staff_id"], name: "index_tips_on_staff_id"
   end
 
@@ -419,6 +431,48 @@ ActiveRecord::Schema.define(version: 2020_09_02_015011) do
     t.integer "business_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "voucher_types", force: :cascade do |t|
+    t.string "name"
+    t.float "value"
+    t.float "price"
+    t.integer "sales_amount"
+    t.integer "sold_amount", default: 0
+    t.boolean "expire", default: false
+    t.integer "expiring_reason"
+    t.string "title"
+    t.text "desc"
+    t.text "notes"
+    t.string "color"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "voucher_usages", force: :cascade do |t|
+    t.integer "voucher_id"
+    t.integer "client_id"
+    t.integer "usable_id"
+    t.string "usable_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["client_id"], name: "index_voucher_usages_on_client_id"
+    t.index ["usable_id"], name: "index_voucher_usages_on_usable_id"
+    t.index ["usable_type"], name: "index_voucher_usages_on_usable_type"
+    t.index ["voucher_id"], name: "index_voucher_usages_on_voucher_id"
+  end
+
+  create_table "vouchers", force: :cascade do |t|
+    t.integer "voucher_type_id"
+    t.string "code"
+    t.float "current_value"
+    t.boolean "expire"
+    t.integer "expiring_reason"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "invoice_id"
   end
 
 end
