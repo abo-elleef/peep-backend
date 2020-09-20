@@ -72,49 +72,6 @@
                       },
                       "date": {
                         "type": "string"
-                      },
-                      "lines_attributes": {
-                        "type": "array",
-                        "items": {
-                          "properties": {
-                            "staff_id": {
-                              "type": "integer"
-                            },
-                            "staff_name": {
-                              "type": "integer"
-                            },
-                            "service_id": {
-                              "type": "integer"
-                            },
-                            "client_id": {
-                              "type": "integer"
-                            },
-                            "service_name": {
-                              "type": "integer"
-                            },
-                            "sellable_id": {
-                              "type": "integer"
-                            },
-                            "sellable_type": {
-                              "type": "string"
-                            },
-                            "sellable_name": {
-                              "type": "string"
-                            },
-                            "price": {
-                              "type": "number"
-                            },
-                            "original_price": {
-                              "type": "number"
-                            },
-                            "starts_at": {
-                              "type": "string"
-                            },
-                            "ends_at": {
-                              "type": "string"
-                            }
-                          }
-                        }
                       }
                     }
                   }
@@ -198,9 +155,9 @@
         }
       },
       "put": {
-        "summary": "checkout an appointment ",
+        "summary": "update an appointment record",
         "tags": [
-          "checkout appointments"
+          "appointments"
         ],
         "parameters": [
           {
@@ -214,7 +171,7 @@
         ],
         "responses": {
           "200": {
-            "description": "checkout completed",
+            "description": "appointment updated",
             "content": {
             }
           },
@@ -253,70 +210,8 @@
                       "date": {
                         "type": "string"
                       },
-                      "lines_attributes": {
-                        "type": "array",
-                        "items": {
-                          "properties": {
-                            "id": {
-                              "type": "integer"
-                            },
-                            "appointment_id": {
-                              "type": "integer"
-                            },
-                            "staff_id": {
-                              "type": "integer"
-                            },
-                            "staff_name": {
-                              "type": "integer"
-                            },
-                            "service_id": {
-                              "type": "integer"
-                            },
-                            "service_name": {
-                              "type": "integer"
-                            },
-                            "sellable_id": {
-                              "type": "integer"
-                            },
-                            "sellable_type": {
-                              "type": "string"
-                            },
-                            "sellable_name": {
-                              "type": "string"
-                            },
-                            "price": {
-                              "type": "number"
-                            },
-                            "original_price": {
-                              "type": "number"
-                            },
-                            "starts_at": {
-                              "type": "string"
-                            },
-                            "ends_at": {
-                              "type": "string"
-                            }
-                          }
-                        }
-                      },
-                      "payments_attributes": {
-                        "type": "array",
-                        "items": {
-                          "properties": {
-                            "id": {
-                              "type": "integer"
-                            },
-                            "appointment_id": {
-                              "type": "integer"
-                            },
-                            "payment_type_id": {
-                              "type": "integer"
-                            },
-                            "amount": {
-                              "type": "number"
-                            }
-                          }
-                        }
+                      "cancellation_id": {
+                        "type": "integer"
                       }
                     }
                   }
@@ -1477,6 +1372,257 @@
                       },
                       "next_num": {
                         "type": "integer"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/invoices": {
+      "get": {
+        "summary": "Retrieves a set of invoices",
+        "tags": [
+          "invoices"
+        ],
+        "responses": {
+          "200": {
+            "description": "services set",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          }
+        }
+      }
+    },
+    "/invoices/{id}": {
+      "get": {
+        "summary": "show details of a invoice",
+        "tags": [
+          "invoices"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "services data",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "404": {
+            "description": "services not found",
+            "content": {
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "update a invoice payments ",
+        "tags": [
+          "invoices"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Invoice updated",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "442": {
+            "description": "bad data or breaks validation ",
+            "content": {
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "invoice": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "integer"
+                      },
+                      "status": {
+                        "type": "integer"
+                      },
+                      "client_id": {
+                        "type": "integer"
+                      },
+                      "location_id": {
+                        "type": "integer"
+                      },
+                      "staff_id": {
+                        "type": "integer"
+                      },
+                      "notes": {
+                        "type": "text"
+                      },
+                      "payments_attributes": {
+                        "type": "array",
+                        "items": {
+                          "properties": {
+                            "payment_type_id": {
+                              "type": "integer"
+                            },
+                            "amount": {
+                              "type": "number"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/checkout": {
+      "post": {
+        "summary": "checkout an invoice",
+        "tags": [
+          "invoices"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "201": {
+            "description": "checkout successfully",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "442": {
+            "description": "bad data or breaks validation ",
+            "content": {
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "invoice": {
+                    "type": "object",
+                    "properties": {
+                      "status": {
+                        "type": "integer"
+                      },
+                      "client_id": {
+                        "type": "integer"
+                      },
+                      "location_id": {
+                        "type": "integer"
+                      },
+                      "staff_id": {
+                        "type": "integer"
+                      },
+                      "notes": {
+                        "type": "text"
+                      },
+                      "lines_attributes": {
+                        "type": "array",
+                        "items": {
+                          "properties": {
+                            "sellable_id": {
+                              "type": "integer"
+                            },
+                            "sellable_type": {
+                              "type": "string"
+                            },
+                            "quantity": {
+                              "type": "integer"
+                            },
+                            "unit_price": {
+                              "type": "number"
+                            },
+                            "original_unit_price": {
+                              "type": "number"
+                            },
+                            "staff_id": {
+                              "type": "integer"
+                            },
+                            "starts_at": {
+                              "type": "string"
+                            },
+                            "ends_at": {
+                              "type": "string"
+                            }
+                          }
+                        }
+                      },
+                      "payments_attributes": {
+                        "type": "array",
+                        "items": {
+                          "properties": {
+                            "payment_type_id": {
+                              "type": "integer"
+                            },
+                            "amount": {
+                              "type": "number"
+                            }
+                          }
+                        }
+                      },
+                      "tips_attributes": {
+                        "type": "array",
+                        "items": {
+                          "properties": {
+                            "staff_id": {
+                              "type": "integer"
+                            },
+                            "value": {
+                              "type": "number"
+                            }
+                          }
+                        }
                       }
                     }
                   }
@@ -3663,6 +3809,291 @@
                         "type": "string"
                       },
                       "business_type": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/voucher_types": {
+      "get": {
+        "summary": "Retrieves a set of voucher_types",
+        "tags": [
+          "voucher_types"
+        ],
+        "responses": {
+          "200": {
+            "description": "voucher_types set",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "create a voucher_type record",
+        "tags": [
+          "voucher_types"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "201": {
+            "description": "voucher_type created",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "442": {
+            "description": "bad data or breaks validation ",
+            "content": {
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "voucher_type": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "text"
+                      },
+                      "price": {
+                        "type": "integer"
+                      },
+                      "sales_amount": {
+                        "type": "string"
+                      },
+                      "title": {
+                        "type": "boolean"
+                      },
+                      "color": {
+                        "type": "integer"
+                      },
+                      "starts_at": {
+                        "type": "integer"
+                      },
+                      "ends_at": {
+                        "type": "integer"
+                      },
+                      "services_ids": {
+                        "type": "array"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/voucher_types/{id}": {
+      "get": {
+        "summary": "show details of a voucher_type",
+        "tags": [
+          "voucher_types"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "voucher_types data",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "404": {
+            "description": "voucher_types not found",
+            "content": {
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "delete voucher_type",
+        "tags": [
+          "voucher_types"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "voucher_types data",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "404": {
+            "description": "voucher_type not found",
+            "content": {
+            }
+          },
+          "442": {
+            "description": "can not be deleted",
+            "content": {
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "update a voucher_type record",
+        "tags": [
+          "voucher_types"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "voucher_type updated",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "442": {
+            "description": "bad data or breaks validation ",
+            "content": {
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "voucher_type": {
+                    "type": "object",
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      },
+                      "value": {
+                        "type": "text"
+                      },
+                      "price": {
+                        "type": "integer"
+                      },
+                      "sales_amount": {
+                        "type": "string"
+                      },
+                      "title": {
+                        "type": "boolean"
+                      },
+                      "color": {
+                        "type": "integer"
+                      },
+                      "starts_at": {
+                        "type": "integer"
+                      },
+                      "ends_at": {
+                        "type": "integer"
+                      },
+                      "services_ids": {
+                        "type": "array"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/vouchers/check_voucher_validity": {
+      "post": {
+        "summary": " check if voucher available to use ",
+        "tags": [
+          "vouchers"
+        ],
+        "parameters": [
+
+        ],
+        "responses": {
+          "201": {
+            "description": "voucher checked",
+            "content": {
+            }
+          },
+          "401": {
+            "description": "not authorized",
+            "content": {
+            }
+          },
+          "442": {
+            "description": "bad data or breaks validation ",
+            "content": {
+            }
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "voucher": {
+                    "type": "object",
+                    "properties": {
+                      "voucher_code": {
                         "type": "string"
                       }
                     }

@@ -8,6 +8,7 @@ class ServicesController < ApplicationController
   end
 
   def top
+    # TODO  @monier build service to find out best 5 staff member and comparing to last month
     data = [
         {name: "service 0 ", current_month: 23, last_month: 12},
         {name: "service 1 ", current_month: 23, last_month: 12},
@@ -61,6 +62,6 @@ class ServicesController < ApplicationController
                                      location_ids: [], staff_ids: [],
                                      service_prices_attributes: [
                                          :id, :service_id, :name, :duration, :pricing_type,
-                                         :price, :special_price, :_destroy])
+                                         :price, :_destroy])
   end
 end

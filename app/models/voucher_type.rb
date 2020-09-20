@@ -9,6 +9,7 @@ class VoucherType < ApplicationRecord
   # == Relationships ========================================================
   has_and_belongs_to_many :services
   has_many :vouchers
+  # TODO @monier why this exists?
   has_one   :voucher_usage,  as: :usable
   has_many :lines, as: :sellable
 

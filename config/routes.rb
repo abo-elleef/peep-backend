@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     end
   end
   resources :clients
+  resources :service_prices, only: :index
   resources :services do
     collection do
       get :top
