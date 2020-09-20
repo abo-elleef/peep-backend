@@ -246,6 +246,10 @@ clients = Client.all;
   )
 end
 
+invoices = Invoice.all;
+appointments = Appointment.all;
+100.times do |index| appointments[index].invoice = invoices[index]; appointments[index].save! end
+
 
 # =================== create invoices sample data ====================
 discounts = Discount.all;

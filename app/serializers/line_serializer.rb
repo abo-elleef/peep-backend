@@ -1,6 +1,6 @@
 class LineSerializer < ActiveModel::Serializer
   attributes :id, :invoice_id, :staff_id, :sellable_id, :sellable_type,
-             :unit_price, :original_unit_price, :staff_name, :starts_at, :ends_at, :quantity
+             :unit_price, :original_unit_price, :staff_name, :quantity
 
   belongs_to :sellable, polymorphic: true
   has_one :discount_usage, serializer: DiscountUsageSerializer

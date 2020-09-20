@@ -8,6 +8,7 @@ class Invoice < ApplicationRecord
   # == Relationships ========================================================
   belongs_to :client
   belongs_to :location
+  has_one :appointment
   has_many :vouchers
   has_many :tips
   has_many :payments, dependent: :destroy
