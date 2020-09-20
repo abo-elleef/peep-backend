@@ -3,7 +3,7 @@ class Order < ApplicationRecord
   # == Extensions ===========================================================
   include Filterable
   # == Attributes ===========================================================
-  enum status: {requested: 1, received: 2 }
+  enum status: {requested: 1, received: 2, cancelled: 3 }
   # == Relationships ========================================================
 
   belongs_to :supplier

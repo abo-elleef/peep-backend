@@ -7,8 +7,9 @@ class Invoice < ApplicationRecord
 
   # == Relationships ========================================================
   belongs_to :client
-  has_many :vouchers
   belongs_to :location
+  has_one :appointment
+  has_many :vouchers
   has_many :tips
   has_many :payments, dependent: :destroy
   has_many :lines, dependent: :destroy
@@ -16,7 +17,6 @@ class Invoice < ApplicationRecord
   accepts_nested_attributes_for :tips
   accepts_nested_attributes_for :payments
   accepts_nested_attributes_for :lines
-
   # == Validations ==========================================================
   # == Scopes ===============================================================
   scope :search, -> (search) { search.present? ? where("sequence ?", "%" + search + "%") : all }

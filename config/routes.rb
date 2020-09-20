@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
   end
   resources :shifts
+  resources :blocked_times
   resources :closing_shifts
   resources :locations
   resources :staffs do
@@ -16,8 +17,16 @@ Rails.application.routes.draw do
       get :top
     end
   end
-  resources :clients
   resources :service_prices, only: :index
+  resources :clients do
+    member do
+      get :appointments
+      get :vouchers
+      get :subscriptions
+      get :products
+      get :invoices
+    end
+  end
   resources :services do
     collection do
       get :top

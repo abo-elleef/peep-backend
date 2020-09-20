@@ -14,8 +14,10 @@ class InvoicesController < ApplicationController
 
   def checkout
     invoice_values = Checkout::InvoiceCalculation.perform(params)
-    invoice = Invoice.new(invoice_params.merge(sequence: Invoice.next_sequence(params[:location_id]),
-                                               sub_total: invoice_values[:total], total: invoice_values[:total], balance: invoice_values[:balance]))
+    invoice = Invoice.new(invoice_params.merge(
+        sequence: Invoice.next_sequence(params[:location_id]), sub_total: invoice_values[:total],
+        total: invoice_values[:total], balance: invoice_values[:balance])
+    )
     if invoice.save!
       lines_types = params[:lines_attributes].map { |line| line[:sellable_type] }.uniq
       Checkout::VoucherCreation.new(params[:lines_attributes].select { |line| line[:sellable_type] == 'VoucherType' }, invoice.id).call if lines_types.include?('VoucherType')

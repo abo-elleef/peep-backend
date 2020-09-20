@@ -23,6 +23,7 @@ location2 = Location.create!({
                                 city: 'cairo', state: 'cairo', zipcode: '123456789', user_id: user.id
 
                             })
+locations = Location.all
 50.times do |index|
   Staff.create!({
                  first_name: "#{index} first_name", last_name: " #{index} last_name",
@@ -62,6 +63,7 @@ end
 
 clients = Client.all;
 services = Service.all;
+service_prices = ServicePrice.all;
 staffs = Staff.all;
 days = []
 6.times do |index|
@@ -76,11 +78,11 @@ end
                                         date: days.sample
                                     })
   3.times do
-    service = services.sample
+    service_price = service_prices.sample
     staff = staffs.sample
     AppointmentService.create!({
                                    appointment_id: appointment.id,
-                                   service_price_id: service.id,
+                                   service_price_id: service_price.id,
                                    staff_id: staff.id,
                                    starts_at: Time.zone.now,
                                    ends_at: Time.zone.now + 1.hour
@@ -208,4 +210,57 @@ staffs =  Staff.all;
 end
 
 
-# =================== create orders sample data ====================
+# =================== create invoices sample data ====================
+locations = Location.all;
+sellables = [Product.all, ServicePrice.all].flatten.shuffle;
+staffs = Staff.all;
+clients = Client.all;
+100.times do
+  location_id = locations.sample.id
+  sellable_attributes = []
+  (3..7).to_a.sample.times do |index|
+    staff = staffs.sample
+    sellable = sellables.sample
+    sellable_attributes << {
+        staff_id: staff.id,
+        staff_name: staff.name,
+        unit_price: (100..200).to_a.sample,
+        original_unit_price: (100..200).to_a.sample,
+        sellable_name: sellable.name,
+        sellable_type: sellable.class.name,
+        sellable_id: sellable.id
+    }
+  end
+  Invoice.create!(
+      {
+          sequence: Invoice.next_sequence(location_id),
+          status: [1,2,3,4].sample,
+          notes: "great work",
+          client_id: clients.sample.id,
+          location_id: location_id,
+          sub_total: (100..500).to_a.sample,
+          total: (100..500).to_a.sample,
+          balance: (100..500).to_a.sample,
+          lines_attributes: sellable_attributes
+      }
+  )
+end
+
+invoices = Invoice.all;
+appointments = Appointment.all;
+100.times do |index| appointments[index].invoice = invoices[index]; appointments[index].save! end
+
+
+# =================== create invoices sample data ====================
+discounts = Discount.all;
+lines = Line.all
+100.times do
+  DiscountUsage.create!({line_id: lines.sample.id, discount_id: discounts.sample.id})
+end
+
+# =================== create invoices sample data ====================
+discounts = VoucherType.all;
+lines = Line.all
+100.times do
+  VoucherUsage.create!({line_id: lines.sample.id, voucher_id: discounts.sample.id})
+end
