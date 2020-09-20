@@ -1,7 +1,7 @@
 class SubscriptionsController < ApplicationController
 
   def index
-    subscriptions = Subscription.peep_filter(params.slice(:name))
+    subscriptions = Subscription.peep_filter(params.slice(:name)).desc_order
     serializers = ActiveModel::Serializer::ArraySerializer.new(subscriptions, each_serializer: SubscriptionSerializer)
     render json: {data: serializers},  status: :ok
   end
