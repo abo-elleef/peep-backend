@@ -23,7 +23,6 @@ class PackagesController < ApplicationController
   def update
     package = Package.find(params[:id])
     package = PackagePricing.new(package, package_params).call if package.pricing_type != package_params[:pricing_type]
-    update_service_prices(package, params)
     if package.update(package_params)
       render json: {data: PackageSerializer.new(package)}, status: :ok
     else
@@ -45,9 +44,5 @@ class PackagesController < ApplicationController
   def package_params
     params.require(:package).permit(:name, :description, :available_for, :pricing_type, :deduction_amount,
                                     :final_price, :schedule_type, service_price_ids: [])
-  end
-
-  def update_service_prices(package, params)
-    package.service_prices  =  ServicePrice.where(id: params[:service_prices].pluck(:id))
   end
 end

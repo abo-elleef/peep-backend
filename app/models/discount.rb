@@ -9,7 +9,8 @@ class Discount < ApplicationRecord
 
   # == Relationships ========================================================
   has_many :discount_usages
-
+  has_many :discounts_service_prices
+  has_many :service_prices, through: :discounts_service_prices
   # == Validations ==========================================================
   validates_presence_of :name
 
