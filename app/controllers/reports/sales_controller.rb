@@ -50,17 +50,17 @@ module Reports
           sales_value: 256,
           sales: [23, 45, 76, 12, 12, 78, 90],
           appointments: [23, 45, 76, 12, 12, 78, 90],
-          days: (Date.today..(Date.today + 7.days)).map {|a| a.strftime("%Y-%m-%d")}
+          days: (Date.today..(Date.today + 7.days)).map { |a| a.strftime("%Y-%m-%d") }
       }
       render json: {data: data}, status: :ok
     end
 
     def appointments
-      lines = Line.preload(:staff, :sellable, appointment: :location).
+      appointment_services = AppointmentService.preload(:appointment, :service, :service_price, :staff).
           peep_filter(params.slice(:starts_at, :ends_at, :staff_ids, :location_ids))
-      pagy, lines = pagy(lines, page: page_index, items: page_size )
-      serializers = ActiveModel::Serializer::ArraySerializer.new(lines, serializer: LineSalesSerializer)
-      render json: {data: serializers, meta: pagy_meta_data(pagy)},  status: :ok
+      pagy, appointment_services = pagy(appointment_services, page: page_index, items: page_size)
+      serializers = ActiveModel::Serializer::ArraySerializer.new(appointment_services, serializer: LineSalesSerializer)
+      render json: {data: serializers, meta: pagy_meta_data(pagy)}, status: :ok
     end
 
     def vouchers

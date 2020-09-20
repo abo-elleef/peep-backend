@@ -3,13 +3,13 @@ class InvoicesController < ApplicationController
   def index
     invoices = Invoice.preload(:location).peep_filter(params.slice(:location_id, :search))
     pagy, invoices = pagy(invoices, page: page_index, items: page_size)
-    data = InvoicePresenter.new(invoices).present_invoice_index
-    render json: {invoices: data, meta: pagy_meta_data(pagy)}, status: :ok
+    serializers = ActiveModel::Serializer::ArraySerializer.new(invoices, each_serializer: InvoiceSerializer)
+    render json: {data: serializers, meta: pagy_meta_data(pagy)}, status: :ok
   end
 
   def show
     invoice = Invoice.find(params[:id])
-    render json: {data: InvoicePresenter.new(invoice).present_invoice}, status: :ok
+    render json: {data: InvoiceSerializer.new(invoice)}, status: :ok
   end
 
   def checkout
@@ -21,7 +21,7 @@ class InvoicesController < ApplicationController
       Checkout::VoucherCreation.new(params[:lines_attributes].select { |line| line[:sellable_type] == 'VoucherType' }, invoice.id).call if lines_types.include?('VoucherType')
       Checkout::AppointmentCreation.new(params).perform if lines_types.include?('Service') || params[:appointment_id].present?
       # TODO ProductProcessing.new(params) if items_types.include?('Product')
-      render json: {data: InvoicePresenter.new(invoice).present_invoice}, status: :ok
+      render json: {data: InvoiceSerializer.new(invoice)}, status: :ok
     else
       render json: invoice.errors, status: :unprocessable_entity
     end
@@ -33,7 +33,7 @@ class InvoicesController < ApplicationController
     update_invoice_payment(invoice.id, params[:payments])
     invoice.status = params[:status]
     if invoice.save!
-      render json: {data: InvoicePresenter.new(invoice).present_invoice}, status: :ok
+      render json: {data: InvoiceSerializer.new(invoice)}, status: :ok
     else
       render json: invoice.errors, status: :unprocessable_entity
     end

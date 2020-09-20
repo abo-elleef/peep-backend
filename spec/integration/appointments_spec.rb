@@ -70,7 +70,19 @@ describe 'Appointments API' do
                       location_id: {type: :integer},
                       notes: {type: :string},
                       date: {type: :string},
-
+                      appointment_services_attributes: {
+                          type: :array,
+                          items: {
+                              properties: {
+                                  appointment_id: {type: :integer},
+                                  staff_id: {type: :integer},
+                                  service_id: {type: :integer},
+                                  service_price_id: {type: :integer},
+                                  starts_at: {type: :string},
+                                  ends_at: {type: :string}
+                              }
+                          }
+                      },
                   }
               }
           }
@@ -105,7 +117,20 @@ describe 'Appointments API' do
                       notes: {type: :string},
                       date: {type: :string},
                       cancellation_id: {type: :integer},
-
+                      appointment_services_attributes: {
+                          type: :array,
+                          items: {
+                              properties: {
+                                  id: {type: :integer},
+                                  appointment_id: {type: :integer},
+                                  staff_id: {type: :integer},
+                                  service_id: {type: :integer},
+                                  service_price_id: {type: :integer},
+                                  starts_at: {type: :string},
+                                  ends_at: {type: :string}
+                              }
+                          }
+                      }
                   }
               }
           }

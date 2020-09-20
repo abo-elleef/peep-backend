@@ -61,6 +61,6 @@ class ServicesController < ApplicationController
                                      location_ids: [], staff_ids: [],
                                      service_prices_attributes: [
                                          :id, :service_id, :name, :duration, :pricing_type,
-                                         :price, :special_price, :_destroy])
+                                         :price, :_destroy])
   end
 end
