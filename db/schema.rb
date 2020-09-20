@@ -10,14 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_17_200421) do
+ActiveRecord::Schema.define(version: 2020_09_20_110139) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "appointment_services", force: :cascade do |t|
     t.integer "appointment_id"
-    t.integer "service_id"
     t.datetime "starts_at"
     t.datetime "ends_at"
     t.datetime "created_at", precision: 6, null: false
@@ -25,7 +24,6 @@ ActiveRecord::Schema.define(version: 2020_09_17_200421) do
     t.integer "staff_id"
     t.integer "service_price_id"
     t.index ["appointment_id"], name: "index_appointment_services_on_appointment_id"
-    t.index ["service_id"], name: "index_appointment_services_on_service_id"
     t.index ["service_price_id"], name: "index_appointment_services_on_service_price_id"
   end
 
@@ -125,6 +123,8 @@ ActiveRecord::Schema.define(version: 2020_09_17_200421) do
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "active"
     t.integer "limit", default: 1
+    t.datetime "starts_at"
+    t.datetime "ends_at"
     t.index ["name"], name: "index_discounts_on_name"
   end
 
@@ -162,8 +162,6 @@ ActiveRecord::Schema.define(version: 2020_09_17_200421) do
     t.float "unit_price"
     t.float "original_unit_price"
     t.string "staff_name"
-    t.datetime "starts_at"
-    t.datetime "ends_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "sellable_name"
