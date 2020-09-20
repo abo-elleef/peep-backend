@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_20_110139) do
+ActiveRecord::Schema.define(version: 2020_09_20_214930) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -126,6 +126,13 @@ ActiveRecord::Schema.define(version: 2020_09_20_110139) do
     t.datetime "starts_at"
     t.datetime "ends_at"
     t.index ["name"], name: "index_discounts_on_name"
+  end
+
+  create_table "discounts_service_prices", force: :cascade do |t|
+    t.integer "discount_id"
+    t.integer "service_price_id"
+    t.index ["discount_id"], name: "index_discounts_service_prices_on_discount_id"
+    t.index ["service_price_id"], name: "index_discounts_service_prices_on_service_price_id"
   end
 
   create_table "invoices", force: :cascade do |t|
