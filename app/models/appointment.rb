@@ -8,12 +8,12 @@ class Appointment < ApplicationRecord
 
   # == Relationships ========================================================
   has_many :appointment_services
-  has_many :services, through: :appointment_services
   has_many :service_prices, through: :appointment_services
+  has_many :services, through: :service_prices
   belongs_to :location
   belongs_to :client
   has_one :invoice
-   accepts_nested_attributes_for :appointment_services
+  accepts_nested_attributes_for :appointment_services
 
   # == Validations ==========================================================
   validates_presence_of :location_id
