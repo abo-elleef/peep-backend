@@ -18,6 +18,7 @@ class VoucherType < ApplicationRecord
   validates :name, :value, :price, :sales_amount, :title, :color, :starts_at, :ends_at, presence: true
 
   # == Scopes ===============================================================
+  scope :by_name, -> (name) { where("name ilike ?", "%" + name + "%")}
   # == Callbacks ============================================================
   # == Class Methods ========================================================
   # == Instance Methods =====================================================
@@ -29,6 +30,11 @@ class VoucherType < ApplicationRecord
       end
     end
     self.expire
+  end
+
+  def status
+    # TODO this should be based on start date and end date
+    :active
   end
 
 end

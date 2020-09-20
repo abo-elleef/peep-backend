@@ -1,7 +1,7 @@
 class DiscountsController < ApplicationController
 
   def index
-    discounts = Discount.peep_filter(params.slice([:name]))
+    discounts = Discount.peep_filter(params.slice(:name)).desc_order
     serializers = ActiveModel::Serializer::ArraySerializer.new(discounts, each_serializer: DiscountSerializer)
     render json: {data: serializers},  status: :ok
   end

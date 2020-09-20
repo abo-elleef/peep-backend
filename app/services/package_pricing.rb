@@ -14,7 +14,7 @@ class PackagePricing
   private
 
   def calculate_price_and_deduction
-    services_prices =  ServicePrice.where(id: params[:service_prices].pluck(:id)).pluck(:price).sum
+    services_prices =  ServicePrice.where(id: params[:service_price_ids]).pluck(:price).sum
     if package.service?
       package.deduction_amount = 0
       package.final_price = services_prices
@@ -22,8 +22,9 @@ class PackagePricing
       package.deduction_amount= services_prices - params[:final_price]
       package.final_price = params[:final_price]
     elsif package.percentage?
-      package.deduction_amount = (params[:deduction_percentage] * services_prices) / 100
-      package.final_price  = services_prices - ((params[:deduction_percentage] * services_prices) / 100)
+      debugger
+      package.deduction_amount = (params[:deduction_amount] * services_prices) / 100
+      package.final_price  = services_prices - ((params[:deduction_amount] * services_prices) / 100)
     elsif package.free?
       package.deduction_amount = services_prices
       package.final_price = 0

@@ -19,4 +19,9 @@ class Discount < ApplicationRecord
   # == Callbacks ============================================================
   # == Class Methods ========================================================
   # == Instance Methods =====================================================
+
+  def status
+    # TODO this should be based on start date and end date
+    :active
+  end
 end
