@@ -64,27 +64,8 @@ module Reports
     end
 
     def vouchers
-      # TODO @monier we should return teh following data
-      # {
-      #     data: [
-      #         {
-      #             'issue_date': 'issue_date',
-      #             'expiry_date': 'expiry_date',
-      #             'invoice_number': 'invoice_number',
-      #             'client': 'client',
-      #             'status': 'status',
-      #             'code': 'code',
-      #             'total': 'total',
-      #             'redeemed': 'redeemed',
-      #             'remaining': 'remaining'
-      #         }
-      #     ]
-      # }
-      # lines = Line.preload(:staff, :sellable, appointment: :location).
-      #     peep_filter(params.slice(:starts_at, :ends_at, :staff_ids, :location_ids))
-      # pagy, lines = pagy(lines, page: page_index, items: page_size )
-      # serializers = ActiveModel::Serializer::ArraySerializer.new(lines, serializer: LineSalesSerializer)
-      # render json: {data: serializers, meta: pagy_meta_data(pagy)},  status: :ok
+      results = Reports::Sales::Vouchers.new(params).perform
+      render json: {sales: results}, status: :ok
     end
 
 

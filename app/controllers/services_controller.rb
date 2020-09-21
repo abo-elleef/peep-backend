@@ -4,18 +4,11 @@ class ServicesController < ApplicationController
     filters = params.slice(:name, :search)
     services = Service.preload(:service_category, :service_prices, :staffs).peep_filter(filters)
     serializers = ActiveModel::Serializer::ArraySerializer.new(services, each_serializer: ServiceSerializer)
-    render json: {data: serializers},  status: :ok
+    render json: {data: serializers}, status: :ok
   end
 
   def top
-    # TODO  @monier build service to find out best 5 staff member and comparing to last month
-    data = [
-        {name: "service 0 ", current_month: 23, last_month: 12},
-        {name: "service 1 ", current_month: 23, last_month: 12},
-        {name: "service 2 ", current_month: 23, last_month: 12},
-        {name: "service 3 ", current_month: 23, last_month: 12},
-        {name: "service 4 ", current_month: 23, last_month: 12},
-    ]
+    data = TopServices.perform
     render json: {data: data}, status: :ok
   end
 
@@ -56,12 +49,12 @@ class ServicesController < ApplicationController
   private
 
   def service_params
-    params.require(:service).permit( :name, :treatment_type_id, :description,
+    params.require(:service).permit(:name, :treatment_type_id, :description,
                                     :available_for, :staff_commission, :extra_time,
-                                     :extra_time_type, :extra_time_duration, :service_category_id,
-                                     location_ids: [], staff_ids: [],
-                                     service_prices_attributes: [
-                                         :id, :service_id, :name, :duration, :pricing_type,
-                                         :price, :_destroy])
+                                    :extra_time_type, :extra_time_duration, :service_category_id,
+                                    location_ids: [], staff_ids: [],
+                                    service_prices_attributes: [
+                                        :id, :service_id, :name, :duration, :pricing_type,
+                                        :price, :_destroy])
   end
 end

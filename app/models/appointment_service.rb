@@ -11,6 +11,7 @@ class AppointmentService < ApplicationRecord
   # == Validations ==========================================================
   # == Scopes ===============================================================
   scope :overlaps?, -> (starts_at, ends_at) { where("created_at <= ? AND ? <= created_at", ends_at, starts_at).any? }
+  scope :during_current_month, -> { where("created_at > ? AND created_at < ?", Time.now.beginning_of_month, Time.now.end_of_month) }
 
   # == Callbacks ============================================================
   # == Class Methods ========================================================

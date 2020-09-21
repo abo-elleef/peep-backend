@@ -19,6 +19,8 @@ class Line < ApplicationRecord
   scope :by_ends_at, -> (ends_at) { where("lines.created_at <= ?  ", ends_at) }
   scope :by_starts_at, -> (starts_at) { where("lines.created_at >= ?", starts_at) }
   scope :by_staff_ids, -> (staff_ids){ where(staff_id: staff_ids )}
+  scope :during_current_month, -> { where("created_at > ? AND created_at < ?", Time.now.beginning_of_month, Time.now.end_of_month) }
+
 
   # == Callbacks ============================================================
   # == Class Methods ========================================================
