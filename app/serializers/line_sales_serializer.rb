@@ -1,6 +1,6 @@
 class LineSalesSerializer < ActiveModel::Serializer
-  attributes :id, :appointment_id, :staff_id, :service_id, :client_id, :service_name,
-             :staff_name, :starts_at, :ends_at, :client_name, :location_name, :status
+  attributes :id, :appointment_id, :staff_id, :client_id, :service_name, :duration,
+             :staff_name, :starts_at, :ends_at, :client_name, :location_name, :status, :price
 
   def status
     object.appointment.status
@@ -24,6 +24,10 @@ class LineSalesSerializer < ActiveModel::Serializer
 
   def service_name
     object.service&.name
+  end
+
+  def price
+    object.service_price.price
   end
 
 end

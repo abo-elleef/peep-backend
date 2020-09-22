@@ -249,6 +249,13 @@ end
 invoices = Invoice.all;
 appointments = Appointment.all;
 100.times do |index| appointments[index].invoice = invoices[index]; appointments[index].save! end
+Invoice.preload(:lines).all.map do |invoice|
+  Tip.create({
+    staff_id: invoice.lines.map(&:staff_id).sample,
+    value: (10..50).to_a.sample,
+    invoice_id: invoice.id
+  })
+end
 
 # =================== create invoices sample data ====================
 discounts = Discount.all;
