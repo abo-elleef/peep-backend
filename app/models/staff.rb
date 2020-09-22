@@ -52,7 +52,7 @@ class Staff < ApplicationRecord
   def status_between(starts_at, ends_at)
     statuses = []
     if self.shifts.overlaps?(starts_at, ends_at)
-      if self.lines.overlaps?(starts_at, ends_at)
+      if self.appointment_services.overlaps?(starts_at, ends_at)
         statuses << :staff_busy
       end
       if self.blocked_times.overlaps?(starts_at, ends_at)

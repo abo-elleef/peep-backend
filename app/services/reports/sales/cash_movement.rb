@@ -24,7 +24,7 @@ module Reports
       end
 
       def build_vouchers
-        sum = 123 # @monier build the right query
+        sum = Voucher.includes(:voucher_type).where(vouchers: {updated_at: starts_at..ends_at}).sum("voucher_types.value - vouchers.current_value")
         {name: "Voucher Redemptions", sum: sum}
       end
     end

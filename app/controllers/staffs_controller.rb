@@ -8,14 +8,7 @@ class StaffsController < ApplicationController
   end
 
   def top
-    # TODO  @monier build service to find out best 5 staff member and comparing to last month
-    data = [
-        {name: "ahmed 0 ", current_month: 23, last_month: 12},
-        {name: "ahmed 1 ", current_month: 23, last_month: 12},
-        {name: "ahmed 2 ", current_month: 23, last_month: 12},
-        {name: "ahmed 3 ", current_month: 23, last_month: 12},
-        {name: "ahmed 4 ", current_month: 23, last_month: 12},
-    ]
+    data = TopStaffs.perform
     render json: {data: data}, status: :ok
   end
 

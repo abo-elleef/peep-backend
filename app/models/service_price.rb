@@ -20,4 +20,8 @@ class ServicePrice < ApplicationRecord
   # == Callbacks ============================================================
   # == Class Methods ========================================================
   # == Instance Methods =====================================================
+
+  def service_name
+    service.name
+  end
 end
