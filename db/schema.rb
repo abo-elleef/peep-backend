@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_20_214930) do
+ActiveRecord::Schema.define(version: 2020_09_22_191859) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -186,9 +186,9 @@ ActiveRecord::Schema.define(version: 2020_09_20_214930) do
     t.string "email"
     t.string "street"
     t.string "building"
-    t.string "city"
-    t.string "state"
-    t.string "zipcode"
+    t.string "area"
+    t.string "block"
+    t.string "avenue"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "user_id"
@@ -422,6 +422,7 @@ ActiveRecord::Schema.define(version: 2020_09_20_214930) do
     t.string "building"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "street"
     t.index ["name"], name: "index_suppliers_on_name"
   end
 

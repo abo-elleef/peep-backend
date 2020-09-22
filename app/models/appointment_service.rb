@@ -19,4 +19,8 @@ class AppointmentService < ApplicationRecord
   def service
     service_price&.service
   end
+
+  def duration
+    Time.at((ends_at - starts_at)).utc.strftime("%H:%M:%S")
+  end
 end

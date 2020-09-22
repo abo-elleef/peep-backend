@@ -10,7 +10,7 @@ class Location < ApplicationRecord
       "massage": 7,
       "spa": 8,
       "eyebrows_&_lashes": 6,
-      "waxing salon": 3,
+      "waxing_salon": 3,
       "tanning_studio": 13,
       "tattoo_&_piercing": 12,
       "therapy_center": 11,
