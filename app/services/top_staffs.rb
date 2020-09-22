@@ -8,7 +8,7 @@ class TopStaffs
                                 .group(:staff_id).order("count_all DESC").count
      top_staffs.map do |line_data|
       {
-          staff_name: line_data.staff_name,
+          name: line_data.staff_name,
           current_month: line_data.count.nil? ? 0 : line_data.count,
           last_month: top_staffs_last_month[line_data.staff_id]
       }

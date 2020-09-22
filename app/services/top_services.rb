@@ -8,7 +8,7 @@ class TopServices
     top_services.map do |service_price_id, count|
       service_price = ServicePrice.find(service_price_id)
       {
-          service_name: service_price.service_name,
+          name: service_price.service_name,
           current_month: count,
           last_month: top_staffs_last_month[service_price_id]
       }

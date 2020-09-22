@@ -4,14 +4,16 @@ module Reports
       attr_reader  :location_ids, :to_date
 
       def initialize(params)
-        @location_ids = params[:location_id].present? ? params[:location_id] : Location.all.pluck(:id).join(',')
-        @to_date = Date.today - params[:range].to_i.days
+        @location_ids = params[:location_id] == 'all' ? Location.all.pluck(:id).join(',') : params[:location_id].to_i
+        @to_date = params[:date_range] == 'week' ? Date.today - 6.days : Date.today - 30.day
       end
 
       def perform
         appointments_count = Appointment.by_location_ids(location_ids).where("created_at >= ? AND created_at <= ?", to_date, Date.today ).where(status: 5).count
         sales = (to_date..Date.today).map do |day|
-          Line.includes(:invoice).where("invoices.location_id IN (?)", location_ids).where("lines.created_at >= ? AND lines.created_at <= ?", day.beginning_of_day, day.end_of_day).sum('lines.unit_price*lines.quantity')
+          Line.includes(:invoice).where(invoices: {location_id: @location_ids}).
+              where(lines: {created_at: (day.beginning_of_day..day.end_of_day)}).
+              sum('lines.unit_price*lines.quantity')
         end
         sales_values =  sales.sum
         appointments = (to_date..Date.today).map do |day|
@@ -24,7 +26,7 @@ module Reports
             sales_value: sales_values,
             sales: sales,
             appointments: appointments,
-            days: (to_date..Date.today).map { |a| a.strftime("%Y-%m-%d") }
+            days: (to_date..Date.today).map { |a| a.strftime("%m-%d") }
         }
       end
     end

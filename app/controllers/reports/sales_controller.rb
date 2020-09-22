@@ -24,27 +24,27 @@ module Reports
 
     def sales_by_service
       results = Reports::Sales::SalesReport.new(params).sales_by_service
-      render json: {sales: results}, status: :ok
+      render json: {data: results}, status: :ok
     end
 
     def sales_by_location
       results = Reports::Sales::SalesReport.new(params).sales_by_location
-      render json: {sales: results}, status: :ok
+      render json: {data: results}, status: :ok
     end
 
     def sales_by_client
       results = Reports::Sales::SalesReport.new(params).sales_by_client
-      render json: {sales: results}, status: :ok
+      render json: {data: results}, status: :ok
     end
 
     def sales_by_staff
       results = Reports::Sales::SalesReport.new(params).sales_by_staff
-      render json: {sales: results}, status: :ok
+      render json: {data: results}, status: :ok
     end
 
     def recent_sales
       results = Reports::Sales::RecentSalesReport.new(params).perform
-      render json: {sales: results}, status: :ok
+      render json: {data: results}, status: :ok
     end
 
     def appointments
@@ -57,7 +57,7 @@ module Reports
 
     def vouchers
       results = Reports::Sales::Vouchers.new(params).perform
-      render json: {sales: results}, status: :ok
+      render json: {data: results}, status: :ok
     end
 
   end
