@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_22_191859) do
+ActiveRecord::Schema.define(version: 2020_09_27_112032) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,11 +30,11 @@ ActiveRecord::Schema.define(version: 2020_09_22_191859) do
   create_table "appointments", force: :cascade do |t|
     t.integer "status", default: 1
     t.integer "client_id"
-    t.integer "location_id"
     t.text "notes"
     t.date "date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "location_id"
     t.integer "cancellation_reason_id"
     t.integer "invoice_id"
     t.index ["cancellation_reason_id"], name: "index_appointments_on_cancellation_reason_id"
@@ -294,9 +294,6 @@ ActiveRecord::Schema.define(version: 2020_09_22_191859) do
     t.float "retail_price"
     t.float "special_price"
     t.float "supply_price"
-    t.integer "initial_stock"
-    t.integer "reorder_point"
-    t.integer "reorder_quantity"
     t.boolean "enable_commission"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -373,6 +370,9 @@ ActiveRecord::Schema.define(version: 2020_09_22_191859) do
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "starts_at"
     t.datetime "ends_at"
+    t.string "repeat"
+    t.integer "parent_id"
+    t.date "repeat_ends_at"
     t.index ["location_id"], name: "index_shifts_on_location_id"
     t.index ["staff_id"], name: "index_shifts_on_staff_id"
   end
