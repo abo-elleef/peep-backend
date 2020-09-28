@@ -1,5 +1,5 @@
 class AppointmentsController < ApplicationController
-
+  load_and_authorize_resource
   def index
     appointments = Appointment.peep_filter(params.slice(:starts_at, :ends_at, :staff_ids, :location_ids)).limit(1000)
     serializers = ActiveModel::Serializer::ArraySerializer.new(appointments, each_serializer: AppointmentSerializer)
