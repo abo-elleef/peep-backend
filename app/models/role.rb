@@ -1,17 +1,35 @@
-class User < ApplicationRecord
+class Role < ApplicationRecord
   # == Constants ============================================================
   # == Extensions ===========================================================
   # == Relationships ========================================================
-  has_many :locations
-  has_and_belongs_to_many :roles
+  has_and_belongs_to_many :users
 
   # == Validations ==========================================================
   # == Scopes ===============================================================
   # == Callbacks ============================================================
   # == Class Methods ========================================================
-  # == Instance Methods =====================================================
-  def has_role?(role)
-    roles.pluck(:name).include?(role.to_s)
+  def self.default_data
+    [
+        {
+            name: "admin"
+        },
+        {
+            name: "owner"
+        },
+        {
+            name: "location-manager"
+        },
+        {
+            name: "store-manager"
+        },
+        {
+            name: "staff-member"
+        },
+        {
+            name: "client"
+        }
+    ]
   end
 
+  # == Instance Methods =====================================================
 end
