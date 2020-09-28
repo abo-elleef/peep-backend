@@ -5,8 +5,8 @@ module Reports
       attr_reader :starts_at, :ends_at, :location_id
 
       def initialize(params)
-        start_date = params[:starts_at] || Time.zone.now.to_s
-        end_date = params[:ends_at] || Time.zone.now.to_s
+        start_date = params[:date] || Time.zone.now.to_s
+        end_date = params[:date] || Time.zone.now.to_s
         @starts_at = Time.zone.parse(start_date).beginning_of_day
         @ends_at = Time.zone.parse(end_date).end_of_day
         @location_id = params[:location_id].presence
