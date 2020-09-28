@@ -16,6 +16,10 @@ class AppointmentService < ApplicationRecord
   scope :by_ends_at, ->(ends_at) { where("appointment_services.created_at < ?", ends_at) }
   scope :by_staff_id, ->(staff_id) { where(staff_id: staff_id) }
   scope :by_location_id, ->(location_id) { joins(:appointment).where(appointments:{location_id: location_id}) }
+  scope :by_search, ->(term) {
+    joins(appointment: :client).
+        where("clients.first_name ILIKE ? OR clients.last_name ILIKE ? ",  "%" + term + "%",  "%" + term + "%")
+  }
 
   # == Callbacks ============================================================
   # == Class Methods ========================================================
