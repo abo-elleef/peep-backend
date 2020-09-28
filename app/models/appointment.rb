@@ -12,7 +12,7 @@ class Appointment < ApplicationRecord
   has_many :services, through: :service_prices
   belongs_to :location
   belongs_to :client
-  belongs_to :invoice
+  belongs_to :invoice, optional:  true
   accepts_nested_attributes_for :appointment_services
 
   # == Validations ==========================================================

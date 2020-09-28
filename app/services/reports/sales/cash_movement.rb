@@ -18,13 +18,16 @@ module Reports
       private
 
       def build_payment_type
-        PaymentType.joins(:payments).where(payments: {created_at: starts_at..ends_at}).
-            group("payment_types.name").
-            select("payment_types.name, Sum(payments.amount)").all.map(&:attributes)
+        # TODO (2) very bad implementation should be handled from db by left join and group
+        PaymentType.all.map do |type|
+          sum = Payment.where(payment_type_id: type.id, created_at: starts_at..ends_at).pluck("amount").map(&:to_f).sum
+          {name: type.name, sum: sum}
+        end
+
       end
 
       def build_vouchers
-        sum = 123 # @monier build the right query
+        sum = Voucher.includes(:voucher_type).where(vouchers: {updated_at: starts_at..ends_at}).sum("voucher_types.value - vouchers.current_value")
         {name: "Voucher Redemptions", sum: sum}
       end
     end
