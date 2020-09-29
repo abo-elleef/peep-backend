@@ -4,7 +4,7 @@ class UserSerializer < ActiveModel::Serializer
              :business_type, :created_at, :updated_at
   has_many :locations, serializer: LocationSerializer
 
-  attribute :token do |serializer|
-    JwtService.encode(serializer.object)
-  end
+  # attribute :token do |serializer|
+  #   JwtService.encode(serializer.object)
+  # end
 end
