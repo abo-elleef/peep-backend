@@ -20,8 +20,18 @@ class Invoice < ApplicationRecord
   accepts_nested_attributes_for :lines
   # == Validations ==========================================================
   # == Scopes ===============================================================
-  scope :search, -> (search) { search.present? ? where("sequence ?", "%" + search + "%") : all }
+  # scope :search, -> (search) { search.present? ? where("sequence ?", "%" + search + "%") : all }
+  scope :by_search, -> (term) {
+    if term.present?
+      joins(:client).where("clients.first_name ILIKE ? OR clients.last_name ILIKE ? ",
+                           "%" + term + "%",  "%" + term + "%")
+    else
+      all
+    end
+  }
   scope :by_location_id, -> (location_id) { where(location_id: location_id) }
+  scope :by_starts_at, ->(starts_at) { where("invoices.created_at > ?", starts_at) }
+  scope :by_ends_at, ->(ends_at) { where("invoices.created_at < ?", ends_at) }
 
   # == Callbacks ============================================================
   # == Class Methods ========================================================

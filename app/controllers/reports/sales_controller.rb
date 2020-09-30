@@ -49,7 +49,7 @@ module Reports
 
     def appointments
       appointment_services = AppointmentService.preload(:appointment, :service_price, :staff).
-          peep_filter(params.slice(:starts_at, :ends_at, :staff_ids, :location_ids)).order(id: :desc)
+          peep_filter(params.slice(:starts_at, :ends_at, :staff_id, :location_id, :search)).order(id: :desc)
       pagy, appointment_services = pagy(appointment_services, page: page_index, items: page_size)
       serializers = ActiveModel::Serializer::ArraySerializer.new(appointment_services, serializer: LineSalesSerializer)
       render json: {data: serializers, meta: pagy_meta_data(pagy)}, status: :ok
