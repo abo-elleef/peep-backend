@@ -8,7 +8,6 @@ RSpec.describe "Users API", type: :request do
       { user: {
         first_name: "first name ",
         last_name: "last name ",
-        username: "username",
         email: "test@email.com",
         password: "12341234",
         password_confirmation:  "12341234",

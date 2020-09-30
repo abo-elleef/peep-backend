@@ -6,17 +6,6 @@ class UsersController < ApplicationController
     render json: {data: UserSerializer.new(current_user)}, status: :ok
   end
 
-  def index
-    users = User.all
-    serializers = ActiveModel::Serializer::ArraySerializer.new(users, each_serializer: UserSerializer)
-    render json: {data: serializers}, status: :ok
-  end
-
-  # GET /users/{username}
-  def show
-    render json: {data: UserSerializer.new(@user)}, status: :ok
-  end
-
   def create
     user = User.new(user_params)
     if user.save
