@@ -5,6 +5,7 @@ class InvoiceSerializer < ActiveModel::Serializer
   has_many :tips, serializer: TipSerializer
   has_many :vouchers, serializer: VoucherSerializer
   has_many :payments, serializer: PaymentSerializer
+  belongs_to :client
 
   def client_name
     object.client&.name

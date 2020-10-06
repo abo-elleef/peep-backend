@@ -17,7 +17,9 @@ module Reports
         end
         sales_values =  sales.sum
         appointments = (to_date..Date.today).map do |day|
-          Appointment.by_location_ids(location_ids).joins(appointment_services: :service_price).where("appointments.created_at >= ? AND appointments.created_at <= ?", day.beginning_of_day, day.end_of_day).where(status: 5).sum("service_prices.price")
+          Appointment.by_location_ids(location_ids).joins(appointment_services: :service_price).
+              where("appointments.created_at >= ? AND appointments.created_at <= ?", day.beginning_of_day, day.end_of_day).
+              where(status: 5).sum("service_prices.price")
         end
         appointment_values = appointments.sum
         {

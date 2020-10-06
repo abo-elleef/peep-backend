@@ -76,6 +76,12 @@ Rails.application.routes.draw do
     get "sales/appointments", to: "sales#appointments"
     get "sales/vouchers", to: "sales#vouchers"
 
+    get "dashboard/total_appointments", to: "dashboard#total_appointments"
+    get "dashboard/total_sales", to: "dashboard#total_sales"
+    get "dashboard/average_sales", to: "dashboard#average_sales"
+    get "dashboard/total_appointments_graph", to: "dashboard#total_appointments_graph"
+    get "dashboard/total_sales_graph", to: "dashboard#total_sales_graph"
+
   end
 
   post "voucher_types/sell_voucher", to: "voucher_types#sell_voucher"
