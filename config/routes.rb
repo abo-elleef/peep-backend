@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
 
   post '/auth/login', to: 'authentication#login'
-  get '/*a', to: 'application#not_found'
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
