@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   before_action :peep_authenticate, except: :create
-  before_action :find_user, except: %i[create index]
 
   def whoami
     render json: {data: UserSerializer.new(current_user)}, status: :ok
@@ -27,13 +26,7 @@ class UsersController < ApplicationController
 
   private
 
-  def find_user
-    @user = User.find_by_username!(params[:_username])
-  rescue ActiveRecord::RecordNotFound
-    render json: { errors: 'User not found' }, status: :not_found
-  end
-
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :email, :username, :password, :password_confirmation, :company_name, :business_type)
+      params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmation, :company_name, :business_type)
     end
 end
