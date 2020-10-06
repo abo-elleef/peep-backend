@@ -12,7 +12,6 @@ class BootstrapAccount
     create_services(location, staff)
     create_payment_types
     create_cancellation_reasons
-    create_roles
   end
 
   private
@@ -55,12 +54,6 @@ class BootstrapAccount
   def create_cancellation_reasons
     CancellationReason.default_data.map do |reason|
       CancellationReason.create(reason)
-    end
-  end
-
-  def create_roles
-    Role.default_data.map do |role|
-      Role.create(role)
     end
   end
 
