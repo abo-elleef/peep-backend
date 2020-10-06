@@ -30,4 +30,13 @@ class Appointment < ApplicationRecord
   # == Callbacks ============================================================
   # == Class Methods ========================================================
   # == Instance Methods =====================================================
+
+
+  def starts_at
+    appointment_services.sort_by(:starts_at).first.try(:starts_at)
+  end
+
+  def ends_at
+    appointment_services.sort_by(:ends_at).last.try(:ends_at)
+  end
 end
