@@ -1,7 +1,7 @@
 class InvoicesController < ApplicationController
 
   def index
-    invoices = Invoice.preload(:location).peep_filter(params.slice(:location_id, :search))
+    invoices = Invoice.preload(:location).peep_filter(params.slice(:location_id, :starts_at, :ends_at, :search))
     pagy, invoices = pagy(invoices, page: page_index, items: page_size)
     serializers = ActiveModel::Serializer::ArraySerializer.new(invoices, each_serializer: InvoiceSerializer)
     render json: {data: serializers, meta: pagy_meta_data(pagy)}, status: :ok
