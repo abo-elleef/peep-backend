@@ -18,7 +18,8 @@ class Line < ApplicationRecord
   # == Scopes ===============================================================
   scope :by_ends_at, -> (ends_at) { where("lines.created_at <= ?  ", ends_at) }
   scope :by_starts_at, -> (starts_at) { where("lines.created_at >= ?", starts_at) }
-  scope :by_staff_ids, -> (staff_ids){ where(staff_id: staff_ids )}
+  scope :by_staff_ids, -> (staff_ids){ where(staff_id: staff_ids ) if staff_ids.present?}
+  scope :by_location_ids, -> (location_id) { joins(:invoice).where(invoices: { location_id: location_id }) }
   scope :during_current_month, -> { where("created_at > ? AND created_at < ?", Time.now.beginning_of_month, Time.now.end_of_month) }
 
 
