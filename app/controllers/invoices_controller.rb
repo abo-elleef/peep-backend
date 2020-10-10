@@ -20,8 +20,9 @@ class InvoicesController < ApplicationController
     )
     if invoice.save!
       lines_types = params[:lines_attributes].map { |line| line[:sellable_type] }.uniq
-      Checkout::VoucherCreation.new(params[:lines_attributes].select { |line| line[:sellable_type] == 'VoucherType' }, invoice.id).call if lines_types.include?('VoucherType')
-      Checkout::AppointmentCreation.new(params).perform if lines_types.include?('Service') || params[:appointment_id].present?
+      # TODO voucher wil be in phase 2
+      # Checkout::VoucherCreation.new(params[:lines_attributes].select { |line| line[:sellable_type] == 'VoucherType' }, invoice.id).call if lines_types.include?('VoucherType')
+      Checkout::AppointmentCreation.new(params).perform if lines_types.include?('ServicePrice') || params[:appointment_id].present?
       # TODO ProductProcessing.new(params) if items_types.include?('Product')
       render json: {data: InvoiceSerializer.new(invoice)}, status: :ok
     else

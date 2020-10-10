@@ -8,7 +8,7 @@ class AppointmentsController < ApplicationController
 
   def show
     appointment = Appointment.find(params[:id])
-    render json: {data: AppointmentSerializer.new(appointment)}, status: :ok
+    render json: {data: AppointmentDetailsSerializer.new(appointment)}, status: :ok
   end
 
   def create
