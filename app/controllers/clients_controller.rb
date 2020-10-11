@@ -1,7 +1,7 @@
 class ClientsController < ApplicationController
 
   def index
-    clients = Client.search(params[:search])
+    clients = Client.search(params[:search]).desc_order
     pagy, clients = pagy(clients, page: page_index, items: page_size )
     serializers = ActiveModel::Serializer::ArraySerializer.new(clients, each_serializer: ClientSerializer)
     render json: {data: serializers, meta: pagy_meta_data(pagy)},  status: :ok
@@ -11,6 +11,45 @@ class ClientsController < ApplicationController
   def show
     client = Client.find(params[:id])
     render json: { data: ClientSerializer.new(client) },  status: :ok
+  end
+
+  def appointments
+    # TODO should be only services
+    client = Client.find(params[:id])
+    appointments = client.invoices.order("invoices.id DESC").preload(:payments, :tips,  lines: :staff).limit(10).map(&:appointment).compact
+    serializers = ActiveModel::Serializer::ArraySerializer.new(appointments, serializer: AppointmentSerializer)
+    render json: {data: serializers},  status: :ok
+  end
+
+  def products
+    # TODO should be only products
+    client = Client.find(params[:id])
+    invoices = client.invoices.order("invoices.id DESC").limit(10).map(&:appointment).compact
+    serializers = ActiveModel::Serializer::ArraySerializer.new(invoices, serializer: AppointmentSerializer)
+    render json: {data: serializers},  status: :ok
+  end
+
+  def vouchers
+    # TODO should be only vouchers
+    client = Client.find(params[:id])
+    invoices = client.invoices.order("invoices.id DESC").limit(10).map(&:appointment).compact
+    serializers = ActiveModel::Serializer::ArraySerializer.new(invoices, serializer: AppointmentSerializer)
+    render json: {data: serializers},  status: :ok
+  end
+
+  def subscriptions
+    # TODO should be only subscriptions
+    client = Client.find(params[:id])
+    invoices = client.invoices.order("invoices.id DESC").limit(10).map(&:appointment).compact
+    serializers = ActiveModel::Serializer::ArraySerializer.new(invoices, serializer: AppointmentSerializer)
+    render json: {data: serializers},  status: :ok
+  end
+
+  def invoices
+    client = Client.find(params[:id])
+    invoices = client.invoices.order("invoices.id DESC").limit(10)
+    serializers = ActiveModel::Serializer::ArraySerializer.new(invoices, serializer: InvoiceSerializer)
+    render json: {data: serializers},  status: :ok
   end
 
   def create

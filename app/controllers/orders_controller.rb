@@ -1,7 +1,8 @@
 class OrdersController < ApplicationController
 
   def index
-    orders = Order.peep_filter(params.slice(:search, :order_category_id, :order_brand_id))
+    orders = Order.preload(:location, :supplier).order(id: :desc).
+        peep_filter(params.slice(:search, :order_category_id, :order_brand_id))
     pagy, orders = pagy(orders, page: page_index, items: page_size)
     serializers = ActiveModel::Serializer::ArraySerializer.new(orders, each_serializer: OrderSerializer)
     render json: {data: serializers, meta: pagy_meta_data(pagy)},  status: :ok
@@ -15,7 +16,7 @@ class OrdersController < ApplicationController
   def create
     order = Order.new(order_params)
     if order.save
-      render json: {data:OrderSerializer.new(order)}, status: :created
+      render json: {data: OrderSerializer.new(order)}, status: :created
     else
       render json: order.errors, status: :unprocessable_entity
     end
@@ -43,8 +44,8 @@ class OrdersController < ApplicationController
 
   def order_params
     params.require(:order).permit(
-        :status, :supplier_id, items_attributes: [
-        :requested_price, :received_price, :received_quantity, :requested_quantity
+        :status, :supplier_id, :location_id, items_attributes: [
+        :id, :requested_price, :received_price, :received_quantity, :requested_quantity, :product_id
     ]
     )
   end

@@ -7,6 +7,11 @@ class StaffsController < ApplicationController
     render json: {data: serializers},  status: :ok
   end
 
+  def top
+    data = TopStaffs.perform
+    render json: {data: data}, status: :ok
+  end
+
   def show
     staff = Staff.find(params[:id])
     render json: {data: StaffSerializer.new(staff)}, status: :ok

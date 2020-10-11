@@ -10,7 +10,7 @@ class Location < ApplicationRecord
       "massage": 7,
       "spa": 8,
       "eyebrows_&_lashes": 6,
-      "waxing salon": 3,
+      "waxing_salon": 3,
       "tanning_studio": 13,
       "tattoo_&_piercing": 12,
       "therapy_center": 11,
@@ -27,6 +27,7 @@ class Location < ApplicationRecord
   has_many :products, through: :locations_products
   has_many :appointments
   has_many :clients
+  has_many :invoices
   has_one :invoice_sequence
   belongs_to :user, optional: true
 

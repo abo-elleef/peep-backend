@@ -1,7 +1,9 @@
 class ProductsController < ApplicationController
 
   def index
-    products = Product.preload(locations_products: :location).peep_filter(params.slice(:search, :product_category_id, :product_brand_id))
+    products = Product.preload(locations_products: :location).peep_filter(params.slice(
+        :search, :product_category_ids, :product_brand_ids, :location_ids, :supplier_ids
+        ))
     pagy, products = pagy(products, page: page_index, items: page_size)
     serializers = ActiveModel::Serializer::ArraySerializer.new(products, each_serializer: ProductSerializer)
     render json: {data: serializers, meta: pagy_meta_data(pagy)},  status: :ok
@@ -9,7 +11,20 @@ class ProductsController < ApplicationController
 
   def show
     product = Product.preload(locations_products: :location).find(params[:id])
+    # TODO limit access to location based on the current user
+    missing_location_ids = Location.all.pluck(:id) - product.location_ids
+    missing_location_ids.map do |id|
+      product.locations_products.build({location_id: id})
+    end
     render json: {data: ProductSerializer.new(product)}, status: :ok
+  end
+
+  def stock_history
+    product = Product.find(params[:id])
+    lines = Line.where(sellable_id: product.id, sellable_type: 'Product')
+    orders = Item.joins(:order).where(product_id: product, orders: {status: :received})
+
+    render json: {data: StockPresenter.new([lines, orders]).present}, status: :ok
   end
 
   def create

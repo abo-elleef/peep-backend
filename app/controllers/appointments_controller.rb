@@ -1,14 +1,14 @@
 class AppointmentsController < ApplicationController
 
   def index
-    appointments = Appointment.peep_filter(params.slice(:starts_at, :ends_at, :staff_ids, :location_id))
+    appointments = Appointment.peep_filter(params.slice(:starts_at, :ends_at, :staff_ids, :location_ids)).limit(1000)
     serializers = ActiveModel::Serializer::ArraySerializer.new(appointments, each_serializer: AppointmentSerializer)
-    render json: {data: serializers},  status: :ok
+    render json: {data: serializers}, status: :ok
   end
 
   def show
     appointment = Appointment.find(params[:id])
-    render json: {data: AppointmentSerializer.new(appointment)}, status: :ok
+    render json: {data: AppointmentDetailsSerializer.new(appointment)}, status: :ok
   end
 
   def create
@@ -23,7 +23,6 @@ class AppointmentsController < ApplicationController
   def update
     appointment = Appointment.find(params[:id])
     if appointment.update(appointment_params)
-      create_appointment_invoice(appointment.id, params[:location_id]) if params[:payments_attributes].present?
       render json: {data: AppointmentSerializer.new(appointment)}, status: :ok
     else
       render json: appointment.errors, status: :unprocessable_entity
@@ -46,20 +45,12 @@ class AppointmentsController < ApplicationController
 
   private
 
-  def create_appointment_invoice(appointment_id, location_id)
-    unless Invoice.find_by(appointment_id: appointment_id).present?
-      Invoice.create(appointment_id: appointment_id, sequence: Invoice.next_sequence(location_id))
-    end
-  end
-
   def appointment_params
-    params.require(:appointment).permit(:status, :client_id, :location_id,
-                                        :notes, :date, :cancellation_reason_id,
-                                        lines_attributes: [:id, :appointment_id,
-                                                           :staff_id, :service_id, :service_price_id,
-                                                           :client_id, :price, :original_price,
-                                                           :staff_name, :service_name, :starts_at, :ends_at],
-                                        payments_attributes: [:id, :appointment_id, :payment_type_id,
-                                                              :amount])
+    params.require(:appointment).permit(
+        :status, :client_id, :location_id, :notes, :date, :cancellation_reason_id,
+        appointment_services_attributes: [
+            :id, :appointment_id, :staff_id, :service_price_id, :starts_at, :ends_at, :_destroy
+        ]
+    )
   end
 end

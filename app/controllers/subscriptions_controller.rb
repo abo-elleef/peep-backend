@@ -1,7 +1,7 @@
 class SubscriptionsController < ApplicationController
 
   def index
-    subscriptions = Subscription.peep_filter(params.slice(:name))
+    subscriptions = Subscription.peep_filter(params.slice(:name)).desc_order
     serializers = ActiveModel::Serializer::ArraySerializer.new(subscriptions, each_serializer: SubscriptionSerializer)
     render json: {data: serializers},  status: :ok
   end
@@ -39,7 +39,8 @@ class SubscriptionsController < ApplicationController
 
     def subscription_params
       params.require(:subscription).permit(
-          :name, :desc, :starts_at, :ends_at, :pricing_type, :pricing_value, :available_for
+          :name, :desc, :starts_at, :ends_at, :pricing_type, :pricing_value,
+          :available_for, :limit, service_price_ids: []
       )
     end
 end

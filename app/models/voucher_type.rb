@@ -1,32 +1,39 @@
-class Deduction < ApplicationRecord
+class VoucherType < ApplicationRecord
   # == Constants ============================================================
   # == Extensions ===========================================================
   include Filterable
 
-  enum deduct_type: { value: "value", percentage: "percentage" }
-  enum apply_on: { services: "services", products: "products"}
+  # == Attributes ===========================================================
+  enum expiring_reason: {sold: 0, time_exceeding: 1, other: 2}
 
   # == Relationships ========================================================
+  has_and_belongs_to_many :services
+  has_many :vouchers
+  has_one   :voucher_usage,  as: :usable
+  has_many :lines, as: :sellable
+
 
   # == Validations ==========================================================
-  validates_presence_of :name, :starts_at, :ends_at
+  validates :name, :value, :price, :sales_amount, :title, :color, :starts_at, :ends_at, presence: true
 
   # == Scopes ===============================================================
   scope :by_name, -> (name) { where("name ilike ?", "%" + name + "%")}
-  scope :active, -> { where("starts_at::date <= ? AND ends_at::date >= ?",
-                            Time.zone.today, Time.zone.today)}
-  scope :scheduled, -> { where("starts_at::date > ?", Time.zone.today)}
-  scope :expired, -> { where("ends::date < ?", Time.zone.today)}
-
   # == Callbacks ============================================================
-
   # == Class Methods ========================================================
-
   # == Instance Methods =====================================================
-  def status
-    return :expired if self.ends_at < Time.zone.now.end_of_day
-    return :scheduled if self.starts_at < Time.zone.now.end_of_day
-    return :active if (self.starts_at..self.ends_at).cover?(Time.zone.now)
-    ""
+  def expire?
+    unless self.expire
+      if sold_amount == sales_amount || DateTime.now >= self.ends_at
+        self.expire = true
+        self.save!
+      end
+    end
+    self.expire
   end
+
+  def status
+    # TODO this should be based on start date and end date
+    :active
+  end
+
 end

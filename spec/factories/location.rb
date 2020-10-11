@@ -6,8 +6,8 @@ FactoryBot.define do
     email { Faker::Internet.email}
     street { Faker::Address.street_name }
     building {Faker::Address.building_number}
-    city {Faker::Address.city}
-    state {Faker::Address.state}
-    zipcode {Faker::Address.zip_code}
+    area {Faker::Address.city}
+    avenue {Faker::Address.state}
+    block {Faker::Address.zip_code}
   end
 end
