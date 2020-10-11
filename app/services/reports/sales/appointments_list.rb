@@ -20,27 +20,27 @@ module Reports
       private
 
       def build_appointments_list
-        lines = if location_id.present? && staff_id.present?
-                  Line.preload(:client).includes(:appointment).where(appointments: {location_id: location_id}).where(staff_id: staff_id, created_at: DateTime.parse(starts_at)..DateTime.parse(ends_at))
-                elsif staff_id.present?
-                  Line.preload(:appointment, :client).where(staff_id: staff_id, created_at: DateTime.parse(starts_at)..DateTime.parse(ends_at))
-                elsif location_id.present?
-                  Line.preload(:client).includes(:appointment).where(appointments: {location_id: location_id}).where(created_at: DateTime.parse(starts_at)..DateTime.parse(ends_at))
-                else
-                  Line.preload(:appointment, :client).where(created_at: DateTime.parse(starts_at)..DateTime.parse(ends_at))
-                end
+        appointment_services = if location_id.present? && staff_id.present?
+                                 AppointmentService.includes(:appointment).where(appointments: {location_id: location_id}).where(staff_id: staff_id, created_at: DateTime.parse(starts_at)..DateTime.parse(ends_at))
+                               elsif staff_id.present?
+                                 AppointmentService.preload(appointment: :client).where(staff_id: staff_id, created_at: DateTime.parse(starts_at)..DateTime.parse(ends_at))
+                               elsif location_id.present?
+                                 AppointmentService.includes(appointment: :client).where(appointments: {location_id: location_id}).where(created_at: DateTime.parse(starts_at)..DateTime.parse(ends_at))
+                               else
+                                 AppointmentService.preload(appointment: :client).where(created_at: DateTime.parse(starts_at)..DateTime.parse(ends_at))
+                               end
 
-        lines.map do |line|
+        appointment_services.map do |appointment_service|
           {
-              appointment_id: line.appointment_id,
-              client_id: line.client_id,
-              client_name: line.client.try(:name),
-              service: line.service_name,
-              date: line.appointment.date,
-              staff_id: line.staff_id,
-              staff_name: line.staff_name,
-              price: line.price,
-              status: line.appointment.status
+              appointment_id: appointment_service.appointment_id,
+              client_id: appointment_service.appointment.client_id,
+              client_name: appointment_service.appointment.try(:client_name),
+              service: appointment_service.service.try(:name),
+              date: appointment_service.appointment.date,
+              staff_id: appointment_service.staff.id,
+              staff_name: appointment_service.staff.name,
+              price: appointment_service.service_price.price,
+              status: appointment_service.appointment.status
           }
         end
       end

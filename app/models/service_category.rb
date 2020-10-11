@@ -1,4 +1,5 @@
 class ServiceCategory < ApplicationRecord
+  default_scope {order("updated_at DESC")}
   include Filterable
 
   has_many :services

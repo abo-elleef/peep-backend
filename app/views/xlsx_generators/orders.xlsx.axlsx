@@ -1,0 +1,7 @@
+xlsx_package = Axlsx::Package.new
+    xlsx_package.workbook.add_worksheet(:name => "Orders") do |sheet|
+      sheet.add_row  ['Order no.', 'Created date', 'Supplier', 'Status', 'Total cost']
+      @orders.map do |order|
+        sheet.add_row [order.id, order.created_at, order.supplier.name, order.status, order.total_cost]
+      end
+    end

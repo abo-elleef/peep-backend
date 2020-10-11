@@ -18,6 +18,8 @@ gem 'turbolinks', '~> 5'
 
 # json serialization
 gem 'fast_jsonapi', '~> 1.5'
+gem 'active_model_serializers', '~> 0.10.0'
+
 # pagination
 gem 'pagy',  '~> 3.8'
 # admin interface
@@ -36,6 +38,10 @@ gem 'rack-cors', '~> 1.1'
 # exporting XLSX
 gem 'caxlsx', '~> 3.0', '>= 3.0.2'
 gem 'caxlsx_rails', '~> 0.6.2'
+
+#exporting pdf
+gem 'prawn', '~> 2.1'
+gem 'prawn-table', '~> 0.2.2'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'

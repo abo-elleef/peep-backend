@@ -9,6 +9,7 @@ class Client < ApplicationRecord
   belongs_to :location, optional: true
   has_many :appointments
   has_many :lines
+  has_many :invoices
   has_many :deduction_usages
   has_many :deductions, through: :deduction_usages
 
