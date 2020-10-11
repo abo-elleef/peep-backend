@@ -8,7 +8,4 @@ class PackageSerializer < ActiveModel::Serializer
       (object.try(:deduction_amount).to_f / (object.try(:deduction_amount).to_f + object.try(:final_price).to_f)) * 100
     end
   end
-
-  has_many :service_prices, serializer: ServicePriceSerializer
-  has_many :services, serializer: ServiceSerializer
 end

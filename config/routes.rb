@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
+
+  post '/auth/login', to: 'authentication#login'
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
-  resources :users, only: [:create, :update] do
+  resources :users, only: [:create, :update]  do
     collection do
       get :whoami
     end
