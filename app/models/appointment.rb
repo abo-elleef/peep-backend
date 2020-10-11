@@ -7,28 +7,36 @@ class Appointment < ApplicationRecord
   enum status: {fresh: 1, confirmed: 2, arrived: 3, started: 4, completed: 5, cancelled: 6, no_show: 7}
 
   # == Relationships ========================================================
-  has_many :appointments_services
-  has_many :payments, inverse_of: :appointment, dependent: :destroy
-  has_many :lines, inverse_of: :appointment, dependent: :destroy
-  has_many :services, through: :lines
-  has_many :staffs, through: :lines
+  has_many :appointment_services
+  has_many :service_prices, through: :appointment_services
+  has_many :services, through: :service_prices
   belongs_to :location
   belongs_to :client
-
-  accepts_nested_attributes_for :lines
-  accepts_nested_attributes_for :payments
+  belongs_to :invoice, optional:  true
+  accepts_nested_attributes_for :appointment_services
 
   # == Validations ==========================================================
   validates_presence_of :location_id
   validates :cancellation_reason_id, presence: true, if: :cancelled?
 
   # == Scopes ===============================================================
-  scope :by_date, -> (starts_at, ends_at) { where("date >= ? AND date <= ?  ", starts_at, ends_at) }
-  scope :by_location, -> (location_ids) { where(location_id: location_ids) }
-  scope :by_staff, -> (staff_ids){ joins(:lines).where(lines: { staff_id: staff_ids })}
-  scope :by_service, -> (service_ids){ joins(:lines).where(lines: {service_id: service_ids} )}
+  scope :by_ends_at, -> (ends_at) { where("appointments.created_at::date <= ?  ", ends_at.to_date) }
+  scope :by_starts_at, -> (starts_at) { where("appointments.created_at::date >= ?", starts_at.to_date) }
+
+  scope :by_location_ids, -> (location_ids) { where(location_id: location_ids) }
+  scope :by_staff_ids, -> (staff_ids) { joins(:appointment_services).where(appointment_services: {staff_id: staff_ids }) }
+  scope :by_service, -> (service_ids) { joins(:appointment_services).where(service_id: service_ids) }
 
   # == Callbacks ============================================================
   # == Class Methods ========================================================
   # == Instance Methods =====================================================
+
+
+  def starts_at
+    appointment_services.sort_by(&:starts_at).first.try(:starts_at)
+  end
+
+  def ends_at
+    appointment_services.sort_by(&:ends_at).last.try(:ends_at)
+  end
 end

@@ -1,0 +1,7 @@
+xlsx_package = Axlsx::Package.new
+    xlsx_package.workbook.add_worksheet(:name => "Staffs") do |sheet|
+      sheet.add_row  ['Id', 'First Name', 'Last Name', 'Mobile Number', 'Email',  'Appointments', 'Start Date', 'End Date', 'Notes', 'Service Commission', 'Product Commission', 'Voucher Commission']
+      @staffs.map do |staff|
+        sheet.add_row [staff.id, staff.first_name, staff.last_name, staff.phone, staff.email, staff.booking_enabled, staff.contract_start, staff.contract_end, staff.notes, staff.service_comm, staff.product_comm, staff.discount_comm]
+      end
+    end

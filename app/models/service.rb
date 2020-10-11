@@ -12,6 +12,10 @@ class Service < ApplicationRecord
   belongs_to :service_category
   has_many :service_prices, inverse_of: :service, dependent: :destroy
   accepts_nested_attributes_for :service_prices
+  has_many :packages, through: :service_prices
+  has_and_belongs_to_many :voucher_types
+  has_many :appointment_services
+  has_many :appointments, through: :appointment_services
 
   # == Validations ==========================================================
   validates_presence_of :name

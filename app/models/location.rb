@@ -10,7 +10,7 @@ class Location < ApplicationRecord
       "massage": 7,
       "spa": 8,
       "eyebrows_&_lashes": 6,
-      "waxing salon": 3,
+      "waxing_salon": 3,
       "tanning_studio": 13,
       "tattoo_&_piercing": 12,
       "therapy_center": 11,
@@ -23,13 +23,17 @@ class Location < ApplicationRecord
   has_and_belongs_to_many :staffs
   has_and_belongs_to_many :services
   has_and_belongs_to_many :closing_shifts
+  has_many :locations_products
+  has_many :products, through: :locations_products
   has_many :appointments
   has_many :clients
+  has_many :invoices
   has_one :invoice_sequence
-  belongs_to :user
+  belongs_to :user, optional: true
 
   # == Validations ==========================================================
-  validates_presence_of :user_id
+  # TODO enable this validation back after adding authentication
+  # validates_presence_of :user_id
 
   # == Scopes ===============================================================
   # == Callbacks ============================================================

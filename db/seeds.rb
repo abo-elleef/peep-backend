@@ -84,12 +84,15 @@
 # end
 #
 #
+# service_prices = ServicePrice.all
 # 40.times do |index|
+#   price = (100..500).to_a.sample
+#   final_price = price - ( index / 100.0 * price)
 #   time = Time.zone.now  - (index * 5 + index).day
-#   Voucher.create({name: "dicount #{index + 20 }", deduct_type: index.even? ? "value" : "percentage", deduct_value: index * 10 + 3, apply_on: "services", usage_limit: 100, uniq_per_client: false, starts_at: time , ends_at: time + 10.days})
+#   VoucherType.create({name: "Voucher #{index + 20 }", price: 200, sales_amount: 300, sold_amount: 23, value: index * 10 + 3, title: "voucher title", desc: "voucher desc", notes: "notes", color: "#f0f0f0", starts_at: time , ends_at: time + 10.days})
 #   Discount.create({name: "dicount #{index + 20 }", deduct_type: index.even? ? "value" : "percentage", deduct_value: index * 10 + 3, apply_on: "services", usage_limit: 100, uniq_per_client: false, starts_at: time , ends_at: time + 10.days})
-#   end
-#
+#   Package.create!({name: "Package name #{index}", description: "Package description #{index}", available_for: :everyone, pricing_type: :percentage, deduction_amount: index, final_price: final_price, schedule_type: :sequence,service_price_ids: service_prices.sample(2).pluck(:id) })
+# end
 # 40.times do |index|
 #   time = Time.zone.now  - (index * 5 + index).day
 #   Subscription.create({name: "sub plan #{index + 1  }",
@@ -137,4 +140,88 @@
 #                       enable_commission: true,
 #                       supplier_id: suppliers.sample.id
 #                   })
+# end
+#
+# =================== create orders sample data ====================
+# products = Product.all
+# suppliers = Supplier.all
+# locations = Location.all
+# staffs =  Staff.all
+#
+# 100.times do |index|
+#   order = Order.create!({
+#                             status: 1,
+#                             location_id: locations.sample.id,
+#                             supplier_id: suppliers.sample.id,
+#                             staff_id: staffs.sample.id
+#                         })
+#   items = []
+#   [3, 4, 5, 6].sample.times do |item_index|
+#     product = products.sample
+#     request = [20, 24, 35, 65, 78, 81].sample
+#     items << Item.create!({
+#                     order_id: order.id,
+#                     product_id: product.id,
+#                     received_price: product.retail_price,
+#                     received_quantity: request,
+#                     requested_quantity: item_index.even? ? request : (request * 0.8).ceil ,
+#                     requested_price: product.retail_price
+#                 })
+#
+#   end
+#   order.items = items
+#   order.update({total_cost: items.map(&:product).flatten.map(&:retail_price).flatten.sum})
+#
+# end
+# ========== create service prices =================================================================
+# services = Service.all;
+# 200.times do |index|
+#   ServicePrice.create!({
+#                           service_id: services.sample.id,
+#                           price: rand(10..100),
+#                           name: " price #{index}",
+#                           duration: rand(60..120),
+#                           pricing_type: rand(1..3)
+#                       })
+# end
+# ========== create Appointments with lines  =======================================================
+# start_date = Date.new(2020, 8, 29);
+# hours = (6..18).to_a;
+# days = [];
+# staffs = Staff.all;
+# clients = Client.all;
+# locations = Location.all;
+# prices = ServicePrice.all
+# 21.times {|index| days << start_date + index.day };
+# 1000.times do |appointment_index|
+#   location = locations.sample
+#   staff = staffs.sample
+#   client = clients.sample
+#   service_price = prices.sample
+#   day = days.sample
+#   time = day + hours.sample.hour
+#   appointment_services = []
+#   rand(1..3).times do |index|
+#     start_time = time + rand(1..3).hour
+#     end_time = start_time + rand(60..120).minute
+#     appointment_services << {
+#         staff_id: staff.id,
+#         starts_at: start_time,
+#         ends_at: end_time,
+#         service_id: service_price.service.id,
+#         service_price_id: service_price.id,
+#         created_at: time,
+#         updated_at: time
+#     }
+#   end
+#   Appointment.create!({
+#                           status: rand(1...6),
+#                           client_id: client.id,
+#                           location_id: location.id,
+#                           notes: " #{appointment_index}-- long appointment notes",
+#                           date: day,
+#                           created_at: time,
+#                           updated_at: time,
+#                           appointment_services_attributes: appointment_services
+#                       })
 # end

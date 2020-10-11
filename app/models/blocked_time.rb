@@ -1,6 +1,7 @@
 class BlockedTime < ApplicationRecord
   # == Constants ============================================================
   # == Extensions ===========================================================
+  include Filterable
   # == Relationships ========================================================
   belongs_to :staff
 
