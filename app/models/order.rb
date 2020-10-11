@@ -3,12 +3,12 @@ class Order < ApplicationRecord
   # == Extensions ===========================================================
   include Filterable
   # == Attributes ===========================================================
-  enum status: {requested: 1, received: 2 }
+  enum status: {requested: 1, received: 2, cancelled: 3 }
   # == Relationships ========================================================
 
   belongs_to :supplier
   belongs_to :location
-  belongs_to :staff
+  belongs_to :staff, optional:  true
   has_many :items
   accepts_nested_attributes_for :items, reject_if: :all_blank
 

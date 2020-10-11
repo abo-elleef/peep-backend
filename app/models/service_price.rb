@@ -8,6 +8,8 @@ class ServicePrice < ApplicationRecord
   belongs_to :service, inverse_of: :service_prices
   has_many :lines, as: :sellable
   has_many :packages
+  has_many :discounts_service_prices
+  has_many :discounts, through: :discounts_service_prices
   has_and_belongs_to_many :subscriptions
 
   # == Validations ==========================================================
@@ -18,4 +20,8 @@ class ServicePrice < ApplicationRecord
   # == Callbacks ============================================================
   # == Class Methods ========================================================
   # == Instance Methods =====================================================
+
+  def service_name
+    service.name
+  end
 end

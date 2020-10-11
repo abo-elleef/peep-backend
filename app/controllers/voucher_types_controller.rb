@@ -1,7 +1,7 @@
 class VoucherTypesController < ApplicationController
 
   def index
-    voucher_types = VoucherType.peep_filter(params.slice([:name]))
+    voucher_types = VoucherType.peep_filter(params.slice(:name)).desc_order
     serializers = ActiveModel::Serializer::ArraySerializer.new(voucher_types, each_serializer: VoucherTypeSerializer)
     render json: {data: serializers}, status: :ok
   end

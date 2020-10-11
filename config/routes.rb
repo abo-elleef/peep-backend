@@ -1,14 +1,17 @@
 Rails.application.routes.draw do
+
+  post '/auth/login', to: 'authentication#login'
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
-  resources :users, only: [:create, :update] do
+  resources :users, only: [:create, :update]  do
     collection do
       get :whoami
     end
 
   end
   resources :shifts
+  resources :blocked_times
   resources :closing_shifts
   resources :locations
   resources :staffs do
@@ -16,8 +19,16 @@ Rails.application.routes.draw do
       get :top
     end
   end
-  resources :clients
   resources :service_prices, only: :index
+  resources :clients do
+    member do
+      get :appointments
+      get :vouchers
+      get :subscriptions
+      get :products
+      get :invoices
+    end
+  end
   resources :services do
     collection do
       get :top
@@ -63,6 +74,12 @@ Rails.application.routes.draw do
     get "sales/recent_sales", to: "sales#recent_sales"
     get "sales/appointments", to: "sales#appointments"
     get "sales/vouchers", to: "sales#vouchers"
+
+    get "dashboard/total_appointments", to: "dashboard#total_appointments"
+    get "dashboard/total_sales", to: "dashboard#total_sales"
+    get "dashboard/average_sales", to: "dashboard#average_sales"
+    get "dashboard/total_appointments_graph", to: "dashboard#total_appointments_graph"
+    get "dashboard/total_sales_graph", to: "dashboard#total_sales_graph"
 
   end
 

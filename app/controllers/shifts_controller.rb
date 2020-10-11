@@ -43,6 +43,9 @@ class ShiftsController < ApplicationController
   private
 
     def shift_params
-      params.require(:shift).permit(:id, :starts_at, :ends_at, :staff_id, :location_id)
+      params.require(:shift).permit(
+          :id, :starts_at, :ends_at, :staff_id, :location_id, :parent_id, :repeat,
+          :repeat_ends_at
+      )
     end
 end

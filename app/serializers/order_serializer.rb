@@ -8,5 +8,5 @@ class OrderSerializer < ActiveModel::Serializer
   attribute :supplier_name do |serializer|
     serializer.object.supplier.name
   end
-  has_many :items, serializer: ItemSerializer
+  has_many :items, each_serializer: ItemSerializer
 end

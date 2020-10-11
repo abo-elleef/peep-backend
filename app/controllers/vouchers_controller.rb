@@ -1,4 +1,4 @@
-class VoucherController < ApplicationController
+class VouchersController < ApplicationController
 
   def check_voucher_validity
     voucher = Voucher.find_by(code: params[:voucher_code].to_s)
