@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
 
   def index
-    products = Product.peep_filter(params.slice(
+    products = Product.preload(locations_products: :location).peep_filter(params.slice(
         :search, :product_category_ids, :product_brand_ids, :location_ids, :supplier_ids
         ))
     pagy, products = pagy(products, page: page_index, items: page_size)
@@ -10,7 +10,7 @@ class ProductsController < ApplicationController
   end
 
   def show
-    product = Product.find(params[:id])
+    product = Product.preload(locations_products: :location).find(params[:id])
     # TODO limit access to location based on the current user
     missing_location_ids = Location.all.pluck(:id) - product.location_ids
     missing_location_ids.map do |id|
