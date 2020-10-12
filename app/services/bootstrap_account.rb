@@ -9,6 +9,7 @@ class BootstrapAccount
   def call
     location = create_location
     staff = create_staff(location)
+    create_invoice_sequence(location)
     create_services(location, staff)
     create_payment_types
     create_cancellation_reasons
@@ -30,6 +31,10 @@ class BootstrapAccount
       Staff.create(staff_params)
     end
     location.staffs = staffs
+  end
+
+  def create_invoice_sequence(location)
+    InvoiceSequence.create(InvoiceSequence.default_data.merge(location_id: location.id))
   end
 
   def create_services(location, staff)
