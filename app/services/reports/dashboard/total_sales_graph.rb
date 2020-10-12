@@ -15,8 +15,8 @@ module Reports
       def perform
         {
             days: days,
-            products: (100..505).to_a.sample(7),
-            services: (100..505).to_a.sample(7),
+            products: products,
+            services: services,
         }
       end
 
@@ -27,6 +27,19 @@ module Reports
         (start..Date.today).to_a
       end
 
+      def products
+        days.map do |day|
+          Line.by_starts_at(day).by_ends_at(day).by_location_ids(location_id).
+            by_staff_ids(staff_id).where(sellable_type: 'Product' ).sum(:unit_price)
+        end
+      end
+
+      def services
+        days.map do |day|
+          Line.by_starts_at(day).by_ends_at(day).by_location_ids(location_id).
+            by_staff_ids(staff_id).where(sellable_type: 'ServicePrice' ).sum(:unit_price)
+        end
+      end
     end
   end
 end

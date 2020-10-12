@@ -13,4 +13,7 @@ class Payment < ApplicationRecord
   # == Callbacks ============================================================
   # == Class Methods ========================================================
   # == Instance Methods =====================================================
+  def name
+    payment_type.name
+  end
 end
