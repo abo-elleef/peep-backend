@@ -9,6 +9,7 @@ class Client < ApplicationRecord
   belongs_to :location, optional: true
   has_many :lines
   has_many :invoices
+  has_many :appointments
 
   # == Validations ==========================================================
   validates_presence_of :first_name

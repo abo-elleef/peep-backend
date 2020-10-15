@@ -476,6 +476,22 @@ ActiveRecord::Schema.define(version: 2020_10_11_055855) do
     t.boolean "permissions_config"
   end
 
+  create_table "user_plans", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "plan_id"
+    t.integer "staffs_num"
+    t.integer "locations_num"
+    t.boolean "emails"
+    t.boolean "sms"
+    t.boolean "subscriptions"
+    t.boolean "analytics"
+    t.boolean "inventory"
+    t.boolean "languages"
+    t.boolean "permissions_config"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "last_name"

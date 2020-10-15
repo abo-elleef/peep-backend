@@ -81,8 +81,8 @@ class ClientsController < ApplicationController
   end
 
   def client_sales
-    client = Client.find(params[:id])
-    invoices = client.invoices.sum(:sub_total)
+    client_data = ClientSales.perform(params[:id])
+    render json: client_data, status: :ok
   end
 
   private
