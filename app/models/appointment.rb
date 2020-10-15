@@ -2,6 +2,7 @@ class Appointment < ApplicationRecord
   # == Constants ============================================================
   # == Extensions ===========================================================
   include Filterable
+  include UserScoped
 
   # == Attributes ===========================================================
   enum status: {fresh: 1, confirmed: 2, arrived: 3, started: 4, completed: 5, cancelled: 6, no_show: 7}

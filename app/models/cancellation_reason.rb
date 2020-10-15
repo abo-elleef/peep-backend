@@ -2,6 +2,7 @@ class CancellationReason < ApplicationRecord
   # == Constants ============================================================
   # == Extensions ===========================================================
   include Filterable
+  include UserScoped
 
   # == Relationships ========================================================
   has_many :appointments

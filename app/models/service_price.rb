@@ -1,6 +1,7 @@
 class ServicePrice < ApplicationRecord
   # == Constants ============================================================
   # == Extensions ===========================================================
+  include UserScoped
   # == Attributes ===========================================================
   enum pricing_type: {free: 1, start: 2, fixed: 3}
 

@@ -17,8 +17,17 @@ class User < ApplicationRecord
   # == Scopes ===============================================================
   # == Callbacks ============================================================
   # == Class Methods ========================================================
+  def self.current_user_id
+    Thread.current[:current_user_id]
+  end
+
+  def self.current_user_id=(id)
+    Thread.current[:current_user_id] = id
+  end
   # == Instance Methods =====================================================
   def has_role?(role)
     roles.pluck(:name).include?(role.to_s)
   end
+
+
 end
