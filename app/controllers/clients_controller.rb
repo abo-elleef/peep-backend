@@ -80,6 +80,11 @@ class ClientsController < ApplicationController
     end
   end
 
+  def client_sales
+    client_data = ClientSales.perform(params[:id])
+    render json: client_data, status: :ok
+  end
+
   private
 
     def client_params

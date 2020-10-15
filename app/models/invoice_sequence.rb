@@ -1,24 +1,20 @@
-class User < ApplicationRecord
-  has_secure_password
+class InvoiceSequence < ApplicationRecord
   # == Constants ============================================================
   # == Extensions ===========================================================
   # == Relationships ========================================================
-  has_many :locations
-  has_and_belongs_to_many :roles
-  has_one :user_plan
+  belongs_to :location
 
   # == Validations ==========================================================
-  validates :email, presence: true, uniqueness: true
-  validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
-  validates :password,
-            length: { minimum: 6 },
-            if: -> { new_record? || !password.nil? }
+  validates_presence_of :location
 
   # == Scopes ===============================================================
   # == Callbacks ============================================================
   # == Class Methods ========================================================
   # == Instance Methods =====================================================
-  def has_role?(role)
-    roles.pluck(:name).include?(role.to_s)
+  def self.default_data
+        {
+            num_prefix: "",
+            next_num: 10
+        }
   end
 end
