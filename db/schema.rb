@@ -135,6 +135,14 @@ ActiveRecord::Schema.define(version: 2020_10_11_055855) do
     t.index ["service_price_id"], name: "index_discounts_service_prices_on_service_price_id"
   end
 
+  create_table "invoice_sequences", force: :cascade do |t|
+    t.integer "location_id"
+    t.string "num_prefix"
+    t.integer "next_num"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "invoices", force: :cascade do |t|
     t.string "sequence"
     t.datetime "created_at", precision: 6, null: false
@@ -272,20 +280,6 @@ ActiveRecord::Schema.define(version: 2020_10_11_055855) do
     t.index ["payment_type_id"], name: "index_payments_on_payment_type_id"
   end
 
-  create_table "plans", force: :cascade do |t|
-    t.integer "staffs_num"
-    t.integer "locations_num"
-    t.boolean "emails"
-    t.boolean "sms"
-    t.boolean "subscriptions"
-    t.boolean "analytics"
-    t.boolean "inventory"
-    t.boolean "languages"
-    t.boolean "permissions_config"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "product_brands", force: :cascade do |t|
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
@@ -322,19 +316,6 @@ ActiveRecord::Schema.define(version: 2020_10_11_055855) do
     t.index ["product_category_id"], name: "index_products_on_product_category_id"
     t.index ["sku"], name: "index_products_on_sku"
     t.index ["supplier_id"], name: "index_products_on_supplier_id"
-  end
-
-  create_table "roles", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "roles_users", id: false, force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "role_id", null: false
-    t.index ["role_id"], name: "index_roles_users_on_role_id"
-    t.index ["user_id"], name: "index_roles_users_on_user_id"
   end
 
   create_table "service_categories", force: :cascade do |t|
@@ -460,36 +441,6 @@ ActiveRecord::Schema.define(version: 2020_10_11_055855) do
     t.float "value"
     t.integer "invoice_id"
     t.index ["staff_id"], name: "index_tips_on_staff_id"
-  end
-
-  create_table "user_plans", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "plan_id"
-    t.integer "staffs_num"
-    t.integer "locations_num"
-    t.boolean "emails"
-    t.boolean "sms"
-    t.boolean "subscriptions"
-    t.boolean "analytics"
-    t.boolean "inventory"
-    t.boolean "languages"
-    t.boolean "permissions_config"
-  end
-
-  create_table "user_plans", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "plan_id"
-    t.integer "staffs_num"
-    t.integer "locations_num"
-    t.boolean "emails"
-    t.boolean "sms"
-    t.boolean "subscriptions"
-    t.boolean "analytics"
-    t.boolean "inventory"
-    t.boolean "languages"
-    t.boolean "permissions_config"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|
