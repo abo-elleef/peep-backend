@@ -80,6 +80,11 @@ class ClientsController < ApplicationController
     end
   end
 
+  def client_sales
+    client = Client.find(params[:id])
+    invoices = client.invoices.sum(:sub_total)
+  end
+
   private
 
     def client_params
