@@ -12,6 +12,7 @@ class CreateUserPlans < ActiveRecord::Migration[6.0]
       t.boolean :inventory
       t.boolean :languages
       t.boolean :permissions_config
+      t.timestamps
     end
   end
 end
