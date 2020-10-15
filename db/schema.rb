@@ -186,6 +186,7 @@ ActiveRecord::Schema.define(version: 2020_10_11_055855) do
     t.integer "invoice_id"
     t.datetime "starts_at"
     t.datetime "ends_at"
+    t.index ["staff_id"], name: "index_lines_on_staff_id"
   end
 
   create_table "locations", force: :cascade do |t|
