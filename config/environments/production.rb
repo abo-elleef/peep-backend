@@ -1,7 +1,7 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
   config.action_mailer.delivery_method = :smtp
-  host = 'peep.solutions'
+  host = ENV['HOST-URL']
   config.action_mailer.default_url_options = {host: host}
 
   # SMTP settings for gmail

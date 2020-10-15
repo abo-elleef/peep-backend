@@ -1,7 +1,7 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
   config.action_mailer.delivery_method = :smtp
-  host = 'peep-staging.herokuapp.com/'
+  host = ENV['HOST-URL']
   config.action_mailer.default_url_options = {host: host}
 
   # SMTP settings for gmail
@@ -71,4 +71,8 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+  ENV['MAILER-EMAIL'] = 'peep.kwt@gmail.com'
+  ENV['MAILER-PASSWORD'] = 'Qazwsxedc!!@@Mnm'
+  ENV['HOST-URL']  = 'peep-staging.herokuapp.com/'
 end

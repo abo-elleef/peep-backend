@@ -6,10 +6,6 @@ require 'rails/all'
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
-if Rails.env.development? || Rails.env.test? || Rails.env.production?
-  ENV.update YAML.load(File.read(File.expand_path('../application.yml', __FILE__)))
-end
-
 module Peep
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
