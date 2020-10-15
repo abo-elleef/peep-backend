@@ -6,6 +6,7 @@ RSpec.describe "Clients API", type: :request do
   describe "#index" do
     let(:clients) {create_list(:client, 3 )}
     context "no params" do
+
       it "list all clients data" do
         clients
         get "/clients"

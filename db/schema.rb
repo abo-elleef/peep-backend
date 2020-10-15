@@ -135,6 +135,14 @@ ActiveRecord::Schema.define(version: 2020_10_11_055855) do
     t.index ["service_price_id"], name: "index_discounts_service_prices_on_service_price_id"
   end
 
+  create_table "invoice_sequences", force: :cascade do |t|
+    t.integer "location_id"
+    t.string "num_prefix"
+    t.integer "next_num"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "invoices", force: :cascade do |t|
     t.string "sequence"
     t.datetime "created_at", precision: 6, null: false
@@ -474,6 +482,8 @@ ActiveRecord::Schema.define(version: 2020_10_11_055855) do
     t.boolean "inventory"
     t.boolean "languages"
     t.boolean "permissions_config"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|

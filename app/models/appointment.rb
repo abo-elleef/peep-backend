@@ -12,7 +12,7 @@ class Appointment < ApplicationRecord
   has_many :services, through: :service_prices
   belongs_to :location
   belongs_to :client
-  belongs_to :invoice, optional:  true
+  belongs_to :invoice, optional: true
   accepts_nested_attributes_for :appointment_services
 
   # == Validations ==========================================================
@@ -24,8 +24,11 @@ class Appointment < ApplicationRecord
   scope :by_starts_at, -> (starts_at) { where("appointments.created_at::date >= ?", starts_at.to_date) }
 
   scope :by_location_ids, -> (location_ids) { where(location_id: location_ids) }
-  scope :by_staff_ids, -> (staff_ids) { joins(:appointment_services).where(appointment_services: {staff_id: staff_ids }) }
+  scope :by_staff_ids, -> (staff_ids) { joins(:appointment_services).where(appointment_services: {staff_id: staff_ids}) }
   scope :by_service, -> (service_ids) { joins(:appointment_services).where(service_id: service_ids) }
+  scope :completed, -> { where("status = ?", 5) }
+  scope :cancelled, -> { where("status = ?", 6) }
+
 
   # == Callbacks ============================================================
   # == Class Methods ========================================================

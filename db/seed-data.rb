@@ -14,14 +14,12 @@ user = User.create({
 location = Location.create!({
                              name: "first location", business_type: 1, phone: '01003809143',
                              email: 'email@email.com', street: 'street', building: '45',
-                             city: 'cairo', state: 'cairo', zipcode: '123456789', user_id: user.id
-
+                              user_id: user.id
                 })
 location2 = Location.create!({
                                 name: "second location", business_type: 1, phone: '01003809143',
                                 email: 'email@email.com', street: 'street', building: '45',
-                                city: 'cairo', state: 'cairo', zipcode: '123456789', user_id: user.id
-
+                                 user_id: user.id
                             })
 locations = Location.all
 50.times do |index|
@@ -140,7 +138,6 @@ end
   package.service_price_ids = service_prices.sample(2).pluck(:id)
   package.save!
 end
-
 # =================== Inventory Supplier data ====================
 100.times do |index|
   Supplier.create!({
@@ -182,7 +179,6 @@ products = Product.all;
 suppliers = Supplier.all;
 locations = Location.all;
 staffs =  Staff.all;
-
 100.times do |index|
   order = Order.create!({
                             status: 1,
@@ -208,8 +204,6 @@ staffs =  Staff.all;
   order.update({total_cost: items.map(&:product).flatten.map(&:retail_price).flatten.sum})
 
 end
-
-
 # =================== create invoices sample data ====================
 locations = Location.all;
 sellables = [Product.all, ServicePrice.all].flatten.shuffle;

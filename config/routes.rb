@@ -27,6 +27,7 @@ Rails.application.routes.draw do
       get :subscriptions
       get :products
       get :invoices
+      get :client_sales
     end
   end
   resources :services do
