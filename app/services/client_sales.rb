@@ -4,7 +4,7 @@ class ClientSales
     client = Client.find(client_id)
     invoices = client.invoices
     {
-        total_sales: invoices.sum(:total) - invoices.sum(:balance),
+        total_sales: invoices.sum(:total),
         outstanding: invoices.sum(:balance),
         bookings: client.appointments.count,
         completed:  client.appointments.completed.count,

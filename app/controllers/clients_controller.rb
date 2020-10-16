@@ -14,9 +14,8 @@ class ClientsController < ApplicationController
   end
 
   def appointments
-    # TODO should be only services
     client = Client.find(params[:id])
-    appointments = client.invoices.order("invoices.id DESC").preload(:payments, :tips,  lines: :staff).limit(10).map(&:appointment).compact
+    appointments = client.appointments.order("appointments.id DESC").preload(:appointment_services).limit(10).compact
     serializers = ActiveModel::Serializer::ArraySerializer.new(appointments, serializer: AppointmentSerializer)
     render json: {data: serializers},  status: :ok
   end
@@ -24,7 +23,7 @@ class ClientsController < ApplicationController
   def products
     # TODO should be only products
     client = Client.find(params[:id])
-    invoices = client.invoices.order("invoices.id DESC").limit(10).map(&:appointment).compact
+    invoices = client.invoices.order("invoices.id ASC").limit(10).map(&:appointment).compact
     serializers = ActiveModel::Serializer::ArraySerializer.new(invoices, serializer: AppointmentSerializer)
     render json: {data: serializers},  status: :ok
   end
@@ -82,7 +81,7 @@ class ClientsController < ApplicationController
 
   def client_sales
     client_data = ClientSales.perform(params[:id])
-    render json: client_data, status: :ok
+    render json: { data: client_data} , status: :ok
   end
 
   private
