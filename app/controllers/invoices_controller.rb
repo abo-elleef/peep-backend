@@ -19,6 +19,10 @@ class InvoicesController < ApplicationController
         total: invoice_values[:total], balance: invoice_values[:balance])
     )
     if invoice.save!
+      appointment = Appointment.find(params[:invoice][:id])
+      appointment.invoice_id = invoice.id
+      appointment.status = 5
+      appointment.save!
       lines_types = invoice_params[:lines_attributes].map { |line| line[:sellable_type] }.uniq
       # TODO voucher wil be in phase 2
       # Checkout::VoucherCreation.new(params[:lines_attributes].select { |line| line[:sellable_type] == 'VoucherType' }, invoice.id).call if lines_types.include?('VoucherType')

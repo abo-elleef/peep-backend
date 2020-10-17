@@ -11,7 +11,7 @@ class Appointment < ApplicationRecord
   has_many :service_prices, through: :appointment_services
   has_many :services, through: :service_prices
   belongs_to :location
-  belongs_to :client
+  belongs_to :client, optional: true
   belongs_to :invoice, optional: true
   accepts_nested_attributes_for :appointment_services
 
