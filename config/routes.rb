@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :blocked_times
   resources :closing_shifts
   resources :locations
+  resources :invoice_sequences
   resources :staffs do
     collection do
       get :top

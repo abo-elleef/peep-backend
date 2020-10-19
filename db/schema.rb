@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_11_055855) do
+ActiveRecord::Schema.define(version: 2020_10_19_133341) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -186,7 +186,6 @@ ActiveRecord::Schema.define(version: 2020_10_11_055855) do
     t.integer "invoice_id"
     t.datetime "starts_at"
     t.datetime "ends_at"
-    t.index ["staff_id"], name: "index_lines_on_staff_id"
   end
 
   create_table "locations", force: :cascade do |t|
@@ -330,19 +329,6 @@ ActiveRecord::Schema.define(version: 2020_10_11_055855) do
     t.index ["product_category_id"], name: "index_products_on_product_category_id"
     t.index ["sku"], name: "index_products_on_sku"
     t.index ["supplier_id"], name: "index_products_on_supplier_id"
-  end
-
-  create_table "roles", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "roles_users", id: false, force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "role_id", null: false
-    t.index ["role_id"], name: "index_roles_users_on_role_id"
-    t.index ["user_id"], name: "index_roles_users_on_user_id"
   end
 
   create_table "service_categories", force: :cascade do |t|
@@ -495,6 +481,8 @@ ActiveRecord::Schema.define(version: 2020_10_11_055855) do
     t.integer "business_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
   end
 
   create_table "voucher_types", force: :cascade do |t|
