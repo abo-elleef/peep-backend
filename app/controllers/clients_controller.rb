@@ -23,8 +23,9 @@ class ClientsController < ApplicationController
   def products
     # TODO should be only products
     client = Client.find(params[:id])
-    invoices = client.invoices.order("invoices.id ASC").limit(10).map(&:appointment).compact
-    serializers = ActiveModel::Serializer::ArraySerializer.new(invoices, serializer: AppointmentSerializer)
+    lines = client.invoices.joins(:lines).where("lines.sellable_type = 'Product'").order("invoices.id DESC").
+        limit(10).map(&:lines).flatten.select {|a| a.sellable_type = 'Product'}.first(10)
+    serializers = ActiveModel::Serializer::ArraySerializer.new(lines, serializer: LineSerializer)
     render json: {data: serializers},  status: :ok
   end
 
