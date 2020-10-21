@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_11_055855) do
+ActiveRecord::Schema.define(version: 2020_10_15_174622) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,17 +30,19 @@ ActiveRecord::Schema.define(version: 2020_10_11_055855) do
   create_table "appointments", force: :cascade do |t|
     t.integer "status", default: 1
     t.integer "client_id"
-    t.integer "location_id"
     t.text "notes"
     t.date "date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "location_id"
     t.integer "cancellation_reason_id"
     t.integer "invoice_id"
+    t.integer "user_id"
     t.index ["cancellation_reason_id"], name: "index_appointments_on_cancellation_reason_id"
     t.index ["client_id"], name: "index_appointments_on_client_id"
     t.index ["date"], name: "index_appointments_on_date"
     t.index ["location_id"], name: "index_appointments_on_location_id"
+    t.index ["user_id"], name: "index_appointments_on_user_id"
   end
 
   create_table "appointments_staffs", force: :cascade do |t|
@@ -65,6 +67,8 @@ ActiveRecord::Schema.define(version: 2020_10_11_055855) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_cancellation_reasons_on_user_id"
   end
 
   create_table "clients", force: :cascade do |t|
@@ -78,7 +82,6 @@ ActiveRecord::Schema.define(version: 2020_10_11_055855) do
     t.datetime "birthday"
     t.string "notes"
     t.boolean "global_notes"
-    t.integer "location_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "street"
@@ -86,7 +89,8 @@ ActiveRecord::Schema.define(version: 2020_10_11_055855) do
     t.string "block"
     t.string "avenue"
     t.string "building"
-    t.index ["location_id"], name: "index_clients_on_location_id"
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_clients_on_user_id"
   end
 
   create_table "closing_shifts", force: :cascade do |t|
@@ -125,7 +129,9 @@ ActiveRecord::Schema.define(version: 2020_10_11_055855) do
     t.integer "limit", default: 1
     t.datetime "starts_at"
     t.datetime "ends_at"
+    t.integer "user_id"
     t.index ["name"], name: "index_discounts_on_name"
+    t.index ["user_id"], name: "index_discounts_on_user_id"
   end
 
   create_table "discounts_service_prices", force: :cascade do |t|
@@ -133,14 +139,6 @@ ActiveRecord::Schema.define(version: 2020_10_11_055855) do
     t.integer "service_price_id"
     t.index ["discount_id"], name: "index_discounts_service_prices_on_discount_id"
     t.index ["service_price_id"], name: "index_discounts_service_prices_on_service_price_id"
-  end
-
-  create_table "invoice_sequences", force: :cascade do |t|
-    t.integer "location_id"
-    t.string "num_prefix"
-    t.integer "next_num"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "invoices", force: :cascade do |t|
@@ -154,9 +152,11 @@ ActiveRecord::Schema.define(version: 2020_10_11_055855) do
     t.float "sub_total"
     t.float "total"
     t.float "balance"
+    t.integer "user_id"
     t.index ["client_id"], name: "index_invoices_on_client_id"
     t.index ["location_id"], name: "index_invoices_on_location_id"
     t.index ["status"], name: "index_invoices_on_status"
+    t.index ["user_id"], name: "index_invoices_on_user_id"
   end
 
   create_table "items", force: :cascade do |t|
@@ -269,6 +269,8 @@ ActiveRecord::Schema.define(version: 2020_10_11_055855) do
     t.string "name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_payment_types_on_user_id"
   end
 
   create_table "payments", force: :cascade do |t|
@@ -351,6 +353,8 @@ ActiveRecord::Schema.define(version: 2020_10_11_055855) do
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id"
+    t.index ["user_id"], name: "index_service_categories_on_user_id"
   end
 
   create_table "service_prices", force: :cascade do |t|
@@ -361,7 +365,9 @@ ActiveRecord::Schema.define(version: 2020_10_11_055855) do
     t.float "price", default: 0.0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "user_id"
     t.index ["service_id"], name: "index_service_prices_on_service_id"
+    t.index ["user_id"], name: "index_service_prices_on_user_id"
   end
 
   create_table "service_prices_subscriptions", force: :cascade do |t|
@@ -383,7 +389,9 @@ ActiveRecord::Schema.define(version: 2020_10_11_055855) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "service_category_id"
+    t.integer "user_id"
     t.index ["service_category_id"], name: "index_services_on_service_category_id"
+    t.index ["user_id"], name: "index_services_on_user_id"
   end
 
   create_table "services_staffs", id: false, force: :cascade do |t|
