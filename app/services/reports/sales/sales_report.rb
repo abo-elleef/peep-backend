@@ -29,24 +29,24 @@ module Reports
       end
 
       def sales_by_location
-        scope = Line.joins(:invoice).select("appointments.location_id, count(*) AS items_sold, ROUND(sum(lines.unit_price)::numeric, 3) AS net_sales,
+        scope = Line.joins(invoice: :location).select("invoices.location_id, locations.name as sellable_name, count(*) AS items_sold, ROUND(sum(lines.unit_price)::numeric, 3) AS net_sales,
                                                              ROUND(sum(lines.original_unit_price)::numeric, 3) AS gross_sales, ROUND(sum(lines.original_unit_price - lines.unit_price)::numeric, 3) AS discounts")
             .where('lines.created_at::date >= ? AND lines.created_at::date <= ?', starts_at, ends_at)
 
         scope = scope.where("appointments.location_id = #{location_id}") if location_id.present?
-        scope.group("invoices.location_id")
+        scope.group("invoices.location_id, locations.name")
       end
 
       def sales_by_client
-        scope = Line.joins(invoice: :client).select("invoices.client_id, clients.first_name,count(*) AS items_sold, ROUND(sum(lines.unit_price)::numeric, 3) AS net_sales,
+        scope = Line.joins(invoice: :client).select("invoices.client_id, clients.first_name, clients.last_name ,count(*) AS items_sold, ROUND(sum(lines.unit_price)::numeric, 3) AS net_sales,
                                                              ROUND(sum(lines.original_unit_price)::numeric, 3) AS gross_sales, ROUND(sum(lines.original_unit_price - lines.unit_price)::numeric, 3) AS discounts")
             .where('lines.created_at::date >= ? AND lines.created_at::date <= ?', starts_at, ends_at)
         scope.where("invoices.location_id = #{location_id}") if location_id.present?
-        scope.group("invoices.client_id, clients.first_name")
+        scope.group("invoices.client_id, clients.first_name, clients.last_name")
       end
 
       def sales_by_staff
-        scope = Line.joins(:invoice).select("lines.staff_id, lines.staff_name, count(*) AS items_sold, ROUND(sum(lines.unit_price)::numeric, 3) AS net_sales,
+        scope = Line.joins(:invoice).select("lines.staff_id, lines.staff_name AS sellable_name, count(*) AS items_sold, ROUND(sum(lines.unit_price)::numeric, 3) AS net_sales,
                                                              ROUND(sum(lines.original_unit_price)::numeric, 3) AS gross_sales, ROUND(sum(lines.original_unit_price - lines.unit_price)::numeric, 3) AS discounts")
             .where('lines.created_at::date >= ? AND lines.created_at::date <= ?', starts_at, ends_at)
         scope = scope.where("invoices.location_id = #{location_id}") if location_id.present?

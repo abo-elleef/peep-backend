@@ -5,14 +5,14 @@ class Appointment < ApplicationRecord
   include UserScoped
 
   # == Attributes ===========================================================
-  enum status: {fresh: 1, confirmed: 2, arrived: 3, started: 4, completed: 5, cancelled: 6, no_show: 7}
+  enum status: {booked: 1, confirmed: 2, arrived: 3, started: 4, completed: 5, cancelled: 6, no_show: 7}
 
   # == Relationships ========================================================
   has_many :appointment_services
   has_many :service_prices, through: :appointment_services
   has_many :services, through: :service_prices
   belongs_to :location
-  belongs_to :client
+  belongs_to :client, optional: true
   belongs_to :invoice, optional: true
   accepts_nested_attributes_for :appointment_services
 

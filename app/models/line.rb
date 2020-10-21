@@ -24,6 +24,7 @@ class Line < ApplicationRecord
 
 
   # == Callbacks ============================================================
+  before_save :set_data
   # == Class Methods ========================================================
   # == Instance Methods =====================================================
 
@@ -50,4 +51,11 @@ class Line < ApplicationRecord
   def cost_price
     unit_price
   end
+
+  private
+
+    def set_data
+      self.staff_name = self.staff.name
+      self.sellable_name = self.sellable.name
+    end
 end

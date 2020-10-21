@@ -27,7 +27,7 @@ module Reports
       private
 
       def basic_scope(starts_at, ends_at)
-        Appointment.by_starts_at(@starts_at).by_ends_at(@ends_at).by_staff_ids(staff_id).by_location_ids(location_id)
+        Appointment.by_starts_at(starts_at).by_ends_at(ends_at).by_staff_ids(staff_id).by_location_ids(location_id)
       end
 
       def total_count

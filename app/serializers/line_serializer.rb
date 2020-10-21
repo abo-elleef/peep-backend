@@ -1,5 +1,5 @@
 class LineSerializer < ActiveModel::Serializer
-  attributes :id, :invoice_id, :staff_id, :sellable_id, :sellable_type,
+  attributes :id, :invoice_id, :staff_id, :sellable_id, :sellable_type, :created_at,
              :unit_price, :original_unit_price, :staff_name, :quantity, :starts_at, :ends_at
 
   belongs_to :sellable, polymorphic: true
