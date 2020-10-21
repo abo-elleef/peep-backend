@@ -1,7 +1,5 @@
 class ClientsController < ApplicationController
 
-  before_action :authorize_request
-
   def index
     clients = Client.search(params[:search]).desc_order
     pagy, clients = pagy(clients, page: page_index, items: page_size )
