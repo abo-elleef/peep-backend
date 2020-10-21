@@ -1,11 +1,11 @@
 class ApplicationController < ActionController::Base
   include Pagy::Backend
-
+  before_action :authorize_request
   skip_before_action :verify_authenticity_token
 
-  # after_action do
-  #   @current_user = nil
-  # end
+  after_action do
+    @current_user = nil
+  end
 
   def authorize_request
     header = request.headers['Authorization']
@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
     begin
       @decoded = JwtService.decode(header)
       @current_user = User.find(@decoded[:user_id])
+      User.current_user_id = @current_user.id
     rescue ActiveRecord::RecordNotFound => e
       render json: { errors: e.message }, status: :unauthorized
     rescue JWT::DecodeError => e
@@ -46,15 +47,16 @@ class ApplicationController < ActionController::Base
     end
 
     def auth_token
-      request.headers["authorization"]
+      header = request.headers['Authorization']
+      header.split(' ').last if header
     end
 
-  def current_location
-    Location.first
-    # return @current_location if @current_location.present? || auth_token.blank?
-    # data = JwtService.decode(auth_token)
-    # @current_location = Location.find(data['location_id'])
-  end
+    def current_location
+      Location.first
+      # return @current_location if @current_location.present? || auth_token.blank?
+      # data = JwtService.decode(auth_token)
+      # @current_location = Location.find(data['location_id'])
+    end
 
     def current_user
       return @current_user if @current_user.present? || auth_token.blank?

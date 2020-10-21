@@ -1,11 +1,8 @@
-class CancellationReason < ApplicationRecord
+class Role < ApplicationRecord
   # == Constants ============================================================
   # == Extensions ===========================================================
-  include Filterable
-  include UserScoped
-
   # == Relationships ========================================================
-  has_many :appointments
+  has_and_belongs_to_many :users
 
   # == Validations ==========================================================
   # == Scopes ===============================================================
@@ -14,17 +11,25 @@ class CancellationReason < ApplicationRecord
   def self.default_data
     [
         {
-            name: "Duplicate appointment"
+            name: "admin"
         },
         {
-            name: "Appointment made by mistake"
+            name: "owner"
         },
         {
-            name: "Client not available"
+            name: "location-manager"
+        },
+        {
+            name: "store-manager"
+        },
+        {
+            name: "staff-member"
+        },
+        {
+            name: "client"
         }
     ]
   end
 
   # == Instance Methods =====================================================
-
 end

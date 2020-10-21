@@ -4,7 +4,7 @@ module Reports
       attr_reader  :location_ids, :to_date
 
       def initialize(params)
-        @location_ids = params[:location_id] == 'all' ? Location.all.pluck(:id).join(',') : params[:location_id].to_i
+        @location_ids = params[:location_id] == 'all' ? Location.all.pluck(:id) : params[:location_id].to_i
         @to_date = params[:date_range] == 'week' ? Date.today - 6.days : Date.today - 30.day
       end
 

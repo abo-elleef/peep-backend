@@ -2,6 +2,7 @@ class PaymentType < ApplicationRecord
   # == Constants ============================================================
   # == Extensions ===========================================================
   include Filterable
+  include UserScoped
 
   # == Relationships ========================================================
   has_many :payments

@@ -1,5 +1,5 @@
 class AppointmentsController < ApplicationController
-
+  # load_and_authorize_resource
   def index
     appointments = Appointment.peep_filter(params.slice(:starts_at, :ends_at, :staff_ids, :location_ids)).
         group('appointments.id').limit(1000)

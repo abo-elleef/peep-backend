@@ -2,6 +2,7 @@ class Service < ApplicationRecord
   # == Constants ============================================================
   # == Extensions ===========================================================
   include Filterable
+  include UserScoped
 
   # == Attributes ===========================================================
   enum available_for: {everyone: 0, males: 1, females: 2}

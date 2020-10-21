@@ -20,6 +20,9 @@ gem 'turbolinks', '~> 5'
 gem 'fast_jsonapi', '~> 1.5'
 gem 'active_model_serializers', '~> 0.10.0'
 
+#authorization
+gem 'cancancan', '~> 1.13', '>= 1.13.1'
+
 # pagination
 gem 'pagy',  '~> 3.8'
 # admin interface

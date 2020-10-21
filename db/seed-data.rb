@@ -40,7 +40,7 @@ end
 
 5.times do |index|
   service_category = ServiceCategory.create!({
-                              name: "category_#{index} ", description: "description", appointment_color: "appointment_color"
+                              name: "category_#{index} ", description: "description", appointment_color: "#F3A2BB"
                           })
   10.times do |service_index|
     service = Service.create!({
