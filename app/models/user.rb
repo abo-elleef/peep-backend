@@ -9,7 +9,8 @@ class User < ApplicationRecord
   # == Validations ==========================================================
   validates :email, presence: true, uniqueness: true
   validates :email, format: { with: URI::MailTo::EMAIL_REGEXP }
-  validates :password,
+  v
+  alidates :password,
             length: { minimum: 6 },
             if: -> { new_record? || !password.nil? }
 
@@ -24,7 +25,7 @@ class User < ApplicationRecord
   end
 
   def password_token_valid?
-    (self.reset_password_sent_at + 4.hours) > Time.now.utc
+    (self.reset_password_sent_at + 4.hours) > Time.zone.now
   end
 
   def reset_password!(password)
