@@ -84,7 +84,7 @@ Rails.application.routes.draw do
     get "dashboard/total_sales_graph", to: "dashboard#total_sales_graph"
   end
   post 'password/forgot', to: 'passwords#forgot'
-  post 'password/reset', to: 'passwords#reset'
+  post 'password/reset', to: 'passwords#reset', as: :reset_password
   put 'password/update', to: 'password#update'
 
   post "voucher_types/sell_voucher", to: "voucher_types#sell_voucher"

@@ -7,7 +7,7 @@ class PasswordsController < ApplicationController
     user = User.find_by(email: params[:email].downcase)
     if user.present?
       user.generate_password_token!
-      #TODO SEND EMAIL HERE Waiting merge  USER MAILER
+      UserMailer.forgot_password(user).deliver
       render json: {}, status: :ok
     else
       render json: {error: ['Email address not found. Please check and try again.']}, status: :not_found
