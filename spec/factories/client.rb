@@ -10,7 +10,6 @@ FactoryBot.define do
     birthday { Faker::Date.birthday }
     notes { Faker::Lorem.paragraph }
     global_notes { Faker::Boolean.boolean }
-    location_id { Faker::Number.positive }
     street { Faker::Address.street_name }
     area { Faker::Address.city }
     block { Faker::Address.city }
