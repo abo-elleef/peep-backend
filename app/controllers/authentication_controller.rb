@@ -3,11 +3,15 @@ class AuthenticationController < ApplicationController
 
   # POST /auth/login
   def login
-    @user = User.find_by_email(params[:email])
-    if @user&.authenticate(params[:password])
-      token = JwtService.encode(user_id: @user.id)
+    user = User.find_by_email(params[:email])
+    if user&.authenticate(params[:password])
+      token = JwtService.encode(user_id: user.id)
       time = Time.now + 24.hours.to_i
-      render json: {data: { token: token, exp: time.strftime("%m-%d-%Y %H:%M")}}, status: :ok
+      render json: {data: {
+          token: token,
+          exp: time.strftime("%m-%d-%Y %H:%M"),
+          user: UserSerializer.new(user)
+      }}, status: :ok
     else
       render json: { error: 'unauthorized' }, status: :unauthorized
     end
