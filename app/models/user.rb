@@ -1,6 +1,9 @@
 class User < ApplicationRecord
   has_secure_password
   # == Constants ============================================================
+  API_KEY = {
+      local: "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo3LCJleHAiOjE2MDM0NTMxMzd9.nVeoZievydce6o0C72fzvi39xlIJ6L_PEy5dzySyL3E"
+  }
   # == Extensions ===========================================================
   # == Relationships ========================================================
   has_many :locations
