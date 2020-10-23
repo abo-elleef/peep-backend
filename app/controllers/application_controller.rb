@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   include Pagy::Backend
-  before_action :authorize_request
+  # before_action :authorize_request
   skip_before_action :verify_authenticity_token
 
   after_action do

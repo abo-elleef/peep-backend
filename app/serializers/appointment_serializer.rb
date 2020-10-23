@@ -7,7 +7,7 @@ class AppointmentSerializer < ActiveModel::Serializer
   end
 
   def color
-    object.service_prices.first.service.service_category.appointment_color
+    object.service_prices.first&.service&.service_category&.appointment_color || 'red'
   end
 
   def client_name

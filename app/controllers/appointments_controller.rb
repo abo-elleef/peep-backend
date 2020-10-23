@@ -44,6 +44,18 @@ class AppointmentsController < ApplicationController
     render json: {hint: hint}, status: :ok
   end
 
+  def calendar
+
+  end
+
+  def calendar_events
+    appointments = Appointment.peep_filter(params.slice(:starts_at, :ends_at, :staff_ids, :location_ids)).
+        group('appointments.id').limit(1000)
+    events = appointments.map(&:appointment_services).flatten
+    serializers = ActiveModel::Serializer::ArraySerializer.new(events, serializer: AppointmentServiceDetailsSerializer)
+    render json: serializers, status: :ok
+  end
+
   private
 
   def appointment_params

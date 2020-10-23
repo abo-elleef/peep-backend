@@ -61,6 +61,9 @@ Rails.application.routes.draw do
   get "export/orders", to: "export#orders"
   post "appointments/check_hints", to: "appointments#check_hints"
   post "/checkout", to: "invoices#checkout"
+  get "/calendar", to: "appointments#calendar"
+  get "/calendar_events", to: "appointments#calendar_events"
+
   # Reports Routes
   namespace :reports do
     # sales routes
