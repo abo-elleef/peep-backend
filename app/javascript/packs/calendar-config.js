@@ -2,23 +2,31 @@ import {Calendar} from "@fullcalendar/core";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import req from "superagent";
 import dayGridPlugin from '@fullcalendar/daygrid';
+import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid';
+
 
 
 console.log("custom loaded");
 
-
-
-document.addEventListener('DOMContentLoaded', function () {
-    var calendarEl = document.getElementById('calendar');
-
-    var calendar = new Calendar(calendarEl, {
-        plugins: [timeGridPlugin, dayGridPlugin],
-        initialView: "timeGridWeek", //timeGridDay,  timeGridWeek
+function drawCalendar(element){
+    if (!element){
+        return
+    }
+    var calendar = new Calendar(element, {
+        plugins: [timeGridPlugin, dayGridPlugin, resourceTimeGridPlugin],
+        resources: [
+            { id: 'a', title: 'Room A' },
+            { id: 'b', title: 'Room B' },
+            { id: 'c', title: 'Room C' },
+            { id: 'd', title: 'Room D' }
+        ],
+        initialView: "resourceTimeGridDay", //timeGridDay,  timeGridWeek
         nowIndicator: true,
+        groupByDateAndResource: true,
         headerToolbar: {
             center: 'prev,next today',
             left: '',
-            right: 'timeGridWeek,timeGridDay'
+            right: 'timeGridWeek,resourceTimeGridDay'
         },
         eventClick: function(info){
             console.log(info);
@@ -43,7 +51,8 @@ document.addEventListener('DOMContentLoaded', function () {
                                     start: event.start,
                                     end: event.end,
                                     display: event.display ,
-                                    color: event.display === 'background' ? '#aaa' : event.color
+                                    color: event.display === 'background' ? '#aaa' : event.color,
+                                    resourceId: 'a'
 
                                 }
                             })
@@ -53,6 +62,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
         }
     })
+    calendar.render();
     // [
     //     {
     //         title: 'All Day Event',
@@ -101,5 +111,9 @@ document.addEventListener('DOMContentLoaded', function () {
     //         start: '2020-10-28'
     //     }
     // ]
-    calendar.render();
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    drawCalendar(document.getElementById('calendar'));
+
 });

@@ -48,6 +48,34 @@ header{
 #sidebar{
   color: $white;
   background-color: $dark-blue;
+  ul li{
+    height: 55px;
+    a{
+      font-size: 16px;
+      color: $white;
+    }
+    &:hover, &.active{
+      color: $white;
+      i{
+        font-size: 24px;
+        font-weight: bold;
+        color: $dark-blue;
+      }
+      a{
+        font-size: 16px;
+        color: $dark-blue;
+        &:hover{
+          background: none;
+        }
+      }
+      background: $light-pink;
+    }
+
+  }
+
+  #logo-container{
+    height: 100px;
+  }
 }
 #content-container{
 

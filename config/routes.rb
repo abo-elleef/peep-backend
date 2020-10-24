@@ -61,8 +61,6 @@ Rails.application.routes.draw do
   get "export/orders", to: "export#orders"
   post "appointments/check_hints", to: "appointments#check_hints"
   post "/checkout", to: "invoices#checkout"
-  get "/calendar", to: "appointments#calendar"
-  get "/calendar_events", to: "appointments#calendar_events"
 
   # Reports Routes
   namespace :reports do
@@ -90,4 +88,21 @@ Rails.application.routes.draw do
   post "voucher_types/sell_voucher", to: "voucher_types#sell_voucher"
   post "vouchers/check_voucher_validity", to: "vouchers#check_voucher_validity"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  #
+  #
+  #
+  # Backend Routes
+  namespace :back, path: nil do
+    # home
+    get "/home", to: "home#home"
+    get "/home/recent_sales", to: "home#recent_sales"
+    get "/home/top_staff", to: "home#top_staff"
+    get "/home/top_services", to: "home#top_services"
+    # calendar
+    get "/calendar", to: "appointments#calendar"
+    get "/calendar_events", to: "appointments#calendar_events"
+
+
+  end
+
 end
