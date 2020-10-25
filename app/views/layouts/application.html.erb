@@ -1,15 +1,75 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Peep</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>Peep</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+<body>
+<div id="app-container">
+    <div id=sidebar>
+      <div id=logo-container>
+        logo should go here
+      </div>
+      <ul>
+        <li class="p-3 valign-wrapper">
+          <i class="Medium material-icons">home</i>
+          <a class="ms-2" href="/home"> Home </a>
+        </li>
+        <li class="p-3 valign-wrapper">
+          <i class="Medium material-icons">collections_bookmark</i>
+          <a class="ms-2" href="/calendar"> Calendar </a>
+        </li>
+        <li class="p-3 valign-wrapper">
+          <i class="Medium material-icons">attach_money</i>
+          <a class="ms-2" href="/calendar"> Sales </a>
+        </li>
+        <li class="p-3 valign-wrapper">
+          <i class="Medium material-icons">local_offer</i>
+          <a class="ms-2" href="/calendar"> Offers </a>
+        </li>
+        <li class="p-3 valign-wrapper">
+          <i class="Medium material-icons">people</i>
+          <a class="ms-2" href="/calendar"> Clients </a>
+        </li>
+        <li class="p-3 valign-wrapper">
+          <i class="Medium material-icons">person</i>
+          <a class="ms-2" href="/calendar"> Staff </a>
+        </li>
+        <li class="p-3 valign-wrapper">
+          <i class="Medium material-icons">work</i>
+          <a class="ms-2" href="/calendar"> Services </a>
+        </li>
+        <li class="p-3 valign-wrapper">
+          <i class="Medium material-icons">add_shopping_cart</i>
+          <a class="ms-2" href="/calendar"> Inventory </a>
+        </li>
+        <li class="p-3 valign-wrapper">
+          <i class="Medium material-icons">insert_chart</i>
+          <a class="ms-2" href="/calendar"> Analytics </a>
+        </li>
+        <li class="p-3 valign-wrapper">
+          <i class="Medium material-icons">settings</i>
+          <a class="ms-2" href="/calendar"> Settings </a>
+        </li>
+      </ul>
+    </div>
 
-  <body>
-    <%= yield %>
-  </body>
+    <div id="content-container" class="ping-bg">
+      <%= yield %>
+    </div>
+  <script type="text/javascript" charset="utf-8">
+      $(document).on('turbolinks:load', function () {
+          $('select').formSelect();
+      })
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</div>
+
+</body>
 </html>

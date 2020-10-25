@@ -1,0 +1,33 @@
+<div class="row">
+  <div class="col s12">
+    <div class="card">
+      <div class="card-content">
+        <span class="card-title">Top Services</span>
+        <table class="highlight">
+          <thead>
+          <tr>
+            <th> Service </th>
+            <th>This Month</th>
+            <th>Last Month</th>
+          </tr>
+          </thead>
+          <tbody>
+          <% @data.map do |row| %>
+            <tr>
+              <td class="p-2">
+                <%= row[:name] %>
+              </td>
+              <td class="p-2">
+                <%= row[:current_month] %>
+              </td>
+              <td class="p-2">
+                <%= row[:last_month] %>
+              </td>
+            </tr>
+          <% end  %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

@@ -19,6 +19,7 @@ class Location < ApplicationRecord
       "other": 14
   }
 
+  include UserScoped
   # == Relationships ========================================================
   has_and_belongs_to_many :staffs
   has_and_belongs_to_many :services

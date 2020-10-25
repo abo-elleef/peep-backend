@@ -1,0 +1,35 @@
+<canvas id="homeChart" height="70"></canvas>
+<script>
+    var ctx = document.getElementById('homeChart');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            //labels: [], //<%# @data[:days] %>,
+            datasets: [
+                {
+                    label: 'Sales',
+                    data: <%= @data[:sales] %>,
+                    backgroundColor: 'rgba(255, 99, 132, 0)',
+                    borderColor: '#77784C',
+
+                },
+                {
+                    label: 'Appointments',
+                    data: <%= @data[:appointments] %>,
+                    backgroundColor: 'rgba(255, 99, 132, 0)',
+                    borderColor: '#586997',
+
+                }
+            ]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
+</script>

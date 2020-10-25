@@ -1,0 +1,19 @@
+.select-wrapper{
+  min-width: 200px;
+}
+.time {
+  .select-wrapper{
+    min-width: 50px;
+    width: 50px;
+    display: inline-block;
+  }
+
+}
+.input-field{
+  display: inline-block;
+}
+#filters-row{
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}

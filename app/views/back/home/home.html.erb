@@ -1,0 +1,65 @@
+<header class="p-2">
+  <h3 class="m-0">Home</h3>
+</header>
+<div id="filters-row">
+  <div class="input-field mse-2">
+    <select id="locationSelector">
+      <option value="all" selected>All Locations</option>
+      <% @locations.map do |location| %>
+        <option value="<%= location.id %>"><%= location.name %></option>
+      <% end %>
+    </select>
+    <label>Materialize Select</label>
+  </div>
+  <div class="input-field mse-2">
+    <select id="periodSelector">
+      <option value="week" selected>Week</option>
+      <option value="month">Month</option>
+    </select>
+    <label>Materialize Select</label>
+  </div>
+
+</div>
+<div class="main-section">
+  <div id="recent-sales" class="row">
+    chart
+  </div>
+
+  <div id="tops" class="row">
+    <div id="top-services" class="col s6">
+      top services
+    </div>
+    <div id="top-staff" class="col s6">
+      top staff
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
+<script type="text/javascript" charset="utf-8">
+    function fetchData(period, location_id) {
+        $.get('/home/top_staff', {location_id: location_id, date_range: period});
+        $.get('/home/top_services', {location_id: location_id, date_range: period});
+        $.get('/home/recent_sales', {location_id: location_id, date_range: period});
+    }
+
+    function registerEvents(){
+        $("#periodSelector").change(function(e){
+            let periodValue = e.target.value;
+            let locationValue = $("#locationSelector").val();
+            fetchData(periodValue, locationValue)
+        });
+        $("#locationSelector").change(function(e){
+            let periodValue = $("#periodSelector").val();
+            let locationValue = e.target.value;
+            fetchData(periodValue, locationValue)
+        })
+    }
+
+    $(document).on('turbolinks:load', function () {
+        registerEvents()
+        fetchData('week', 'all');
+    })
+
+
+</script>

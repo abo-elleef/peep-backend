@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="col s2 push-s3 time">
+    <%= f.time_select :starts_at, {minute_step: 5}, {class: 'time'} %>
+    <label>Start</label>
+  </div>
+  <div class="col s4 push-s3">
+    <%= f.select :service_price_id, options_for_select(@service_prices) %>
+    <label>Service</label>
+  </div>
+</div>
+<div class="row">
+  <div class="col s2 push-s3">
+    <label> duration </label>
+  </div>
+  <div class="col s4 push-s3">
+    <%= f.select :staff_id, options_for_select(@staff) %>
+    <label>Staff</label>
+
+  </div>
+</div>
+<%= link_to_remove_association "remove task", f %>
+
+<script>
+    setTimeout(function () {
+        $('select').formSelect();
+    }, 50)
+
+</script>

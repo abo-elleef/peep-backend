@@ -20,6 +20,9 @@ gem 'turbolinks', '~> 5'
 gem 'fast_jsonapi', '~> 1.5'
 gem 'active_model_serializers', '~> 0.10.0'
 
+#authorization
+gem 'cancancan', '~> 1.13', '>= 1.13.1'
+
 # pagination
 gem 'pagy',  '~> 3.8'
 # admin interface
@@ -85,3 +88,6 @@ gem 'pronto', '~> 0.10.0'
 gem 'pronto-rubocop', require: false
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+gem "cocoon"
+

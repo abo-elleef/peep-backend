@@ -2,6 +2,7 @@ class Discount < ApplicationRecord
   # == Constants ============================================================
   # == Extensions ===========================================================
   include Filterable
+  include UserScoped
 
   # == Attributes ===========================================================
   enum deduct_type: { value: "value", percentage: "percentage" }

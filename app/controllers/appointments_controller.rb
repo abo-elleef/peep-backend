@@ -1,5 +1,5 @@
 class AppointmentsController < ApplicationController
-
+  # load_and_authorize_resource
   def index
     appointments = Appointment.peep_filter(params.slice(:starts_at, :ends_at, :staff_ids, :location_ids)).
         group('appointments.id').limit(1000)
@@ -42,6 +42,18 @@ class AppointmentsController < ApplicationController
   def check_hints
     hint = AppointmentHints.new(params).call
     render json: {hint: hint}, status: :ok
+  end
+
+  def calendar
+
+  end
+
+  def calendar_events
+    appointments = Appointment.peep_filter(params.slice(:starts_at, :ends_at, :staff_ids, :location_ids)).
+        group('appointments.id').limit(1000)
+    events = appointments.map(&:appointment_services).flatten
+    serializers = ActiveModel::Serializer::ArraySerializer.new(events, serializer: AppointmentServiceDetailsSerializer)
+    render json: serializers, status: :ok
   end
 
   private

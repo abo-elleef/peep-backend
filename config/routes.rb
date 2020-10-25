@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :blocked_times
   resources :closing_shifts
   resources :locations
+  resources :invoice_sequences
   resources :staffs do
     collection do
       get :top
@@ -36,7 +37,7 @@ Rails.application.routes.draw do
     end
   end
   resources :service_categories
-  resources :appointments
+  # resources :appointments
   resources :orders
   resources :product_brands
   resources :product_categories
@@ -61,6 +62,7 @@ Rails.application.routes.draw do
   get "export/orders", to: "export#orders"
   post "appointments/check_hints", to: "appointments#check_hints"
   post "/checkout", to: "invoices#checkout"
+
   # Reports Routes
   namespace :reports do
     # sales routes
@@ -81,10 +83,30 @@ Rails.application.routes.draw do
     get "dashboard/average_sales", to: "dashboard#average_sales"
     get "dashboard/total_appointments_graph", to: "dashboard#total_appointments_graph"
     get "dashboard/total_sales_graph", to: "dashboard#total_sales_graph"
-
   end
+  post 'password/forgot', to: 'passwords#forgot'
+  post 'password/reset', to: 'passwords#reset', as: :reset_password
+  put 'password/update', to: 'password#update'
 
   post "voucher_types/sell_voucher", to: "voucher_types#sell_voucher"
   post "vouchers/check_voucher_validity", to: "vouchers#check_voucher_validity"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
+  #
+  #
+  #
+  # Backend Routes
+  namespace :back, path: nil do
+    # home
+    get "/home", to: "home#home"
+    get "/home/recent_sales", to: "home#recent_sales"
+    get "/home/top_staff", to: "home#top_staff"
+    get "/home/top_services", to: "home#top_services"
+    # calendar
+    get "/calendar", to: "appointments#calendar"
+    get "/calendar_events", to: "appointments#calendar_events"
+    resources :appointments
+
+
+  end
+
 end

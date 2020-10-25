@@ -1,13 +1,12 @@
 class ClosingShiftSerializer < ActiveModel::Serializer
   # include FastJsonapi::ObjectSerializer
-  attributes :id, :starts_at, :ends_at, :desc, :location_ids
+  attributes :id, :starts_at, :ends_at, :desc, :location_ids, :locations, :number_of_days
 
-  attribute :number_of_days do |serializer|
-    ((serializer.object.ends_at - serializer.object.starts_at) / ( 60 * 60 * 24 )).to_i
+  def locations
+    object.locations.pluck(:name)
   end
 
-  # TODO:// this should be removed when location crud is complete in backend and frontend
-  attribute :locations do |serializer|
-    serializer.object.locations.pluck(:name)
+  def number_of_days
+    (((object.ends_at - object.starts_at).to_f / ( 60 * 60 * 24 ))).ceil
   end
 end

@@ -6,12 +6,12 @@ class TopServices
     top_staffs_last_month = AppointmentService.where(service_price_id: top_services.keys).
         where(created_at: last_month.beginning_of_month..last_month.end_of_month).group(:service_price_id).order("count_all DESC").count
     top_services.map do |service_price_id, count|
-      service_price = ServicePrice.find(service_price_id)
+      service_price = ServicePrice.where(id: service_price_id).first
       {
           name: service_price.service_name,
           current_month: count,
           last_month: top_staffs_last_month[service_price_id]
-      }
-    end
+      } if service_price
+    end.compact
   end
 end
