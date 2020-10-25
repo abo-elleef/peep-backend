@@ -1,6 +1,6 @@
 class AppointmentServiceDetailsSerializer < ActiveModel::Serializer
   attributes :id,  :ends_at, :starts_at, :staff_name, :staff_id, :duration, :name, :price,
-             :service_price_id, :discounted_price, :title, :start, :end
+             :service_price_id, :discounted_price, :title, :start, :end, :appointment_id
 
   def name
     object.service_price&.name

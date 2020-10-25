@@ -63,6 +63,11 @@
     <div id="content-container" class="ping-bg">
       <%= yield %>
     </div>
+  <script type="text/javascript" charset="utf-8">
+      $(document).on('turbolinks:load', function () {
+          $('select').formSelect();
+      })
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </div>
 

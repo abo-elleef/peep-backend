@@ -3,26 +3,26 @@ import timeGridPlugin from "@fullcalendar/timegrid";
 import req from "superagent";
 import dayGridPlugin from '@fullcalendar/daygrid';
 import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid';
+import interactionPlugin from '@fullcalendar/interaction';
+
 
 
 
 console.log("custom loaded");
-
 function drawCalendar(element){
     if (!element){
         return
     }
     var calendar = new Calendar(element, {
-        plugins: [timeGridPlugin, dayGridPlugin, resourceTimeGridPlugin],
+        plugins: [timeGridPlugin, dayGridPlugin, resourceTimeGridPlugin, interactionPlugin],
         resources: [
             { id: 'a', title: 'Room A' },
             { id: 'b', title: 'Room B' },
             { id: 'c', title: 'Room C' },
             { id: 'd', title: 'Room D' }
         ],
-        initialView: "resourceTimeGridDay", //timeGridDay,  timeGridWeek
+        initialView: "timeGridWeek", //timeGridDay,  timeGridWeek, resourceTimeGridDay
         nowIndicator: true,
-        groupByDateAndResource: true,
         headerToolbar: {
             center: 'prev,next today',
             left: '',
@@ -30,6 +30,17 @@ function drawCalendar(element){
         },
         eventClick: function(info){
             console.log(info);
+            let id = info.event.extendedProps.meta.appointment_id;
+            window.location.href = '/appointments/' + id + '/edit';
+        },
+        dateClick: function(info) {
+            // alert('Clicked on: ' + info.dateStr);
+            // alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+            // alert('Current view: ' + info.view.type);
+            // // change the day's background color just for fun
+            //
+            // info.dayEl.style.backgroundColor = 'red';
+            window.location.href = '/appointments/new?location_id=' + window.location_id + '&date' + info.date.toISOString();
         },
         events: function (info, successCallback, failureCallback) {
             req.get('calendar_events')
@@ -51,6 +62,7 @@ function drawCalendar(element){
                                     start: event.start,
                                     end: event.end,
                                     display: event.display ,
+                                    meta: event,
                                     color: event.display === 'background' ? '#aaa' : event.color,
                                     resourceId: 'a'
 
@@ -113,7 +125,21 @@ function drawCalendar(element){
     // ]
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+$(document).on('turbolinks:load', function () {
+    registerEvents()
+    window.location_id = $("#locationSelector").val()
     drawCalendar(document.getElementById('calendar'));
+})
+function registerEvents(){
+    $("#staffSelector").change(function(e){
+        window.staff_id = e.target.value;
+        window.staff_id = $("#locationSelector").val();
+        drawCalendar(document.getElementById('calendar'));
+    });
+    $("#locationSelector").change(function(e){
+        window.staff_id = $("#staffSelector").val();
+        window.location_id = e.target.value;
+        drawCalendar(document.getElementById('calendar'));
+    })
 
-});
+}

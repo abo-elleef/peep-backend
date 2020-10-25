@@ -5,5 +5,27 @@
   </a>
 </header>
 <div class="main-section">
+  <div id="filters-row">
+    <div class="input-field mse-2">
+      <select id="locationSelector">
+        <% @locations.map.with_index do |location| %>
+          <option value="<%= location.id %>"><%= location.name %></option>
+        <% end %>
+      </select>
+      <label>Materialize Select</label>
+    </div>
+    <div class="input-field mse-2">
+      <select id="staffSelector">
+        <option value="all" selected>All Staff</option>
+        <% @staff.map.with_index do |staff, index| %>
+          <option value="<%= staff.id %>"><%= staff.name %></option>
+        <% end %>
+      </select>
+      <label>Materialize Select</label>
+    </div>
+
+  </div>
   <div id='calendar'></div>
 </div>
+
+<%= javascript_pack_tag 'calendar-config', 'data-turbolinks-track': 'reload' %>
