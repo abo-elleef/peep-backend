@@ -1,6 +1,9 @@
 class User < ApplicationRecord
   has_secure_password
   # == Constants ============================================================
+  API_KEY = {
+      local: "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo3LCJleHAiOjE2MDM0NTMxMzd9.nVeoZievydce6o0C72fzvi39xlIJ6L_PEy5dzySyL3E"
+  }
   # == Extensions ===========================================================
   # == Relationships ========================================================
   has_many :locations
@@ -27,6 +30,27 @@ class User < ApplicationRecord
   # == Instance Methods =====================================================
   def has_role?(role)
     roles.pluck(:name).include?(role.to_s)
+  end
+
+  def generate_password_token!
+    self.reset_password_token = generate_token
+    self.reset_password_sent_at = Time.now.utc
+    save!
+  end
+
+  def password_token_valid?
+    (self.reset_password_sent_at + 4.hours) > Time.zone.now
+  end
+
+  def reset_password!(password)
+    self.reset_password_token = nil
+    self.password = password
+    save!
+  end
+
+  private
+  def generate_token
+    SecureRandom.hex(10)
   end
 
 

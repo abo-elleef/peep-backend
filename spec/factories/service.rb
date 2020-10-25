@@ -5,6 +5,7 @@ FactoryBot.define do
     available_for { 'everyone' }
     staff_commission { true }
     extra_time { false }
-    service_category factory: :service_category, strategy: :create
+    user
+    service_category { FactoryBot.build(:service_category, user_id: user_id) }
   end
 end

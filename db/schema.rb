@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_15_174622) do
+ActiveRecord::Schema.define(version: 2020_10_19_133341) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,11 +30,11 @@ ActiveRecord::Schema.define(version: 2020_10_15_174622) do
   create_table "appointments", force: :cascade do |t|
     t.integer "status", default: 1
     t.integer "client_id"
+    t.integer "location_id"
     t.text "notes"
     t.date "date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "location_id"
     t.integer "cancellation_reason_id"
     t.integer "invoice_id"
     t.integer "user_id"
@@ -139,6 +139,14 @@ ActiveRecord::Schema.define(version: 2020_10_15_174622) do
     t.integer "service_price_id"
     t.index ["discount_id"], name: "index_discounts_service_prices_on_discount_id"
     t.index ["service_price_id"], name: "index_discounts_service_prices_on_service_price_id"
+  end
+
+  create_table "invoice_sequences", force: :cascade do |t|
+    t.integer "location_id"
+    t.string "num_prefix"
+    t.integer "next_num"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "invoices", force: :cascade do |t|
@@ -333,6 +341,19 @@ ActiveRecord::Schema.define(version: 2020_10_15_174622) do
     t.index ["supplier_id"], name: "index_products_on_supplier_id"
   end
 
+  create_table "roles", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "roles_users", id: false, force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "role_id", null: false
+    t.index ["role_id"], name: "index_roles_users_on_role_id"
+    t.index ["user_id"], name: "index_roles_users_on_user_id"
+  end
+
   create_table "service_categories", force: :cascade do |t|
     t.string "name"
     t.string "appointment_color"
@@ -489,6 +510,8 @@ ActiveRecord::Schema.define(version: 2020_10_15_174622) do
     t.integer "business_type"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "reset_password_token"
+    t.datetime "reset_password_sent_at"
   end
 
   create_table "voucher_types", force: :cascade do |t|

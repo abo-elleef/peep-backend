@@ -4,6 +4,9 @@ require "rails_helper"
 
 RSpec.describe "Users API", type: :request do
   describe "#create" do
+    let!(:user) { create(:user) }
+    let!(:headers) { request_headers(user) }
+
     let(:user_params) {
       { user: {
         first_name: "first name ",
@@ -16,7 +19,7 @@ RSpec.describe "Users API", type: :request do
       } }
     }
     it "create user" do
-      post "/users", params: user_params
+      post "/users", {params: user_params, headers: headers}
       expect(response.code).to eq("201")
     end
   end
