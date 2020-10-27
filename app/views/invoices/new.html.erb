@@ -22,17 +22,7 @@
       </div>
 
       <div class="col s3  p-4 white-bg ">
-        <div id="client-details" class="row">
-          <% if @appointment.client.nil? %>
-            <p> Walk-in Client </p>
-          <% else %>
-            <p> <%= @appointment.client.name %> </p>
-            <p> <%= @appointment.client.phone %> </p>
-            <p> <%= @appointment.client.email %> </p>
-            <p> <%= @appointment.client.notes %> </p>
-          <% end %>
-
-        </div>
+        <%= render "shared/appointment_client", client: @appointment.client %>
         <div class="row">
           <div class="input-field col s12">
             <input placeholder="Placeholder" id="pay" type="number" class="validate">

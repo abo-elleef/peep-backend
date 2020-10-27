@@ -1,5 +1,6 @@
 class AppointmentsController < ApplicationController
   # load_and_authorize_resource
+  layout "forms", only: ['show', 'new', 'edit']
   def index
     appointments = Appointment.peep_filter(params.slice(:starts_at, :ends_at, :staff_ids, :location_ids)).
         group('appointments.id').limit(1000)
@@ -8,8 +9,20 @@ class AppointmentsController < ApplicationController
   end
 
   def show
+    @appointment = Appointment.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.json {
+        render json: {data: AppointmentDetailsSerializer.new(@appointment)}, status: :ok
+      }
+    end
+
+  end
+
+  def update_status
     appointment = Appointment.find(params[:id])
-    render json: {data: AppointmentDetailsSerializer.new(appointment)}, status: :ok
+    appointment.update(status: params[:status])
+    redirect_to appointment
   end
 
   def destroy
@@ -38,7 +51,7 @@ class AppointmentsController < ApplicationController
   def create
     appointment = Appointment.new(appointment_params)
     if appointment.save!
-      redirect_to edit_appointment_path(appointment.id)
+      redirect_to appointment
     else
       render json: appointment.errors, status: :unprocessable_entity
     end
@@ -50,10 +63,9 @@ class AppointmentsController < ApplicationController
   end
 
   def update
-    debugger
     appointment = Appointment.find(params[:id])
     if appointment.update(appointment_params)
-      redirect_to edit_appointment_path(appointment.id)
+      redirect_to appointment
     else
       render json: appointment.errors, status: :unprocessable_entity
     end
@@ -105,7 +117,7 @@ class AppointmentsController < ApplicationController
 
   def resolve_layout
     case action_name
-    when "new", "edit"
+    when "new", "edit", 'show'
       "forms"
     else
       "application"

@@ -37,7 +37,11 @@ Rails.application.routes.draw do
     end
   end
   resources :service_categories
-  # resources :appointments
+  resources :appointments do
+    member do
+      get :update_status
+    end
+  end
   resources :orders
   resources :product_brands
   resources :product_categories
@@ -105,7 +109,7 @@ Rails.application.routes.draw do
     get "/", to: "back/appointments#calendar"
     get "/calendar_events", to: "back/appointments#calendar_events"
 
-    resources :appointments
+
 
 
 

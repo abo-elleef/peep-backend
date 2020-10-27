@@ -43,4 +43,20 @@ class Appointment < ApplicationRecord
   def ends_at
     appointment_services.sort_by(&:ends_at).last.try(:ends_at)
   end
+
+  def total_price
+    service_prices.map(&:price).compact.sum
+  end
+
+  def total_duration
+    service_prices.map(&:duration).compact.sum
+  end
+
+  def color
+    object.service_prices.first&.service&.service_category&.appointment_color || 'red'
+  end
+
+  def client_name
+    object.client&.name
+  end
 end

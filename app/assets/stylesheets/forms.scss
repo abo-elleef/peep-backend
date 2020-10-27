@@ -38,9 +38,6 @@
 }
 #checkout-page{
   margin: 0;
-  .height-100{
-    height: 100%;
-  }
   #payment-types-container{
     display: grid;
     column-gap: 20px;
@@ -57,5 +54,33 @@
   }
   .action a{
     width: 100%;
+  }
+}
+
+#appointment-details{
+  .service-row{
+    margin: 30px auto;
+    display: flex;
+    align-items: center;
+    .start{
+      flex-grow: 1;
+    }
+    .details{
+      flex-grow: 15;
+    }
+    .price{
+      flex-grow: 1;
+    }
+  }
+  #appointment-actions{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 20px;
+  }
+  #side-bar{
+    display: grid;
+    grid-template-rows:  auto 1fr auto;
+    border-left: 1px solid $border-color;
+
   }
 }

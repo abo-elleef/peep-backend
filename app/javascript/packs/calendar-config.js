@@ -31,7 +31,7 @@ function drawCalendar(element){
         eventClick: function(info){
             console.log(info);
             let id = info.event.extendedProps.meta.appointment_id;
-            window.location.href = '/appointments/' + id + '/edit';
+            window.location.href = '/appointments/' + id ;
         },
         dateClick: function(info) {
             // alert('Clicked on: ' + info.dateStr);
