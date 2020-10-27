@@ -53,7 +53,7 @@ Rails.application.routes.draw do
   resources :discounts
   resources :voucher_types
   resources :packages
-  resources :invoices, only: [:index, :show, :update]
+  resources :invoices, only: [:index, :show, :update, :new, :create]
 
   get "export/clients", to: "export#clients"
   get "export/services", to: "export#services"
@@ -101,7 +101,7 @@ Rails.application.routes.draw do
     get "/home/top_staff", to: "back/home#top_staff"
     get "/home/top_services", to: "back/home#top_services"
     # calendar
-    get "/calendar", to: "back/appointments#calendar"
+    get "/calendar", to: "appointments#calendar"
     get "/", to: "back/appointments#calendar"
     get "/calendar_events", to: "back/appointments#calendar_events"
 

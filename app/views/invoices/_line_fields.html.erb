@@ -1,0 +1,55 @@
+<li class="nested-fields">
+  <div class="row collapsible-header mb-0">
+    <%= f.hidden_field :sellable_type %>
+    <%= f.hidden_field :sellable_id %>
+    <%= f.hidden_field :staff_id %>
+    <%= f.hidden_field :unit_price %>
+    <%= f.hidden_field :original_unit_price %>
+
+    <div class="col s9">
+      <p class="mb-0"><%= f.object.sellable.checkout_text %></p>
+      <label> <%= f.object.sellable.checkout_help_text(f.object.staff) %></label>
+    </div>
+    <div class="col s3 ">
+      <span class="right"> KWD <%= f.object.sellable.price %></span>
+      <br>
+      <span class="right"> KWD <%= f.object.sellable.price %></span>
+    </div>
+  </div>
+  <div class="row collapsible-body white">
+
+
+    <div class="col s2">
+      <label>Quantity</label>
+      <% if f.object.sellable_type == 'ServicePrice' %>
+        <%= f.number_field :quantity , disabled: true %>
+      <% else %>
+        <%= f.number_field :quantity %>
+      <% end %>
+    </div>
+
+    <div class="col s5">
+      <label>Staff</label>
+      <%= f.select :staff_id, @staff, {selected: f.object.staff_id}, {class: 'browser-default select2'} %>
+    </div>
+
+    <div class="col s5">
+      <label>Discount</label>
+      <%#= f.fields_for :discount_usage do |usage_f| %>
+        <%# usage_f.select :discount_id, @discounts, {}, {class: 'browser-default select2'} %>
+      <%# end %>
+    </div>
+
+
+  </div>
+  <div class="mb-2"></div>
+</li>
+
+
+
+<script>
+    setTimeout(function () {
+        // $('.select2').select2();
+    }, 50)
+
+</script>

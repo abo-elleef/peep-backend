@@ -8,7 +8,7 @@ class Appointment < ApplicationRecord
   enum status: {booked: 1, confirmed: 2, arrived: 3, started: 4, completed: 5, cancelled: 6, no_show: 7}
 
   # == Relationships ========================================================
-  has_many :appointment_services
+  has_many :appointment_services, dependent: :destroy
   has_many :service_prices, through: :appointment_services
   has_many :services, through: :service_prices
   belongs_to :location

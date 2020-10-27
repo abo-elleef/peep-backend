@@ -25,4 +25,12 @@ class ServicePrice < ApplicationRecord
   def service_name
     service.name
   end
+
+  def checkout_text
+    service_name
+  end
+
+  def checkout_help_text(staff)
+    "#{self.name} #{self.duration.to_s} with #{staff.name} "
+  end
 end
