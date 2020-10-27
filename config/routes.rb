@@ -95,18 +95,18 @@ Rails.application.routes.draw do
   #
   #
   # Backend Routes
-  namespace :back, path: nil do
     # home
-    get "/home", to: "home#home"
-    get "/home/recent_sales", to: "home#recent_sales"
-    get "/home/top_staff", to: "home#top_staff"
-    get "/home/top_services", to: "home#top_services"
+    get "/home", to: "back/home#home"
+    get "/home/recent_sales", to: "back/home#recent_sales"
+    get "/home/top_staff", to: "back/home#top_staff"
+    get "/home/top_services", to: "back/home#top_services"
     # calendar
-    get "/calendar", to: "appointments#calendar"
-    get "/calendar_events", to: "appointments#calendar_events"
+    get "/calendar", to: "back/appointments#calendar"
+    get "/", to: "back/appointments#calendar"
+    get "/calendar_events", to: "back/appointments#calendar_events"
+
     resources :appointments
 
 
-  end
 
 end

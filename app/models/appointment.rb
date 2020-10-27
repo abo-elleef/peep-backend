@@ -14,7 +14,7 @@ class Appointment < ApplicationRecord
   belongs_to :location
   belongs_to :client, optional: true
   belongs_to :invoice, optional: true
-  accepts_nested_attributes_for :appointment_services
+  accepts_nested_attributes_for :appointment_services, :allow_destroy => true
 
   # == Validations ==========================================================
   validates_presence_of :location_id
