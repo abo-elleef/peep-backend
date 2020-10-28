@@ -10,7 +10,8 @@ class EventPresenter
         title: title,
         start: event.starts_at,
         end: event.ends_at,
-        color: color
+        color: color,
+        staff_id: event.staff_id
     }
   end
 

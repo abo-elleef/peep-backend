@@ -26,12 +26,7 @@ function drawCalendar(element) {
     }
     var calendar = new Calendar(element, {
         plugins: [timeGridPlugin, dayGridPlugin, resourceTimeGridPlugin, interactionPlugin],
-        resources: [
-            {id: 'a', title: 'Room A'},
-            {id: 'b', title: 'Room B'},
-            {id: 'c', title: 'Room C'},
-            {id: 'd', title: 'Room D'}
-        ],
+        resources: 'staffs/calendar.json',
         initialView: "timeGridWeek", //timeGridDay,  timeGridWeek, resourceTimeGridDay
         nowIndicator: true,
         headerToolbar: {
@@ -66,8 +61,8 @@ function drawCalendar(element) {
                                     end: event.end,
                                     display: event.display,
                                     meta: event,
-                                    color: event.display === 'background' ? '#aaa' : event.color,
-                                    resourceId: 'a'
+                                    color: event.color,
+                                    resourceId: event.staff_id
 
                                 }
                             })

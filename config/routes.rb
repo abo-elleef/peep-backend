@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   resources :staffs do
     collection do
       get :top
+      get :calendar
     end
   end
   resources :service_prices, only: :index
