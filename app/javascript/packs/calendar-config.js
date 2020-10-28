@@ -21,18 +21,40 @@ function dateHandler(info) {
 }
 
 function drawCalendar(element) {
+    let view  =  window.view || 'resourceTimeGridDay'
     if (!element) {
         return
     }
-    var calendar = new Calendar(element, {
+    let calendar = new Calendar(element, {
         plugins: [timeGridPlugin, dayGridPlugin, resourceTimeGridPlugin, interactionPlugin],
         resources: 'staffs/calendar.json',
-        initialView: "timeGridWeek", //timeGridDay,  timeGridWeek, resourceTimeGridDay
+        initialView: view, //timeGridDay,  timeGridWeek, resourceTimeGridDay
         nowIndicator: true,
+        allDaySlot: false,
+        slotMinWidth: 300,
         headerToolbar: {
             center: 'prev,next today',
             left: '',
             right: 'timeGridWeek,resourceTimeGridDay'
+        },
+        eventMouseEnter: function (data) {
+            if (data.event._def.ui.display === 'undefined'){
+                console.log(data);
+                let tooltip = '<div class="tooltiptopicevent" >' +
+                    'staff_name: ' + ': ' + data.event.extendedProps.meta.staff_name + '</br>' +
+                    'duration: ' + ': ' + data.event.extendedProps.meta.duration + ' minutes.' + '</br>' +
+                    'price: ' + ': ' + data.event.extendedProps.meta.price + ' KWD' + '</br>' +
+                    '</div>';
+                $("body").append(tooltip);
+                $('.tooltiptopicevent').fadeIn('500');
+                $('.tooltiptopicevent').fadeTo('10', 1.9);
+                $('.tooltiptopicevent').css('top', data.jsEvent.clientY);
+                $('.tooltiptopicevent').css('left', data.jsEvent.clientX );
+            }
+
+        },
+        eventMouseLeave: function (data, event, view) {
+            $('.tooltiptopicevent').remove();
         },
         eventClick: function (info) {
             console.log(info);
@@ -46,8 +68,8 @@ function drawCalendar(element) {
                 .query({
                     starts_at: info.start.toISOString(),
                     ends_at: info.end.toISOString(),
-                    location_id: window.location_id,
-                    staff_id: window.staff_id
+                    location_id: window.location_id === 'all' ? null : window.location_id,
+                    staff_id: window.staff_id === 'all' ? null: window.staff_id
                 })
                 .end(function (err, res) {
                     if (err) {
@@ -129,17 +151,30 @@ $(document).on('turbolinks:load', function () {
     drawCalendar(document.getElementById('calendar'));
 })
 
+function staffChangeHandler(newId){
+    console.log('staff customer handler ');
+    window.staff_id = newId;
+    $("#staffSelector").val(newId);
+    window.location_id = $("#locationSelector").val();
+    if(window.staff_id === 'all'){
+        window.view = 'resourceTimeGridDay'
+    }else{
+        window.view = 'timeGridWeek'
+    }
+    drawCalendar(document.getElementById('calendar'));
+}
+
 function registerEvents() {
     $("#staffSelector").change(function (e) {
-        window.staff_id = e.target.value;
-        window.staff_id = $("#locationSelector").val();
-        drawCalendar(document.getElementById('calendar'));
+        console.log('staff changed');
+        staffChangeHandler(e.target.value)
     });
     $("#locationSelector").change(function (e) {
-        window.staff_id = $("#staffSelector").val();
+        console.log('location changed');
         window.location_id = e.target.value;
-        drawCalendar(document.getElementById('calendar'));
-    })
+        staffChangeHandler('all');
+        $('select').formSelect();
+    });
     $("#new_appointment").click(function(){
         dateHandler();
     });

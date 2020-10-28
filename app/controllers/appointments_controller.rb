@@ -91,7 +91,7 @@ class AppointmentsController < ApplicationController
   end
 
   def calendar_events
-    appointments = Appointment.peep_filter(params.slice(:starts_at, :ends_at, :staff_ids, :location_ids)).
+    appointments = Appointment.preload(:appointment_services).peep_filter(params.slice(:starts_at, :ends_at, :staff_id, :location_id)).
         group('appointments.id').limit(1000)
     events = appointments.map(&:appointment_services).flatten
     blocked_events = ClosingShift.all

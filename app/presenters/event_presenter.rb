@@ -12,7 +12,11 @@ class EventPresenter
         end: event.ends_at,
         color: color,
         staff_id: event.staff_id,
-        appointment_id: event.appointment_id
+        appointment_id: event.appointment_id,
+        staff_name: event.staff.name,
+        status: event.appointment.status,
+        duration: event.service_price.duration,
+        price:  event.service_price.price
     }
   end
 
