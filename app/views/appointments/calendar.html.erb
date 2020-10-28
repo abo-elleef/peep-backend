@@ -7,7 +7,7 @@
 <div class="main-section">
   <div id="filters-row">
     <div class="input-field mse-2">
-      <select id="locationSelector">
+      <select id="locationSelector" class="material-select">
         <% @locations.map.with_index do |location| %>
           <option value="<%= location.id %>"><%= location.name %></option>
         <% end %>
@@ -15,7 +15,7 @@
       <label>Materialize Select</label>
     </div>
     <div class="input-field mse-2">
-      <select id="staffSelector">
+      <select id="staffSelector" class="material-select">
         <option value="all" selected>All Staff</option>
         <% @staff.map.with_index do |staff, index| %>
           <option value="<%= staff.id %>"><%= staff.name %></option>
