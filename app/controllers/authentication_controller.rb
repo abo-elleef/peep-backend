@@ -1,5 +1,5 @@
 class AuthenticationController < ApplicationController
-  skip_before_action :authorize_request, only: :login
+  # skip_before_action :authorize_request, only: :login
 
   # POST /auth/login
   def login

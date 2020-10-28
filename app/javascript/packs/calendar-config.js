@@ -6,21 +6,27 @@ import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 
 
-
-
 console.log("custom loaded");
-function drawCalendar(element){
-    if (!element){
+
+function dateHandler(info) {
+    // alert('Clicked on: ' + info.dateStr);
+    // alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+    // alert('Current view: ' + info.view.type);
+    // // change the day's background color just for fun
+    //
+    // info.dayEl.style.backgroundColor = 'red';
+    let url = '/appointments/new?location_id=' + window.location_id;
+    if(info){ url += '&date' + info.date.toISOString() }
+    window.location.href = url;
+}
+
+function drawCalendar(element) {
+    if (!element) {
         return
     }
     var calendar = new Calendar(element, {
         plugins: [timeGridPlugin, dayGridPlugin, resourceTimeGridPlugin, interactionPlugin],
-        resources: [
-            { id: 'a', title: 'Room A' },
-            { id: 'b', title: 'Room B' },
-            { id: 'c', title: 'Room C' },
-            { id: 'd', title: 'Room D' }
-        ],
+        resources: 'staffs/calendar.json',
         initialView: "timeGridWeek", //timeGridDay,  timeGridWeek, resourceTimeGridDay
         nowIndicator: true,
         headerToolbar: {
@@ -28,20 +34,12 @@ function drawCalendar(element){
             left: '',
             right: 'timeGridWeek,resourceTimeGridDay'
         },
-        eventClick: function(info){
+        eventClick: function (info) {
             console.log(info);
             let id = info.event.extendedProps.meta.appointment_id;
-            window.location.href = '/appointments/' + id + '/edit';
+            window.location.href = '/appointments/' + id;
         },
-        dateClick: function(info) {
-            // alert('Clicked on: ' + info.dateStr);
-            // alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
-            // alert('Current view: ' + info.view.type);
-            // // change the day's background color just for fun
-            //
-            // info.dayEl.style.backgroundColor = 'red';
-            window.location.href = '/appointments/new?location_id=' + window.location_id + '&date' + info.date.toISOString();
-        },
+        dateClick: dateHandler,
         events: function (info, successCallback, failureCallback) {
             req.get('calendar_events')
                 .type('json')
@@ -61,10 +59,10 @@ function drawCalendar(element){
                                     title: event.title,
                                     start: event.start,
                                     end: event.end,
-                                    display: event.display ,
+                                    display: event.display,
                                     meta: event,
-                                    color: event.display === 'background' ? '#aaa' : event.color,
-                                    resourceId: 'a'
+                                    color: event.color,
+                                    resourceId: event.staff_id
 
                                 }
                             })
@@ -130,16 +128,20 @@ $(document).on('turbolinks:load', function () {
     window.location_id = $("#locationSelector").val()
     drawCalendar(document.getElementById('calendar'));
 })
-function registerEvents(){
-    $("#staffSelector").change(function(e){
+
+function registerEvents() {
+    $("#staffSelector").change(function (e) {
         window.staff_id = e.target.value;
         window.staff_id = $("#locationSelector").val();
         drawCalendar(document.getElementById('calendar'));
     });
-    $("#locationSelector").change(function(e){
+    $("#locationSelector").change(function (e) {
         window.staff_id = $("#staffSelector").val();
         window.location_id = e.target.value;
         drawCalendar(document.getElementById('calendar'));
     })
+    $("#new_appointment").click(function(){
+        dateHandler();
+    });
 
 }

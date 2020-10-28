@@ -52,4 +52,8 @@ class Invoice < ApplicationRecord
     location.name
   end
 
+  def tips_total
+    tips.map(&:value).sum
+  end
+
 end

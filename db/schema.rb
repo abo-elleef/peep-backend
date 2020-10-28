@@ -30,11 +30,11 @@ ActiveRecord::Schema.define(version: 2020_10_19_133341) do
   create_table "appointments", force: :cascade do |t|
     t.integer "status", default: 1
     t.integer "client_id"
-    t.integer "location_id"
     t.text "notes"
     t.date "date"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "location_id"
     t.integer "cancellation_reason_id"
     t.integer "invoice_id"
     t.integer "user_id"
@@ -141,14 +141,6 @@ ActiveRecord::Schema.define(version: 2020_10_19_133341) do
     t.index ["service_price_id"], name: "index_discounts_service_prices_on_service_price_id"
   end
 
-  create_table "invoice_sequences", force: :cascade do |t|
-    t.integer "location_id"
-    t.string "num_prefix"
-    t.integer "next_num"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "invoices", force: :cascade do |t|
     t.string "sequence"
     t.datetime "created_at", precision: 6, null: false
@@ -194,6 +186,7 @@ ActiveRecord::Schema.define(version: 2020_10_19_133341) do
     t.integer "invoice_id"
     t.datetime "starts_at"
     t.datetime "ends_at"
+    t.index ["staff_id"], name: "index_lines_on_staff_id"
   end
 
   create_table "locations", force: :cascade do |t|

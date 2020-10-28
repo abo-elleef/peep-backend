@@ -1,0 +1,81 @@
+<div class="form-header">
+  <p></p>
+  <p class="form-title"> View Appointment</p>
+  <a href="/calendar">x</a>
+</div>
+<div id="appointment-details">
+  <div class="row height-100">
+    <div class="col s9">
+      <div class="row">
+        <div class="col s8 push-s2">
+          <div>
+            <p> <%= @appointment.created_at.strftime(' %A, %d %b %Y') %></p>
+          </div>
+          <div>
+            <% @appointment.appointment_services.map do |appointment_service| %>
+              <div class="service-row">
+                <div class="start">
+                  <%= appointment_service.starts_at.strftime('%H:%M') %>
+                </div>
+                <div class="details">
+                  <p class="mb-0 mt-0">
+                    <%= appointment_service.service_price.checkout_text %>
+                  </p>
+                  <label>
+                    <%= appointment_service.service_price.checkout_help_text(appointment_service.staff) %>
+                  </label>
+                </div>
+                <div class="price">
+                  <%= appointment_service.service_price.price %> KWD
+                </div>
+              </div>
+            <% end %>
+          </div>
+          <div class="divider"></div>
+          <div class="service-row">
+            <div class="start"></div>
+            <div class="details">
+              <p class="mb-0 mt-0">
+                <%= time_diff(@appointment.total_duration * 60) %>
+              </p>
+            </div>
+            <div class="price">
+              KWD <%= @appointment.total_price %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="side-bar" class="col s3 p-4  height-100 ">
+      <%= render "shared/appointment_client", client: @appointment.client %>
+      <div id="status-container">
+        <%= render "update_status" %>
+      </div>
+
+      <div id="appointment-actions">
+        <a class='dropdown-trigger btn main-bg' data-target='dropdown2'>
+          Options
+        </a>
+        <ul id='dropdown2' class='dropdown-content'>
+            <li>
+              <%= link_to 'Edit Appointment', edit_appointment_path(@appointment) %>
+<!--              todo activate cancel and reschedule logic -->
+              <a href="#!">
+                cancel (soon)
+              </a>
+              <a href="@!">
+                Reschedule (soon)
+              </a>
+            </li>
+        </ul>
+        <% if @appointment.invoice_id.present? %>
+          <%= link_to 'Invoice', invoice_path(id: @appointment.invoice_id), class: 'btn white-text' %>
+        <% else %>
+          <%= link_to 'Checkout', new_invoice_path(appointment_id: @appointment.id), class: 'btn white-text' %>
+        <% end  %>
+      </div>
+    </div>
+  </div>
+</div>

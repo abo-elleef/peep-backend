@@ -12,6 +12,11 @@ class StaffsController < ApplicationController
     render json: {data: data}, status: :ok
   end
 
+  def calendar
+    data = Staff.limit(10).map do |s| {id: s.id, title: s.name} end
+    render json: data, status: :ok
+  end
+
   def show
     staff = Staff.find(params[:id])
     render json: {data: StaffSerializer.new(staff)}, status: :ok

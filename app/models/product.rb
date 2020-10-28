@@ -34,5 +34,8 @@ class Product < ApplicationRecord
   # == Callbacks ============================================================
   # == Class Methods ========================================================
   # == Instance Methods =====================================================
+  def price
+    self.retail_price
+  end
 
 end
