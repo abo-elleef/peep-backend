@@ -1,5 +1,5 @@
 class InvoicesController < ApplicationController
-
+  layout "forms", only: :new
   def index
     invoices = Invoice.preload(:location).peep_filter(params.slice(:location_id, :starts_at, :ends_at, :search))
     pagy, invoices = pagy(invoices, page: page_index, items: page_size)
@@ -9,7 +9,29 @@ class InvoicesController < ApplicationController
 
   def show
     invoice = Invoice.find(params[:id])
-    render json: {data: InvoiceSerializer.new(invoice)}, status: :ok
+    respond_to do |format|
+      format.html { @invoice = invoice}
+      format.json {
+        render json: {data: InvoiceSerializer.new(invoice)}, status: :ok
+      }
+    end
+
+  end
+
+  def new
+    @appointment = Appointment.find params[:appointment_id]
+    @staff = Staff.all.map{|s| [s.name, s.id]}
+    @discounts = Discount.all.map{|s| [s.name, s.id]}.unshift(['No Discount', nil])
+    @invoice = Invoice.new({
+                               location_id: @appointment.location_id,
+                               client_id: @appointment.client_id
+                           })
+
+    @appointment.appointment_services.map do |appointment_service|
+      line = @invoice.lines.build({sellable_type: 'ServicePrice', sellable_id: appointment_service.service_price_id, staff_id: appointment_service.staff_id, unit_price: appointment_service.service_price.price, original_unit_price: appointment_service.service_price.price, quantity: 1, starts_at: appointment_service.starts_at, ends_at: appointment_service.ends_at })
+      line.build_discount_usage
+    end
+
   end
 
   def checkout
@@ -19,20 +41,22 @@ class InvoicesController < ApplicationController
         total: invoice_values[:total], balance: invoice_values[:balance])
     )
     if invoice.save!
-      appointment = Appointment.find(params[:invoice][:id])
+      appointment = Appointment.find(params[:appointment_id])
       appointment.invoice_id = invoice.id
       appointment.status = 5
       appointment.save!
-      lines_types = invoice_params[:lines_attributes].map { |line| line[:sellable_type] }.uniq
+      lines_types = invoice_params[:lines_attributes].values.map { |line| line[:sellable_type] }.uniq
       # TODO voucher wil be in phase 2
       # Checkout::VoucherCreation.new(params[:lines_attributes].select { |line| line[:sellable_type] == 'VoucherType' }, invoice.id).call if lines_types.include?('VoucherType')
       Checkout::AppointmentCreation.new(invoice_params).perform if lines_types.include?('ServicePrice') || params[:appointment_id].present?
       # TODO ProductProcessing.new(params) if items_types.include?('Product')
-      render json: {data: InvoiceSerializer.new(invoice)}, status: :ok
+      redirect_to invoice
     else
       render json: invoice.errors, status: :unprocessable_entity
     end
   end
+
+  alias :create :checkout
 
   # update just in case of the new payment
   def update

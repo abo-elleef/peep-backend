@@ -1,0 +1,11 @@
+<div id="client-details" class="row">
+  <% if client.nil? %>
+    <p> Walk-in Client </p>
+  <% else %>
+    <p> <%= client.name %> </p>
+    <p> <%= client.phone %> </p>
+    <p> <%= client.email %> </p>
+    <p> <%= client.notes %> </p>
+  <% end %>
+
+</div>

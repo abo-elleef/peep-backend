@@ -1,0 +1,103 @@
+<header class="p-2">
+  <h3 class="m-0">Invoice Details</h3>
+</header>
+<div class="main-section">
+  <div class="row">
+    <div id="invoice-details-wrapper" class="col s8 push-s2">
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title center"><%= @invoice.sequence %></span>
+          <p class="center"> <%= @invoice.created_at.strftime(' %d / %m / %Y ') %> </p>
+          <div class="lines-container services-lines">
+            <% @invoice.lines.map do |line| %>
+              <div class="line-row">
+                <div class="service_details">
+                  <span class="gray"> <%= line.quantity %>  Item(s) </span>
+                  <p> <%= line.sellable.name %> </p>
+                  <span class="gray">
+                    <%= line.starts_at.try(:strftime, '%H:%M ') %> with <%= line.staff_name %>
+                  </span>
+                </div>
+                <div class="service_price">
+                  <% if line.original_unit_price != line.unit_price %>
+                    <span class="gray discounted-price">
+                      <%= line.original_unit_price * line.quantity %>  KWD
+                    </span>
+                  <% end %>
+                  <p><%= line.unit_price * line.quantity %> KWD </p>
+
+
+                </div>
+              </div>
+            <% end %>
+          </div>
+          <div class="divider"></div>
+          <div class="lines-container">
+            <div class="line-row">
+              <div class="service_details">
+                <p> Tips </p>
+              </div>
+              <div class="service_price">
+                <p>
+                  <%= @invoice.tips_total %>  KWD </p>
+              </div>
+            </div>
+            <div class="line-row">
+              <div class="service_details">
+                <p> Sub Total </p>
+              </div>
+              <div class="service_price">
+                <p>
+                  <% @invoice.sub_total %> KWD </p>
+              </div>
+            </div>
+          </div>
+          <div class="divider"></div>
+          <div class="lines-container">
+            <div class="line-row">
+              <div class="service_details">
+                <p> Total </p>
+              </div>
+              <div class="service_price">
+                <p> <%= @invoice.total %> KWD </p>
+              </div>
+            </div>
+          </div>
+          <% if @invoice.payments.size > 0 %>
+
+            <div class="divider"></div>
+            <div class="lines-container">
+              <% @invoice.payments.map do |payment| %>
+                <div class="line-row">
+                  <div class="service_details">
+                    <p>
+                      <%= payment.name %>  </p>
+                    <p>
+                      <%= payment.created_at %> dd-MM-yyyy HH:mm:ss </p>
+                  </div>
+                  <div class="service_price">
+                    <p> <%= payment.amount %> KWD </p>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+
+
+          <div class="divider"></div>
+          <div>
+            <div class="line-row">
+              <div class="service_details">
+                <p> Balance </p>
+              </div>
+              <div class="service_price">
+                <p>
+                  <%= @invoice.balance %>  KWD </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

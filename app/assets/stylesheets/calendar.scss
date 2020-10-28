@@ -1,4 +1,16 @@
 #calendar {
-  margin: 0 40px;
+  margin: -50px 0px 0 0px;
   height: 84em;
+
+  .fc-view.fc-resourceTimeGridDay-view {
+    overflow-x: scroll;
+
+    table {
+      min-width: 3000px !important;
+    }
+
+  }
+}
+.fc-timegrid-slot{
+  min-width: 700px !important;
 }
