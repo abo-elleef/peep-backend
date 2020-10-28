@@ -94,8 +94,10 @@ class AppointmentsController < ApplicationController
     appointments = Appointment.peep_filter(params.slice(:starts_at, :ends_at, :staff_ids, :location_ids)).
         group('appointments.id').limit(1000)
     events = appointments.map(&:appointment_services).flatten
-    serializers = ActiveModel::Serializer::ArraySerializer.new(events, serializer: AppointmentServiceDetailsSerializer)
-    render json: serializers, status: :ok
+    blocked_events = ClosingShift.all
+    events = events.map { |event| EventPresenter.new(event).to_json }
+    blocked_events = blocked_events.map { |event| BlockedEventPresenter.new(event).to_json }
+    render json: [events, blocked_events].flatten, status: :ok
   end
 
   private

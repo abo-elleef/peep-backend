@@ -106,8 +106,8 @@ Rails.application.routes.draw do
     get "/home/top_services", to: "back/home#top_services"
     # calendar
     get "/calendar", to: "appointments#calendar"
-    get "/", to: "back/appointments#calendar"
-    get "/calendar_events", to: "back/appointments#calendar_events"
+    get "/", to: "appointments#calendar"
+    get "/calendar_events", to: "appointments#calendar_events"
 
 
 
