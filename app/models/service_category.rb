@@ -12,10 +12,7 @@ class ServiceCategory < ApplicationRecord
   scope :search, ->(search) {where("name ilike ?", "%" + search + "%").
       or(where("description ilike ?", "%" + search + "%")).
       or(where("appointment_color ilike ?", "%" + search + "%")). or all}
-  scope :by_location_id, -> (location_id) {
-    where(id: LocationsService.where(location_id: location_id)
-                  .pluck(:service_id).uniq)
-  }
+
   def self.default_data
     [
         {
