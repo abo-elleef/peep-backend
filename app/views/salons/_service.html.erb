@@ -1,0 +1,18 @@
+<!--<div class="location_services">-->
+<!--  <h4><%#= "Select Service" %></h4>-->
+<!--  <td><%#= link_to "#{service.name}", location_services_path(location_id: location.id) %></td>-->
+<!--  <h5><%#= service.name %></h5>-->
+<!--  <h6><%#= location.phone %></h6>-->
+<!--  <h6><%#= location.area %></h6>-->
+<!--</div>-->
+
+<%= form_for(service) do |f| %>
+  <p>
+      <%= check_box_tag "", service.id  %>
+      <%= service.name %><br />
+    <%= service.description %><br />
+  </p>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

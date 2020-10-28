@@ -1,0 +1,9 @@
+<h4> Select Staff </h4>
+<div class="salon_location">
+  <% @staffs.each do |staff| %>
+    <td><%= link_to "#{staff.name}", location_services_path(staff_id: staff.id) %></td>
+    <h5><%= staff.name %></h5>
+    <h6><%= location.phone %></h6>
+    <h6><%= location.area %></h6>
+  <% end %>
+</div>
