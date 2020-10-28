@@ -42,7 +42,7 @@ class AppointmentsController < ApplicationController
 
   def new
     @appointment = Appointment.new(location_id: params[:location_id])
-    @appointment.appointment_services.build(starts_at: params[:date])
+    @appointment.appointment_services.build(starts_at: params[:date] || Time.zone.now)
     init_selections
   end
 
