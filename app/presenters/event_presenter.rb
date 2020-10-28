@@ -11,7 +11,8 @@ class EventPresenter
         start: event.starts_at,
         end: event.ends_at,
         color: color,
-        staff_id: event.staff_id
+        staff_id: event.staff_id,
+        appointment_id: event.appointment_id
     }
   end
 
