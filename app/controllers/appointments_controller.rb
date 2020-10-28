@@ -101,9 +101,10 @@ class AppointmentsController < ApplicationController
   private
 
   def init_selections
-    @service_prices = ServicePrice.unscoped.all.map{|a| [a.name, a.id]}
+    @service_prices = ServicePrice.all
     @staff = Staff.unscoped.all.map{|a| [a.name, a.id]}
     @clients = Client.all.map{|a| [a.name, a.id]}
+    @categories = ServiceCategory.all
   end
 
   def appointment_params

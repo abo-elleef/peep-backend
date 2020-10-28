@@ -30,6 +30,10 @@ class ServicePrice < ApplicationRecord
     service_name
   end
 
+  def category_id
+    service.service_category_id
+  end
+
   def checkout_help_text(staff)
     "#{self.name} #{self.duration.to_s} with #{staff.name} "
   end

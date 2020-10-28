@@ -19,11 +19,9 @@
   display: grid;
   margin: 0;
   height:100%;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: 80px 1fr;
 }
-.form-wrapper{
-  margin: 40px;
-}
+
 .form-header{
   width: 100%;
   display: flex;
@@ -82,5 +80,23 @@
     grid-template-rows:  auto 1fr auto;
     border-left: 1px solid $border-color;
 
+  }
+}
+
+#appointment-form{
+  .service-row{
+    margin: 30px auto;
+  }
+  .line{
+    display: grid;
+    column-gap: 20px;
+    grid-template-columns:  auto 1fr 35px;
+  }
+  .start{
+    min-width: 150px;
+  }
+  #side-bar{
+    display: grid;
+    grid-template-rows: 1fr 30px;
   }
 }

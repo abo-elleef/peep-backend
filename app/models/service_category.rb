@@ -4,6 +4,7 @@ class ServiceCategory < ApplicationRecord
   include UserScoped
 
   has_many :services
+  has_many :service_prices, through: :services
 
   validates_presence_of :name
 
