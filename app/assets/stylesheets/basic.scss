@@ -78,8 +78,17 @@ header{
   }
 }
 #content-container{
-
 }
+#client-details{
+  padding: 20px;
+  p {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+}
+
+
 
 $start: left;
 $end: right;

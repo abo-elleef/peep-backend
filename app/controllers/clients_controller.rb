@@ -13,6 +13,10 @@ class ClientsController < ApplicationController
     render json: { data: ClientSerializer.new(client) },  status: :ok
   end
 
+  def mini_details
+    @client = Client.find(params[:id])
+  end
+
   def appointments
     client = Client.find(params[:id])
     appointments = client.appointments.order("appointments.id DESC").preload(:appointment_services).limit(10).compact

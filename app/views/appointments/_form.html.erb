@@ -1,7 +1,7 @@
 <div class="form-header">
   <p></p>
   <p class="form-title"> <%= @appointment.id ? 'Update Appointment' : 'Create Appointment' %></p>
-  <a href="/calendar">x</a>
+  <a class="waves-effect waves-teal btn-flat" href="/calendar">x</a>
 </div>
 <div class="form-wrapper height-100" id="appointment-form" >
   <%= form_with model: @appointment, html: {class: 'height-100'} do |f| %>
@@ -32,7 +32,9 @@
         <div class="row">
           <%= f.label :client_id %>
           <%= f.select :client_id, @clients, {selected: f.object.client_id} , {class: 'browser-default select2'} %>
+          <div id="client-container"></div>
         </div>
+
         <div class="row">
           <%= f.submit :save, class: 'btn width-100 main-bg' %>
         </div>
@@ -50,8 +52,14 @@
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
 <script>
+  function registerEventsAppointmentForm(){
+      $('.select2').select2();
+      $("#appointment_client_id").change(function(e){
+         let clientID = e.target.value;
+         $.get('/clients/' + clientID + '/mini_details')
+      });
+  }
     $(document).on('turbolinks:load', function () {
-        $('.select2').select2();
-
+        registerEventsAppointmentForm()
     });
 </script>

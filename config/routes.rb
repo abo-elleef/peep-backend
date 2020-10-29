@@ -30,6 +30,7 @@ Rails.application.routes.draw do
       get :products
       get :invoices
       get :client_sales
+      get :mini_details
     end
   end
   resources :services do
