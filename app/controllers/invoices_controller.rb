@@ -31,6 +31,7 @@ class InvoicesController < ApplicationController
       line = @invoice.lines.build({sellable_type: 'ServicePrice', sellable_id: appointment_service.service_price_id, staff_id: appointment_service.staff_id, unit_price: appointment_service.service_price.price, original_unit_price: appointment_service.service_price.price, quantity: 1, starts_at: appointment_service.starts_at, ends_at: appointment_service.ends_at })
       line.build_discount_usage
     end
+    # @invoice.tips.build({value: 16})
 
   end
 

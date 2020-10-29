@@ -17,6 +17,16 @@
                 <%= render 'line_fields', f: line %>
               <% end %>
             </ul>
+            <div class="row">
+              <div class="col s6 push-s6">
+                <%= f.fields_for :tips, f.object.tips do |tip| %>
+                  <%= render 'tip_fields', f: tip %>
+                <% end %>
+                <div>
+                  <%= link_to_add_association 'Add Tip', f, :tips, class: 'btn' %>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
