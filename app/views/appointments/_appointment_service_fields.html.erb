@@ -7,8 +7,11 @@
     </div>
     <div class="selection">
       <label>Service</label>
-      <%= f.grouped_collection_select  :service_price_id, @categories, 'service_prices',  :name, :id, :name, {selected: f.object.service_price_id, include_blank: true} , {class: 'browser-default select2'} %>
+      <%= f.grouped_collection_select  :service_price_id, @categories, 'service_prices',  :name, :id, :full_details_html, {selected: f.object.service_price_id, include_blank: true} , {class: 'browser-default select2'} %>
 
+    </div>
+    <div class="remove-link">
+      <%= link_to_remove_association "x", f %>
     </div>
   </div>
   <div class="line">
@@ -19,7 +22,6 @@
       <%= f.label :staff_id %>
       <%= f.select :staff_id, @staff, {selected: f.object.staff_id, include_blank: true} , {class: 'browser-default select2', placeholder: 'Pick Staff'} %>
     </div>
-    <%= link_to_remove_association "x", f, class: 'waves-effect waves-light btn col red' %>
   </div>
 </div>
 <!--<a class="waves-effect waves-light btn"><i class="material-icons right">cloud</i>button</a>-->

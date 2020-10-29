@@ -34,6 +34,16 @@ class ServicePrice < ApplicationRecord
     service.service_category_id
   end
 
+  def full_details_html
+    "<div>
+  <div>
+    <p>#{service.name}</p>
+    <span>#{name} </span>
+  </div>
+  <div>(#{price} KWD)</div>
+</div>".html_safe
+  end
+
   def checkout_help_text(staff)
     "#{self.name} #{self.duration.to_s} with #{staff.name} "
   end
