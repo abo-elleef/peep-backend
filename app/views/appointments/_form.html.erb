@@ -32,7 +32,11 @@
         <div class="row">
           <%= f.label :client_id %>
           <%= f.select :client_id, @clients, {selected: f.object.client_id} , {class: 'browser-default select2'} %>
-          <div id="client-container"></div>
+          <div id="client-container">
+            <% if @appointment.client_id.present? %>
+              <%= render 'shared/appointment_client', client: @appointment.client %>
+            <% end %>
+          </div>
         </div>
 
         <div class="row">
