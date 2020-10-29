@@ -1,9 +1,9 @@
-<header class="p-2">
-  <h3 class="m-0">Home</h3>
+<header class="p-4">
+  <p class="m-0">Home</p>
 </header>
 <div id="filters-row">
   <div class="input-field mse-2">
-    <select id="locationSelector">
+    <select id="locationSelector" class="material-select">
       <option value="all" selected>All Locations</option>
       <% @locations.map do |location| %>
         <option value="<%= location.id %>"><%= location.name %></option>
@@ -12,7 +12,7 @@
     <label>Materialize Select</label>
   </div>
   <div class="input-field mse-2">
-    <select id="periodSelector">
+    <select id="periodSelector" class="material-select">
       <option value="week" selected>Week</option>
       <option value="month">Month</option>
     </select>

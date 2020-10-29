@@ -9,7 +9,7 @@ module Reports
       end
 
       def perform
-        appointments_count = Appointment.by_location_ids(location_ids).where("created_at >= ? AND created_at <= ?", to_date, Date.today ).where(status: 5).count
+        appointments_count = Appointment.by_location_id(location_ids).where("created_at >= ? AND created_at <= ?", to_date, Date.today ).where(status: 5).count
         sales = (to_date..Date.today).map do |day|
           Line.includes(:invoice).where(invoices: {location_id: @location_ids}).
               where(lines: {created_at: (day.beginning_of_day..day.end_of_day)}).
@@ -17,7 +17,7 @@ module Reports
         end
         sales_values =  sales.sum
         appointments = (to_date..Date.today).map do |day|
-          Appointment.by_location_ids(location_ids).joins(appointment_services: :service_price).
+          Appointment.by_location_id(location_ids).joins(appointment_services: :service_price).
               where("appointments.created_at >= ? AND appointments.created_at <= ?", day.beginning_of_day, day.end_of_day).
               where(status: 5).sum("service_prices.price")
         end

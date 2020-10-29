@@ -58,6 +58,7 @@ class InvoicesController < ApplicationController
 
   alias :create :checkout
 
+  # TODO: remove it after remove FE completely
   # update just in case of the new payment
   def update
     invoice = Invoice.find(params[:id])

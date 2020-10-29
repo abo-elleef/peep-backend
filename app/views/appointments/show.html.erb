@@ -1,7 +1,7 @@
 <div class="form-header">
   <p></p>
   <p class="form-title"> View Appointment</p>
-  <a href="/calendar">x</a>
+  <a href="/calendar" class="waves-effect waves-teal btn-flat">x</a>
 </div>
 <div id="appointment-details">
   <div class="row height-100">
@@ -63,10 +63,10 @@
               <%= link_to 'Edit Appointment', edit_appointment_path(@appointment) %>
 <!--              todo activate cancel and reschedule logic -->
               <a href="#!">
-                cancel (soon)
+                cancel <span class="soon">(soon)</span>
               </a>
               <a href="@!">
-                Reschedule (soon)
+                Reschedule <span class="soon">(soon)</span>
               </a>
             </li>
         </ul>

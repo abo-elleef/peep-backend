@@ -35,9 +35,16 @@ html, body {
 header{
   background-color: $white;
   display: flex;
+  align-items: center;
   justify-content: space-between;
   position: sticky;
   z-index: 12;
+  padding: 30px;
+  min-height: 75px;
+  p {
+    font-size: 24px;
+    font-weight: bolder;
+  }
 }
 
 #app-container{
@@ -184,4 +191,9 @@ $end: right;
 }
 .left-border{
   border-left: 1px solid $border-color;
+}
+
+.soon{
+  font-size: 10px;
+  color: $dark-blue;
 }

@@ -1,5 +1,15 @@
-<header class="p-2">
-  <h3 class="m-0">Invoice Details</h3>
+<header class="p-4">
+  <p class="m-0">Invoice Details</p>
+  <a class='dropdown-trigger waves-effect waves-teal btn-flat' href='#' data-target='dropdown1'>Options</a>
+
+
+  <!-- Dropdown Structure -->
+  <ul id='dropdown1' class='dropdown-content'>
+    <li><a href="#!">Download <span class="soon">(soon)</span></a></li>
+    <li><a id="print-link">Print</a></li>
+    <li class="divider" tabindex="-1"></li>
+    <li cla><a>Rebook <span class="soon">(soon)</span></a></li>
+  </ul>
 </header>
 <div class="main-section">
   <div class="row">
@@ -101,3 +111,19 @@
     </div>
   </div>
 </div>
+
+<script>
+    function printInvoice() {
+        document.body.innerHTML = document.getElementById('invoice-details-wrapper').innerHTML;
+        window.print();
+        window.location.reload();
+    }
+
+    $(document).on('turbolinks:load', function () {
+        console.log('vvvv')
+        $('#print-link').click(function(e){
+            console.log('aaaaa');
+            printInvoice();
+        })
+    })
+</script>
