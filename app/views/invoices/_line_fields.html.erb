@@ -10,12 +10,12 @@
       <label class="checkout_help_text"> <%= f.object.sellable&.checkout_help_text(f.object.staff) %></label>
     </div>
     <div class="col s3 ">
-      <span class="right">
+      <span class="right price-container">
         <span> KWD </span>
         <span class="price-span"> <%= f.object.sellable&.price %></span>
       </span>
       <br>
-      <span class="right hide">
+      <span class="right hide discounted-price-container">
         <span> KWD </span>
         <span class="discounted_price discounted-price-span"><%= f.object.sellable&.price %></span>
       </span>
@@ -40,9 +40,12 @@
 
     <div class="col s5">
       <label>Discount</label>
-      <%#= f.fields_for :discount_usage do |usage_f| %>
-        <%# usage_f.select :discount_id, @discounts, {}, {class: 'browser-default select2'} %>
-      <%# end %>
+      <%= f.fields_for :discount_usage do |usage_f| %>
+        <% usage_f.select :discount_id,
+                          options_for_select(@discounts.map {|d| [d.select_text, d.id, {deduct_type: d.deduct_type, deduct_value: d.deduct_value}]}),
+                          {include_blank: 'No Discount'},
+                          {class: 'browser-default select2 discount_select'} %>
+      <% end %>
     </div>
 
 

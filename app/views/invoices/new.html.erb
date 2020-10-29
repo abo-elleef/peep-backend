@@ -159,6 +159,23 @@
         },50)
 
     }
+    function applyDiscount(that){
+        let type = $(that).find(":selected").attr('deduct_type')
+        let value = parseFloat($(that).find(":selected").attr('deduct_value')) || 0;
+        let price =parseFloat($(that).closest('.nested-fields').find('.original_unit_price').val());
+        if (type === 'value'){
+            new_price = price - value;
+        }
+        if (type === 'percentage'){
+            new_price = price - price * value / 100 ;
+        }
+        $(that).closest('.nested-fields').find('.unit_price').val(new_price);
+        $(that).closest('.nested-fields').find('.discounted-price-span').text(new_price);
+        $(that).closest('.nested-fields').find('.discounted-price-container').removeClass('hide');
+        $(that).closest('.nested-fields').find('.price-container').addClass('strike');
+        calculateSums();
+
+    }
     function registerEvents() {
         $("#client-details").click(function () {
             document.location.href = '/clients/<%= @appointment.client.id %>';
@@ -170,6 +187,7 @@
             $("#sale-actions").toggleClass('hide');
         })
         $('body').on( 'click', '#payment-types-container .payment_type', function(e){ addPayment(this)})
+        $('body').on( 'change', '.discount_select', function(e){ applyDiscount(this)})
     }
     function loadPaymentTypes() {
         $.get('/payment_types.js')
@@ -190,11 +208,7 @@
             $('.collapsible .nested-fields').last().find('.discounted-price-span').text(price);
             $('.collapsible .nested-fields').last().find('.price-span').text(price);
 
-
-
         }, 50, e )
-        //    update need fields in added line
-    //    expand last line
         calculateSums();
     }
     $(document).on('turbolinks:load', function () {

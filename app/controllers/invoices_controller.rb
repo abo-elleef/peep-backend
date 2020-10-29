@@ -25,7 +25,7 @@ class InvoicesController < ApplicationController
     # else
       @staff = Staff.all.map{|s| [s.name, s.id]}
     @products = Product.all
-      @discounts = Discount.all.map{|s| [s.name, s.id]}.unshift(['No Discount', nil])
+      @discounts = Discount.all
       @invoice = Invoice.new({
                                  location_id: @appointment.location_id,
                                  client_id: @appointment.client_id
@@ -36,7 +36,6 @@ class InvoicesController < ApplicationController
         line.build_discount_usage
       end
     @invoice.balance = @invoice.total = @invoice.sub_total = @appointment.total_price
-      # @invoice.tips.build({value: 16})
     # end
   end
 
