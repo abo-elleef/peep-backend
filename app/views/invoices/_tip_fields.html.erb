@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col s3">
       <label>Value</label>
-      <%= f.number_field :value %>
+      <%= f.number_field :value, class: 'tip_field' %>
     </div>
     <div class="col s8">
       <label>Staff</label>
@@ -18,7 +18,9 @@
 
 <script>
     setTimeout(function () {
+        $('.tip_field').keyup(calculateSums);
         $('.select2').select2();
+
     }, 50)
 
 </script>

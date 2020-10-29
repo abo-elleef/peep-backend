@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_19_133341) do
+ActiveRecord::Schema.define(version: 2020_10_29_145522) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -475,6 +475,8 @@ ActiveRecord::Schema.define(version: 2020_10_19_133341) do
     t.integer "staff_id"
     t.float "value"
     t.integer "invoice_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
     t.index ["staff_id"], name: "index_tips_on_staff_id"
   end
 

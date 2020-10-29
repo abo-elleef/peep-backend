@@ -18,12 +18,44 @@
               <% end %>
             </ul>
             <div class="row">
-              <div class="col s6 push-s6">
-                <%= f.fields_for :tips, f.object.tips do |tip| %>
-                  <%= render 'tip_fields', f: tip %>
-                <% end %>
+              <div id="numbers" class="col s6 push-s6">
+                <div class="row">
+                  <div class="col s9">
+                    <p>Sub Total</p>
+                  </div>
+                  <div class="col s3">
+                    <p> <%= @invoice.sub_total %> KWD </p>
+                  </div>
+                </div>
                 <div>
-                  <%= link_to_add_association 'Add Tip', f, :tips, class: 'btn' %>
+                  <%= f.fields_for :tips, f.object.tips do |tip| %>
+                    <%= render 'tip_fields', f: tip %>
+                  <% end %>
+                  <div>
+                    <%= link_to_add_association 'Add Tip', f, :tips, class: 'btn-flat' %>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="divider"></div>
+                </div>
+                <div>
+                  <%= f.fields_for :payments, f.object.payments do |tip| %>
+                    <%= render 'payment_fields', f: tip %>
+                  <% end %>
+                  <div>
+                    <%= link_to_add_association 'Add payment', f, :payments, class: 'hide', id: 'add-payment' %>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="divider"></div>
+                </div>
+                <div class="row">
+                  <div class="col s9">
+                    <p>Balance</p>
+                  </div>
+                  <div class="col s3">
+                    <p id="balanceValue"> <%= @invoice.balance %> KWD </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -35,27 +67,26 @@
         <%= render "shared/appointment_client", client: @appointment.client %>
         <div class="row">
           <div class="input-field col s12">
-            <input placeholder="Placeholder" id="pay" type="number" class="validate">
+            <input placeholder="Placeholder" id="pay" type="number" class="validate" value="<%= @invoice.total  %>">
             <label for="pay">Pay</label>
           </div>
         </div>
         <div id="payment-types-container">
-<!--          content load as ajax will replace this -->
+          <!--          content load as ajax will replace this -->
         </div>
         <div id="payment-types-container">
-          <%= f.submit :complete_sale, class: 'payment_type main-bg mb-4 p-3' %>
+          <%= f.submit :complete_sale, class: 'main-bg mb-4 p-3' %>
           <div class="payment_type secondary-bg mb-4 p-3">
-            Reset  Payments
+            Reset Payments
           </div>
         </div>
         <div class="action">
           <!-- Dropdown Trigger -->
-          <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Drop Me!</a>
+          <!--          <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Drop Me!</a>-->
 
-          <!-- Dropdown Structure -->
-          <ul id='dropdown1' class='dropdown-content'>
-            <li><a href="#!">Invoice Details</a></li>
-          </ul>
+          <!--          <ul id='dropdown1' class='dropdown-content'>-->
+          <!--            <li><a href="#!">Invoice Details</a></li>-->
+          <!--          </ul>-->
         </div>
 
       </div>
@@ -64,10 +95,38 @@
 </div>
 
 <script>
+    function calculateSums(){
+        let totalTips = 0;
+        let totalPayments = 0;
+        let totalWanted = 0;
+        $('.tip_field').each(function (){ totalTips += parseFloat($(this).val()) } );
+        $('.amount').each(function (){ totalPayments += parseFloat($(this).val()) } );
+        $('.discounted_price').each(function (){ totalWanted += parseFloat($(this).text()) } );
+        let stillToPay = totalWanted - totalPayments + totalTips
+        $("#pay").val(stillToPay)
+        $("#balanceValue").text(stillToPay + ' KWD');
+    }
+    function addPayment(that){
+        $('#add-payment').click();
+        let paymentTypeId = parseInt($(that).attr('data'));
+        let paymentTypeName = $(that).text();
+        setTimeout(function(){
+            $('.payment-row').last().find('.type_id').val(paymentTypeId)
+            $('.payment-row').last().find('.amount').val($("#pay").val())
+
+            $('.payment-row').last().find('.paymentTypeName').html(paymentTypeName)
+            $('.payment-row').last().find('.amountValue').html($("#pay").val() + ' KWD')
+            calculateSums();
+        },50)
+
+    }
     function registerEvents() {
         $("#client-details").click(function () {
             document.location.href = '/clients/<%= @appointment.client.id %>';
         })
+        $('body').on( 'click', '.payment_type', function(e){ addPayment(this)})
+        $('.collapsible').collapsible();
+        $('.collapsible').collapsible('open', 0);
     }
 
     function loadPaymentTypes() {
@@ -77,9 +136,5 @@
     $(document).on('turbolinks:load', function () {
         loadPaymentTypes();
         registerEvents();
-        $('.collapsible').collapsible();
-        $('.collapsible').collapsible('open', 0);
-
-
     })
 </script>

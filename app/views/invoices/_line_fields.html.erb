@@ -13,7 +13,10 @@
     <div class="col s3 ">
       <span class="right"> KWD <%= f.object.sellable.price %></span>
       <br>
-      <span class="right"> KWD <%= f.object.sellable.price %></span>
+      <span class="right hide ">
+        <span> KWD </span>
+        <span class="discounted_price"><%= f.object.sellable.price %></span>
+      </span>
     </div>
   </div>
   <div class="row collapsible-body white">
