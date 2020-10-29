@@ -74,9 +74,9 @@
         <div id="payment-types-container">
           <!--          content load as ajax will replace this -->
         </div>
-        <div id="payment-types-container">
-          <%= f.submit :complete_sale, class: 'main-bg mb-4 p-3' %>
-          <div class="payment_type secondary-bg mb-4 p-3">
+        <div id="sale-actions" class="hide">
+          <%= f.submit "Complete Sale", class: 'payment_type main-bg flat-btn mb-4 p-3' %>
+          <div id="reset-payment" class="payment_type secondary-bg mb-4 p-3">
             Reset Payments
           </div>
         </div>
@@ -99,12 +99,19 @@
         let totalTips = 0;
         let totalPayments = 0;
         let totalWanted = 0;
-        $('.tip_field').each(function (){ totalTips += parseFloat($(this).val()) } );
-        $('.amount').each(function (){ totalPayments += parseFloat($(this).val()) } );
-        $('.discounted_price').each(function (){ totalWanted += parseFloat($(this).text()) } );
+        $('.tip_field').each(function (){ totalTips += parseFloat($(this).val()) || 0 } );
+        $('.amount').each(function (){ totalPayments += parseFloat($(this).val()) || 0 } );
+        $('.discounted_price').each(function (){ totalWanted += parseFloat($(this).text()) || 0} );
         let stillToPay = totalWanted - totalPayments + totalTips
         $("#pay").val(stillToPay)
         $("#balanceValue").text(stillToPay + ' KWD');
+        if(stillToPay === 0 ){
+            $("#payment-types-container").toggleClass('hide');
+            $("#sale-actions").toggleClass('hide');
+        }else{
+            $("#payment-types-container").toggleClass('hide');
+            $("#sale-actions").toggleClass('hide');
+        }
     }
     function addPayment(that){
         $('#add-payment').click();
@@ -124,7 +131,13 @@
         $("#client-details").click(function () {
             document.location.href = '/clients/<%= @appointment.client.id %>';
         })
-        $('body').on( 'click', '.payment_type', function(e){ addPayment(this)})
+        $('#reset-payment').click(function(){
+            $("#numbers .remove_fields").click();
+            setTimeout(calculateSums, 100);
+            $("#payment-types-container").toggleClass('hide');
+            $("#sale-actions").toggleClass('hide');
+        })
+        $('body').on( 'click', '#payment-types-container .payment_type', function(e){ addPayment(this)})
         $('.collapsible').collapsible();
         $('.collapsible').collapsible('open', 0);
     }
