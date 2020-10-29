@@ -24,6 +24,7 @@ class InvoicesController < ApplicationController
     #   redirect_to @appointment.invoice
     # else
       @staff = Staff.all.map{|s| [s.name, s.id]}
+    @products = Product.all
       @discounts = Discount.all.map{|s| [s.name, s.id]}.unshift(['No Discount', nil])
       @invoice = Invoice.new({
                                  location_id: @appointment.location_id,

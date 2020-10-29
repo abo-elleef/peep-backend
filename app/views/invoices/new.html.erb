@@ -16,9 +16,14 @@
               <%= f.fields_for :lines, f.object.lines do |line| %>
                 <%= render 'line_fields', f: line %>
               <% end %>
+              <li><%= link_to_add_association 'Add Line', f, :lines, class: 'hide', id: "add-lines" %></li>
             </ul>
+
             <div class="row">
-              <div id="numbers" class="col s6 push-s6">
+              <div class="col s6">
+                <a class="waves-effect waves-light btn modal-trigger" href="#modal1">Add Product</a>
+              </div>
+              <div id="numbers" class="col s6 ">
                 <div class="row">
                   <div class="col s9">
                     <p>Sub Total</p>
@@ -90,7 +95,34 @@
         </div>
 
       </div>
+
+      <!-- Modal Structure -->
+      <div id="modal1" class="modal">
+        <div class="modal-content">
+          <h5 class="center">Select Product</h5>
+          <div>
+            <ul class="collection">
+              <% @products.map do |product| %>
+                <li
+                  class="collection-item product"
+                  data-product-id="<%= product.id %>"
+                  data-product-price="<%= product.price %>"
+                  data-product-barcode="<%= product.barcode %>"
+                  data-product-name="<%= product.name %>"
+                >
+                  <%= product.name %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-close waves-effect waves-green btn-flat">Dismiss</a>
+        </div>
+      </div>
     </div>
+
+
   <% end %>
 </div>
 
@@ -138,16 +170,40 @@
             $("#sale-actions").toggleClass('hide');
         })
         $('body').on( 'click', '#payment-types-container .payment_type', function(e){ addPayment(this)})
-        $('.collapsible').collapsible();
-        $('.collapsible').collapsible('open', 0);
     }
-
     function loadPaymentTypes() {
         $.get('/payment_types.js')
     }
+    function productSelected(e){
+        $('.modal').modal('close');
+        $("#add-lines").click()
+        setTimeout(function(e){
+            $('.collapsible').collapsible('open', $('.collapsible li').length - 2);
+            $('.collapsible .nested-fields').last().find('.sellable_type').val('Product')
+            $('.collapsible .nested-fields').last().find('.sellable_id').val(e.target.dataset.productId)
+            $('.collapsible .nested-fields').last().find('.staff_id').val();
+            let price = e.target.dataset.productPrice;
+            $('.collapsible .nested-fields').last().find('.unit_price').val(price);
+            $('.collapsible .nested-fields').last().find('.original_unit_price').val(price);
+            $('.collapsible .nested-fields').last().find('.checkout_text').text(e.target.dataset.productName);
+            $('.collapsible .nested-fields').last().find('.checkout_help_text').text(e.target.dataset.productBarcode);
+            $('.collapsible .nested-fields').last().find('.discounted-price-span').text(price);
+            $('.collapsible .nested-fields').last().find('.price-span').text(price);
 
+
+
+        }, 50, e )
+        //    update need fields in added line
+    //    expand last line
+        calculateSums();
+    }
     $(document).on('turbolinks:load', function () {
         loadPaymentTypes();
         registerEvents();
+        $('.modal').modal();
+        $(".product").click(productSelected)
+        $('.collapsible').collapsible();
+        $('.collapsible').collapsible('open', 0);
+
     })
 </script>

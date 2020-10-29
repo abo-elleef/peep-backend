@@ -1,21 +1,23 @@
 <li class="nested-fields">
   <div class="row collapsible-header mb-0">
-    <%= f.hidden_field :sellable_type %>
-    <%= f.hidden_field :sellable_id %>
-    <%= f.hidden_field :staff_id %>
-    <%= f.hidden_field :unit_price %>
-    <%= f.hidden_field :original_unit_price %>
+    <%= f.hidden_field :sellable_type, class: 'sellable_type' %>
+    <%= f.hidden_field :sellable_id, class: 'sellable_id' %>
+    <%= f.hidden_field :unit_price, class: 'unit_price' %>
+    <%= f.hidden_field :original_unit_price, class: 'original_unit_price' %>
 
     <div class="col s9">
-      <p class="mb-0"><%= f.object.sellable.checkout_text %></p>
-      <label> <%= f.object.sellable.checkout_help_text(f.object.staff) %></label>
+      <p class="mb-0 checkout_text"><%= f.object.sellable&.checkout_text %></p>
+      <label class="checkout_help_text"> <%= f.object.sellable&.checkout_help_text(f.object.staff) %></label>
     </div>
     <div class="col s3 ">
-      <span class="right"> KWD <%= f.object.sellable.price %></span>
-      <br>
-      <span class="right hide ">
+      <span class="right">
         <span> KWD </span>
-        <span class="discounted_price"><%= f.object.sellable.price %></span>
+        <span class="price-span"> <%= f.object.sellable&.price %></span>
+      </span>
+      <br>
+      <span class="right hide">
+        <span> KWD </span>
+        <span class="discounted_price discounted-price-span"><%= f.object.sellable&.price %></span>
       </span>
     </div>
   </div>
@@ -47,3 +49,10 @@
   </div>
   <div class="mb-2"></div>
 </li>
+<script>
+
+
+        setTimeout(function(){
+            $('.select2').select2();
+        }, 50)
+</script>
