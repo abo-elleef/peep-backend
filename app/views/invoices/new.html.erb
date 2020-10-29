@@ -138,11 +138,11 @@
         $("#pay").val(stillToPay)
         $("#balanceValue").text(stillToPay + ' KWD');
         if(stillToPay === 0 ){
-            $("#payment-types-container").toggleClass('hide');
-            $("#sale-actions").toggleClass('hide');
+            $("#payment-types-container").addClass('hide');
+            $("#sale-actions").removeClass('hide');
         }else{
-            $("#payment-types-container").toggleClass('hide');
-            $("#sale-actions").toggleClass('hide');
+            $("#payment-types-container").removeClass('hide');
+            $("#sale-actions").addClass('hide');
         }
     }
     function addPayment(that){
