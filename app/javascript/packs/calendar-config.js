@@ -6,8 +6,6 @@ import resourceTimeGridPlugin from '@fullcalendar/resource-timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 
 
-console.log("custom loaded");
-
 function dateHandler(info) {
     // alert('Clicked on: ' + info.dateStr);
     // alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
@@ -23,11 +21,16 @@ function dateHandler(info) {
 }
 
 function formatEventHtml(arg) {
-    console.log(arg)
-    let html = '<p class="m-0">' + arg.event._def.extendedProps.meta.formatted_time + ' ' +
-        arg.event._def.extendedProps.meta.client_name + '</p>' +
-        '<p class="m-0">' + arg.event._def.extendedProps.meta.help_text + '</p>'
-    return {html: html};
+    if (arg.event._def.ui.display === 'undefined'){
+        let html = '<p class="m-0">' + arg.event._def.extendedProps.meta.formatted_time + ' ' +
+            arg.event._def.extendedProps.meta.client_name + '</p>' +
+            '<p class="m-0">' + arg.event._def.extendedProps.meta.help_text + '</p>';
+        return {html: html};
+    } else{
+        let html = '<p class="m-0">' + arg.event._def.extendedProps.meta.title  +'</p>' ;
+        return {html: html};
+    }
+
 }
 
 function drawCalendar(element) {
@@ -43,13 +46,12 @@ function drawCalendar(element) {
         allDaySlot: false,
         slotDuration: '00:15:00',
         headerToolbar: {
-            center: 'prev,next today',
+            center: 'prev today next title',
             left: '',
             right: 'timeGridWeek,resourceTimeGridDay'
         },
         eventMouseEnter: function (data) {
             if (data.event._def.ui.display === 'undefined') {
-                console.log(data);
                 let tooltip = '<div class="tooltiptopicevent card" >' +
                     'Staff: '  + data.event.extendedProps.meta.staff_name + '</br>' +
                     'Duration: '  + data.event.extendedProps.meta.duration + ' minutes.' + '</br>' +
@@ -68,7 +70,6 @@ function drawCalendar(element) {
             $('.tooltiptopicevent').remove();
         },
         eventClick: function (info) {
-            console.log(info);
             let id = info.event.extendedProps.meta.appointment_id;
             window.location.href = '/appointments/' + id;
         },
@@ -116,7 +117,6 @@ $(document).on('turbolinks:load', function () {
 })
 
 function staffChangeHandler(newId) {
-    console.log('staff customer handler ');
     window.staff_id = newId;
     $("#staffSelector").val(newId);
     window.location_id = $("#locationSelector").val();
@@ -130,11 +130,9 @@ function staffChangeHandler(newId) {
 
 function registerEvents() {
     $("#staffSelector").change(function (e) {
-        console.log('staff changed');
         staffChangeHandler(e.target.value)
     });
     $("#locationSelector").change(function (e) {
-        console.log('location changed');
         window.location_id = e.target.value;
         staffChangeHandler('all');
         $('select').formSelect();

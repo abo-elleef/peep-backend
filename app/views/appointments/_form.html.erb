@@ -31,7 +31,7 @@
       <div id="side-bar" class="col s3 left-border height-100 p-4">
         <div class="row">
           <%= f.label :client_id %>
-          <%= f.select :client_id, @clients, {selected: f.object.client_id} , {class: 'browser-default select2'} %>
+          <%= f.select :client_id, @clients, {selected: f.object.client_id, include_blank: true} , {class: 'browser-default select2'} %>
           <div id="client-container">
             <% if @appointment.client_id.present? %>
               <%= render 'shared/appointment_client', client: @appointment.client %>
