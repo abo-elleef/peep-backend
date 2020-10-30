@@ -57,6 +57,6 @@ class Appointment < ApplicationRecord
   end
 
   def client_name
-    object.client&.name
+    client&.name || 'Walk-IN'
   end
 end

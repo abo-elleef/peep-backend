@@ -10,12 +10,17 @@
     }
     .fc-timegrid-col, .fc-col-header-cell{
       width: 250px;
+      height: 50px;
     }
 
   }
 }
-.fc-timegrid-slot{
-  min-width: 700px !important;
+.fc-event-main{
+  padding: 5px !important;
+  *{
+    font-size: 11px;
+  }
+
 }
 
 .fc-timegrid-event{

@@ -34,6 +34,10 @@ class ServicePrice < ApplicationRecord
     service.service_category_id
   end
 
+  def full_name
+    "#{service_name} #{name}"
+  end
+
   def full_details_html
     "<div>
   <div>
