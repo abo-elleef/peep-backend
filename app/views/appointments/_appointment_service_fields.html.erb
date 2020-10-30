@@ -7,7 +7,14 @@
     </div>
     <div class="selection">
       <label>Service</label>
-      <%= f.grouped_collection_select  :service_price_id, @categories, 'service_prices',  :name, :id, :full_details_html, {selected: f.object.service_price_id, include_blank: true} , {class: 'browser-default select2'} %>
+      <%= f.grouped_collection_select  :service_price_id,
+                                       @categories,
+                                       :service_prices_options,
+                                       :name,
+                                       ->(el){el.first.id},
+                                       ->(el){el.first.full_details_html},
+                                       {selected: f.object.service_price_id, include_blank: true},
+                                       {class: 'browser-default service_price_selection'} %>
 
     </div>
     <div class="remove-link">
@@ -17,6 +24,7 @@
   <div class="line">
     <div class="start">
       <label> duration </label>
+      <p class="duration"></p>
     </div>
     <div class="selection">
       <%= f.label :staff_id %>

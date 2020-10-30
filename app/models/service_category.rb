@@ -22,4 +22,10 @@ class ServiceCategory < ApplicationRecord
      }
     ]
   end
+
+  def service_prices_options
+    service_prices.map do |service_price|
+      [service_price, {duration: service_price.duration}]
+    end
+  end
 end

@@ -92,6 +92,10 @@
     display: grid;
     column-gap: 20px;
     grid-template-columns:  auto 1fr 35px;
+    .duration{
+      text-align: center;
+      font-size: 18px;
+    }
     .remove-link{
       display: flex;
       align-items: center;

@@ -176,6 +176,7 @@
         calculateSums();
 
     }
+
     function registerEvents() {
         $("#client-details").click(function () {
             document.location.href = '/clients/<%= @appointment.client.id %>';
@@ -188,6 +189,9 @@
         })
         $('body').on( 'click', '#payment-types-container .payment_type', function(e){ addPayment(this)})
         $('body').on( 'change', '.discount_select', function(e){ applyDiscount(this)})
+        $('.service_price_selection').change(function(e){ serviceSelected(this)})
+
+
     }
     function loadPaymentTypes() {
         $.get('/payment_types.js')
@@ -218,6 +222,5 @@
         $(".product").click(productSelected)
         $('.collapsible').collapsible();
         $('.collapsible').collapsible('open', 0);
-
     })
 </script>

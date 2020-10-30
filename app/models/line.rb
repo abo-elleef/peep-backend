@@ -57,5 +57,6 @@ class Line < ApplicationRecord
     def set_data
       self.staff_name = self.staff.name
       self.sellable_name = self.sellable.name
+      self.ends_at ||= self.starts_at + sellable.duration.minutes
     end
 end
