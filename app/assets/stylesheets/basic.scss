@@ -1,31 +1,4 @@
-$white: #FFFFFF;
-$black: #000000;
-$bg-gray: #F6F6F6;
-$light-pink: #F9F5F4;
-$dark-pink: #EED2CF;
-$light-blue: #586997;
-$dark-blue: #293659;
-$light-green: #DBD9CD;
-$dark-green: #77784C;
-$appointment-color: #84D2CB;
-$disabled-color: #A5A5A5;
-$border-color: #ddd;
-$dark-gray: #eee;
-$darker-gray: #aaa;
-$detailed-color: #b3b3b3;
-$bg-pink: $light-pink;
-$primary-color: $dark-blue;
-$aqua: $dark-blue;
-$side-menu-color: $light-pink;
-$side-menu-color-bg: $dark-blue;
-$side-menu-color-hover: $dark-blue;
-$side-menu-color-hover-bg: $light-pink;
-$table-hover-bg: whitesmoke;
-$table-active-bg: #efefef;
-$delete-color: #f74969;
-$form-header-color: #878C93;
-$span-color: #968c93;
-$dark-secondary-button: $dark-green;
+@import "variables";
 
 
 html, body {
