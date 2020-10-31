@@ -1,5 +1,9 @@
 class User < ApplicationRecord
-  has_secure_password
+  # Include default devise modules. Others available are:
+  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable
+
   # == Constants ============================================================
   API_KEY = {
       local: "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo3LCJleHAiOjE2MDM0NTMxMzd9.nVeoZievydce6o0C72fzvi39xlIJ6L_PEy5dzySyL3E"
