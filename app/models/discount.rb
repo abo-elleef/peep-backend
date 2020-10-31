@@ -26,4 +26,14 @@ class Discount < ApplicationRecord
     # TODO this should be based on start date and end date
     :active
   end
+
+  def deduct_string
+    return "KWD #{deduct_value}" if deduct_type.to_s == "value"
+    return "% #{deduct_value}" if deduct_type.to_s == "percentage"
+    ""
+  end
+
+  def select_text
+    "#{name} (#{deduct_string} off)"
+  end
 end

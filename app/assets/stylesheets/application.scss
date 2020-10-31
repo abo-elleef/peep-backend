@@ -13,5 +13,25 @@
  *= require_tree .
  *= require_self
  */
-
+@import "variables";
+@import "materialize";
 @import "basic";
+.main-section{
+  padding: 20px;
+}
+#invoice-details-wrapper {
+  .line-row {
+    padding: 15px 0;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    position: relative;
+    .service_price{
+      position: absolute;
+      right: 0;
+    }
+    .discounted-price{
+      text-decoration: line-through;
+    }
+  }
+}

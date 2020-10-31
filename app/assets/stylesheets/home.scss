@@ -14,6 +14,10 @@
 }
 #filters-row{
   display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: space-between;
+  .input-field{
+    background: white;
+    padding: 0 10px;
+  }
 }

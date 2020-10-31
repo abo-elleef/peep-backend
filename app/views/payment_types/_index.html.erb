@@ -1,0 +1,6 @@
+
+<% @payment_types.map do |payment_type| %>
+  <div class="payment_type main-bg mb-4 p-3" data="<%= payment_type.id %>">
+    <%= payment_type.name %>
+  </div>
+<% end %>

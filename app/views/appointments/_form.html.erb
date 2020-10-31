@@ -1,0 +1,74 @@
+<div class="form-header">
+  <p></p>
+  <p class="form-title"> <%= @appointment.id ? 'Update Appointment' : 'Create Appointment' %></p>
+  <a class="waves-effect waves-teal btn-flat" href="/calendar">x</a>
+</div>
+<div class="form-wrapper height-100" id="appointment-form" >
+  <%= form_with model: @appointment, html: {class: 'height-100'} do |f| %>
+    <div class="row height-100">
+      <div class="col s9">
+        <div id="appointment_services" class="row">
+          <%= f.hidden_field :location_id %>
+          <div class="col s8 push-s2">
+
+            <%= f.fields_for :appointment_services, @appointment.appointment_services do |service| %>
+              <%= render 'appointment_service_fields', f: service %>
+            <% end %>
+            <div class="links">
+              <%= link_to_add_association 'Add Service', f, :appointment_services, class: 'btn' %>
+            </div>
+            <br>
+            <br>
+
+            <div class="">
+              <%= f.label :notes %>
+              <%= f.text_field :notes %>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="side-bar" class="col s3 left-border height-100 p-4">
+        <div class="row">
+          <%= f.label :client_id %>
+          <%= f.select :client_id, @clients, {selected: f.object.client_id, include_blank: true} , {class: 'browser-default select2'} %>
+          <div id="client-container">
+            <% if @appointment.client_id.present? %>
+              <%= render 'shared/appointment_client', client: @appointment.client %>
+            <% end %>
+          </div>
+        </div>
+
+        <div class="row">
+          <%= f.submit :save, class: 'btn width-100 main-bg' %>
+        </div>
+
+      </div>
+    </div>
+
+
+
+  <% end %>
+</div>
+
+
+
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<script>
+    function serviceSelected(that){
+        let duration = $(that).find(':selected').attr('duration');
+        $(that).parents('.nested-fields').find('.duration').text(duration + '  min')
+    }
+  function registerEventsAppointmentForm(){
+      $('.select2').select2();
+      $("#appointment_client_id").change(function(e){
+         let clientID = e.target.value;
+         $.get('/clients/' + clientID + '/mini_details')
+      });
+      $('body').on( 'change', '.service_price_selection', function(e){ serviceSelected(this)})
+  }
+    $(document).on('turbolinks:load', function () {
+        registerEventsAppointmentForm()
+    });
+</script>

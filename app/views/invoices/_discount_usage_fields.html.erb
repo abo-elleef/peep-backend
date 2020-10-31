@@ -1,0 +1,13 @@
+<div class="nested-fields">
+  <%= f.select :discount_id,
+              options_for_select(@discounts.map { |d| [d.select_text, d.id, {deduct_type: d.deduct_type, deduct_value: d.deduct_value}] }),
+              {include_blank: 'No Discount'},
+              {class: 'browser-default select2 discount_select'} %>
+
+</div>
+
+<script>
+    setTimeout(function(){
+        $('.select2').select2();
+    }, 50)
+</script>

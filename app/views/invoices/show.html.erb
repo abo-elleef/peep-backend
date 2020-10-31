@@ -1,0 +1,127 @@
+<header class="p-4">
+  <p class="m-0">Invoice Details</p>
+  <a class='dropdown-trigger waves-effect waves-teal btn-flat' href='#' data-target='dropdown1'>Options</a>
+
+
+  <!-- Dropdown Structure -->
+  <ul id='dropdown1' class='dropdown-content'>
+    <li><a href="#!">Download <span class="soon">(soon)</span></a></li>
+    <li><a id="print-link">Print</a></li>
+    <li class="divider" tabindex="-1"></li>
+    <li cla><a>Rebook <span class="soon">(soon)</span></a></li>
+  </ul>
+</header>
+<div class="main-section">
+  <div class="row">
+    <div id="invoice-details-wrapper" class="col s8 push-s2">
+      <div class="card">
+        <div class="card-content">
+          <span class="card-title center"><%= @invoice.sequence %></span>
+          <p class="center"> <%= @invoice.created_at.strftime(' %d / %m / %Y ') %> </p>
+          <div class="lines-container services-lines">
+            <% @invoice.lines.map do |line| %>
+              <div class="line-row">
+                <div class="service_details">
+                  <span class="gray"> <%= line.quantity %>  Item(s) </span>
+                  <p> <%= line.sellable.name %> </p>
+                  <span class="gray">
+                    <%= line.starts_at.try(:strftime, '%H:%M ') %> with <%= line.staff_name %>
+                  </span>
+                </div>
+                <div class="service_price">
+                  <% if line.original_unit_price != line.unit_price %>
+                    <span class="gray discounted-price">
+                      <%= line.original_unit_price * line.quantity %>  KWD
+                    </span>
+                  <% end %>
+                  <p><%= line.unit_price * line.quantity %> KWD </p>
+
+
+                </div>
+              </div>
+            <% end %>
+          </div>
+          <div class="divider"></div>
+          <div class="lines-container">
+            <div class="line-row">
+              <div class="service_details">
+                <p> Tips </p>
+              </div>
+              <div class="service_price">
+                <p>
+                  <%= @invoice.tips_total %>  KWD </p>
+              </div>
+            </div>
+            <div class="line-row">
+              <div class="service_details">
+                <p> Sub Total </p>
+              </div>
+              <div class="service_price">
+                <p>
+                  <% @invoice.sub_total %> KWD </p>
+              </div>
+            </div>
+          </div>
+          <div class="divider"></div>
+          <div class="lines-container">
+            <div class="line-row">
+              <div class="service_details">
+                <p> Total </p>
+              </div>
+              <div class="service_price">
+                <p> <%= @invoice.total %> KWD </p>
+              </div>
+            </div>
+          </div>
+          <% if @invoice.payments.size > 0 %>
+
+            <div class="divider"></div>
+            <div class="lines-container">
+              <% @invoice.payments.map do |payment| %>
+                <div class="line-row">
+                  <div class="service_details">
+                    <p>
+                      <%= payment.name %>  </p>
+                    <p>
+                      <%= payment.created_at.strftime(' %d/%m/%Y - %H:%M') %> </p>
+                  </div>
+                  <div class="service_price">
+                    <p> <%= payment.amount %> KWD </p>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          <% end %>
+
+
+          <div class="divider"></div>
+          <div>
+            <div class="line-row">
+              <div class="service_details">
+                <p> Balance </p>
+              </div>
+              <div class="service_price">
+                <p>
+                  <%= @invoice.balance %>  KWD </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+    function printInvoice() {
+        document.body.innerHTML = document.getElementById('invoice-details-wrapper').innerHTML;
+        window.print();
+        window.location.reload();
+    }
+
+    $(document).on('turbolinks:load', function () {
+        $('#print-link').click(function(e){
+            printInvoice();
+        })
+    })
+</script>

@@ -1,0 +1,14 @@
+<a class='dropdown-trigger btn width-100' data-target='dropdown1'>
+  <%= @appointment.status %>
+</a>
+<ul id='dropdown1' class='dropdown-content'>
+  <% Appointment.statuses.map do |key, value| %>
+    <li>
+      <%= link_to update_status_appointment_path(id: @appointment.id, status: key) do %>
+        <i class="material-icons">view_module</i><%= key %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
+

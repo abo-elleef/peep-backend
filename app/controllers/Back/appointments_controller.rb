@@ -1,4 +1,8 @@
 class Back::AppointmentsController < Back::BackBase
+  layout :resolve_layout
+
+  # ...
+
   # load_and_authorize_resource
   # def index
   #   appointments = Appointment.peep_filter(params.slice(:starts_at, :ends_at, :staff_ids, :location_ids)).
@@ -15,16 +19,18 @@ class Back::AppointmentsController < Back::BackBase
   def new
     @appointment = Appointment.new(location_id: params[:location_id])
     @appointment.appointment_services.build(starts_at: params[:date])
-    @service_prices = ServicePrice.unscoped.all.map{|a| [a.name, a.id]}
-    @staff = Staff.unscoped.all.map{|a| [a.name, a.id]}
+    @service_prices = ServicePrice.all.map{|a| [a.name, a.id]}
+    @staff = Staff.all.map{|a| [a.name, a.id]}
+    @clients = Client.all.map{|a| [a.name, a.id]}
   end
 
 
   #
   def create
+    debugger
     appointment = Appointment.new(appointment_params)
-    if appointment.save
-      render json: {data: AppointmentSerializer.new(appointment)}, status: :created
+    if appointment.save!
+      redirect_to edit_back_appointment_path(appointment.id)
     else
       render json: appointment.errors, status: :unprocessable_entity
     end
@@ -34,11 +40,13 @@ class Back::AppointmentsController < Back::BackBase
     @appointment = Appointment.find(params[:id])
     @service_prices = ServicePrice.unscoped.all.map{|a| [a.name, a.id]}
     @staff = Staff.unscoped.all.map{|a| [a.name, a.id]}
+    @clients = Client.all.map{|a| [a.name, a.id]}
   end
   def update
+    debugger
     appointment = Appointment.find(params[:id])
     if appointment.update(appointment_params)
-      render json: {data: AppointmentSerializer.new(appointment)}, status: :ok
+      redirect_to edit_back_appointment_path(appointment.id)
     else
       render json: appointment.errors, status: :unprocessable_entity
     end
@@ -75,10 +83,20 @@ class Back::AppointmentsController < Back::BackBase
 
   def appointment_params
     params.require(:appointment).permit(
-        :status, :client_id, :location_id, :notes, :date, :cancellation_reason_id,
+        :status, :client_id, :location_id, :notes, :cancellation_reason_id,
         appointment_services_attributes: [
             :id, :appointment_id, :staff_id, :service_price_id, :starts_at, :ends_at, :_destroy
         ]
     )
   end
+
+  def resolve_layout
+    case action_name
+    when "new", "edit"
+      "forms"
+    else
+      "application"
+    end
+  end
+
 end

@@ -4,6 +4,7 @@ class ServiceCategory < ApplicationRecord
   include UserScoped
 
   has_many :services
+  has_many :service_prices, through: :services
 
   validates_presence_of :name
 
@@ -20,5 +21,11 @@ class ServiceCategory < ApplicationRecord
          appointment_color: "#00c9e1"
      }
     ]
+  end
+
+  def service_prices_options
+    service_prices.map do |service_price|
+      [service_price, {duration: service_price.duration}]
+    end
   end
 end
