@@ -1,4 +1,4 @@
-<li class="nested-fields">
+<li class="nested-fields nested-line">
   <div class="row collapsible-header mb-0">
     <%= f.hidden_field :sellable_type, class: 'sellable_type' %>
     <%= f.hidden_field :sellable_id, class: 'sellable_id' %>
@@ -26,11 +26,7 @@
 
     <div class="col s2">
       <label>Quantity</label>
-      <% if f.object.sellable_type == 'ServicePrice' %>
-        <%= f.number_field :quantity , disabled: true %>
-      <% else %>
-        <%= f.number_field :quantity %>
-      <% end %>
+        <%= f.number_field :quantity , class: 'quantity',min: 1, disabled: f.object.sellable_type == 'ServicePrice' %>
     </div>
 
     <div class="col s5">
@@ -41,11 +37,12 @@
     <div class="col s5">
       <label>Discount</label>
       <%= f.fields_for :discount_usage do |usage_f| %>
-        <% usage_f.select :discount_id,
-                          options_for_select(@discounts.map {|d| [d.select_text, d.id, {deduct_type: d.deduct_type, deduct_value: d.deduct_value}]}),
-                          {include_blank: 'No Discount'},
-                          {class: 'browser-default select2 discount_select'} %>
+          <%= render "discount_usage_fields", f: usage_f %>
       <% end %>
+      <div>
+        <%= link_to_add_association 'Add discount', f, :discount_usage, class: 'btn add-discount hide', count: 1 %>
+      </div>
+
     </div>
 
 
@@ -53,9 +50,13 @@
   <div class="mb-2"></div>
 </li>
 <script>
-
-
         setTimeout(function(){
+
+            $(".collapsible-body").each(function(){
+                if ($(this).find('.discount_select').length === 0){
+                    $(this).find('.add-discount').click();
+                }
+            })
             $('.select2').select2();
         }, 50)
 </script>

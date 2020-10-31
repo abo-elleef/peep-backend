@@ -33,7 +33,7 @@ class InvoicesController < ApplicationController
 
       @appointment.appointment_services.map do |appointment_service|
         line = @invoice.lines.build({sellable_type: 'ServicePrice', sellable_id: appointment_service.service_price_id, staff_id: appointment_service.staff_id, unit_price: appointment_service.service_price.price, original_unit_price: appointment_service.service_price.price, quantity: 1, starts_at: appointment_service.starts_at, ends_at: appointment_service.ends_at })
-        line.build_discount_usage
+        # line.build_discount_usage
       end
     @invoice.balance = @invoice.total = @invoice.sub_total = @appointment.total_price
     # end

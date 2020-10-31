@@ -162,21 +162,35 @@
     function applyDiscount(that){
         let type = $(that).find(":selected").attr('deduct_type')
         let value = parseFloat($(that).find(":selected").attr('deduct_value')) || 0;
-        let price =parseFloat($(that).closest('.nested-fields').find('.original_unit_price').val());
+        let price =parseFloat($(that).closest('.nested-line').find('.original_unit_price').val());
+        let quantity =parseFloat($(that).closest('.nested-line').find('.quantity').val());
+        price = price * quantity;
         if (type === 'value'){
             new_price = price - value;
         }
         if (type === 'percentage'){
             new_price = price - price * value / 100 ;
         }
-        $(that).closest('.nested-fields').find('.unit_price').val(new_price);
-        $(that).closest('.nested-fields').find('.discounted-price-span').text(new_price);
-        $(that).closest('.nested-fields').find('.discounted-price-container').removeClass('hide');
-        $(that).closest('.nested-fields').find('.price-container').addClass('strike');
+        $(that).closest('.nested-line').find('.unit_price').val(new_price / quantity);
+        $(that).closest('.nested-line').find('.discounted-price-span').text(new_price);
+        $(that).closest('.nested-line').find('.discounted-price-container').removeClass('hide');
+        $(that).closest('.nested-line').find('.price-container').addClass('strike');
         calculateSums();
 
     }
-
+    function quantityChanged(that){
+        let quantity = parseFloat($(that).val());
+        console.log(quantity);
+        if(quantity < 1){
+            $(that).val(1)
+            quantity = 1;
+        }
+        let unitPrice = $(that).parents('.nested-line').find('.original_unit_price').val();
+        let newPrice = unitPrice * quantity
+        $(that).parents('.nested-line').find('.price-span').text(newPrice)
+        $(that).parents('.nested-line').find('.discounted-price-span').text(newPrice)
+        calculateSums();
+    }
     function registerEvents() {
         $("#client-details").click(function () {
             document.location.href = '/clients/<%= @appointment.client.id %>';
@@ -189,9 +203,7 @@
         })
         $('body').on( 'click', '#payment-types-container .payment_type', function(e){ addPayment(this)})
         $('body').on( 'change', '.discount_select', function(e){ applyDiscount(this)})
-        $('.service_price_selection').change(function(e){ serviceSelected(this)})
-
-
+        $('body').on( 'keyup', '.quantity', function(e){ quantityChanged(this)})
     }
     function loadPaymentTypes() {
         $.get('/payment_types.js')
@@ -201,19 +213,18 @@
         $("#add-lines").click()
         setTimeout(function(e){
             $('.collapsible').collapsible('open', $('.collapsible li').length - 2);
-            $('.collapsible .nested-fields').last().find('.sellable_type').val('Product')
-            $('.collapsible .nested-fields').last().find('.sellable_id').val(e.target.dataset.productId)
-            $('.collapsible .nested-fields').last().find('.staff_id').val();
+            $('.collapsible .nested-line').last().find('.sellable_type').val('Product')
+            $('.collapsible .nested-line').last().find('.sellable_id').val(e.target.dataset.productId)
+            $('.collapsible .nested-line').last().find('.staff_id').val();
             let price = e.target.dataset.productPrice;
-            $('.collapsible .nested-fields').last().find('.unit_price').val(price);
-            $('.collapsible .nested-fields').last().find('.original_unit_price').val(price);
-            $('.collapsible .nested-fields').last().find('.checkout_text').text(e.target.dataset.productName);
-            $('.collapsible .nested-fields').last().find('.checkout_help_text').text(e.target.dataset.productBarcode);
-            $('.collapsible .nested-fields').last().find('.discounted-price-span').text(price);
-            $('.collapsible .nested-fields').last().find('.price-span').text(price);
-
+            $('.collapsible .nested-line').last().find('.unit_price').val(price);
+            $('.collapsible .nested-line').last().find('.original_unit_price').val(price);
+            $('.collapsible .nested-line').last().find('.checkout_text').text(e.target.dataset.productName);
+            $('.collapsible .nested-line').last().find('.checkout_help_text').text(e.target.dataset.productBarcode);
+            $('.collapsible .nested-line').last().find('.discounted-price-span').text(price);
+            $('.collapsible .nested-line').last().find('.price-span').text(price);
+            calculateSums();
         }, 50, e )
-        calculateSums();
     }
     $(document).on('turbolinks:load', function () {
         loadPaymentTypes();
