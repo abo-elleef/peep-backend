@@ -83,7 +83,7 @@
                     <p>
                       <%= payment.name %>  </p>
                     <p>
-                      <%= payment.created_at %> dd-MM-yyyy HH:mm:ss </p>
+                      <%= payment.created_at.strftime(' %d/%m/%Y - %H:%M') %> </p>
                   </div>
                   <div class="service_price">
                     <p> <%= payment.amount %> KWD </p>
@@ -120,9 +120,7 @@
     }
 
     $(document).on('turbolinks:load', function () {
-        console.log('vvvv')
         $('#print-link').click(function(e){
-            console.log('aaaaa');
             printInvoice();
         })
     })
