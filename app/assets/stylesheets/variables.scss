@@ -1,3 +1,4 @@
+@import "materialize/components/color-variables";
 $white: #FFFFFF;
 $black: #000000;
 $bg-gray: #F6F6F6;
@@ -26,3 +27,8 @@ $delete-color: #f74969;
 $form-header-color: #878C93;
 $span-color: #968c93;
 $dark-secondary-button: $dark-green;
+
+
+
+$primary-color: $dark-blue !default;
+$secondary-color: $light-blue !default;

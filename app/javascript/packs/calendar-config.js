@@ -52,7 +52,7 @@ function drawCalendar(element) {
         },
         eventMouseEnter: function (data) {
             if (data.event._def.ui.display === 'undefined') {
-                let tooltip = '<div class="tooltiptopicevent card" >' +
+                let tooltip = '<div class="tooltiptopicevent" >' +
                     'Staff: '  + data.event.extendedProps.meta.staff_name + '</br>' +
                     'Duration: '  + data.event.extendedProps.meta.duration + ' minutes.' + '</br>' +
                     'Price: ' + data.event.extendedProps.meta.price + ' KWD' + '</br>' +
