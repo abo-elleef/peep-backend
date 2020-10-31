@@ -15,5 +15,9 @@
 #filters-row{
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
+  .input-field{
+    background: white;
+    padding: 0 10px;
+  }
 }
