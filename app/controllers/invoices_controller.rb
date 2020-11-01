@@ -1,5 +1,5 @@
 class InvoicesController < ApplicationController
-  layout "forms", only: :new
+  layout :resolve_layout
   def index
     invoices = Invoice.preload(:location).peep_filter(params.slice(:location_id, :starts_at, :ends_at, :search))
     pagy, invoices = pagy(invoices, page: page_index, items: page_size)
@@ -93,6 +93,15 @@ class InvoicesController < ApplicationController
     new_payments = payments.select { |payment| !payment[:id].present? }
     new_payments.map do |payment|
       Payment.create!(invoice_id: invoice_id, payment_type_id: payment[:payment_type_id], amount: payment[:amount], staff_id: payment[:staff_id])
+    end
+  end
+
+  def resolve_layout
+    case action_name
+    when "new"
+      "forms"
+    else
+      "dash"
     end
   end
 end
