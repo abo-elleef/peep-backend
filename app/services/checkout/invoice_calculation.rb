@@ -7,8 +7,9 @@ module Checkout
       paid = (params[:payments_attributes].presence&.values || []).sum { |payment| payment[:amount].to_f }
       balance = (total + tips_total) - paid
       {
-          total: total,
-          balance: balance
+          total: total + tips_total,
+          balance: balance,
+          sub_total: total
       }
     end
   end

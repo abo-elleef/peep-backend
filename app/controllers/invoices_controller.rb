@@ -42,7 +42,7 @@ class InvoicesController < ApplicationController
   def checkout
     invoice_values = Checkout::InvoiceCalculation.perform(invoice_params)
     invoice = Invoice.new(invoice_params.merge(
-        sequence: Invoice.next_sequence(invoice_params[:location_id]), sub_total: invoice_values[:total],
+        sequence: Invoice.next_sequence(invoice_params[:location_id]), sub_total: invoice_values[:sub_total],
         total: invoice_values[:total], balance: invoice_values[:balance])
     )
     if invoice.save!
