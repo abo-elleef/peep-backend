@@ -1,10 +1,19 @@
 class ServicesController < ApplicationController
-
+  layout :resolve_layout
   def index
     filters = params.slice(:name, :search)
     services = Service.preload(:service_category, :service_prices, :staffs).peep_filter(filters)
-    serializers = ActiveModel::Serializer::ArraySerializer.new(services, each_serializer: ServiceSerializer)
-    render json: {data: serializers}, status: :ok
+    respond_to do |format|
+      format.html{
+        @categories = ServiceCategory.where(id: services.map(&:service_category_id)).all
+        @services = services
+      }
+      format.json{
+        serializers = ActiveModel::Serializer::ArraySerializer.new(services, each_serializer: ServiceSerializer)
+        render json: {data: serializers}, status: :ok
+      }
+    end
+
   end
 
   def top
@@ -56,5 +65,14 @@ class ServicesController < ApplicationController
                                     service_prices_attributes: [
                                         :id, :service_id, :name, :duration, :pricing_type,
                                         :price, :_destroy])
+  end
+
+  def resolve_layout
+    case action_name
+    when "new", "edit", 'show'
+      "forms"
+    else
+      "dash"
+    end
   end
 end
