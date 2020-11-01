@@ -13,7 +13,7 @@ class StaffsController < ApplicationController
   end
 
   def calendar
-    data = Staff.map do |s| {id: s.id, title: s.name} end
+    data = Staff.all.map do |s| {id: s.id, title: s.name} end
     render json: data, status: :ok
   end
 
