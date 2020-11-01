@@ -1,0 +1,32 @@
+<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+  <div class="row">
+    <div class="card p-10 col s6 push-s3">
+      <p class="card-title"> Sign in </p>
+      <div class="input-field width-100">
+        <%= f.label :email %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+      </div>
+
+      <div class="input-field width-100">
+        <%= f.label :password %>
+        <%= f.password_field :password, autocomplete: "current-password" %>
+      </div>
+
+      <% if devise_mapping.rememberable? %>
+        <p class="input-field width-100">
+          <label>
+            <%= f.check_box :remember_me %>
+            <span>remember me</span>
+          </label>
+        </p>
+      <% end %>
+      <br>
+      <br>
+      <br>
+      <div class="actions">
+        <%= f.submit "Log in", class: 'btn right' %>
+      </div>
+      <%= render "devise/shared/links" %>
+    </div>
+  </div>
+<% end %>

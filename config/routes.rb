@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  devise_for :users
   post '/auth/login', to: 'authentication#login'
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'

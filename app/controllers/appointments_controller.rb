@@ -1,6 +1,7 @@
 class AppointmentsController < ApplicationController
+  before_action :authenticate_user!
   # load_and_authorize_resource
-  layout "forms", only: ['show', 'new', 'edit']
+  layout :resolve_layout
   def index
     appointments = Appointment.peep_filter(params.slice(:starts_at, :ends_at, :staff_ids, :location_ids)).
         group('appointments.id').limit(1000)
@@ -123,7 +124,7 @@ class AppointmentsController < ApplicationController
     when "new", "edit", 'show'
       "forms"
     else
-      "application"
+      "dash"
     end
   end
 end

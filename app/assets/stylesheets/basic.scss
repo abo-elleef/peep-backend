@@ -25,6 +25,18 @@ header{
   height: 100%;
   grid-template-columns: 200px 1fr;
 }
+#auth-container{
+  .card {
+    margin-top: 100px;
+  }
+  a {
+    color: $light-blue;
+    padding: 6px 12px;
+    &:hover{
+      background: none;
+    }
+  }
+}
 #sidebar{
   color: $white;
   background-color: $dark-blue;
