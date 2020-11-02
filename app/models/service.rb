@@ -31,6 +31,7 @@ class Service < ApplicationRecord
       or(where("description ilike ?", "%" + search + "%")) }
 
   # == Callbacks ============================================================
+  before_save :set_data
   # == Class Methods ========================================================
   def self.default_data
     [
@@ -54,4 +55,12 @@ class Service < ApplicationRecord
   end
 
   # == Instance Methods =====================================================
+  private
+
+  def set_data
+    unless extra_time
+      self.extra_time_type = nil
+      self.extra_time_duration = nil
+    end
+  end
 end
