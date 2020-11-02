@@ -1,0 +1,51 @@
+<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+<div id="modal1" class="modal">
+  <div id="category-form">
+    <%= form_with model: @category  do |f| %>
+      <div class="modal-content">
+        <h4><%= @category.id.present? ? 'Edit Category' : 'Add Category' %></h4>
+        <a href="#" class="modal-close waves-effect waves-green btn-flat right red-text"> X </a>
+        <div class="input-field width-100">
+          <%= f.text_field :name %>
+          <%= f.label :name %>
+        </div>
+
+        <div class="input-field width-100">
+          <label> Appointment Color </label>
+          <br>
+          <br>
+          <% colors_options.map do |color| %>
+            <p class="color-container" style="background-color: <%= color %>; border-color: <%= color %>; ">
+              <label>
+                <input name="service_category[appointment_color]" type="checkbox" class="" value="<%= color %>" <%= 'checked' if f.object&.appointment_color == color %>/>
+                <span></span>
+              </label>
+            </p>
+          <% end  %>
+        </div>
+
+
+        <div class="input-field width-100">
+          <%= f.text_area :description %>
+          <%= f.label :description %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <%= f.submit :save, class: 'modal-close waves-effect waves-green btn-flat' %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+  setTimeout(function(){
+      $(".color-container input").change(function(){
+          console.log('clicked');
+          if ($(this).is(":checked")){
+              $(this).parents(".input-field").find('input').prop('checked', false);
+              $(this).prop('checked', true)
+          }
+      })
+  }, 50)
+
+</script>

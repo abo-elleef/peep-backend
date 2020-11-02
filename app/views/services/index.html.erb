@@ -26,10 +26,10 @@
             </a>
             <ul id='dropdown<%= category.id %>' class='dropdown-content'>
               <li>
-                <%= link_to 'Add Service', new_service_path(category_id: category.id) %>
+                <%= link_to 'Add Service', new_service_category_path(category_id: category.id, format: :js), remote: true %>
               </li>
               <li>
-                <%= link_to 'Edit Category', edit_service_category_path(id: category.id) %>
+                <%= link_to 'Edit Category', edit_service_category_path(id: category.id,format: :js), remote: true %>
               </li>
               <li class="divider" tabindex="-1"></li>
               <li>

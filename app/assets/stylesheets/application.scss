@@ -48,3 +48,21 @@
   align-items: center;
   padding: 10px 30px;
 }
+
+#category-form{
+  .color-container {
+    display: inline-block;
+    width: 55px;
+    height: 55px;
+    margin-left: 20px;
+    border: 1px solid;
+    border-radius: 50%;
+    label {
+      margin-left: 16px;
+      margin-top: 16px;
+    }
+  }
+}
+[type="checkbox"] + span:not(.lever):before, [type="checkbox"]:not(.filled-in) + span:not(.lever):after {
+  border: none;
+}
