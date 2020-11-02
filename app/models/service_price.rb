@@ -34,6 +34,11 @@ class ServicePrice < ApplicationRecord
     service.service_category_id
   end
 
+  def duration_stringified
+    # TODO this should be string as 1 h and 3 minutes
+    duration
+  end
+
   def full_name
     "#{service_name} #{name}"
   end

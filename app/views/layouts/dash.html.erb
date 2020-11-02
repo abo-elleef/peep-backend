@@ -42,7 +42,7 @@
         </li>
         <li class="p-3 valign-wrapper">
           <i class="Medium material-icons">work</i>
-          <a class="ms-2" href="https://peep-staging-front.herokuapp.com/dash/services"> Services </a>
+          <a class="ms-2" href="/services"> Services </a>
         </li>
         <li class="p-3 valign-wrapper">
           <i class="Medium material-icons">add_shopping_cart</i>
@@ -74,6 +74,9 @@
       $(document).on('turbolinks:load', function () {
           $('select.material-select').formSelect();
           $('.dropdown-trigger').dropdown();
+          $('.collapsible').collapsible();
+
+
       })
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>

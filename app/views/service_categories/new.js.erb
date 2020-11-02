@@ -1,0 +1,4 @@
+$(".modal").remove();
+$("body").append('<%= escape_javascript render "service_categories/form"  %>');
+$(".modal").modal();
+$(".modal").modal('open');
