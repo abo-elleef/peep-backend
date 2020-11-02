@@ -3,7 +3,7 @@
     <div class="line">
       <div class="input-field">
         <%= f.label :duration %>
-        <%= f.number_field :duration %>
+        <%= f.number_field :duration, class: 'autocomplete' %>
       </div>
       <div class="input-field">
         <%= f.select :pricing_type, options_for_select(price_type_options), {}, class: 'material-select' %>
