@@ -47,7 +47,7 @@ RSpec.describe "Service Categories API", type: :request do
       test_category
       put "/service_categories/#{test_category.id}", {headers: headers, params: {service_category: {name: "updated category name"}}}
       test_category.reload
-      expect(response).to have_http_status(:success)
+      expect(response.code).to eq("302")
       expect(test_category.name).to eq("updated category name")
     end
   end
