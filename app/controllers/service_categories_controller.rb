@@ -39,11 +39,23 @@ class ServiceCategoriesController < ApplicationController
 
   def destroy
     service_category = ServiceCategory.find(params[:id])
-    if service_category.destroy
-      render json: {}, status: :ok
-    else
-      render json: {}, status: :bad_request
+    respond_to do |format|
+      format.json {
+        if service_category.destroy
+          render json: {}, status: :ok
+        else
+          render json: {}, status: :bad_request
+        end
+      }
+      format.html {
+        if service_category.destroy
+          redirect_to services_path
+        else
+          render json: {}, status: :bad_request
+        end
+      }
     end
+
   end
 
   private

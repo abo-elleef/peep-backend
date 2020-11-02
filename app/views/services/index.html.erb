@@ -9,7 +9,14 @@
     </a>
   </div>
   <div>
-    <%= link_to 'New Service', new_service_path, class: 'btn' %>
+    <a class='dropdown-trigger btn' href='#' data-target='dropdown-header'>Add New</a>
+
+    <!-- Dropdown Structure -->
+    <ul id='dropdown-header' class='dropdown-content auto'>
+      <li><%= link_to 'Service', new_service_path %></li>
+      <li class="divider" tabindex="-1"></li>
+      <li><%= link_to 'Category', new_service_category_path(format: :js), remote: true %></li>
+    </ul>
   </div>
 
 </header>
@@ -19,14 +26,14 @@
     <div class="col s8 push-s2">
       <% @categories.map do |category| %>
         <div class="category-header">
-          <p> <%= category.name %></p>
+          <h5 class="main-color"> <%= category.name %></h5>
           <div>
-            <a class='dropdown-trigger btn' href='#' data-target='dropdown<%= category.id %>'>
+            <a class='dropdown-trigger secondary-bg btn-small' href='#' data-target='dropdown<%= category.id %>'>
               <i class="material-icons">menu</i>
             </a>
-            <ul id='dropdown<%= category.id %>' class='dropdown-content'>
+            <ul id='dropdown<%= category.id %>' class='dropdown-content auto'>
               <li>
-                <%= link_to 'Add Service', new_service_category_path(category_id: category.id, format: :js), remote: true %>
+                <%= link_to 'Add Service', new_service_path(category_id: category.id) %>
               </li>
               <li>
                 <%= link_to 'Edit Category', edit_service_category_path(id: category.id,format: :js), remote: true %>
@@ -37,10 +44,8 @@
                             data: {:confirm => 'Are you sure?'}, :method => :delete%>
               </li>
             </ul>
-
           </div>
         </div>
-
         <ul class="collapsible">
           <% service_by_category(@services, category).map do |service| %>
             <li style=" border-left: 5px solid <%= category.appointment_color %>">
@@ -81,6 +86,7 @@
             </li>
           <% end %>
         </ul>
+        <div class="divider"></div>
       <% end %>
     </div>
   </div>

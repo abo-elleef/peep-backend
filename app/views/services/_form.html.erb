@@ -27,7 +27,7 @@
             <%= f.label :description %>
           </div>
           <div class="input-field width-100">
-            <%= f.select :service_category_id, service_categories_options,{selected: f.object.service_category_id}, class: 'material-select', required: true%>
+            <%= f.select :service_category_id, service_categories_options,{selected: f.object.service_category_id, required: true}, class: 'material-select', required: true%>
             <%= f.label :service_category_id %>
           </div>
 

@@ -1,24 +1,6 @@
 @import "variables";
 
 
-html, body {
-  margin:0;
-  height:100%;
-}
-header{
-  background-color: $white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky;
-  z-index: 12;
-  padding: 30px;
-  min-height: 75px;
-  p {
-    font-size: 24px;
-    font-weight: bolder;
-  }
-}
 
 #app-container{
   display: grid;
@@ -150,36 +132,7 @@ $end: right;
 }
 
 
-.main-color{
-  color: $dark-blue
-}
 
-.main-bg{
-  background-color: $dark-blue;
-  color: $white
-}
-.secondary-bg{
-  background-color: $dark-green;
-  color: $white
-}
-
-.pink-bg{
-  background-color: $light-pink;
-}
-.gray{
-  color: $darker-gray
-}
-
-.height-100{
-  height: 100%;
-}
-
-.width-100{
-  width: 100%;
-}
-.left-border{
-  border-left: 1px solid $border-color;
-}
 
 .soon{
   font-size: 10px;
@@ -216,4 +169,66 @@ $end: right;
       top: 1rem;
     }
   }
+}
+// general rules
+
+html, body {
+  margin:0;
+  height:100%;
+}
+header{
+  background-color: $white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  z-index: 12;
+  padding: 30px;
+  min-height: 75px;
+  p {
+    font-size: 24px;
+    font-weight: bolder;
+  }
+}
+
+a.btn:visited{
+  color: $white;
+}
+ul.select-dropdown.auto,
+ul.dropdown-content.auto {
+  width: auto !important;
+  li > a {
+    white-space: nowrap;
+  }
+}
+
+.main-color{
+  color: $light-blue
+}
+
+.main-bg{
+  background-color: $dark-blue;
+  color: $white
+}
+.secondary-bg{
+  background-color: $dark-green;
+  color: $white
+}
+
+.pink-bg{
+  background-color: $light-pink;
+}
+.gray{
+  color: $darker-gray
+}
+
+.height-100{
+  height: 100%;
+}
+
+.width-100{
+  width: 100%;
+}
+.left-border{
+  border-left: 1px solid $border-color;
 }
