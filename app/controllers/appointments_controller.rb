@@ -88,7 +88,7 @@ class AppointmentsController < ApplicationController
 
   def calendar
     @locations = Location.all
-    @staff = Staff.limit(10)
+    @staff = Staff.all
   end
 
   def calendar_events
