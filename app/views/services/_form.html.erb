@@ -1,11 +1,11 @@
 <div id="form-container">
   <div class="form-header">
-    <a class="waves-effect waves-teal btn-flat" href="/services">x</a>
+    <a class="waves-effect waves-red btn-flat" href="/services">x</a>
     <p class="form-title"> <%= @service.id ? 'Edit Service' : 'Add Service' %></p>
     <div>
       <% if @service.id.present? %>
         <%= link_to 'Delete', service_path(id: @service.id),
-                    data: {:confirm => 'Are you sure?', class: 'waves-effect waves-blue btn-flat red-text'}, :method => :delete%>
+                    data: {:confirm => 'Are you sure?'}, class: 'waves-effect waves-red btn-flat red-text', :method => :delete%>
       <% end  %>
       <a class="waves-effect waves-blue btn" onclick="submitForm();">Save</a>
     </div>

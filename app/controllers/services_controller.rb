@@ -52,27 +52,14 @@ class ServicesController < ApplicationController
   end
 
   def update
-    service = Service.find(params[:id])
-    respond_to do |format|
-      format.json {
-        if service.update(service_params)
-          service.staff_ids = service_params[:staff_ids]
-          render json: {data: ServiceSerializer.new(service)}, status: :ok
-        else
-          render json: service.errors, status: :unprocessable_entity
-        end
-      }
-      format.html {
-        @service = service
-        if @service.update(service_params)
-          @service.staff_ids = service_params[:staff_ids]
-          redirect_to services_path
-        else
-          redirect_to edit_service_path(@service)
-        end
-      }
+    @service = Service.find(params[:id])
+    if @service.update(service_params)
+      @service.staff_ids = service_params[:staff_ids]
+      redirect_to services_path
+    else
+      @staff = Staff.all
+      render :edit
     end
-
   end
 
   def destroy
