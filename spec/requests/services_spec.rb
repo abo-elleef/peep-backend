@@ -41,7 +41,7 @@ RSpec.describe "Services API", type: :request do
   describe "POST /create" do
     it "create new service with the right params" do
       expect { post "/services",  {headers: headers, params: {service: attributes_for(:service, service_category_id: test_category.id)} }}.to change(Service, :count).by(+1)
-      expect(response).to have_http_status(:success)
+      expect(response.code).to eq("302")
       expect(Service.last.service_category_id).to eq(test_category.id)
     end
   end
@@ -51,7 +51,7 @@ RSpec.describe "Services API", type: :request do
       test_service
       put "/services/#{test_service.id}",  {headers: headers, params: {service: {name: "updated service name"}}}
       test_service.reload
-      expect(response).to have_http_status(:success)
+      expect(response.code).to eq("302")
       expect(test_service.name).to eq("updated service name")
     end
   end
