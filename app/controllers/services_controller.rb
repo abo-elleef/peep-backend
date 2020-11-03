@@ -1,14 +1,15 @@
 class ServicesController < ApplicationController
   layout :resolve_layout
+
   def index
     filters = params.slice(:name, :search)
     services = Service.preload(:service_category, :service_prices, :staffs).peep_filter(filters)
     respond_to do |format|
-      format.html{
+      format.html {
         @categories = ServiceCategory.where(id: services.map(&:service_category_id)).all
         @services = services
       }
-      format.json{
+      format.json {
         serializers = ActiveModel::Serializer::ArraySerializer.new(services, each_serializer: ServiceSerializer)
         render json: {data: serializers}, status: :ok
       }
@@ -23,7 +24,7 @@ class ServicesController < ApplicationController
 
   def new
     @staff = Staff.all
-    @service = Service.new({service_category_id: params[:category_id] })
+    @service = Service.new({service_category_id: params[:category_id]})
     @service.service_prices.build
   end
 
@@ -39,50 +40,26 @@ class ServicesController < ApplicationController
   end
 
   def create
-    service = Service.new(service_params)
-    respond_to do |format|
-      format.json {
-        if service.save
-          service.staff_ids = service_params[:staff_ids]
-          render json: {data: ServiceSerializer.new(service)}, status: :created
-        else
-          render json: service.errors, status: :unprocessable_entity
-        end
-      }
-      format.html {
-        if service.save
-          service.staff_ids = service_params[:staff_ids]
-          redirect_to services_path
-        else
-          redirect_to new_service_path, notice: 'Can not create Service'
-        end
-      }
+    @service = Service.new(service_params)
+    if @service.save
+      @service.staff_ids = service_params[:staff_ids]
+      redirect_to services_path
+    else
+      @staff = Staff.all
+      render :new
     end
 
   end
 
   def update
-    service = Service.find(params[:id])
-    respond_to do |format|
-      format.json{
-        if service.update(service_params)
-          service.staff_ids = service_params[:staff_ids]
-          render json: {data: ServiceSerializer.new(service)}, status: :ok
-        else
-          render json: service.errors, status: :unprocessable_entity
-        end
-      }
-      format.html{
-        @service = service
-        if @service.update(service_params)
-          @service.staff_ids = service_params[:staff_ids]
-          redirect_to services_path
-        else
-          redirect_to edit_service_path(@service)
-        end
-      }
+    @service = Service.find(params[:id])
+    if @service.update(service_params)
+      @service.staff_ids = service_params[:staff_ids]
+      redirect_to services_path
+    else
+      @staff = Staff.all
+      render :edit
     end
-
   end
 
   def destroy
@@ -119,7 +96,7 @@ class ServicesController < ApplicationController
 
   def resolve_layout
     case action_name
-    when "new", "edit", 'show'
+    when "new", "edit", "create", 'update'
       "forms"
     else
       "dash"
