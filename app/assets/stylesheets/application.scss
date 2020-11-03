@@ -32,6 +32,8 @@
     box-shadow: 0 1px 1px -1px rgba(0, 0, 0, 0.4);
   }
 }
+
+// invoice
 #invoice-details-wrapper {
   .line-row {
     padding: 15px 0;
@@ -48,6 +50,7 @@
     }
   }
 }
+// services
 #services-index {
   .collapsible-header,.collapsible-header > div {
     display: flex;
@@ -76,6 +79,37 @@
     }
   }
 }
+// client
+#client-profile-container{
+  height: calc(100% - 75px);
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 40px;
+  align-items: start;
+  .profile-appointment-row{
+    align-items: center;
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+  }
+  .profile-product-row{
+    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr auto;
+  }
+  #client-sales{
+    height: calc(100vh - 450px);
+    overflow-y: scroll;
+    .tabs{
+      position: sticky;
+      top: 0;
+    }
+  }
+  #personal-info{
+    height: auto !important;
+  }
+}
+
+// overrides
 [type="checkbox"] + span:not(.lever):before, [type="checkbox"]:not(.filled-in) + span:not(.lever):after {
   border: none;
 }

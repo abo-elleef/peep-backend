@@ -131,7 +131,14 @@ $end: right;
   }
 }
 
-
+@for $i from 10 through 30 {
+  .fs-#{$i} {
+    font-size: (1px * $i) !important;
+  }
+}
+.bold { font-weight: bold}
+.bolder { font-weight: bolder}
+.capitalize{text-transform: capitalize;}
 
 
 .soon{

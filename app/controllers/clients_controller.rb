@@ -18,7 +18,11 @@ class ClientsController < ApplicationController
 
   def show
     @client = Client.find(params[:id])
-    # render json: { data: ClientSerializer.new(client) },  status: :ok
+    @stats = ClientSales.perform(params[:id])
+    @appointments = @client.appointments.order("appointments.id DESC").preload(:appointment_services).limit(10).map(&:appointment_services).flatten.compact
+    @products = @client.invoices.joins(:lines).where("lines.sellable_type = 'Product'").order("invoices.id DESC").
+        limit(10).map(&:lines).flatten.select {|a| a.sellable_type = 'Product'}.first(10)
+    @invoices = @client.invoices.order("invoices.id DESC").limit(10)
   end
 
   def mini_details
@@ -33,7 +37,6 @@ class ClientsController < ApplicationController
   end
 
   def products
-    # TODO should be only products
     client = Client.find(params[:id])
     lines = client.invoices.joins(:lines).where("lines.sellable_type = 'Product'").order("invoices.id DESC").
         limit(10).map(&:lines).flatten.select {|a| a.sellable_type = 'Product'}.first(10)
