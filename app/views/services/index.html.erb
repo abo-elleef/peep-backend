@@ -41,7 +41,7 @@
               <li class="divider" tabindex="-1"></li>
               <li>
                 <%= link_to 'Delete Category', service_category_path(id: category.id),
-                            data: {:confirm => 'Are you sure?'}, :method => :delete%>
+                            data: {:confirm => 'Are you sure?'}, class: 'waves-effect waves-red red-text', :method => :delete%>
               </li>
             </ul>
           </div>

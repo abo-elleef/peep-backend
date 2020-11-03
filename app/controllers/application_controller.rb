@@ -52,12 +52,12 @@ class ApplicationController < ActionController::Base
     #   header.split(' ').last if header
     # end
 
-    # def current_location
-    #   Location.first
-    #   # return @current_location if @current_location.present? || auth_token.blank?
-    #   # data = JwtService.decode(auth_token)
-    #   # @current_location = Location.find(data['location_id'])
-    # end
+    def current_location
+      Location.first
+      # return @current_location if @current_location.present? || auth_token.blank?
+      # data = JwtService.decode(auth_token)
+      # @current_location = Location.find(data['location_id'])
+    end
 
     # def current_user
     #   return @current_user if @current_user.present? || auth_token.blank?
