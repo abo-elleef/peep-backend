@@ -1,0 +1,63 @@
+<header class="p-4">
+  <p class="m-0">Client Details</p>
+</header>
+<div id="client-profile-container">
+  <div class="row p-8">
+    <div class="col s4 card p-6">
+      <div class="">
+        image show go here
+      </div>
+      <div class="">
+        <p class="center"> <%= @client.name %></p>
+      </div>
+      <div class="divider"></div>
+      <br>
+      <div class="">
+        <label> Phone </label>
+        <p class="mt-0">  <%= @client.phone %> </p>
+      </div>
+      <div class="">
+        <label> Email </label>
+        <p class="mt-0">  <%= @client.email %> </p>
+      </div>
+      <div class="">
+        <label> Address </label>
+        <p class="mt-0">  <%= @client.address_string %> </p>
+      </div>
+      <div class="">
+        <label> Notes </label>
+        <p class="mt-0">  <%= @client.notes %> </p>
+      </div>
+    </div>
+    <div class="col s7 push-s1 blue">
+      <div class="row white center">
+        <div class="row mb-0 ">
+          <div class="col s6 ptb-2"> main stat ses</div>
+          <div class="col s6 ptb-2 left-border"> main stat ses</div>
+        </div>
+        <div class="divider"></div>
+        <div class="row mb-0">
+          <div class="col s3 ptb-2"> main stat ses</div>
+          <div class="col s3 ptb-2 left-border"> main stat ses</div>
+          <div class="col s3 ptb-2 left-border"> main stat ses</div>
+          <div class="col s3 ptb-2 left-border"> main stat ses</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="row">
+          <div class="col s12">
+            <ul class="tabs">
+              <li class="tab col s3"><a href="#test1">Appointments</a></li>
+              <li class="tab col s2"><a class="active" href="#test2">Products</a></li>
+              <li class="tab col s2"><a href="#test3">Invoices</a></li>
+            </ul>
+          </div>
+          <div id="test1" class="col s12">Test 1</div>
+          <div id="test2" class="col s12">Test 2</div>
+          <div id="test3" class="col s12">Test 3</div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

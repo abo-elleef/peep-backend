@@ -9,9 +9,16 @@ class ClientsController < ApplicationController
 
   end
 
+  def new
+    @client = Client.new
+  end
+  def edit
+    @client = Client.find(params[:id])
+  end
+
   def show
-    client = Client.find(params[:id])
-    render json: { data: ClientSerializer.new(client) },  status: :ok
+    @client = Client.find(params[:id])
+    # render json: { data: ClientSerializer.new(client) },  status: :ok
   end
 
   def mini_details
