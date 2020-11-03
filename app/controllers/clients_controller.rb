@@ -1,10 +1,11 @@
 class ClientsController < ApplicationController
-
+  layout :resolve_layout
   def index
     clients = Client.search(params[:search]).desc_order
-    pagy, clients = pagy(clients, page: page_index, items: page_size )
-    serializers = ActiveModel::Serializer::ArraySerializer.new(clients, each_serializer: ClientSerializer)
-    render json: {data: serializers, meta: pagy_meta_data(pagy)},  status: :ok
+    @pagy, @clients = pagy(clients, page: page_index, items: page_size )
+
+    # serializers = ActiveModel::Serializer::ArraySerializer.new(clients, each_serializer: ClientSerializer)
+    # render json: {data: serializers, meta: pagy_meta_data(pagy)},  status: :ok
 
   end
 
@@ -95,5 +96,13 @@ class ClientsController < ApplicationController
                                      :language, :gender, :birthday, :notes, :global_notes,
                                      :street, :area, :block, :avenue, :building
                                      )
+    end
+    def resolve_layout
+      case action_name
+      when "new", "edit"
+        "forms"
+      else
+        "dash"
+      end
     end
 end

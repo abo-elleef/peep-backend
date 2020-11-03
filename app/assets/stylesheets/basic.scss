@@ -210,6 +210,10 @@ ul.dropdown-content.auto {
   background-color: $dark-blue;
   color: $white
 }
+.btn.secondary-bg:focus,
+.btn-small.secondary-bg:focus,
+.btn-large.secondary-bg:focus,
+.btn-floating.secondary-bg:focus,
 .secondary-bg{
   background-color: $dark-green;
   color: $white

@@ -1,0 +1,31 @@
+<header class="p-4">
+  <p class="m-0">Clients</p>
+</header>
+<div class="main-section">
+  <div id="filters-row">
+    <div class="input-field col s6">
+      <input  id="clients_search" type="text">
+      <label for="clients_search">Search</label>
+    </div>
+    <div class="actions">
+      <a class='dropdown-trigger btn waves-effects secondary-bg ' href='#' data-target='dropdown1'>Download</a>
+      <%= link_to 'New Client', new_client_path, class: 'btn waves-teal' %>
+
+      <!-- Dropdown Structure -->
+      <ul id='dropdown1' class='dropdown-content'>
+        <li><a target="_blank" href="/export/clients?export_type=xlsx">Excel</a></li>
+        <li><a target="_blank" href="/export/clients?export_type=csv">CSV</a></li>
+      </ul>
+
+    </div>
+  </div>
+  <div class="data-row white">
+    <%= render "index" %>
+  </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+  $("#clients_search").keyup(function(){
+      $.get("clients.js?search=" + $(this).val());
+  })
+</script>
