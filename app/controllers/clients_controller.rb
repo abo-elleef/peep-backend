@@ -58,7 +58,6 @@ class ClientsController < ApplicationController
 
   def create
     client = Client.new(client_params)
-    client.location = current_location
     if client.save
       render json: { data: ClientSerializer.new(client) }, status: :created
     else
