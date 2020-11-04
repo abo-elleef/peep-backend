@@ -27,4 +27,9 @@ class Client < ApplicationRecord
   def name
     "#{first_name} #{last_name}"
   end
+
+
+  def address_string
+    [self.street, self.area, self.block, self.avenue, self.building].reject(&:blank?).join(", ")
+  end
 end
