@@ -13,18 +13,17 @@
 </head>
 
 <body>
-<div id="form-container">
   <%= yield %>
   <script type="text/javascript" charset="utf-8">
       $(document).on('turbolinks:load', function () {
           $('select.material-select').formSelect();
           $('select.select2').select2();
           $('.dropdown-trigger').dropdown();
-
+          $('.tabs').tabs();
+          $('.datepicker').datepicker();
       })
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-</div>
 
 </body>
 </html>

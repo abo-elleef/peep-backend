@@ -17,8 +17,25 @@
 @import "materialize";
 @import "basic";
 .main-section{
-  padding: 20px;
+  padding: 0 20px;
+  &.clients {
+    display: grid;
+    grid-template-rows: 80px calc(100vh - 180px);
+  }
+  .data-row{
+    overflow-y: scroll;
+  }
 }
+.sticky-table{
+  th {
+    background: white;
+    position: sticky;
+    top: 0; /* Don't forget this, required for the stickiness */
+    box-shadow: 0 1px 1px -1px rgba(0, 0, 0, 0.4);
+  }
+}
+
+// invoice
 #invoice-details-wrapper {
   .line-row {
     padding: 15px 0;
@@ -35,6 +52,7 @@
     }
   }
 }
+// services
 #services-index {
   .collapsible-header,.collapsible-header > div {
     display: flex;
@@ -62,7 +80,45 @@
       margin-top: 16px;
     }
   }
+  [type="checkbox"] + span:not(.lever):before, [type="checkbox"]:not(.filled-in) + span:not(.lever):after {
+    border: none;
+  }
 }
-[type="checkbox"] + span:not(.lever):before, [type="checkbox"]:not(.filled-in) + span:not(.lever):after {
-  border: none;
+// client
+#client-profile-container{
+  height: calc(100% - 75px);
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 20px;
+  align-items: start;
+  .profile-appointment-row{
+    align-items: center;
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+  }
+  .profile-product-row{
+    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr auto;
+  }
+  #client-sales{
+    max-height: calc(100vh - 350px);
+    height: auto;
+    overflow-y: scroll;
+    .tabs{
+      position: sticky;
+      top: 0;
+    }
+  }
+  #personal-info{
+    height: auto !important;
+  }
+}
+#clients_search{
+  min-width: 300px;
+}
+
+// overrides
+.pagination{
+  float: right;
 }

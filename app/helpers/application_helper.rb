@@ -1,4 +1,6 @@
 module ApplicationHelper
+  include Pagy::Frontend
+
 
   def time_diff(seconds)
     "%02d h %02d m" % [seconds/3600%24, seconds/60%60]
@@ -31,6 +33,14 @@ module ApplicationHelper
 
   def colors_options
     ['#F3A2BB', '#DBA9E4', '#BDC1E6', '#B1DDF7', '#A2E1ED', '#84D2CB', '#B1E3BF', '#E7F28E', '#FBED82', '#F5C271']
+  end
+
+  def gender_options
+    [['Unknown', nil], ['Female', 'female'], ['Male', 'male']]
+  end
+
+  def referral_options
+    ['Walk In', 'walk-in']
   end
 
 end

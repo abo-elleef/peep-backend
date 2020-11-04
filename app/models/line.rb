@@ -52,6 +52,10 @@ class Line < ApplicationRecord
     unit_price
   end
 
+  def sold_price
+    unit_price.to_f * quantity.to_f
+  end
+
   private
 
     def set_data

@@ -131,7 +131,29 @@ $end: right;
   }
 }
 
-
+@for $i from 10 through 30 {
+  .fs-#{$i} {
+    font-size: (1px * $i) !important;
+  }
+}
+.bold { font-weight: bold}
+.bolder { font-weight: bolder}
+.capitalize{text-transform: capitalize;}
+.box-shadow{
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+}
+.profile-avatar{
+  display: flex;
+  width: 120px;
+  height: 120px;
+  font-size: 3rem;
+  margin: 0px auto 15px;
+  background-size: cover;
+  background-color: #eee;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+}
 
 
 .soon{
@@ -210,6 +232,10 @@ ul.dropdown-content.auto {
   background-color: $dark-blue;
   color: $white
 }
+.btn.secondary-bg:focus,
+.btn-small.secondary-bg:focus,
+.btn-large.secondary-bg:focus,
+.btn-floating.secondary-bg:focus,
 .secondary-bg{
   background-color: $dark-green;
   color: $white

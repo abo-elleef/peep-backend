@@ -21,6 +21,8 @@
   margin: 0;
   height:100%;
   grid-template-rows: 80px 1fr;
+  align-items: stretch;
+  justify-items: stretch;
 }
 
 .form-header{
@@ -35,6 +37,7 @@
     font-size: 24px;
   }
 }
+
 #checkout-page{
   margin: 0;
   #payment-types-container, #sale-actions{
@@ -55,7 +58,6 @@
     width: 100%;
   }
 }
-
 #appointment-details{
   .service-row{
     margin: 30px auto;
@@ -83,7 +85,6 @@
 
   }
 }
-
 #appointment-form{
   .service-row{
     margin: 30px auto;
@@ -148,5 +149,11 @@
   }
   .autocomplete-content.dropdown-content{
     max-height: 250px;
+  }
+}
+#client-form{
+  form{
+    display: grid;
+    grid-template-columns: 1fr 2px 1fr;
   }
 }
