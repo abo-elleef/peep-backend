@@ -3,9 +3,9 @@
 </header>
 <div class="main-section">
   <div id="filters-row">
-    <div class="input-field col s6">
-      <input  id="clients_search" type="text">
-      <label for="clients_search">Search</label>
+    <div class="input-field">
+      <i class="material-icons prefix" style="color: #999">search</i>
+      <input  id="clients_search" class="width-100" placeholder="Search Client data" type="text">
     </div>
     <div class="actions">
       <a class='dropdown-trigger btn waves-effects secondary-bg ' href='#' data-target='dropdown1'>Download</a>
@@ -19,7 +19,7 @@
 
     </div>
   </div>
-  <div class="data-row white">
+  <div class="data-row white box-shadow">
     <%= render "index" %>
   </div>
 </div>

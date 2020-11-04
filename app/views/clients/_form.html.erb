@@ -11,9 +11,19 @@
     </div>
 
   </div>
-  <div class="pink-bg" id="client-form">
+  <div id="client-form">
     <%= form_with(model: @client, html: {class: 'height-100'}) do |f| %>
-      <div class="white p-8 m-8">
+      <div class=" p-8 m-8">
+        <% if @client.errors.full_messages.any? %>
+          <div class="p-4">
+            <p class="red-text"> Please check the following errors and Save again</p>
+            <ul class="collection">
+              <% @client.errors.full_messages.map do |msg| %>
+                <li class="red-text collection-item"><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
         <div class="row">
           <div class="input-field col s6">
             <%= f.label :first_name %>
@@ -52,14 +62,14 @@
         </div>
       </div>
       <div class="left-border"></div>
-      <div class="white p-8 m-8">
+      <div class=" p-8 m-8">
         <ul class="tabs">
           <li class="tab col s3"><a class="active" href="#test1">Personal Info</a></li>
           <li class="tab col s3"><a href="#test2">Address</a></li>
         </ul>
-        <div id="test1" class="col s12">
+        <div id="test1" class="col s12 mt-4">
           <div class="row">
-            <div class="col s8 push-s2">
+            <div class="col s12 ">
               <div class="row">
                 <div class="input-field col s12">
                   <%= f.select :gender, gender_options, {selected: f.object.gender},{class: 'material-select'} %>
@@ -87,9 +97,9 @@
             </div>
           </div>
         </div>
-        <div id="test2" class="col s12">
+        <div id="test2" class="col s12  mt-4">
           <div class="row">
-            <div class="col s8 push-s2">
+            <div class="col s12 ">
               <div class="row">
                 <div class="input-field col s12">
                   <%= f.text_field :street %>

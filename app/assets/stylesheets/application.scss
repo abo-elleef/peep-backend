@@ -87,7 +87,7 @@
   height: calc(100% - 75px);
   display: grid;
   grid-template-columns: 1fr 2fr;
-  gap: 40px;
+  gap: 20px;
   align-items: start;
   .profile-appointment-row{
     align-items: center;
@@ -100,7 +100,8 @@
     grid-template-columns: 1fr auto;
   }
   #client-sales{
-    height: calc(100vh - 450px);
+    max-height: calc(100vh - 350px);
+    height: auto;
     overflow-y: scroll;
     .tabs{
       position: sticky;
@@ -113,3 +114,6 @@
 }
 
 // overrides
+.pagination{
+  float: right;
+}

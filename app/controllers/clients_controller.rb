@@ -92,7 +92,7 @@ class ClientsController < ApplicationController
   def destroy
     client = Client.find(params[:id])
     if client.destroy
-      render json: {}, status: :ok
+      redirect_to client_path
     else
       render json: {}, status: :bad_request
     end
@@ -115,7 +115,7 @@ class ClientsController < ApplicationController
     end
     def resolve_layout
       case action_name
-      when "new", "edit"
+      when "new", "edit", "update", "create"
         "forms"
       else
         "dash"

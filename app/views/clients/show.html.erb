@@ -1,14 +1,29 @@
 <header class="p-4">
   <p class="m-0">Client Details</p>
 </header>
-<div id="client-profile-container" class="p-8">
-  <div id="personal-info" class="p-6 white">
-    <div class="">
-      image show go here
+<div id="client-profile-container" class="p-4">
+  <div id="personal-info" class="p-6 white box-shadow">
+    <div class="profile-avatar">
+      <span class="capitalize"> <%= @client.name.split("").first %></span>
     </div>
     <div class="">
       <p class="center capitalize"> <%= @client.name %></p>
     </div>
+    <a class='dropdown-trigger btn width-100' href='#' data-target='dropdown1'>options</a>
+
+    <!-- Dropdown Structure -->
+    <ul id='dropdown1' class='dropdown-content'>
+      <li><a>New Appointment <span class="soon">(soon)</span></a></li>
+      <li>
+        <%= link_to "Edit", edit_client_path(@client) %>
+      </li>
+      <li class="divider" tabindex="-1"></li>
+      <li>
+        <%= link_to 'Delete', client_path(id: @client.id),
+                    data: {:confirm => 'Are you sure?'}, class: 'waves-effect waves-red btn-flat red-text', :method => :delete %>
+      </li>
+      <li><a>Block <span class="soon">(soon)</span></a></li>
+    </ul>
     <div class="divider"></div>
     <br>
     <div class="">
@@ -35,39 +50,40 @@
     </div>
   </div>
   <div class="">
-    <div class="row white center">
+    <div class="row white center box-shadow">
       <div class="row mb-0 ">
-        <div class="col s6 ptb-8">
+        <div class="col s6 ptb-6">
           <p class="m-0 fs-20 bold"> KWD <%= @stats[:total_sales] %> </p>
           <span class="gray  fs-14 capitalize"> total sales</span>
         </div>
-        <div class="col s6 ptb-8 left-border">
+        <div class="col s6 ptb-6 left-border">
           <p class="m-0 fs-20 bold"> KWD <%= @stats[:outstanding] %> </p>
           <span class="gray  fs-14 capitalize"> outstanding </span>
         </div>
       </div>
       <div class="divider"></div>
       <div class="row mb-0">
-        <div class="col s4 ptb-8">
+        <div class="col s4 ptb-4">
           <p class="m-0 fs-20"> <%= @stats[:bookings] %> </p>
           <span class="gray  fs-14 bold capitalize"> all appointments </span>
         </div>
-        <div class="col s4 ptb-8 left-border">
+        <div class="col s4 ptb-4 left-border">
           <p class="m-0 fs-20"> <%= @stats[:completed] %> </p>
           <span class="gray  fs-14 bold capitalize"> completed </span>
         </div>
-        <div class="col s4 ptb-8 left-border">
+        <div class="col s4 ptb-4 left-border">
           <p class="m-0 fs-20"> <%= @stats[:cancelled] %> </p>
           <span class="gray fs-14 bold capitalize"> cancelled </span>
         </div>
       </div>
     </div>
-    <div id="client-sales" class="row white mt-8 mb-0">
+    <div id="client-sales" class="row white box-shadow mt-4 mb-0">
       <ul class="tabs">
         <li class="tab col s3"><a href="#test1">Appointments</a></li>
         <li class="tab col s2"><a class="active"  href="#test2">Products</a></li>
         <li class="tab col s2"><a href="#test3">Invoices</a></li>
       </ul>
+      <div class="divider"></div>
       <div id="test1" class="col s12">
         <% @appointments.map do |appointment_service| %>
           <div class="profile-appointment-row">
