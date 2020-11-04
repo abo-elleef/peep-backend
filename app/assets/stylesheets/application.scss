@@ -18,8 +18,10 @@
 @import "basic";
 .main-section{
   padding: 0 20px;
-  display: grid;
-  grid-template-rows: 80px calc(100vh - 180px);
+  &.clients {
+    display: grid;
+    grid-template-rows: 80px calc(100vh - 180px);
+  }
   .data-row{
     overflow-y: scroll;
   }
@@ -111,6 +113,9 @@
   #personal-info{
     height: auto !important;
   }
+}
+#clients_search{
+  min-width: 300px;
 }
 
 // overrides
