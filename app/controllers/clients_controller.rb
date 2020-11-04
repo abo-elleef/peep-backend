@@ -68,20 +68,24 @@ class ClientsController < ApplicationController
   end
 
   def create
-    client = Client.new(client_params)
-    if client.save
-      render json: { data: ClientSerializer.new(client) }, status: :created
+    @client = Client.new(client_params)
+    if @client.save
+      redirect_to client_path(@client)
+      # render json: { data: ClientSerializer.new(client) }, status: :created
     else
-      render json: client.errors,status: :unprocessable_entity
+      render :new
+      # render json: client.errors,status: :unprocessable_entity
     end
   end
 
   def update
-    client = Client.find(params[:id])
-    if client.update(client_params)
-      render json: { data: ClientSerializer.new(client) },  status: :ok
+    @client = Client.find(params[:id])
+    if @client.update(client_params)
+      redirect_to client_path(@client)
+      # render json: { data: ClientSerializer.new(client) },  status: :ok
     else
-      render json: client.errors,status: :unprocessable_entity
+      render :edit
+      # render json: client.errors,status: :unprocessable_entity
     end
   end
 
@@ -102,10 +106,12 @@ class ClientsController < ApplicationController
   private
 
     def client_params
-      params.require(:client).permit(:first_name, :last_name, :phone, :email, :notify_method,
+      permitted = params.require(:client).permit(:first_name, :last_name, :phone, :email, :notify_method,
                                      :language, :gender, :birthday, :notes, :global_notes,
                                      :street, :area, :block, :avenue, :building
                                      )
+      permitted[:global_notes] = permitted[:global_notes].present?
+      permitted
     end
     def resolve_layout
       case action_name

@@ -7,7 +7,7 @@
       image show go here
     </div>
     <div class="">
-      <p class="center"> <%= @client.name %></p>
+      <p class="center capitalize"> <%= @client.name %></p>
     </div>
     <div class="divider"></div>
     <br>
@@ -19,13 +19,19 @@
       <label> Email </label>
       <p class="mt-0">  <%= @client.email %> </p>
     </div>
+
+    <div class="">
+      <label> Gender </label>
+      <p class="mt-0 capitalize">  <%= @client.gender %> </p>
+    </div>
+
     <div class="">
       <label> Address </label>
-      <p class="mt-0">  <%= @client.address_string %> </p>
+      <p class="mt-0 capitalize">  <%= @client.address_string %> </p>
     </div>
     <div class="">
       <label> Notes </label>
-      <p class="mt-0">  <%= @client.notes %> </p>
+      <p class="mt-0 capitalize">  <%= @client.notes %> </p>
     </div>
   </div>
   <div class="">

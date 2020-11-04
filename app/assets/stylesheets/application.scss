@@ -78,6 +78,9 @@
       margin-top: 16px;
     }
   }
+  [type="checkbox"] + span:not(.lever):before, [type="checkbox"]:not(.filled-in) + span:not(.lever):after {
+    border: none;
+  }
 }
 // client
 #client-profile-container{
@@ -110,6 +113,3 @@
 }
 
 // overrides
-[type="checkbox"] + span:not(.lever):before, [type="checkbox"]:not(.filled-in) + span:not(.lever):after {
-  border: none;
-}
