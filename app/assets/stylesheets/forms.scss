@@ -40,6 +40,9 @@
 
 #checkout-page{
   margin: 0;
+  .pink-bg{
+    height: calc(100vh - 80px);
+  }
   #payment-types-container, #sale-actions{
     display: grid;
     column-gap: 20px;
@@ -86,6 +89,7 @@
   }
 }
 #appointment-form{
+  height: calc(100vh - 79px);
   .service-row{
     margin: 30px auto;
   }
