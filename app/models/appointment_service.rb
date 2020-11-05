@@ -38,6 +38,6 @@ class AppointmentService < ApplicationRecord
   private
 
   def set_data
-    self.ends_at ||= self.starts_at + service_price.duration.minutes
+    self.ends_at = self.starts_at + service_price.duration.minutes
   end
 end

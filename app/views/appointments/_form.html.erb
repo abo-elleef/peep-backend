@@ -7,6 +7,11 @@
   <%= form_with model: @appointment, html: {class: 'height-100'} do |f| %>
     <div class="row height-100">
       <div class="col s9">
+        <div class="row mt-4">
+          <div class="col s8 push-s2">
+            <input type="text" class="datepicker" name="date" value="<%= params[:date] %>" >
+          </div>
+        </div>
         <div id="appointment_services" class="row">
           <%= f.hidden_field :location_id %>
           <div class="col s8 push-s2">
