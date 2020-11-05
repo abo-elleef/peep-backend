@@ -22,7 +22,7 @@ class ServiceCategoriesController < ApplicationController
   def create
     service_category = ServiceCategory.new(service_category_params)
     if service_category.save
-      render json: {data: ServiceCategorySerializer.new(service_category)}, status: :created
+      redirect_to services_path
     else
       render json: service_category.errors, status: :unprocessable_entity
     end

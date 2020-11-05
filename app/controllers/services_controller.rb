@@ -6,7 +6,7 @@ class ServicesController < ApplicationController
     services = Service.preload(:service_category, :service_prices, :staffs).peep_filter(filters)
     respond_to do |format|
       format.html {
-        @categories = ServiceCategory.where(id: services.map(&:service_category_id)).all
+        @categories = ServiceCategory.all
         @services = services
       }
       format.json {

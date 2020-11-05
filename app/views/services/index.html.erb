@@ -46,46 +46,49 @@
             </ul>
           </div>
         </div>
-        <ul class="collapsible">
-          <% service_by_category(@services, category).map do |service| %>
-            <li style=" border-left: 5px solid <%= category.appointment_color %>">
-              <div class="collapsible-header">
-                <div>
-                  <i class="material-icons">menu</i><%= service.name %>
+        <% services = service_by_category(@services, category) %>
+        <% if services.any? %>
+          <ul class="collapsible">
+            <% services.map do |service| %>
+              <li style=" border-left: 5px solid <%= category.appointment_color %>">
+                <div class="collapsible-header">
+                  <div>
+                    <i class="material-icons">menu</i><%= service.name %>
+                  </div>
+                  <a href="/services/<%= service.id %>/edit">
+                    <i class="tiny material-icons">edit</i>
+                  </a>
                 </div>
-                <a href="/services/<%= service.id %>/edit">
-                  <i class="tiny material-icons">edit</i>
-                </a>
-              </div>
-              <div class="collapsible-body">
-                <table class="white">
-                  <thead>
-                  <tr>
-                    <th class="p-2"> Option</th>
-                    <th class="p-2"> Duration</th>
-                    <th class="p-2"> Price</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <% service.service_prices.map do |service_price| %>
+                <div class="collapsible-body">
+                  <table class="white">
+                    <thead>
                     <tr>
-                      <td class="p-2">
-                        <%= service_price.name %>
-                      </td>
-                      <td class="p-2">
-                        <%= service_price.duration %> min
-                      </td>
-                      <td class="p-2">
-                        KWD <%= service_price.price %>
-                      </td>
+                      <th class="p-2"> Option</th>
+                      <th class="p-2"> Duration</th>
+                      <th class="p-2"> Price</th>
                     </tr>
-                  <% end %>
-                  </tbody>
-                </table>
-              </div>
-            </li>
-          <% end %>
-        </ul>
+                    </thead>
+                    <tbody>
+                    <% service.service_prices.map do |service_price| %>
+                      <tr>
+                        <td class="p-2">
+                          <%= service_price.name %>
+                        </td>
+                        <td class="p-2">
+                          <%= service_price.duration %> min
+                        </td>
+                        <td class="p-2">
+                          KWD <%= service_price.price %>
+                        </td>
+                      </tr>
+                    <% end %>
+                    </tbody>
+                  </table>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        <% end  %>
         <div class="divider"></div>
       <% end %>
     </div>
