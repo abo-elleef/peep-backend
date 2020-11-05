@@ -160,7 +160,9 @@ $end: right;
   font-size: 10px;
   color: $dark-blue;
 }
-
+.inline-block {
+  display: inline-block;
+}
 .strike{
   text-decoration: line-through;
 }

@@ -60,7 +60,11 @@ Rails.application.routes.draw do
   resources :discounts
   resources :voucher_types
   resources :packages
-  resources :invoices, only: [:index, :show, :update, :new, :create]
+  resources :invoices, only: [:index, :show, :update, :new, :create] do
+    member do
+      get :send_email
+    end
+  end
 
   get "export/clients", to: "export#clients"
   get "export/services", to: "export#services"

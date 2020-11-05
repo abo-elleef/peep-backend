@@ -15,7 +15,7 @@ function dateHandler(info) {
     // info.dayEl.style.backgroundColor = 'red';
     let url = '/appointments/new?location_id=' + window.location_id;
     if (info) {
-        url += '&date' + info.date.toISOString()
+        url += '&date=' + info.date.toISOString();
     }
     window.location.href = url;
 }

@@ -42,13 +42,13 @@ class AppointmentsController < ApplicationController
 
 
   def new
+    params[:date] = (params[:date].present? ? Date.parse(params[:date]) : Date.today).to_date
     @appointment = Appointment.new(location_id: params[:location_id])
     @appointment.appointment_services.build(starts_at: params[:date] || Time.zone.now)
     init_selections
   end
 
 
-  #
   def create
     appointment = Appointment.new(appointment_params)
     if appointment.save!
@@ -60,6 +60,7 @@ class AppointmentsController < ApplicationController
 
   def edit
     @appointment = Appointment.find(params[:id])
+    params[:date] = @appointment.appointment_services.first.starts_at.to_date
     init_selections
   end
 
@@ -111,12 +112,24 @@ class AppointmentsController < ApplicationController
   end
 
   def appointment_params
-    params.require(:appointment).permit(
+    permitted_params = params.require(:appointment).permit(
         :status, :client_id, :location_id, :notes, :cancellation_reason_id,
         appointment_services_attributes: [
             :id, :appointment_id, :staff_id, :service_price_id, :starts_at, :ends_at, :_destroy
         ]
     )
+    set_appointment_date(permitted_params)
+  end
+
+  def set_appointment_date(hash)
+    return hash if params[:date].blank?
+    date = Date.parse(params[:date])
+    hash["appointment_services_attributes"].to_h.map do |key, value|
+      hash['appointment_services_attributes'][key]['starts_at(1i)'] = date.year.to_s
+      hash['appointment_services_attributes'][key]['starts_at(2i)'] = date.month.to_s
+      hash['appointment_services_attributes'][key]['starts_at(3i)'] = date.day.to_s
+    end
+    hash
   end
 
   def resolve_layout

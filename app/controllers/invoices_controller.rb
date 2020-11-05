@@ -7,6 +7,13 @@ class InvoicesController < ApplicationController
     render json: {data: serializers, meta: pagy_meta_data(pagy)}, status: :ok
   end
 
+
+  def send_email
+    invoice = Invoice.find params[:id]
+    #  send email include invoice details to email provided params[:email]
+    redirect_to invoice_path(invoice)
+  end
+
   def show
     invoice = Invoice.find(params[:id])
     respond_to do |format|
@@ -15,7 +22,6 @@ class InvoicesController < ApplicationController
         render json: {data: InvoiceSerializer.new(invoice)}, status: :ok
       }
     end
-
   end
 
   def new

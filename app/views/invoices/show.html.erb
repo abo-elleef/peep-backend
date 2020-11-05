@@ -1,18 +1,27 @@
 <header class="p-4">
   <p class="m-0">Invoice Details</p>
-  <a class='dropdown-trigger waves-effect waves-teal btn-flat' href='#' data-target='dropdown1'>Options</a>
+  <div>
+    <form id="email-form" action="/invoices/<%= @invoice.id %>/send_email" class="inline-block hide">
+      <div class="field-input inline-block" style="width: 300px;">
+        <input type="email" name="email" required placeholder="youremail@domain.com">
+      </div>
+      <div class="field-input inline-block">
+        <button type="submit" class="btn">Send</button>
+      </div>
+    </form>
+    <a class='dropdown-trigger waves-effect waves-teal btn-flat' href='#' data-target='dropdown1'>Options</a>
 
 
-  <!-- Dropdown Structure -->
-  <ul id='dropdown1' class='dropdown-content'>
-    <li><a href="#!">Download <span class="soon">(soon)</span></a></li>
-    <li><a id="print-link">Print</a></li>
-    <li class="divider" tabindex="-1"></li>
-    <li cla><a>Rebook <span class="soon">(soon)</span></a></li>
-  </ul>
+    <!-- Dropdown Structure -->
+    <ul id='dropdown1' class='dropdown-content'>
+      <li><a href="#!">Download <span class="soon">(soon)</span></a></li>
+      <li><a id="print-link">Print</a></li>
+      <li><a onclick="showForm();">Email</a></li>
+    </ul>
+  </div>
 </header>
-<div class="main-section">
-  <div class="row">
+<div class="">
+  <div class="row mt-4">
     <div id="invoice-details-wrapper" class="col s8 push-s2">
       <div class="card">
         <div class="card-content">
@@ -118,10 +127,13 @@
         window.print();
         window.location.reload();
     }
-
+    function showForm(){
+        $("#email-form").removeClass('hide');
+    }
     $(document).on('turbolinks:load', function () {
         $('#print-link').click(function(e){
             printInvoice();
         })
     })
+
 </script>
