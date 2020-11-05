@@ -168,21 +168,21 @@ $end: right;
 }
 
 .input-field.input-outlined {
-  > input {
-    border: 2px solid #eee;
+  > input, textarea{
+    border: 2px solid #eaeaea;
     padding: 6px 12px;
     width: calc(100% - 2.5rem);
     float: none;
     display: block;
-    border-radius: 4px;
+    border-radius: 5px;
     transition: box-shadow, border-color 0.15s;
     &:focus:not([readonly]) {
-      border-color: $light-blue;
+      border: 2px solid $light-blue;
       box-shadow: 0 1px 0 0px $light-blue;
     }
   }
   > label {
-    left: 10px;
+    left: 15px;
     display: inline-flex;
     width: auto !important;
     &.active {
@@ -190,6 +190,8 @@ $end: right;
       border-left: 4px solid white;
       border-right: 4px solid white;
       transform: translateY(-1.75rem);
+      font-size: 10px;
+      left: 5px;
       top: 1rem;
     }
   }

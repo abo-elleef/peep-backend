@@ -29,12 +29,12 @@
             <h5>Basic Info</h5>
             <p>Add a service name and choose the treatment type</p>
             <div class="divider"></div>
-            <div class="input-field width-100">
+            <div class="input-field input-outlined width-100">
               <%= f.label :name %>
               <%= f.text_field :name %>
 
             </div>
-            <div class="input-field width-100">
+            <div class="input-field input-outlined width-100">
               <%= f.text_area :description %>
               <%= f.label :description %>
             </div>
@@ -106,7 +106,7 @@
             <h5>Extra Time</h5>
             <p> Enable extra time after service </p>
             <div>
-              <div class="input-field width-100">
+              <div class="input-field  width-100">
                 <div class="switch">
                   <label>
                     <%= f.check_box :extra_time %>
@@ -117,7 +117,7 @@
               </div>
             </div>
             <div class="row <%= 'hide ' unless  f.object.extra_time? %>" id="extra_columns">
-              <div class="input-field col s4">
+              <div class="input-field input-outlined col s4">
                 <%= f.label :extra_time_duration, 'Duration' %>
                 <%= f.number_field :extra_time_duration %>
               </div>

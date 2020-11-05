@@ -1,7 +1,7 @@
 <div class="nested-fields">
   <div class="service-price-row">
     <div class="line">
-      <div class="input-field">
+      <div class="input-field input-outlined">
         <%= f.label :duration %>
         <%= f.number_field :duration, class: 'autocomplete' %>
       </div>
@@ -9,7 +9,7 @@
         <%= f.select :pricing_type, options_for_select(price_type_options), {}, class: 'material-select' %>
         <%= f.label :pricing_type %>
       </div>
-      <div class="input-field">
+      <div class="input-field input-outlined">
         <%= f.label :price %>
         <%= f.number_field :price %>
       </div>
@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="line">
-      <div class="input-field name">
+      <div class="input-field name input-outlined">
         <%= f.text_field :name %>
         <%= f.label :name %>
       </div>
