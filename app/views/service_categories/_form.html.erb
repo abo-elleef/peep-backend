@@ -3,7 +3,7 @@
   <div id="category-form">
     <%= form_with model: @category  do |f| %>
       <div class="modal-content">
-        <h4><%= @category.id.present? ? 'Edit Category' : 'Add Category' %></h4>
+        <h4 class="inline-block"><%= @category.id.present? ? 'Edit Category' : 'Add Category' %></h4>
         <a href="#" class="modal-close waves-effect waves-green btn-flat right red-text"> X </a>
         <div class="input-field width-100">
           <%= f.text_field :name %>
