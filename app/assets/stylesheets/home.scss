@@ -1,6 +1,4 @@
-.select-wrapper{
-  min-width: 200px;
-}
+
 .time {
   .select-wrapper{
     min-width: 50px;
@@ -19,6 +17,9 @@
   .input-field{
     background: white;
     padding: 0 10px;
+  }
+  .select-wrapper{
+    min-width: 200px;
   }
 
 }
