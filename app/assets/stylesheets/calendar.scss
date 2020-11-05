@@ -1,7 +1,7 @@
 #calendar {
   margin: -80px 0px 0 0px;
   .fc-view{
-    background: #fff;
+    background: red;
   }
   .fc-view.fc-resourceTimeGridDay-view {
     overflow-x: scroll;
@@ -14,6 +14,9 @@
       height: 50px;
     }
 
+  }
+  .fc-event-main{
+    overflow: hidden;
   }
 }
 .fc-event-main{
