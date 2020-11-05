@@ -122,6 +122,12 @@
 #clients_search{
   min-width: 300px;
 }
+.tabs-container{
+  .tabs{
+    z-index: 13;
+  }
+
+}
 
 // overrides
 .pagination{
