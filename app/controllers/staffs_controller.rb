@@ -3,7 +3,7 @@ class StaffsController < ApplicationController
   layout :resolve_layout
 
   def index
-    @staffs = Staff.preload(:blocked_times).all
+    @staffs = Staff.preload(:blocked_times).peep_filter(params.slice(:search)).all
     # serializers = ActiveModel::Serializer::ArraySerializer.new(staffs, each_serializer: StaffSerializer)
     # render json: {data: serializers},  status: :ok
   end

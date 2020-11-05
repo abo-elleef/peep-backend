@@ -10,7 +10,31 @@
       <li class="tab"><a href="#test4" data-href="/permissions">Permission</a></li>
     </ul>
   </div>
-  <div id="test1" class="col s12">staff data</div>
+  <div id="test1" class="col s12">
+    <div class="main-section tabs-section">
+      <div class="filters-row">
+        <div class="input-field">
+          <i class="material-icons prefix" style="color: #999">search</i>
+          <input  id="staffs_search" class="width-100" placeholder="Search staff data" type="text">
+        </div>
+        <div class="actions">
+          <a class='dropdown-trigger btn waves-effects secondary-bg ' href='#' data-target='dropdown1'>Download</a>
+          <%= link_to 'New Staff', new_staff_path, class: 'btn waves-teal' %>
+
+          <!-- Dropdown Structure -->
+          <ul id='dropdown1' class='dropdown-content'>
+            <li><a target="_blank" href="/export/staffs?export_type=xlsx">Excel</a></li>
+            <li><a target="_blank" href="/export/staffs?export_type=csv">CSV</a></li>
+          </ul>
+
+        </div>
+      </div>
+      <div class="data-row white box-shadow">
+        <%= render "index" %>
+      </div>
+    </div>
+
+  </div>
   <div id="test2" class="col s12">closing shifts data</div>
   <div id="test3" class="col s12">shifts data</div>
   <div id="test4" class="col s12">permissions</div>
@@ -25,6 +49,9 @@
                 type: "GET",
                 url: url
             });
+        })
+        $("#staffs_search").keyup(function(){
+            $.get("staffs.js?search=" + $(this).val());
         })
     })
 
