@@ -1,43 +1,50 @@
 <header class="p-4">
   <p class="m-0">Home</p>
 </header>
-<div id="filters-row" class="main-section">
-  <div>
-  </div>
-  <div>
-    <div class="input-field mse-2 end">
-      <select id="locationSelector" class="material-select right">
-        <option value="all" selected>All Locations</option>
-        <% @locations.map do |location| %>
-          <option value="<%= location.id %>"><%= location.name %></option>
-        <% end %>
-      </select>
-      <label>Location</label>
-    </div>
-    <div class="input-field mse-2 end">
-      <select id="periodSelector" class="material-select">
-        <option value="week" selected>Week</option>
-        <option value="month">Month</option>
-      </select>
-      <label>Period</label>
-    </div>
-  </div>
-</div>
 <div class="main-section">
-  <div class="card p-4">
-    <div id="recent-sales" class="row">
-      chart
+  <div id="filters-row">
+    <div>
+    </div>
+    <div>
+      <div class="input-field mse-2 end">
+        <select id="locationSelector" class="material-select right">
+          <option value="all" selected>All Locations</option>
+          <% @locations.map do |location| %>
+            <option value="<%= location.id %>"><%= location.name %></option>
+          <% end %>
+        </select>
+        <label>Location</label>
+      </div>
+      <div class="input-field mse-2 end">
+        <select id="periodSelector" class="material-select">
+          <option value="week" selected>Week</option>
+          <option value="month">Month</option>
+        </select>
+        <label>Period</label>
+      </div>
     </div>
   </div>
-  <div id="tops" class="row">
-    <div id="top-services" class="col s6">
-      top services
+  <div class="data-row">
+    <div class="row">
+      <div class="col s12">
+        <div class="card p-4">
+          <div id="recent-sales" class="row">
+            chart
+          </div>
+        </div>
+      </div>
     </div>
-    <div id="top-staff" class="col s6">
-      top staff
+    <div id="tops" class="row">
+      <div id="top-services" class="col s6">
+        top services
+      </div>
+      <div id="top-staff" class="col s6">
+        top staff
+      </div>
     </div>
   </div>
 </div>
+
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js" integrity="sha512-d9xgZrVZpmmQlfonhQUvTR7lMPtO7NkZMkA0ABN3PHCbKA5nqylQ/yWlFAyY6hYgdF1Qh6nYiuADWwKB4C2WSw==" crossorigin="anonymous"></script>
 <script type="text/javascript" charset="utf-8">

@@ -18,10 +18,8 @@
 @import "basic";
 .main-section{
   padding: 0 20px;
-  &.clients {
-    display: grid;
-    grid-template-rows: 80px calc(100vh - 180px);
-  }
+  display: grid;
+  grid-template-rows: 100px calc(100vh - 200px);
   .data-row{
     overflow-y: scroll;
   }
@@ -54,6 +52,8 @@
 }
 // services
 #services-index {
+  height: calc(100vh - 100px);
+  overflow-y: scroll;
   .collapsible-header,.collapsible-header > div {
     display: flex;
     justify-content: space-between;
