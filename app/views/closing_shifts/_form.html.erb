@@ -19,6 +19,7 @@
           <%= f.text_field :desc%>
         </div>
       </div>
+      still missing location selection , this closing date will be applied on which locations
       <br>
       <br>
       <br>
@@ -33,6 +34,11 @@
       <br>
       <div class="row m-0 modal-footer">
         <a class="modal-close waves-effect waves-green btn-flat text-red left">cancel</a>
+        <% if  @shift.id.present? %>
+          <%= link_to 'Delete', closing_shift_path(@shift), method: :delete , remote: true,
+                      data: { confirm: "Are you sure?" },
+                      class: 'btn-flat red-text waves-effect waves-red waves left' %>
+        <% end  %>
         <%= f.submit :save, class: 'waves-effect waves-green btn' %>
       </div>
 

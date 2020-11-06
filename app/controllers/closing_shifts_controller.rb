@@ -40,7 +40,7 @@ class ClosingShiftsController < ApplicationController
   def destroy
     closing_shift = ClosingShift.find(params[:id])
     if closing_shift.destroy
-      render json: {}, status: :ok
+      # render json: {}, status: :ok
     else
       render json: {}, status: :bad_request
     end
