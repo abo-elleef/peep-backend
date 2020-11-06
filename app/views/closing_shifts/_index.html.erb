@@ -11,7 +11,7 @@
   <% @closing_shifts.map do |shift| %>
     <tr>
       <td>
-        <%= link_to  edit_shift_path(shift) do %>
+        <%= link_to  edit_closing_shift_path(shift), remote: true do %>
           <%= shift.starts_at.strftime("%h, %d %Y") %> - <%= shift.ends_at.strftime("%h, %d %Y") %>
         <% end  %>
       </td>

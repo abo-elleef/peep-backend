@@ -11,6 +11,14 @@ class ClosingShiftsController < ApplicationController
     render json: {data: ClosingShiftSerializer.new(closing_shift)}, status: :ok
   end
 
+  def new
+    @shift = ClosingShift.new
+  end
+
+  def edit
+    @shift = ClosingShift.find params[:id]
+  end
+
   def create
     closing_shift = ClosingShift.new(closing_shift_params)
     if closing_shift.save
