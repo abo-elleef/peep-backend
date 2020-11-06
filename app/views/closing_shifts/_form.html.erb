@@ -2,22 +2,40 @@
 <div id="shift_modal" class="modal">
   <div class="modal-content">
     <h4><%= @shift.id.present? ? 'Edit Closing Date' : 'Add Closing Date' %></h4>
-    <%= form_with(model: @shift) do |f| %>
-      <div class="input-field">
-        <%= f.label :starts_at %>
-        <%= f.text_field :starts_at, class: 'datepicker' %>
+    <%= form_with(model: @shift, remote: true) do |f| %>
+      <div class="row">
+        <div class="input-field col s6">
+          <%= f.label :starts_at %>
+          <%= f.text_field :starts_at, class: 'datepicker' %>
+        </div>
+        <div class="input-field col s6">
+          <%= f.label :ends_at %>
+          <%= f.text_field :ends_at, class: 'datepicker' %>
+        </div>
       </div>
-      <div class="input-field">
-        <%= f.label :ends_at %>
-        <%= f.text_field :ends_at, class: 'datepicker' %>
+      <div class="row">
+        <div class="input-field col s12">
+          <%= f.label :desc %>
+          <%= f.text_field :desc%>
+        </div>
       </div>
-      <div class="input-field">
-        <%= f.label :desc %>
-        <%= f.text_field :desc%>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <div class="row m-0 modal-footer">
+        <a class="modal-close waves-effect waves-green btn-flat text-red left">cancel</a>
+        <%= f.submit :save, class: 'waves-effect waves-green btn' %>
       </div>
+
     <% end %>
-  </div>
-  <div class="modal-footer">
-    <a href="#!" class="modal-close waves-effect waves-green btn-flat">Agree</a>
   </div>
 </div>
