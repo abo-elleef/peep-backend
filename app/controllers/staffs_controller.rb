@@ -8,6 +8,16 @@ class StaffsController < ApplicationController
     # render json: {data: serializers},  status: :ok
   end
 
+  def new
+    @staff = Staff.new
+    init_data
+  end
+
+  def edit
+    @staff = Staff.find params[:id]
+    init_data
+  end
+
   def top
     data = TopStaffs.perform
     render json: {data: data}, status: :ok
@@ -67,5 +77,9 @@ class StaffsController < ApplicationController
     else
       "dash"
     end
+  end
+  def init_data
+    @locations = Location.all
+    @service_prices = Service.all
   end
 end

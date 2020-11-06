@@ -156,7 +156,7 @@
     max-height: 250px;
   }
 }
-#client-form{
+#client-form, #staff-form{
   form{
     display: grid;
     grid-template-columns: 1fr 2px 1fr;
