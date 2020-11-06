@@ -17,6 +17,13 @@ class ClosingShift < ApplicationRecord
   # == Class Methods ========================================================
   # == Instance Methods =====================================================
 
+  def location_names
+    locations.pluck(:name)
+  end
+
+  def number_of_days
+    ((ends_at - starts_at).to_f / ( 60 * 60 * 24 )).ceil
+  end
 
   private
 

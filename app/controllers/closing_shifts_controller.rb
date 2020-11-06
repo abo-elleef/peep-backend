@@ -1,9 +1,9 @@
 class ClosingShiftsController < ApplicationController
 
   def index
-    closing_shifts = ClosingShift.preload(:locations).peep_filter(params.slice(:location_id))
-    serializers = ActiveModel::Serializer::ArraySerializer.new(closing_shifts, each_serializer: ClosingShiftSerializer)
-    render json: {data: serializers},  status: :ok
+    @closing_shifts = ClosingShift.preload(:locations).peep_filter(params.slice(:location_id))
+    # serializers = ActiveModel::Serializer::ArraySerializer.new(closing_shifts, each_serializer: ClosingShiftSerializer)
+    # render json: {data: serializers},  status: :ok
   end
 
   def show
