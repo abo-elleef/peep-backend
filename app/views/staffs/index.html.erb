@@ -4,12 +4,12 @@
 <div class="tabs-container">
   <div class="">
     <ul class="tabs ps-3">
-      <li class="tab"><a class="active" href="#test1" data-href="/staffs">Staff</a></li>
+      <li class="tab"><a  href="#test1" data-href="/staffs">Staff</a></li>
       <li class="tab">
         <a id="closing-shifts-tab" href="#test2" data-href="/closing_shifts">closing Dates</a>
       </li>
-      <li class="tab"><a href="#test3" data-href="/shifts">Shifts</a></li>
-      <li class="tab"><a href="#test4" data-href="/permissions">Permission</a></li>
+      <li class="tab"><a class="active" href="#test3" data-href="/shifts">Shifts</a></li>
+<!--      <li class="tab"><a href="#test4" data-href="/permissions">Permission</a></li>-->
     </ul>
   </div>
   <div id="test1" class="col s12">
@@ -57,14 +57,25 @@
           <%= select_tag :location_id, options_for_select(locations_options), {class: 'material-select'} %>
         </div>
         <div class="actions">
-          date picker goes here
+          <div class="date-picker-container">
+<!--            <span>-->
+<!--              <i class="material-icons">navigate_before</i>-->
+<!--            </span>-->
+<!--            <span class="btn-flat"> Today </span>-->
+            <span>
+              <input id="shifts_datepicker" type="text" class="datepicker">
+            </span>
+<!--            <span>-->
+<!--              <i class="material-icons">navigate_next</i>-->
+<!--            </span>-->
+          </div>
         </div>
       </div>
       <div class="data-row white box-shadow">
       </div>
     </div>
   </div>
-  <div id="test4" class="col s12">permissions</div>
+<!--  <div id="test4" class="col s12">permissions</div>-->
 
 </div>
 
@@ -81,6 +92,14 @@
         })
         $("#staffs_search").keyup(function () {
             $.get("staffs.js?search=" + $(this).val());
+        })
+        $("#shifts_datepicker").change(function(){
+          let date =  $(this).val();
+            $.ajax({
+                type: "GET",
+                url: '/shifts?date=' + date,
+                format: 'js'
+            });
         })
     })
 </script>

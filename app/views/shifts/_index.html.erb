@@ -3,7 +3,7 @@
   <tr>
     <th>Staff Name</th>
     <% week_days(@start_date).map do |date| %>
-      <th><%= date %></th>
+      <th><%= date.strftime("%a, %d %h") %></th>
     <% end %>
   </tr>
   </thead>

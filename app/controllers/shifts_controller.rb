@@ -3,11 +3,9 @@ class ShiftsController < ApplicationController
   def index
     # TODO add index for location_id
     # TODO add compained index for location id and staff_id
-    params[:date] = Time.zone.now.to_s
-    if params[:date].present?
-      params[:starts_at] = Time.zone.parse(params[:date]).beginning_of_week
-      params[:ends_at] = Time.zone.parse(params[:date]).end_of_week
-    end
+    params[:date] ||= Time.zone.now.to_s
+    params[:starts_at] = Time.zone.parse(params[:date]).beginning_of_week
+    params[:ends_at] = Time.zone.parse(params[:date]).end_of_week
     @start_date = Time.zone.parse(params[:date]).beginning_of_week
     @staff = Staff.all
     @shifts = Shift.includes(:staff).peep_filter(params.slice(:location_id, :staff_id, :starts_at, :ends_at))
