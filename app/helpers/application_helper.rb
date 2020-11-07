@@ -31,6 +31,10 @@ module ApplicationHelper
     ServiceCategory.all.map {|a| [a.name, a.id]}
   end
 
+  def locations_options
+    Location.all.map{ |location| [location.name, location.id] }
+  end
+
   def colors_options
     ['#F3A2BB', '#DBA9E4', '#BDC1E6', '#B1DDF7', '#A2E1ED', '#84D2CB', '#B1E3BF', '#E7F28E', '#FBED82', '#F5C271']
   end
@@ -41,6 +45,17 @@ module ApplicationHelper
 
   def referral_options
     ['Walk In', 'walk-in']
+  end
+
+
+  def week_days(start)
+    (0..6).to_a.map do |added|
+      start + added.days
+    end
+
+  end
+  def filter_shifts(staff, date)
+    @shifts.select {|shift| shift.staff_id == staff.id &&  date.to_date == shift.starts_at.to_date }
   end
 
 end

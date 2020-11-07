@@ -49,23 +49,38 @@
       <div class="data-row white box-shadow">
       </div>
     </div>
-    <div id="test3" class="col s12">shifts data</div>
-    <div id="test4" class="col s12">permissions</div>
   </div>
+  <div id="test3" class="col s12">
+    <div class="main-section tabs-section">
+      <div class="filters-row">
+        <div class="input-field">
+          <%= select_tag :location_id, options_for_select(locations_options), {class: 'material-select'} %>
+        </div>
+        <div class="actions">
+          date picker goes here
+        </div>
+      </div>
+      <div class="data-row white box-shadow">
+      </div>
+    </div>
+  </div>
+  <div id="test4" class="col s12">permissions</div>
+
 </div>
 
-  <script type="text/javascript" charset="utf-8">
-      $(document).on('turbolinks:load', function () {
-          $('.tab').click(function (e) {
-              let url = $(this).find('a').attr('data-href');
-              e.preventDefault();
-              $.ajax({
-                  type: "GET",
-                  url: url
-              });
-          })
-          $("#staffs_search").keyup(function () {
-              $.get("staffs.js?search=" + $(this).val());
-          })
-      })
-  </script>
+<script type="text/javascript" charset="utf-8">
+    $(document).on('turbolinks:load', function () {
+        $('.tab').click(function (e) {
+            let url = $(this).find('a').attr('data-href');
+            e.preventDefault();
+            $.ajax({
+                type: "GET",
+                url: url,
+                format: 'js'
+            });
+        })
+        $("#staffs_search").keyup(function () {
+            $.get("staffs.js?search=" + $(this).val());
+        })
+    })
+</script>
