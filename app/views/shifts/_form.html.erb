@@ -5,17 +5,17 @@
     <%= form_with(model: @shift, remote: true) do |f| %>
       <div class="row">
         <div class="input-field col s6">
-          <%= f.select :starts_at, options_for_select(time_options(f.object.starts_at, 15)), {selected: f.object.starts_at}, class: 'material-select' %>
+          <%= f.select :starts_at, time_options(f.object.starts_at, 15), {selected: f.object.starts_at.to_s}, class: 'material-select' %>
           <%= f.label :starts_at %>
         </div>
         <div class="input-field col s6">
-          <%= f.select :ends_at, options_for_select(time_options(f.object.ends_at, 15)), {selected: f.object.starts_at},  class: 'material-select' %>
+          <%= f.select :ends_at, time_options(f.object.ends_at, 15), {selected: f.object.ends_at.to_s},  class: 'material-select' %>
           <%= f.label :ends_at %>
         </div>
       </div>
       <div class="row">
         <div class="input-field col s6">
-          <%= f.select :repeat, options_for_select(shift_repeat_options), {selected: f.object.repeat},  class: 'material-select' %>
+          <%= f.select :repeat, shift_repeat_options, {selected: f.object.repeat},  class: 'material-select' %>
           <%= f.label :ends_at %>
         </div>
         <div class="input-field col s6">
