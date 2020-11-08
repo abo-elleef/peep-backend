@@ -1,0 +1,38 @@
+<!-- Modal Structure -->
+<div id="shift_modal" class="modal">
+  <div class="modal-content">
+    <h4><%= @shift.id.present? ? 'Edit Shift' : 'Add Shift' %></h4>
+    <%= form_with(model: @shift, remote: true) do |f| %>
+      <div class="row">
+        <div class="input-field col s6">
+          <%= f.select :starts_at, options_for_select(time_options(f.object.starts_at, 15)), {selected: f.object.starts_at}, class: 'material-select' %>
+          <%= f.label :starts_at %>
+        </div>
+        <div class="input-field col s6">
+          <%= f.select :ends_at, options_for_select(time_options(f.object.ends_at, 15)), {selected: f.object.starts_at},  class: 'material-select' %>
+          <%= f.label :ends_at %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="input-field col s6">
+          <%= f.select :repeat, options_for_select(shift_repeat_options), {selected: f.object.repeat},  class: 'material-select' %>
+          <%= f.label :ends_at %>
+        </div>
+        <div class="input-field col s6">
+          <%= f.text_field :repeat_ends_at, class: 'datepicker' %>
+          <%= f.label :repeat_ends_at %>
+        </div>
+      </div>
+      <div class="row m-0 modal-footer">
+        <a class="modal-close waves-effect waves-green btn-flat text-red left">cancel</a>
+        <% if  @shift.id.present? %>
+          <%= link_to 'Delete', shift_path(@shift), method: :delete , remote: true,
+                      data: { confirm: "Are you sure?" },
+                      class: 'btn-flat red-text waves-effect waves-red waves left' %>
+        <% end  %>
+        <%= f.submit :save, class: 'waves-effect waves-green btn' %>
+      </div>
+
+    <% end %>
+  </div>
+</div>

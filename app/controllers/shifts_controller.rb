@@ -18,6 +18,15 @@ class ShiftsController < ApplicationController
     # render json: {data: serializers},  status: :ok
   end
 
+
+  def new
+    @shift = Shift.new
+  end
+
+  def edit
+    @shift = Shift.find params[:id]
+  end
+
   def show
     shift = Shift.find(params[:id])
     render json: {data: ShiftSerializer.new(shift)}, status: :ok

@@ -54,8 +54,26 @@ module ApplicationHelper
     end
 
   end
+
   def filter_shifts(staff, date)
     @shifts.select {|shift| shift.staff_id == staff.id &&  date.to_date == shift.starts_at.to_date }
+  end
+
+  def shift_repeat_options
+    [['No Repeat', nil],['daily', 'daily'], ['weekly', 'weekly']]
+  end
+
+  def time_options(time, period)
+    time ||= Time.zone.now
+    finish_line = time.end_of_day
+    start_line = time.beginning_of_day
+    iterator = start_line
+    options = [iterator]
+    while iterator <= finish_line
+      iterator =iterator + period.minute
+      options.push(iterator)
+    end
+    options.map do |option| [option.strftime("%H:%M"), option] end
   end
 
 end

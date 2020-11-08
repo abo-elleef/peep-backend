@@ -16,10 +16,14 @@
       <% week_days(@start_date).map do |date| %>
         <td>
           <% filter_shifts(staff, date).map do |shift| %>
-            <span class="shift-span" style="background-color: <%= staff.booking_color %>">
-              <%= shift.starts_at.strftime('%H %m') %> - <%= shift.ends_at.strftime('%H %m') %>
-            </span>
-            <br>
+            <%= link_to edit_shift_path(id: shift.id, date: date), remote: true, class: 'mt-0' do  %>
+              <p class="shift-span white-text p-1 mt-0 center" style="background-color: <%= staff.booking_color %>">
+                <%= shift.starts_at.strftime('%H %m') %> - <%= shift.ends_at.strftime('%H %m') %>
+              </p>
+            <% end %>
+          <% end %>
+          <%= link_to new_shift_path(date: date), remote: true do  %>
+            <i class="material-icons">add</i>
           <% end %>
         </td>
       <% end %>
