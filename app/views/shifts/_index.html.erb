@@ -1,4 +1,4 @@
-<table id="shifts-table" class="sticky-table">
+<table id="shifts-table" class="sticky-table highlight">
   <thead>
   <tr>
     <th>Staff Name</th>
@@ -22,7 +22,7 @@
               </p>
             <% end %>
           <% end %>
-          <%= link_to new_shift_path(date: date), remote: true, class: 'adding-shift' do  %>
+          <%= link_to new_shift_path(date: date, staff_id: staff.id), remote: true, class: 'adding-shift' do  %>
             <i class="material-icons">add</i>
           <% end %>
         </td>

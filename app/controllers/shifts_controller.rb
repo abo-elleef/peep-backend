@@ -26,7 +26,7 @@ class ShiftsController < ApplicationController
     slots = time_slots(starts_at, 15)
     starts_at = slots.select{ |a| a >= starts_at}.first
     ends_at = starts_at + 3.hours
-    @shift = Shift.new(starts_at: starts_at, ends_at: ends_at)
+    @shift = Shift.new(starts_at: starts_at, ends_at: ends_at, staff_id: params[:staff_id],location_id:  params[:location_id])
   end
 
   def edit

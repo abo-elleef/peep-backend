@@ -101,5 +101,17 @@
                 format: 'js'
             });
         })
+        $()
+
+        $("")
+    })
+    $('body').on('click', '.adding-shift', function(e){
+        e.preventDefault();
+        let location_id = $("#location_id").val();
+        let url = $(this).prop("href");
+        url += '&location_id=' + location_id;
+        console.log(url);
+        $.get(url)
+        return false
     })
 </script>

@@ -3,6 +3,8 @@
   <div class="modal-content">
     <h4><%= @shift.id.present? ? 'Edit Shift' : 'Add Shift' %></h4>
     <%= form_with(model: @shift, remote: true) do |f| %>
+      <%= f.hidden_field :staff_id%>
+      <%= f.hidden_field :location_id%>
       <div class="row">
         <div class="input-field col s6">
           <%= f.select :starts_at, time_options(f.object.starts_at, 15), {selected: f.object.starts_at.to_s}, class: 'material-select' %>
