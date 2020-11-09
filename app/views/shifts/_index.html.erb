@@ -18,7 +18,7 @@
           <% filter_shifts(staff, date).map do |shift| %>
             <%= link_to edit_shift_path(id: shift.id, date: date), remote: true, class: 'mt-0' do  %>
               <p class="shift-span white-text p-1 mt-0 center" style="background-color: <%= staff.booking_color %>">
-                <%= shift.starts_at.strftime('%H:%m') %> - <%= shift.ends_at.strftime('%H:%m') %>
+                <%= shift.starts_at.strftime('%H:%M') %> - <%= shift.ends_at.strftime('%H:%M') %>
               </p>
             <% end %>
           <% end %>
