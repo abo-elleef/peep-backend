@@ -1,5 +1,5 @@
 <!-- Modal Structure -->
-<div id="shift_modal" class="modal">
+<div id="shift_modal" class="modal" style="min-height: 500px;">
   <div class="modal-content">
     <h4><%= @shift.id.present? ? 'Edit Shift' : 'Add Shift' %></h4>
     <%= form_with(model: @shift, remote: true) do |f| %>
@@ -23,6 +23,14 @@
           <%= f.label :repeat_ends_at %>
         </div>
       </div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
       <div class="row m-0 modal-footer">
         <a class="modal-close waves-effect waves-green btn-flat text-red left">cancel</a>
         <% if  @shift.id.present? %>

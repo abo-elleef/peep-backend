@@ -125,6 +125,24 @@
 #clients_search{
   min-width: 300px;
 }
+
+#shift_modal{
+  .dropdown-content.select-dropdown{
+    max-height: 300px !important;
+  }
+}
+#shifts-table{
+  td {
+    .adding-shift{
+      display: none;
+    }
+  }
+  td:hover {
+    .adding-shift{
+      display: block;
+    }
+  }
+}
 .tabs-container{
   .tabs{
     z-index: 13;

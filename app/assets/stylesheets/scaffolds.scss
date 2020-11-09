@@ -8,8 +8,8 @@
 @font-face {
   font-family: 'Arvo';
   src:
-          url('app/assets/fonts/Arvo-Regular.ttf') format('ttf'),
-          url('app/assets/fonts/Arvo-Bold.ttf') format('tff');
+          font-url('assets/Arvo-Regular.ttf') format('ttf'),
+          font-url('assets/Arvo-Bold.ttf') format('tff');
   font-weight: normal;
   font-style: normal;
 }
@@ -17,8 +17,8 @@
 @font-face {
   font-family: 'Mulish';
   src:
-          url('app/assets/fonts/Mulish-Regular.ttf') format('ttf'),
-          url('app/assets/fonts/Mulish-Bold.ttf') format('tff');
+          font-url('assets/Mulish-Regular.ttf') format('ttf'),
+          font-url('assets/Mulish-Bold.ttf') format('tff');
   font-weight: normal;
   font-style: normal;
 }

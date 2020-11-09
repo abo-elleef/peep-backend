@@ -20,7 +20,13 @@ class ShiftsController < ApplicationController
 
 
   def new
-    @shift = Shift.new
+    time = Time.zone.now
+    starts_at = Time.zone.parse(params[:date])
+    starts_at = starts_at.change(hour: time.hour, min: time.min)
+    slots = time_slots(starts_at, 15)
+    starts_at = slots.select{ |a| a >= starts_at}.first
+    ends_at = starts_at + 3.hours
+    @shift = Shift.new(starts_at: starts_at, ends_at: ends_at)
   end
 
   def edit
@@ -66,5 +72,18 @@ class ShiftsController < ApplicationController
         :id, :starts_at, :ends_at, :staff_id, :location_id, :parent_id, :repeat,
         :repeat_ends_at
     )
+  end
+
+  def time_slots(time, period)
+    finish_line = time.end_of_day
+    start_line = time.beginning_of_day
+    iterator = start_line
+    options = [iterator]
+    while iterator <= finish_line
+      iterator =iterator + period.minute
+      options.push(iterator)
+    end
+    p "aaaaa"
+    options
   end
 end
