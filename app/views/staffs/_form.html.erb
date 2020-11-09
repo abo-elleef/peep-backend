@@ -7,7 +7,7 @@
         <%= link_to 'Delete', client_path(id: @staff.id),
                     data: {:confirm => 'Are you sure?'}, class: 'waves-effect waves-red btn-flat red-text', :method => :delete %>
       <% end %>
-      <a class="waves-effect waves-blue btn" onclick="submitForm();">Save</a>
+      <a class="waves-effect waves-blue btn" onclick="submitStaff();">Save</a>
     </div>
 
   </div>
@@ -195,7 +195,7 @@
 </div>
 
 <script type="text/javascript" charset="utf-8">
-    function submitForm() {
-        $("#client-form form").submit();
+    function submitStaff() {
+        $("#staff-form form").submit();
     }
 </script>

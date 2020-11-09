@@ -39,7 +39,8 @@ class StaffsController < ApplicationController
     staff = Staff.new(staff_params)
     if staff.save
       # TODO: create working hours if staff is booking_enabled
-      render json: {data: StaffSerializer.new(staff)}, status: :created
+      redirect_to staffs_path
+      # render json: {data: StaffSerializer.new(staff)}, status: :created
     else
       render json: staff.errors, status: :unprocessable_entity
     end
@@ -48,7 +49,8 @@ class StaffsController < ApplicationController
   def update
     staff = Staff.find(params[:id])
     if staff.update(staff_params)
-      render json: {data: StaffSerializer.new(staff)}, status: :created
+      redirect_to staffs_path
+      # render json: {data: StaffSerializer.new(staff)}, status: :created
     else
       render json: staff.errors, status: :ok
     end
