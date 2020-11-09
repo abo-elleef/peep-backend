@@ -38,7 +38,7 @@
         </li>
         <li class="p-3 valign-wrapper">
           <i class="Medium material-icons">people</i>
-          <a class="ms-2" href="https://peep-staging-front.herokuapp.com/dash/staff"> Staff </a>
+          <a class="ms-2" href="/staffs"> Staff </a>
         </li>
         <li class="p-3 valign-wrapper">
           <i class="Medium material-icons">work</i>
@@ -76,6 +76,12 @@
           $('.dropdown-trigger').dropdown();
           $('.collapsible').collapsible();
           $('.tabs').tabs();
+          $('.datepicker').datepicker({
+              defaultDate: new Date(),
+              setDefaultDate: true,
+              yearRange: 100
+          });
+
       })
   </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>

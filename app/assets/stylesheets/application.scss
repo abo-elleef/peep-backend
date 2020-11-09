@@ -20,6 +20,9 @@
   padding: 0 20px;
   display: grid;
   grid-template-rows: 100px calc(100vh - 200px);
+  &.tabs-section{
+    grid-template-rows: 100px calc(100vh - 250px);
+  }
   .data-row{
     overflow-y: scroll;
   }
@@ -67,7 +70,7 @@
   padding: 10px 30px;
 }
 
-#category-form{
+#category-form, #staff-form{
   .color-container {
     display: inline-block;
     width: 55px;
@@ -121,6 +124,30 @@
 }
 #clients_search{
   min-width: 300px;
+}
+
+#shift_modal{
+  .dropdown-content.select-dropdown{
+    max-height: 300px !important;
+  }
+}
+#shifts-table{
+  td {
+    .adding-shift{
+      display: none;
+    }
+  }
+  td:hover {
+    .adding-shift{
+      display: block;
+    }
+  }
+}
+.tabs-container{
+  .tabs{
+    z-index: 13;
+  }
+
 }
 
 // overrides

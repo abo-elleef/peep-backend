@@ -12,6 +12,9 @@ class Staff < ApplicationRecord
   has_many :blocked_times
   # == Validations ==========================================================
   # == Scopes ===============================================================
+  scope :by_search, -> (search) { search.present? ?  where("first_name ilike ?", "%" + search + "%").
+      or(where("last_name ilike ?", "%" + search + "%")).
+      or(where(phone: search)) : all }
   # == Callbacks ============================================================
   # == Class Methods ========================================================
 
