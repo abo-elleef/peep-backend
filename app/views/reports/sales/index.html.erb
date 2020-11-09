@@ -22,7 +22,7 @@
       </div>
       <div class="actions">
         <div class="input-field mtb-0">
-          <%= select_tag :location_id, options_for_select(locations_options), {class: 'material-select'} %>
+          <%= select_tag :daily_sales_location_id, options_for_select(locations_options), {class: 'material-select'} %>
         </div>
       </div>
     </div>
@@ -35,18 +35,102 @@
 
   </div>
   <div id="test2" class="col s12">
-    test 2
+    <div class="filters-row pse-4 pt-4">
+      <div class="input-field mtb-0">
+        <input id="appointments-date-picker" type="text" class="datepicker">
+      </div>
+      <div class="actions">
+        <div class="input-field mtb-0">
+          <%= select_tag :appointments_location_id, options_for_select(locations_options), {class: 'material-select'} %>
+        </div>
+      </div>
+    </div>
+    <div class="p-4 data-row" >
+      <table class="sticky-table white highlight">
+        <thead>
+        <tr>
+          <th> Id </th>
+          <th> Client </th>
+          <th> Service </th>
+          <th> Staff </th>
+          <th> Date </th>
+          <th> Duration </th>
+          <th> Price </th>
+          <th> Status  </th>
+          <th> Location </th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <% @appointment_services.map do |appointment_service| %>
+          <tr>
+            <td>
+              <%= link_to appointment_service.id, appointment_path(appointment_service.appointment_id) %>
+            </td>
+            <td> <%= appointment_service.appointment.client&.name %> </td>
+            <td> <%= appointment_service.service_price.full_name %> </td>
+            <td> <%= appointment_service.staff.name %> </td>
+            <td> <%= appointment_service.starts_at.strftime("%m, %d  %y ") %> </td>
+            <td> <%= appointment_service.service_price.duration %> </td>
+            <td> <%= appointment_service.service_price.price %> </td>
+            <td> <%= appointment_service.appointment.status %> </td>
+            <td> <%= appointment_service.appointment.location&.name %> </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
   <div id="test3" class="col s12">
-    test 3
+    <div class="filters-row pse-4 pt-4">
+      <div class="input-field mtb-0">
+        <input id="invoices-date-picker" type="text" class="datepicker">
+      </div>
+      <div class="actions">
+        <div class="input-field mtb-0">
+          <%= select_tag :invoices_location_id, options_for_select(locations_options), {class: 'material-select'} %>
+        </div>
+      </div>
+    </div>
+    <div class="p-4 data-row" >
+      <table class="sticky-table white highlight">
+        <thead>
+        <tr>
+          <th> Id </th>
+          <th> Client </th>
+          <th> Status </th>
+          <th> Date </th>
+          <th> Location </th>
+          <th> Tips </th>
+          <th> total </th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <% @invoices.map do |invoice| %>
+          <tr>
+            <td>
+              <%= link_to invoice.id, invoice_path(invoice.id) %>
+            </td>
+            <td> <%= invoice.appointment&.client&.name %> </td>
+            <td> <%= invoice.appointment&.status %> </td>
+            <td> <%= invoice.created_at.strftime("%m, %d  %y ") %> </td>
+            <td> <%= invoice.location.name %> </td>
+            <td> KWD <%= invoice.tips_total %> </td>
+            <td> KWD <%= invoice.total %> </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 
 
 <script type="text/javascript" charset="utf-8">
-    function fetchData() {
+    function fetchDailySalesData() {
         let date = $("#sales-date-picker").val();
-        let location_id = $("#location_id").val();
+        let location_id = $("#daily_sales_location_id").val();
         if(!date) {return}
         if(!location_id) {return}
         $.get('/reports/sales/transaction_summary', {location_id: location_id, date: date});
@@ -55,16 +139,16 @@
 
     function registerEvents() {
         $("#sales-date-picker").change(function (e) {
-            fetchData();
+            fetchDailySalesData();
         });
-        $("#location_id").change(function (e) {
-            fetchData();
+        $("#daily_sales_location_id").change(function (e) {
+            fetchDailySalesData();
         })
     }
 
     $(document).on('turbolinks:load', function () {
         registerEvents();
-        fetchData();
+        fetchDailySalesData();
     })
 
 

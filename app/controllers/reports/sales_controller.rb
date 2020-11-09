@@ -2,6 +2,8 @@ module Reports
   class SalesController < ApplicationController
     layout :resolve_layout
     def index
+      @appointment_services = Appointment.last(100).map(&:appointment_services).flatten # TODO remove it
+      @invoices = Invoice.last(100)# TODO remove it
 
     end
 

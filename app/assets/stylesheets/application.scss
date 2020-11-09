@@ -151,6 +151,10 @@
       column-gap: 20px;
     }
   }
+  .data-row{
+    height: calc(100vh - 180px);
+    overflow-y: auto;
+  }
 }
 .tabs-container{
   .tabs{
