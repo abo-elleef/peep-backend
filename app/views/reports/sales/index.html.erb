@@ -1,0 +1,71 @@
+<header class="pse-4 ptb-0">
+  <p class="m-0">Sales</p>
+</header>
+<div id="sales-container" class="tabs-container">
+  <div class="">
+    <ul class="tabs ps-3">
+      <li class="tab">
+        <a  class="active" href="#test1" data-href="/staffs">Daily Sales</a>
+      </li>
+      <li class="tab">
+        <a id="closing-shifts-tab" href="#test2" data-href="/closing_shifts">Appointments</a>
+      </li>
+      <li class="tab">
+        <a id="shifts-tab"  href="#test3" data-href="/shifts"> Invoices </a>
+      </li>
+    </ul>
+  </div>
+  <div id="test1" class="col s12">
+    <div class="filters-row pse-4 pt-4">
+      <div class="input-field mtb-0">
+        <input id="sales-date-picker" type="text" class="datepicker">
+      </div>
+      <div class="actions">
+        <div class="input-field mtb-0">
+          <%= select_tag :location_id, options_for_select(locations_options), {class: 'material-select'} %>
+        </div>
+      </div>
+    </div>
+    <div class="p-4 data-row" >
+      <div id="transaction-summary-container" class="white box-shadow pse-4">
+      </div>
+      <div id="cash-movement-container" class="white box-shadow pse-4">
+      </div>
+    </div>
+
+  </div>
+  <div id="test2" class="col s12">
+    test 2
+  </div>
+  <div id="test3" class="col s12">
+    test 3
+  </div>
+</div>
+
+
+<script type="text/javascript" charset="utf-8">
+    function fetchData() {
+        let date = $("#sales-date-picker").val();
+        let location_id = $("#location_id").val();
+        if(!date) {return}
+        if(!location_id) {return}
+        $.get('/reports/sales/transaction_summary', {location_id: location_id, date: date});
+        $.get('/reports/sales/cash_movement', {location_id: location_id, date: date});
+    }
+
+    function registerEvents() {
+        $("#sales-date-picker").change(function (e) {
+            fetchData();
+        });
+        $("#location_id").change(function (e) {
+            fetchData();
+        })
+    }
+
+    $(document).on('turbolinks:load', function () {
+        registerEvents();
+        fetchData();
+    })
+
+
+</script>

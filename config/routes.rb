@@ -77,6 +77,7 @@ Rails.application.routes.draw do
   # Reports Routes
   namespace :reports do
     # sales routes
+    get "/sales", to: "sales#index"
     get "sales/transaction_summary", to: "sales#transaction_summary"
     get "sales/cash_movement", to: "sales#cash_movement"
     get "sales/appointments_list", to: "sales#appointments_list"

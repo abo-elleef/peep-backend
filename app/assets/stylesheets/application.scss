@@ -143,6 +143,15 @@
     }
   }
 }
+#sales-container{
+  #test1{
+    .data-row{
+      display: grid;
+      grid-template-columns: auto auto;
+      column-gap: 20px;
+    }
+  }
+}
 .tabs-container{
   .tabs{
     z-index: 13;

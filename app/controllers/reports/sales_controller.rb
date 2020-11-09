@@ -1,14 +1,34 @@
 module Reports
   class SalesController < ApplicationController
+    layout :resolve_layout
+    def index
+
+    end
 
     def transaction_summary
       data = Reports::Sales::TransactionSummary.new(params).perform
-      render json: {data: data}, status: :ok
+      respond_to do |format|
+        format.js {
+          @data = data
+        }
+        format.json{
+          render json: {data: data}, status: :ok
+        }
+      end
+
     end
 
     def cash_movement
       data = Reports::Sales::CashMovement.new(params).perform
-      render json: {data: data}, status: :ok
+      respond_to do |format|
+        format.js {
+          @data = data
+        }
+        format.json{
+          render json: {data: data}, status: :ok
+        }
+      end
+
     end
 
     def appointments_list
@@ -58,6 +78,15 @@ module Reports
     def vouchers
       results = Reports::Sales::Vouchers.new(params).perform
       render json: {data: results}, status: :ok
+    end
+
+    private
+
+    def resolve_layout
+      case action_name
+      when 'index'
+        'dash'
+      end
     end
 
   end

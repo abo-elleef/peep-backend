@@ -1,0 +1,17 @@
+<p class="fs-24 bold ps-4">Transaction Summary</p>
+<table class="highlight">
+  <tr>
+    <th>No.</th>
+    <th>Quantity</th>
+    <th>Total</th>
+  </tr>
+  <%  @data.map do |array| %>
+    <tr>
+      <td> <%= array[:name] %> </td>
+      <td> <%= array[:quantity] %> </td>
+      <td> <%= array[:total_price] %> </td>
+    </tr>
+  <% end %>
+
+</table>
+<br>
