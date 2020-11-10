@@ -1,0 +1,54 @@
+<header class="pse-4 ptb-0">
+  <p class="m-0">Sales</p>
+</header>
+<div id="sales-container" class="tabs-container">
+  <%= render "reports/sales/tab_headers", active: 'appointments' %>
+  <div id="test2" class="col s12">
+    <div class="filters-row pse-4 pt-4">
+      <div class="input-field mtb-0">
+        <input id="appointments-date-picker" type="text" class="datepicker">
+      </div>
+      <div class="actions">
+        <div class="input-field mtb-0">
+          <%= select_tag :appointments_location_id, options_for_select(locations_options), {class: 'material-select'} %>
+        </div>
+      </div>
+    </div>
+    <div class="p-4 data-row white" >
+      <table class="sticky-table highlight">
+        <thead>
+        <tr>
+          <th> Id </th>
+          <th> Client </th>
+          <th> Service </th>
+          <th> Staff </th>
+          <th> Date </th>
+          <th> Duration </th>
+          <th> Price </th>
+          <th> Status  </th>
+          <th> Location </th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <% @appointment_services.map do |appointment_service| %>
+          <tr>
+            <td>
+              <%= link_to appointment_service.id, appointment_path(appointment_service.appointment_id) %>
+            </td>
+            <td> <%= appointment_service.appointment.client&.name %> </td>
+            <td> <%= appointment_service.service_price.full_name %> </td>
+            <td> <%= appointment_service.staff.name %> </td>
+            <td> <%= appointment_service.starts_at.strftime("%m, %d  %y ") %> </td>
+            <td> <%= appointment_service.service_price.duration %> </td>
+            <td> <%= appointment_service.service_price.price %> </td>
+            <td> <%= appointment_service.appointment.status %> </td>
+            <td> <%= appointment_service.appointment.location&.name %> </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <%== pagy_materialize_nav(@pagy) %>
+    </div>
+  </div>
+</div>

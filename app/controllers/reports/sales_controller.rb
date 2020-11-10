@@ -1,10 +1,8 @@
 module Reports
   class SalesController < ApplicationController
     layout :resolve_layout
-    def index
-      @appointment_services = Appointment.last(100).map(&:appointment_services).flatten # TODO remove it
-      @invoices = Invoice.last(100)# TODO remove it
 
+    def index
     end
 
     def transaction_summary
@@ -72,9 +70,16 @@ module Reports
     def appointments
       appointment_services = AppointmentService.preload(:appointment, :service_price, :staff).
           peep_filter(params.slice(:starts_at, :ends_at, :staff_id, :location_id, :search)).order(id: :desc)
-      pagy, appointment_services = pagy(appointment_services, page: page_index, items: page_size)
-      serializers = ActiveModel::Serializer::ArraySerializer.new(appointment_services, serializer: LineSalesSerializer)
-      render json: {data: serializers, meta: pagy_meta_data(pagy)}, status: :ok
+      @pagy, @appointment_services = pagy(appointment_services, page: page_index, items: page_size)
+      # serializers = ActiveModel::Serializer::ArraySerializer.new(appointment_services, serializer: LineSalesSerializer)
+      # render json: {data: serializers, meta: pagy_meta_data(pagy)}, status: :ok
+    end
+
+    def invoices
+      invoices = Invoice.preload(:location).peep_filter(params.slice(:location_id, :starts_at, :ends_at, :search))
+      @pagy, @invoices = pagy(invoices, page: page_index, items: page_size)
+      # serializers = ActiveModel::Serializer::ArraySerializer.new(invoices, each_serializer: InvoiceSerializer)
+      # render json: {data: serializers, meta: pagy_meta_data(pagy)}, status: :ok
     end
 
     def vouchers
@@ -86,7 +91,7 @@ module Reports
 
     def resolve_layout
       case action_name
-      when 'index'
+      when 'index', 'appointments', 'invoices'
         'dash'
       end
     end

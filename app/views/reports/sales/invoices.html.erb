@@ -1,0 +1,50 @@
+<header class="pse-4 ptb-0">
+  <p class="m-0">Sales</p>
+</header>
+<div id="sales-container" class="tabs-container">
+  <%= render "reports/sales/tab_headers", active: 'invoices' %>
+  <div id="test3" class="col s12">
+    <div class="filters-row pse-4 pt-4">
+      <div class="input-field mtb-0">
+        <input id="invoices-date-picker" type="text" class="datepicker">
+      </div>
+      <div class="actions">
+        <div class="input-field mtb-0">
+          <%= select_tag :invoices_location_id, options_for_select(locations_options), {class: 'material-select'} %>
+        </div>
+      </div>
+    </div>
+    <div class="p-4 data-row" >
+      <table class="sticky-table white highlight">
+        <thead>
+        <tr>
+          <th> Id </th>
+          <th> Client </th>
+          <th> Status </th>
+          <th> Date </th>
+          <th> Location </th>
+          <th> Tips </th>
+          <th> total </th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <% @invoices.map do |invoice| %>
+          <tr>
+            <td>
+              <%= link_to invoice.id, invoice_path(invoice.id) %>
+            </td>
+            <td> <%= invoice.appointment&.client&.name %> </td>
+            <td> <%= invoice.appointment&.status %> </td>
+            <td> <%= invoice.created_at.strftime("%m, %d  %y ") %> </td>
+            <td> <%= invoice.location.name %> </td>
+            <td> KWD <%= invoice.tips_total %> </td>
+            <td> KWD <%= invoice.total %> </td>
+          </tr>
+        <% end %>
+        </tbody>
+      </table>
+      <%== pagy_materialize_nav(@pagy) %>
+    </div>
+  </div>
+</div>

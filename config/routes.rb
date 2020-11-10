@@ -88,6 +88,7 @@ Rails.application.routes.draw do
     get "sales/sales_by_staff", to: "sales#sales_by_staff"
     get "sales/recent_sales", to: "sales#recent_sales"
     get "sales/appointments", to: "sales#appointments"
+    get "sales/invoices", to: "sales#invoices"
     get "sales/vouchers", to: "sales#vouchers"
 
     get "dashboard/total_appointments", to: "dashboard#total_appointments"
