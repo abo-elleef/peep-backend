@@ -6,7 +6,7 @@
   <div id="test2" class="col s12">
     <div class="filters-row pse-4 pt-4">
       <div class="input-field mtb-0">
-        <input id="appointments-date-picker" type="text" class="datepicker">
+        <input id="appointments-date-picker" type="text" class="datepicker" value="<%= params[:date] %>">
       </div>
       <div class="actions">
         <div class="input-field mtb-0">
@@ -14,19 +14,19 @@
         </div>
       </div>
     </div>
-    <div class="p-4 data-row white" >
-      <table class="sticky-table highlight">
+    <div class="data-row ">
+      <table class="sticky-table white highlight m-4">
         <thead>
         <tr>
-          <th> Id </th>
-          <th> Client </th>
-          <th> Service </th>
-          <th> Staff </th>
-          <th> Date </th>
-          <th> Duration </th>
-          <th> Price </th>
-          <th> Status  </th>
-          <th> Location </th>
+          <th> Id</th>
+          <th> Client</th>
+          <th> Service</th>
+          <th> Staff</th>
+          <th> Date</th>
+          <th> Duration</th>
+          <th> Price</th>
+          <th> Status</th>
+          <th> Location</th>
 
         </tr>
         </thead>
@@ -52,3 +52,27 @@
     </div>
   </div>
 </div>
+
+
+<script type="text/javascript" charset="utf-8">
+    function registerEvents() {
+        var currentValue = null
+        $("#appointments-date-picker").focus(function () {
+            currentValue = $(this).val();
+        }).change(function (e) {
+            if (!currentValue) {
+                return;
+            }
+            let date = $("#appointments-date-picker").val();
+            let param_string = 'date=' + date
+            let url = window.location.href.split('?')[0];
+            url += '?'
+            url += param_string
+            window.location.href = url;
+        });
+    }
+
+    $(document).on('turbolinks:load', function () {
+        registerEvents();
+    })
+</script>

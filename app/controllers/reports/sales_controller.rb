@@ -68,14 +68,17 @@ module Reports
     end
 
     def appointments
+      params[:date] ||= Date.today
       appointment_services = AppointmentService.preload(:appointment, :service_price, :staff).
           peep_filter(params.slice(:starts_at, :ends_at, :staff_id, :location_id, :search)).order(id: :desc)
+      # params[:date] = Time.zone.parse(params[:date])
       @pagy, @appointment_services = pagy(appointment_services, page: page_index, items: page_size)
       # serializers = ActiveModel::Serializer::ArraySerializer.new(appointment_services, serializer: LineSalesSerializer)
       # render json: {data: serializers, meta: pagy_meta_data(pagy)}, status: :ok
     end
 
     def invoices
+      params[:date] ||= Date.today
       invoices = Invoice.preload(:location).peep_filter(params.slice(:location_id, :starts_at, :ends_at, :search))
       @pagy, @invoices = pagy(invoices, page: page_index, items: page_size)
       # serializers = ActiveModel::Serializer::ArraySerializer.new(invoices, each_serializer: InvoiceSerializer)
