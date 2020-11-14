@@ -68,7 +68,9 @@ module Reports
     end
 
     def appointments
-      params[:date] ||= Date.today
+      params[:date] = params[:date].present? ? Date.parse(params[:date]) :  Date.today
+      params[:starts_at] = params[:date].beginning_of_day
+      params[:ends_at] = params[:date].end_of_day
       appointment_services = AppointmentService.preload(:appointment, :service_price, :staff).
           peep_filter(params.slice(:starts_at, :ends_at, :staff_id, :location_id, :search)).order(id: :desc)
       # params[:date] = Time.zone.parse(params[:date])

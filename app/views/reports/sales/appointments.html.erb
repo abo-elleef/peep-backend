@@ -10,7 +10,7 @@
       </div>
       <div class="actions">
         <div class="input-field mtb-0">
-          <%= select_tag :appointments_location_id, options_for_select(locations_options), {class: 'material-select'} %>
+          <%= select_tag :appointments_location_id, options_for_select(locations_options, selected: params[:location_id]), {class: 'material-select'} %>
         </div>
       </div>
     </div>
@@ -55,6 +55,16 @@
 
 
 <script type="text/javascript" charset="utf-8">
+  function appointmentFetchData() {
+      params = $.param({
+          date: $("#appointments-date-picker").val(),
+          location_id: $("#appointments_location_id").val()
+      })
+      let url = window.location.href.split('?')[0];
+      url += '?'
+      url += params
+      window.location.href = url;
+  }
     function registerEvents() {
         var currentValue = null
         $("#appointments-date-picker").focus(function () {
@@ -63,13 +73,11 @@
             if (!currentValue) {
                 return;
             }
-            let date = $("#appointments-date-picker").val();
-            let param_string = 'date=' + date
-            let url = window.location.href.split('?')[0];
-            url += '?'
-            url += param_string
-            window.location.href = url;
+            appointmentFetchData();
         });
+        $("#appointments_location_id").change(function(){
+          appointmentFetchData();
+        })
     }
 
     $(document).on('turbolinks:load', function () {
