@@ -1,0 +1,33 @@
+<div class="">
+  <ul class="tabs ps-3">
+    <li class="tab">
+      <a class="<%= 'active' if active == 'daily' %>" href="#test1" data-href="/reports/sales">Daily Sales</a>
+    </li>
+    <li class="tab">
+      <a class="<%= 'active' if active == 'appointments' %>"
+         href="#test2"
+         data-href="/reports/sales/appointments">
+        Appointments
+      </a>
+    </li>
+    <li class="tab">
+      <a class="<%= 'active' if active == 'invoices' %>"
+         href="#test3"
+         data-href="/reports/sales/invoices">
+        Invoices
+      </a>
+    </li>
+  </ul>
+</div>
+
+
+<script type="text/javascript" charset="utf-8">
+    $(document).on('turbolinks:load', function () {
+        $('.tab').click(function (e) {
+            let url = $(this).find('a').attr('data-href');
+            e.preventDefault();
+            document.location.href = url;
+        })
+    })
+
+</script>

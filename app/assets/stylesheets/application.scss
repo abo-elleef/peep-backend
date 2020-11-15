@@ -143,6 +143,20 @@
     }
   }
 }
+#sales-container{
+  #test1{
+    .data-row{
+      display: grid;
+      grid-template-columns: auto auto;
+      column-gap: 20px;
+      align-items: start;
+    }
+  }
+  .data-row{
+    height: calc(100vh - 220px);
+    overflow-y: auto;
+  }
+}
 .tabs-container{
   .tabs{
     z-index: 13;

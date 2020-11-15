@@ -1,0 +1,15 @@
+<p class="fs-24 bold ps-4">Cash Movement Summary</p>
+<table class="highlight">
+  <tr>
+    <th>Name</th>
+    <th>Total</th>
+  </tr>
+  <%  @cash_data.map do |array| %>
+    <tr>
+      <td> <%= array[:name] %> </td>
+      <td> <%= array[:sum] %> </td>
+    </tr>
+  <% end %>
+
+</table>
+<br>

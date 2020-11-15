@@ -77,6 +77,7 @@ Rails.application.routes.draw do
   # Reports Routes
   namespace :reports do
     # sales routes
+    get "/sales", to: "sales#index"
     get "sales/transaction_summary", to: "sales#transaction_summary"
     get "sales/cash_movement", to: "sales#cash_movement"
     get "sales/appointments_list", to: "sales#appointments_list"
@@ -87,6 +88,7 @@ Rails.application.routes.draw do
     get "sales/sales_by_staff", to: "sales#sales_by_staff"
     get "sales/recent_sales", to: "sales#recent_sales"
     get "sales/appointments", to: "sales#appointments"
+    get "sales/invoices", to: "sales#invoices"
     get "sales/vouchers", to: "sales#vouchers"
 
     get "dashboard/total_appointments", to: "dashboard#total_appointments"
