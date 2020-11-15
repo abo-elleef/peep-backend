@@ -10,7 +10,7 @@
       </div>
       <div class="actions">
         <div class="input-field mtb-0">
-          <%= select_tag :invoices_location_id, options_for_select(locations_options,{ selected: params[:location_id]}), {class: 'material-select'} %>
+          <%= select_tag :invoices_location_id, options_for_select(locations_options,{ selected: params[:location_id]}), {class: 'material-select' , include_blank: 'All Locations'} %>
         </div>
       </div>
     </div>
@@ -36,7 +36,7 @@
             </td>
             <td> <%= invoice.appointment&.client&.name %> </td>
             <td> <%= invoice.appointment&.status %> </td>
-            <td> <%= invoice.created_at.strftime("%m, %d  %y ") %> </td>
+            <td> <%= invoice.created_at.strftime("%b, %d  %Y ") %> </td>
             <td> <%= invoice.location.name %> </td>
             <td> KWD <%= invoice.tips_total %> </td>
             <td> KWD <%= invoice.total %> </td>

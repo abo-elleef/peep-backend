@@ -10,7 +10,7 @@
       </div>
       <div class="actions">
         <div class="input-field mtb-0">
-          <%= select_tag :appointments_location_id, options_for_select(locations_options, selected: params[:location_id]), {class: 'material-select'} %>
+          <%= select_tag :appointments_location_id, options_for_select(locations_options, selected: params[:location_id]), {class: 'material-select', include_blank: 'All Locations'} %>
         </div>
       </div>
     </div>
@@ -39,7 +39,7 @@
             <td> <%= appointment_service.appointment.client&.name %> </td>
             <td> <%= appointment_service.service_price.full_name %> </td>
             <td> <%= appointment_service.staff.name %> </td>
-            <td> <%= appointment_service.starts_at.strftime("%m, %d  %y ") %> </td>
+            <td> <%= appointment_service.starts_at.strftime("%b, %d  %Y ") %> </td>
             <td> <%= appointment_service.service_price.duration %> </td>
             <td> <%= appointment_service.service_price.price %> </td>
             <td> <%= appointment_service.appointment.status %> </td>

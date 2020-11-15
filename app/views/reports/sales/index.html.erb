@@ -10,7 +10,7 @@
       </div>
       <div class="actions">
         <div class="input-field mtb-0">
-          <%= select_tag :daily_sales_location_id, options_for_select(locations_options, { selected: params[:location_id]}), {class: 'material-select'} %>
+          <%= select_tag :daily_sales_location_id, options_for_select(locations_options, { selected: params[:location_id]}), {class: 'material-select', include_blank: 'All Locations'} %>
         </div>
       </div>
     </div>
