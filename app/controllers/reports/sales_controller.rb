@@ -3,6 +3,9 @@ module Reports
     layout :resolve_layout
 
     def index
+      params[:date] = params[:date].present? ? Date.parse(params[:date]) :  Date.today
+      @summary_data = Reports::Sales::TransactionSummary.new(params).perform
+      @cash_data = Reports::Sales::CashMovement.new(params).perform
     end
 
     def transaction_summary

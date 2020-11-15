@@ -6,18 +6,20 @@
   <div id="test1" class="col s12">
     <div class="filters-row pse-4 pt-4">
       <div class="input-field mtb-0">
-        <input id="sales-date-picker" type="text" class="datepicker" value="<%= Date.today %>">
+        <input id="sales-date-picker" type="text" class="datepicker" value="<%= params[:date] %>">
       </div>
       <div class="actions">
         <div class="input-field mtb-0">
-          <%= select_tag :daily_sales_location_id, options_for_select(locations_options), {class: 'material-select'} %>
+          <%= select_tag :daily_sales_location_id, options_for_select(locations_options, { selected: params[:location_id]}), {class: 'material-select'} %>
         </div>
       </div>
     </div>
     <div class="p-4 data-row" >
       <div id="transaction-summary-container" class="white box-shadow pse-4">
+        <%= render "reports/sales/transaction_summary" %>
       </div>
       <div id="cash-movement-container" class="white box-shadow pse-4">
+        <%= render "reports/sales/cash_movement" %>
       </div>
     </div>
 
@@ -31,8 +33,14 @@
         let location_id = $("#daily_sales_location_id").val();
         if(!date) {return}
         if(!location_id) {return}
-        $.get('/reports/sales/transaction_summary', {location_id: location_id, date: date});
-        $.get('/reports/sales/cash_movement', {location_id: location_id, date: date});
+        let params = $.param({
+            date: date,
+            location_id: location_id
+        })
+        let url = window.location.href.split('?')[0];
+        url += '?'
+        url += params
+        window.location.href = url;
     }
 
     function registerEvents() {
@@ -46,7 +54,6 @@
 
     $(document).on('turbolinks:load', function () {
         registerEvents();
-        fetchDailySalesData();
     })
 
 
