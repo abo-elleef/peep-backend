@@ -56,7 +56,7 @@
 
 <script type="text/javascript" charset="utf-8">
   function appointmentFetchData() {
-      params = $.param({
+      let params = $.param({
           date: $("#appointments-date-picker").val(),
           location_id: $("#appointments_location_id").val()
       })

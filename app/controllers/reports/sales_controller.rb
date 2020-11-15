@@ -80,7 +80,9 @@ module Reports
     end
 
     def invoices
-      params[:date] ||= Date.today
+      params[:date] = params[:date].present? ? Date.parse(params[:date]) :  Date.today
+      params[:starts_at] = params[:date].beginning_of_day
+      params[:ends_at] = params[:date].end_of_day
       invoices = Invoice.preload(:location).peep_filter(params.slice(:location_id, :starts_at, :ends_at, :search))
       @pagy, @invoices = pagy(invoices, page: page_index, items: page_size)
       # serializers = ActiveModel::Serializer::ArraySerializer.new(invoices, each_serializer: InvoiceSerializer)
