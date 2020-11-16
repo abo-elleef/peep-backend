@@ -1,0 +1,100 @@
+<div id="form-container">
+  <div class="form-header">
+    <a class="waves-effect waves-red btn-flat" href="/locations">x</a>
+    <p class="form-title"> <%= @location.id ? 'Edit Location' : 'Add Location' %></p>
+    <div>
+      <% if @location.id.present? %>
+        <%= link_to 'Delete', client_path(id: @location.id),
+                    data: {:confirm => 'Are you sure?'}, class: 'waves-effect waves-red btn-flat red-text', :method => :delete %>
+      <% end %>
+      <a class="waves-effect waves-blue btn" onclick="submitStaff();">Save</a>
+    </div>
+
+  </div>
+  <div id="location-form">
+    <%= form_with(model: @location, html: {class: 'height-100'}) do |f| %>
+      <div class=" p-8 m-8">
+        <% if @location.errors.full_messages.any? %>
+          <div class="p-4">
+            <p class="red-text"> Please check the following errors and Save again</p>
+            <ul class="collection">
+              <% @location.errors.full_messages.map do |msg| %>
+                <li class="red-text collection-item"><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.text_field :name %>
+            <%= f.label :name %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.select :business_type, business_type_options, {selected: f.object.business_type}, {class: 'material-select'} %>
+            <%= f.label :business_type %>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.label :phone %>
+            <%= f.text_field :phone %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.label :email %>
+            <%= f.text_field :email %>
+          </div>
+        </div>
+      </div>
+      <div class="left-border"></div>
+      <div class=" p-8 m-8">
+          <div class="row">
+            <div class="col s12 ">
+              <div class="row">
+                <div class="input-field col s12">
+                  <%= f.text_field :street %>
+                  <%= f.label :street %>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <%= f.text_field :area %>
+                  <%= f.label :area %>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s6">
+                  <%= f.text_field :block %>
+                  <%= f.label :block %>
+                </div>
+                <div class="input-field col s6">
+                  <%= f.text_field :avenue %>
+                  <%= f.label :avenue %>
+                </div>
+              </div>
+              <div class="row">
+                <div class="input-field col s12">
+                  <%= f.text_field :building %>
+                  <%= f.label :building %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+    function submitStaff() {
+        $("#location-form form").submit();
+    }
+</script>

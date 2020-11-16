@@ -1,5 +1,6 @@
 <header class="pse-4 ptb-0">
   <p class="m-0">Locations</p>
+  <%= link_to 'New Location', new_location_path, class: 'btn waves-teal' %>
 </header>
 <div id="locations-index">
   <div class="filters-row">
@@ -19,7 +20,7 @@
       <% @locations.map do |locations| %>
         <tr>
           <td>
-            <%= link_to locations.name, location_path(locations.id) %>
+            <%= link_to locations.name, edit_location_path(locations.id) %>
           </td>
           <td> <%= locations.address_string %> </td>
           <td> <%= locations.business_type %> </td>
