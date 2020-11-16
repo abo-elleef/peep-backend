@@ -1,9 +1,17 @@
 class LocationsController < ApplicationController
-
+  layout :resolve_layout
   def index
     locations = Location.all
-    serializers = ActiveModel::Serializer::ArraySerializer.new(locations, each_serializer: LocationSerializer)
-    render json: {data: serializers},  status: :ok
+    respond_to do |format|
+      format.html {
+        @locations = locations
+      }
+      format.json do
+        serializers = ActiveModel::Serializer::ArraySerializer.new(locations, each_serializer: LocationSerializer)
+        render json: {data: serializers},  status: :ok
+      end
+    end
+
   end
 
   def show
@@ -46,4 +54,13 @@ class LocationsController < ApplicationController
           :building, :area, :block, :avenue, :next_num, :num_prefix
       )
     end
+
+  def resolve_layout
+    case action_name
+    when "new", "edit", "update", "create"
+      "forms"
+    else
+      "dash"
+    end
+  end
 end
