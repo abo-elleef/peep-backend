@@ -30,26 +30,51 @@ class LocationsController < ApplicationController
 
   def create
     location = Location.new(location_params)
-    if location.save
-      render json: {data: LocationSerializer.new(location)}, status: :created
-    else
-      render json: location.errors, status: :unprocessable_entity
+    respond_to do |format|
+      format.json {
+        if location.save
+          render json: {data: LocationSerializer.new(location)}, status: :created
+        else
+          render json: location.errors, status: :unprocessable_entity
+        end
+      }
+      format.html {
+        @location = location
+        if @location.save
+          redirect_to locations_path
+        else
+          render :new
+        end
+      }
     end
+
   end
 
   def update
     location = Location.find(params[:id])
-    if location.update(location_params)
-      render json: {data: LocationSerializer.new(location)}, status: :ok
-    else
-      render json: location.errors,status: :unprocessable_entity
+    respond_to do |format|
+      format.json{
+        if location.update(location_params)
+          render json: {data: LocationSerializer.new(location)}, status: :ok
+        else
+          render json: location.errors,status: :unprocessable_entity
+        end
+      }
+      format.html {
+        if location.update(location_params)
+          redirect_to locations_path
+        else
+          render :edit
+        end
+      }
     end
+
   end
 
   def destroy
     location = Location.find(params[:id])
     if location.destroy
-      render json: {}, status: :ok
+      redirect_to locations_path
     else
       render json: {}, status: :bad_request
     end

@@ -4,7 +4,7 @@
     <p class="form-title"> <%= @location.id ? 'Edit Location' : 'Add Location' %></p>
     <div>
       <% if @location.id.present? %>
-        <%= link_to 'Delete', client_path(id: @location.id),
+        <%= link_to 'Delete', location_path(id: @location.id),
                     data: {:confirm => 'Are you sure?'}, class: 'waves-effect waves-red btn-flat red-text', :method => :delete %>
       <% end %>
       <a class="waves-effect waves-blue btn" onclick="submitStaff();">Save</a>
