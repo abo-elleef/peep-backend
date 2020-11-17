@@ -1,11 +1,12 @@
 class PaymentTypesController < ApplicationController
-
+  layout :resolve_layout
   def index
     payment_types = PaymentType.peep_filter(params.slice(:search, :name))
     serializers = ActiveModel::Serializer::ArraySerializer.new(payment_types, each_serializer: PaymentTypeSerializer)
     respond_to do |format|
       format.json { render json: { data: serializers },  status: :ok }
       format.js { @payment_types = payment_types }
+      format.html { @payment_types = payment_types }
     end
   end
 
@@ -45,5 +46,14 @@ class PaymentTypesController < ApplicationController
 
   def payment_type_params
     params.require(:payment_type).permit(:name)
+  end
+
+  def resolve_layout
+    case action_name
+    when "new", "edit", "update", "create"
+      "forms"
+    else
+      "dash"
+    end
   end
 end

@@ -1,0 +1,29 @@
+<header class="pse-4 ptb-0">
+  <p class="m-0">Payment Type</p>
+  <%= link_to 'New Payment Type', new_payment_type_path, class: 'btn waves-teal' %>
+</header>
+<div id="locations-index">
+  <div class="filters-row">
+  </div>
+  <div class="data-row ">
+    <table class="sticky-table white highlight m-4">
+      <thead>
+      <tr>
+        <th> Name </th>
+        <th> Added </th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <% @payment_types.map do |payment_type| %>
+        <tr>
+          <td>
+            <%= link_to payment_type.name, edit_payment_type_path(payment_type.id) %>
+          </td>
+          <td> <%= payment_type.created_at.strftime("%b, %d  %Y ") %> </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
