@@ -10,6 +10,15 @@ class PaymentTypesController < ApplicationController
     end
   end
 
+
+  def new
+    @payment_type = PaymentType.new
+  end
+
+  def edit
+    @payment_type = PaymentType.find params[:id]
+  end
+
   def show
     payment_type = PaymentType.find(params[:id])
     render json: {data: PaymentTypeSerializer.new(payment_type)}, status: :ok
@@ -18,7 +27,7 @@ class PaymentTypesController < ApplicationController
   def create
     payment_type = PaymentType.new(payment_type_params)
     if payment_type.save
-      render json: {data: PaymentTypeSerializer.new(payment_type)}, status: :created
+      # render json: {data: PaymentTypeSerializer.new(payment_type)}, status: :created
     else
       render json: payment_type.errors, status: :unprocessable_entity
     end
@@ -27,7 +36,7 @@ class PaymentTypesController < ApplicationController
   def update
     payment_type = PaymentType.find(params[:id])
     if payment_type.update(payment_type_params)
-      render json: {data: PaymentTypeSerializer.new(payment_type)}, status: :ok
+      # render json: {data: PaymentTypeSerializer.new(payment_type)}, status: :ok
     else
       render json: payment_type.errors, status: :unprocessable_entity
     end
@@ -36,7 +45,7 @@ class PaymentTypesController < ApplicationController
   def destroy
     payment_type = PaymentType.find(params[:id])
     if payment_type.destroy
-      render json: {}, status: :ok
+      # render json: {}, status: :ok
     else
       render json: {}, status: :bad_request
     end

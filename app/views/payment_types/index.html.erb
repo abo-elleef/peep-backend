@@ -1,8 +1,8 @@
 <header class="pse-4 ptb-0">
   <p class="m-0">Payment Type</p>
-  <%= link_to 'New Payment Type', new_payment_type_path, class: 'btn waves-teal' %>
+  <%= link_to 'New Payment Type', new_payment_type_path, class: 'btn waves-teal', remote: true %>
 </header>
-<div id="locations-index">
+<div id="payment-types-index">
   <div class="filters-row">
   </div>
   <div class="data-row ">
@@ -18,7 +18,7 @@
       <% @payment_types.map do |payment_type| %>
         <tr>
           <td>
-            <%= link_to payment_type.name, edit_payment_type_path(payment_type.id) %>
+            <%= link_to payment_type.name, edit_payment_type_path(payment_type.id), remote: true %>
           </td>
           <td> <%= payment_type.created_at.strftime("%b, %d  %Y ") %> </td>
         </tr>
