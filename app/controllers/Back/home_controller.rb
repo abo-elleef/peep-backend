@@ -17,4 +17,8 @@ class Back::HomeController < Back::BackBase
   def top_services
     @data = TopServices.perform
   end
+
+  def settings
+
+  end
 end

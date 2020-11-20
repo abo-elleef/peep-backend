@@ -20,6 +20,10 @@ module ApplicationHelper
     ServicePrice.pricing_types.keys.map { |a| [a, a] }
   end
 
+  def business_type_options
+    Location.business_types.keys.map { |a| [a, a] }
+  end
+
   def extra_time_type_options
     [
         ['Blocked Time', 'blocking_after'],

@@ -1,0 +1,23 @@
+<!-- Modal Structure -->
+<div id="payment_type_modal" class="modal" style="min-height: 500px;">
+  <div class="modal-content">
+    <h4><%= 'Edit Invoice Sequence' %></h4>
+    <%= form_with(model: @location, url: invoice_sequence_path(@location.id) , action: :put, remote: true) do |f| %>
+      <div class="row">
+        <div class="input-field col s12">
+          <%= f.text_field :next_num %>
+          <%= f.label :next_num, "Next Number"%>
+        </div>
+        <div class="input-field col s12">
+          <%= f.text_field :num_prefix %>
+          <%= f.label :num_prefix, "Invoice Prefix" %>
+        </div>
+      </div>
+      <div class="row m-0 modal-footer">
+        <a class="modal-close waves-effect waves-green btn-flat text-red left">cancel</a>
+        <%= f.submit :save, class: 'waves-effect waves-green btn' %>
+      </div>
+
+    <% end %>
+  </div>
+</div>

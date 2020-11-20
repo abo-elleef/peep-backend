@@ -1,0 +1,39 @@
+<header class="p-4">
+  <p class="m-0">Settings</p>
+</header>
+<div id="settings-page" class="main-section">
+  <div id="filters-row">
+  </div>
+  <div class="data-row">
+    <div class="p-4 white box-shadow">
+      <p class="fs-24 bold mb-1"> Account Setup </p>
+      <span class="gray"> configure sales operations </span>
+      <div class="pse-4">
+        <p>
+          <%= link_to 'Account Settings', invoice_sequences_path %>
+        </p>
+        <p>
+          <%= link_to 'Locations', locations_path %>
+        </p>
+      </div>
+    </div>
+
+    <div class="p-4 white box-shadow">
+      <p class="fs-24 bold mb-1"> Point Of Sales </p>
+      <span class="gray"> configure sales operations </span>
+
+      <div class="pse-4">
+        <p>
+          <%= link_to 'Invoice Sequences', invoice_sequences_path %>
+        </p>
+        <p>
+          <%= link_to 'Payment Types', payment_types_path %>
+        </p>
+        <p>
+          <%= link_to 'Cancellation Reason', cancellation_reasons_path %>
+        </p>
+      </div>
+    </div>
+
+  </div>
+</div>

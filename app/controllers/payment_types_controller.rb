@@ -1,12 +1,24 @@
 class PaymentTypesController < ApplicationController
-
+  layout :resolve_layout
   def index
     payment_types = PaymentType.peep_filter(params.slice(:search, :name))
-    serializers = ActiveModel::Serializer::ArraySerializer.new(payment_types, each_serializer: PaymentTypeSerializer)
     respond_to do |format|
-      format.json { render json: { data: serializers },  status: :ok }
+      format.json {
+        serializers = ActiveModel::Serializer::ArraySerializer.new(payment_types, each_serializer: PaymentTypeSerializer)
+        render json: { data: serializers },  status: :ok
+      }
       format.js { @payment_types = payment_types }
+      format.html { @payment_types = payment_types }
     end
+  end
+
+
+  def new
+    @payment_type = PaymentType.new
+  end
+
+  def edit
+    @payment_type = PaymentType.find params[:id]
   end
 
   def show
@@ -17,7 +29,7 @@ class PaymentTypesController < ApplicationController
   def create
     payment_type = PaymentType.new(payment_type_params)
     if payment_type.save
-      render json: {data: PaymentTypeSerializer.new(payment_type)}, status: :created
+      # render json: {data: PaymentTypeSerializer.new(payment_type)}, status: :created
     else
       render json: payment_type.errors, status: :unprocessable_entity
     end
@@ -26,7 +38,7 @@ class PaymentTypesController < ApplicationController
   def update
     payment_type = PaymentType.find(params[:id])
     if payment_type.update(payment_type_params)
-      render json: {data: PaymentTypeSerializer.new(payment_type)}, status: :ok
+      # render json: {data: PaymentTypeSerializer.new(payment_type)}, status: :ok
     else
       render json: payment_type.errors, status: :unprocessable_entity
     end
@@ -35,7 +47,7 @@ class PaymentTypesController < ApplicationController
   def destroy
     payment_type = PaymentType.find(params[:id])
     if payment_type.destroy
-      render json: {}, status: :ok
+      # render json: {}, status: :ok
     else
       render json: {}, status: :bad_request
     end
@@ -45,5 +57,14 @@ class PaymentTypesController < ApplicationController
 
   def payment_type_params
     params.require(:payment_type).permit(:name)
+  end
+
+  def resolve_layout
+    case action_name
+    when "new", "edit", "update", "create"
+      "forms"
+    else
+      "dash"
+    end
   end
 end

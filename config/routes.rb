@@ -117,6 +117,7 @@ Rails.application.routes.draw do
     get "/calendar", to: "appointments#calendar"
     get "/", to: "appointments#calendar"
     get "/calendar_events", to: "appointments#calendar_events"
+    get "/settings", to: "back/home#settings"
 
 
 

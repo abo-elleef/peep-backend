@@ -1,0 +1,29 @@
+<header class="pse-4 ptb-0">
+  <p class="m-0">Cancellation Reasons</p>
+  <%= link_to 'New Cancellation Reason', new_cancellation_reason_path, class: 'btn waves-teal', remote: true %>
+</header>
+<div id="payment-types-index">
+  <div class="filters-row">
+  </div>
+  <div class="data-row ">
+    <table class="sticky-table white highlight m-4">
+      <thead>
+      <tr>
+        <th> Name </th>
+        <th> Added </th>
+
+      </tr>
+      </thead>
+      <tbody>
+      <% @cancellation_reasons.map do |cancellation_reason| %>
+        <tr>
+          <td>
+            <%= link_to cancellation_reason.name, edit_cancellation_reason_path(cancellation_reason.id), remote: true %>
+          </td>
+          <td> <%= cancellation_reason.created_at.strftime("%b, %d  %Y ") %> </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
