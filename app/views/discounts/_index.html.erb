@@ -1,0 +1,34 @@
+<table class="sticky-table">
+  <thead>
+  <tr>
+    <th> Name</th>
+    <th> Deduct Type </th>
+    <th> Deduct Value </th>
+    <th> Apply On </th>
+    <th> Added  </th>
+    <th> starts_at  </th>
+    <th> ends_at  </th>
+    <th> Active  </th>
+    <th> uniq_per_client  </th>
+    <th> limit </th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @discounts.map do |discount| %>
+    <tr>
+      <td>
+        <%= link_to discount.name, edit_discount_path(discount) %>
+      </td>
+      <td> <%= discount.deduct_type %> </td>
+      <td> <%= discount.deduct_value %> </td>
+      <td> <%= discount.apply_on %> </td>
+      <td> <%= discount.created_at.strftime("%b, %d %Y") %> </td>
+      <td> <%= discount.starts_at.strftime("%b, %d %Y") %> </td>
+      <td> <%= discount.ends_at.strftime("%b, %d %Y") %> </td>
+      <td> <%= discount.active %> </td>
+      <td> <%= discount.uniq_per_client %> </td>
+      <td> <%= discount.limit %> </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

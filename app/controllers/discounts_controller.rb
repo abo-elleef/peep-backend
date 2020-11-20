@@ -1,9 +1,11 @@
 class DiscountsController < ApplicationController
 
+  layout :resolve_layout
+
   def index
-    discounts = Discount.peep_filter(params.slice(:name)).desc_order
-    serializers = ActiveModel::Serializer::ArraySerializer.new(discounts, each_serializer: DiscountSerializer)
-    render json: {data: serializers},  status: :ok
+    @discounts = Discount.peep_filter(params.slice(:name, :search)).desc_order
+    # serializers = ActiveModel::Serializer::ArraySerializer.new(discounts, each_serializer: DiscountSerializer)
+    # render json: {data: serializers},  status: :ok
   end
 
   def show
@@ -45,5 +47,13 @@ class DiscountsController < ApplicationController
         :name, :deduct_type, :deduct_value, :apply_on, :limit,
         :uniq_per_client, :starts_at, :ends_at, service_price_ids: []
     )
+  end
+  def resolve_layout
+    case action_name
+    when "new", "edit", "update", "create"
+      "forms"
+    else
+      "dash"
+    end
   end
 end

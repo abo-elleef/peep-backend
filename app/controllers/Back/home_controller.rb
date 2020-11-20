@@ -21,4 +21,5 @@ class Back::HomeController < Back::BackBase
   def settings
 
   end
+
 end

@@ -17,6 +17,7 @@ class Discount < ApplicationRecord
 
   # == Scopes ===============================================================
   scope :by_name, -> (name) { where("name ilike ?", "%" + name + "%")}
+  scope :by_search, -> (name) { where("name ilike ?", "%" + name + "%")}
 
   # == Callbacks ============================================================
   # == Class Methods ========================================================
