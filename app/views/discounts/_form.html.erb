@@ -1,4 +1,4 @@
-<div id="form-container">
+<div class="form-container">
 <%= form_with model: @discount, html: {class: 'height-100'} do |f| %>
   <div class="form-header">
     <p><a class="waves-effect waves-teal btn-flat" href="/discounts">x</a></p>
@@ -80,18 +80,20 @@
         </div>
 
         <div class="col s6 left-border p-4">
-          
-          <%= f.label :service_price_ids %>
-          <%= f.select :service_price_ids, @service_prices.map {|a| [a.name, a.id]}, {selected: nil} , {multiple: true, class: 'browser-default select2'} %>
-          <% @service_prices.map do |service_price| %>
-          <p>
-            <label>
-              <input type="checkbox" checked="checked" />
-              <span><%= service_price.name %></span>
-            </label>
-          </p>
-          <% end %>
-          
+          <div class="row height-25">
+            <div class="col push-s1 p-4">
+
+              <%= f.label :service_price_ids %>
+              <% @service_prices.map do |service_price| %>
+                <p>
+                  <label>
+                    <%= f.check_box :service_price_ids, {multiple: true}, service_price.id, nil %>
+                    <span><%= service_price.name %></span>
+                  </label>
+                </p>
+              <% end %>
+            </div>
+          </div>
         </div>
       </div>
   </div>
@@ -99,16 +101,3 @@
 </div>
 
 
-
-
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet"/>
-<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
-<script>
-    
-  function registerEventsAppointmentForm(){
-      $('.select2').select2();
-  }
-    $(document).on('turbolinks:load', function () {
-        registerEventsAppointmentForm()
-    });
-</script>

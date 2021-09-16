@@ -8,7 +8,7 @@ class DiscountsController < ApplicationController
     # render json: {data: serializers},  status: :ok
   end
 
-  def new 
+  def new
     @discount = Discount.new
     init_selections
   end
@@ -18,8 +18,8 @@ class DiscountsController < ApplicationController
     init_selections
   end
 
-
   # which phase ?
+
   def show
     discount = Discount.find(params[:id])
     render json: {data: DiscountSerializer.new(discount)}, status: :ok
@@ -61,11 +61,8 @@ class DiscountsController < ApplicationController
     )
   end
 
-
   def init_selections
     @service_prices = ServicePrice.all
-    @staff = Staff.unscoped.all.map{|a| [a.name, a.id]}
-    @clients = Client.all.map{|a| [a.name, a.id]}
     @categories = ServiceCategory.all
   end
 
