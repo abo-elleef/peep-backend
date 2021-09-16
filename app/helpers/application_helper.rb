@@ -35,6 +35,7 @@ module ApplicationHelper
     ServiceCategory.all.map {|a| [a.name, a.id]}
   end
 
+
   def locations_options
     Location.all.map{ |location| [location.name, location.id] }
   end

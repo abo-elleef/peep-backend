@@ -8,26 +8,38 @@ class DiscountsController < ApplicationController
     # render json: {data: serializers},  status: :ok
   end
 
+  def new 
+    @discount = Discount.new
+    init_selections
+  end
+
+  def edit 
+    @discount = Discount.find(params[:id])
+    init_selections
+  end
+
+
+  # which phase ?
   def show
     discount = Discount.find(params[:id])
     render json: {data: DiscountSerializer.new(discount)}, status: :ok
   end
 
   def create
-    discount = Discount.new(discount_params)
-    if discount.save
-      render json: {data: DiscountSerializer.new(discount)}, status: :created
+    @discount = Discount.new(discount_params)
+    if @discount.save
+      redirect_to discounts_path
     else
-      render json: discount.errors, status: :unprocessable_entity
+      render :new
     end
   end
 
   def update
     discount = Discount.find(params[:id])
     if discount.update(discount_params)
-      render json: {data: DiscountSerializer.new(discount)}, status: :ok
+      redirect_to discounts_path
     else
-      render json: discount.errors, status: :unprocessable_entity
+      render :edit
     end
   end
 
@@ -48,6 +60,15 @@ class DiscountsController < ApplicationController
         :uniq_per_client, :starts_at, :ends_at, service_price_ids: []
     )
   end
+
+
+  def init_selections
+    @service_prices = ServicePrice.all
+    @staff = Staff.unscoped.all.map{|a| [a.name, a.id]}
+    @clients = Client.all.map{|a| [a.name, a.id]}
+    @categories = ServiceCategory.all
+  end
+
   def resolve_layout
     case action_name
     when "new", "edit", "update", "create"
