@@ -9,10 +9,10 @@ module Exports
           end
         end
       end
+      class << self
+        private
 
-      private
-
-        def self.discount_attributes
+        def discount_attributes
           {
             id: :id,
             name: :name,
@@ -22,9 +22,10 @@ module Exports
             limit: :limit,
             starts_at: :starts_at,
             ends_at: :ends_at,
-            created_at: :created_at,
+            created_at: :created_at
           }
         end
+      end
     end
   end
 end

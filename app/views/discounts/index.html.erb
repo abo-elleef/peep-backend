@@ -14,9 +14,10 @@
       <div class="filters-row">
         <div class="input-field">
           <i class="material-icons prefix" style="color: #999">search</i>
-          <input id="staffs_search" class="width-100" placeholder="Search discount data" type="text">
+          <input id="index_search" class="width-100" placeholder="Search discount data" type="text">
         </div>
         <div class="actions">
+          <%= link_to 'Delete', "#", class: 'btn waves-teal', onClick: "delete_call()"%>
           <a class='dropdown-trigger btn waves-effects secondary-bg ' href='#' data-target='dropdown1'>Download</a>
           <%= link_to 'New Discount', new_discount_path, class: 'btn waves-teal' %>
 
@@ -47,28 +48,14 @@
                 format: 'js'
             });
         })
-        $("#staffs_search").keyup(function () {
+        $("#index_search").keyup(function () {
             $.get("discounts.js?search=" + $(this).val());
         })
-        $("#shifts_datepicker").change(function(){
-            let date =  $(this).val();
-            $.ajax({
-                type: "GET",
-                url: '/shifts?date=' + date,
-                format: 'js'
-            });
-        })
-        $()
 
-        $("")
+        
     })
-    $('body').on('click', '.adding-shift', function(e){
-        e.preventDefault();
-        let location_id = $("#location_id").val();
-        let url = $(this).prop("href");
-        url += '&location_id=' + location_id;
-        console.log(url);
-        $.get(url)
-        return false
-    })
+    function delete_call(){
+      $.delete("discounts.js?selected_ids=" + window.selectedIds;
+    }
+    
 </script>

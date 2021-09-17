@@ -1,6 +1,14 @@
 <table class="sticky-table">
   <thead>
   <tr>
+    <th> 
+      <p>
+        <label>
+          <%= check_box_tag :selected_all, nil , false,{multiple: true, checked: false, class: "table_select_all"} %>
+          <span></span>
+        </label>
+      </p>
+    </th>
     <th> Name</th>
     <th> Deduct Type </th>
     <th> Deduct Value </th>
@@ -16,6 +24,15 @@
   <tbody>
   <% @discounts.map do |discount| %>
     <tr>
+      <td>
+        <p class="m-0">
+          <label>
+            <%= check_box_tag :selected_ids, discount.id , false,{multiple: true, checked: false, class: "table_select"} %>
+            <span></span>
+          </label>
+        </p>
+        
+      </td>
       <td>
         <%= link_to discount.name, edit_discount_path(discount) %>
       </td>

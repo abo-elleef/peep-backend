@@ -3,6 +3,6 @@ xlsx_package = Axlsx::Package.new
 xlsx_package.workbook.add_worksheet(:name => "Discounts") do |sheet|
   sheet.add_row discounts_xlsx.keys
   @discounts.map do |discount|
-    sheet.add_row discounts_xlsx.values.map {|method_name| discount.send(method_name)}
+    sheet.add_row(discounts_xlsx.values.map { |method_name| discount.send method_name })
   end
 end
