@@ -17,14 +17,13 @@
           <input id="staffs_search" class="width-100" placeholder="Search discount data" type="text">
         </div>
         <div class="actions">
-<!--          <a class='dropdown-trigger btn waves-effects secondary-bg ' href='#' data-target='dropdown1'>Download</a>-->
+          <a class='dropdown-trigger btn waves-effects secondary-bg ' href='#' data-target='dropdown1'>Download</a>
           <%= link_to 'New Discount', new_discount_path, class: 'btn waves-teal' %>
 
-          <!-- Dropdown Structure -->
-<!--          <ul id='dropdown1' class='dropdown-content'>-->
-<!--            <li><a target="_blank" href="/export/discounts?export_type=xlsx">Excel</a></li>-->
-<!--            <li><a target="_blank" href="/export/discounts?export_type=csv">CSV</a></li>-->
-<!--          </ul>-->
+          <ul id='dropdown1' class='dropdown-content'>
+            <li><a target="_blank" href="/export/discounts?export_type=xlsx">Excel</a></li>
+            <li><a target="_blank" href="/export/discounts?export_type=csv">CSV</a></li>
+          </ul>
 
         </div>
       </div>

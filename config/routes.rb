@@ -71,6 +71,7 @@ Rails.application.routes.draw do
   get "export/staffs", to: "export#staffs"
   get "export/products", to: "export#products"
   get "export/orders", to: "export#orders"
+  get "export/discounts", to: "export#discounts"
   post "appointments/check_hints", to: "appointments#check_hints"
   post "/checkout", to: "invoices#checkout"
 
