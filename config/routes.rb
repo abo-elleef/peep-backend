@@ -57,7 +57,11 @@ Rails.application.routes.draw do
   resources :cancellation_reasons
   resources :suppliers
   resources :subscriptions
-  resources :discounts
+  resources :discounts do 
+    collection do 
+      delete 'delete'
+    end
+  end
   resources :voucher_types
   resources :packages
   resources :invoices, only: [:index, :show, :update, :new, :create] do

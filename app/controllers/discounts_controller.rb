@@ -43,12 +43,13 @@ class DiscountsController < ApplicationController
     end
   end
 
-  def destroy
-    discount = Discount.find(params[:id])
-    if discount.destroy
-      render json: {}, status: :ok
+  def delete
+    ids  = params[:selected_ids].present? ? params[:selected_ids].split(',') : []
+    discounts = Discount.where(id: ids)
+    if discounts.destroy_all
+      redirect_to discounts_path
     else
-      render json: {}, status: :bad_request
+      redirect_to discounts_path
     end
   end
 
