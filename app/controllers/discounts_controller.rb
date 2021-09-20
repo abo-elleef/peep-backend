@@ -1,10 +1,24 @@
 class DiscountsController < ApplicationController
 
+  layout :resolve_layout
+
   def index
-    discounts = Discount.peep_filter(params.slice(:name)).desc_order
-    serializers = ActiveModel::Serializer::ArraySerializer.new(discounts, each_serializer: DiscountSerializer)
-    render json: {data: serializers},  status: :ok
+    @discounts = Discount.peep_filter(params.slice(:name, :search)).desc_order
+    # serializers = ActiveModel::Serializer::ArraySerializer.new(discounts, each_serializer: DiscountSerializer)
+    # render json: {data: serializers},  status: :ok
   end
+
+  def new
+    @discount = Discount.new
+    init_selections
+  end
+
+  def edit 
+    @discount = Discount.find(params[:id])
+    init_selections
+  end
+
+  # which phase ?
 
   def show
     discount = Discount.find(params[:id])
@@ -12,29 +26,30 @@ class DiscountsController < ApplicationController
   end
 
   def create
-    discount = Discount.new(discount_params)
-    if discount.save
-      render json: {data: DiscountSerializer.new(discount)}, status: :created
+    @discount = Discount.new(discount_params)
+    if @discount.save
+      redirect_to discounts_path
     else
-      render json: discount.errors, status: :unprocessable_entity
+      render :new
     end
   end
 
   def update
     discount = Discount.find(params[:id])
     if discount.update(discount_params)
-      render json: {data: DiscountSerializer.new(discount)}, status: :ok
+      redirect_to discounts_path
     else
-      render json: discount.errors, status: :unprocessable_entity
+      render :edit
     end
   end
 
-  def destroy
-    discount = Discount.find(params[:id])
-    if discount.destroy
-      render json: {}, status: :ok
+  def delete
+    ids  = params[:selected_ids].present? ? params[:selected_ids].split(',') : []
+    discounts = Discount.where(id: ids)
+    if discounts.destroy_all
+      redirect_to discounts_path
     else
-      render json: {}, status: :bad_request
+      redirect_to discounts_path
     end
   end
 
@@ -45,5 +60,19 @@ class DiscountsController < ApplicationController
         :name, :deduct_type, :deduct_value, :apply_on, :limit,
         :uniq_per_client, :starts_at, :ends_at, service_price_ids: []
     )
+  end
+
+  def init_selections
+    @service_prices = ServicePrice.all
+    @categories = ServiceCategory.all
+  end
+
+  def resolve_layout
+    case action_name
+    when "new", "edit", "update", "create"
+      "forms"
+    else
+      "dash"
+    end
   end
 end

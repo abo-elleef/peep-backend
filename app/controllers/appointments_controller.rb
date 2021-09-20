@@ -40,14 +40,12 @@ class AppointmentsController < ApplicationController
     render json: {hint: hint}, status: :ok
   end
 
-
   def new
     params[:date] = (params[:date].present? ? Date.parse(params[:date]) : Date.today).to_date
     @appointment = Appointment.new(location_id: params[:location_id])
     @appointment.appointment_services.build(starts_at: params[:date] || Time.zone.now)
     init_selections
   end
-
 
   def create
     appointment = Appointment.new(appointment_params)
