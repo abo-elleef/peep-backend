@@ -57,7 +57,11 @@ Rails.application.routes.draw do
   resources :cancellation_reasons
   resources :suppliers
   resources :subscriptions
-  resources :discounts
+  resources :discounts do 
+    collection do 
+      delete 'delete'
+    end
+  end
   resources :voucher_types
   resources :packages
   resources :invoices, only: [:index, :show, :update, :new, :create] do
@@ -71,6 +75,7 @@ Rails.application.routes.draw do
   get "export/staffs", to: "export#staffs"
   get "export/products", to: "export#products"
   get "export/orders", to: "export#orders"
+  get "export/discounts", to: "export#discounts"
   post "appointments/check_hints", to: "appointments#check_hints"
   post "/checkout", to: "invoices#checkout"
 

@@ -1,0 +1,103 @@
+<div class="form-container">
+<%= form_with model: @discount, html: {class: 'height-100'} do |f| %>
+  <div class="form-header">
+    <p><a class="waves-effect waves-teal btn-flat" href="/discounts">x</a></p>
+    <p class="form-title"> <%= @discount.id ? 'Update Discount' : 'Create Discount' %></p>
+    <p> <%= f.submit :save, class: 'btn width-100 main-bg waves-effect waves-teal btn-flat' %> </p>
+    
+  </div>
+  <div class="form-wrapper" >
+    
+      <div class="row height-100">
+        <div class="col s6">
+          <div class="row mt-4">
+            <div class="col s8 push-s2">
+              <%= f.label :name %>
+              <%= f.text_field :name %>
+            </div>
+          </div>
+          <div class="row mt-4">
+            <div class="col s4 push-s2">
+              <%= f.label :deduct_type %>
+              <% Discount.deduct_types.map do |key, value| %>
+                <p>
+                  <label>
+                    <%= f.radio_button :deduct_type, key %>
+                    <span><%= value %></span>
+                  </label>
+                </p>
+              <% end %>
+            </div>
+
+            <div class="col s4 push-s2">
+              <%= f.label :apply_on %>
+              <% Discount.apply_ons.map do |key, value| %>
+                <p>
+                  <label>
+                    <%= f.radio_button :apply_on, key %>
+                    <span><%= value %></span>
+                  </label>
+                </p>
+              <% end %>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col s4 push-s2">
+              <%= f.label :limit %>
+              <%= f.number_field :limit%>
+            </div>
+            <div class="col s4 push-s2">
+              <%= f.label :deduct_value %>
+              <%= f.number_field :deduct_value %>
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col s4 push-s2">
+            <p>
+              <%= f.label :uniq_per_client, "" do %>
+                <%= f.check_box :uniq_per_client %>
+                <span> Once per Client</span>  
+              <% end %>
+            </p>  
+            </div>
+          </div>
+
+          <div class="row mt-4">
+            <div class="col s4 push-s2">
+              <%= f.label :starts_at %>
+              <%= f.text_field :starts_at, {value: (f.object.starts_at || params[:starts_at] || Date.today) ,  class: "datepicker"} %>
+            </div>
+            <div class="col s4 push-s2">
+              <%= f.label :ends_at %>
+              <%= f.text_field :ends_at, {value: (f.object.ends_at || params[:ends_at] || Date.today) ,  class: "datepicker"} %>
+            </div>
+          </div>
+          <div id="appointment_services" class="row">
+            <%= f.hidden_field :location_id %>
+          </div>
+        </div>
+
+        <div class="col s6 left-border p-4">
+          <div class="row height-25">
+            <div class="col push-s1 p-4">
+
+              <%= f.label :service_price_ids %>
+              <% @service_prices.map do |service_price| %>
+                <p>
+                  <label>
+                    <%= f.check_box :service_price_ids, {multiple: true}, service_price.id, nil %>
+                    <span><%= service_price.name %></span>
+                  </label>
+                </p>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  <% end %>
+</div>
+
+

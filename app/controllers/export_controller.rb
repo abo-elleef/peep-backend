@@ -50,6 +50,17 @@ class ExportController < ApplicationController
     end
   end
 
+  def discounts
+    @discounts = Discount.all
+    if params[:export_type] == 'csv'
+      send_data Exports::CsvGenerators::Discounts.perform(@discounts), filename: @file_name
+    elsif params[:export_type] == 'xlsx'
+      render xlsx: @file_name, template: "xlsx_generators/discounts.xlsx.axlsx"
+    else
+      render json: {}, status: :unprocessable_entity
+    end
+  end
+
   def orders
     # TODO  add locations and types
     @orders = Order.preload(:supplier).peep_filter(params.slice(:supplier_id, :status))
