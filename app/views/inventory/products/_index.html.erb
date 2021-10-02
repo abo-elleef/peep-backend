@@ -1,0 +1,27 @@
+<div class="p-4 data-row" >
+  <table class="sticky-table white highlight">
+    <thead>
+    <tr>
+      <th> Name </th>
+      <th> barcode </th>
+      <th> sku </th>
+      <th> retail_price </th>
+      <th> Last updated </th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @products.map do |product| %>
+      <tr>
+        <td>
+          <%= link_to product.name, inventory_product_path(product.id) %>
+        </td>
+        <td> <%= product.barcode %> </td>
+        <td> <%= product.sku %> </td>
+        <td> <%= product.retail_price %> </td>
+        <td> <%= product.updated_at.strftime("%b, %d  %Y ") %> </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <%== pagy_materialize_nav(@pagy) %>
+</div>

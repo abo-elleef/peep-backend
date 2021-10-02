@@ -1,0 +1,32 @@
+<div class="">
+  <ul class="tabs ps-3">
+    <li class="tab">
+    <%# class: (acitve == "" ? "active" : ""), %>
+      <%= link_to 'Products', inventory_products_path, target: "_self" %>
+    </li>
+    <li class="tab">
+      <a target="_self"
+         href="/inventory/orders">
+        Orders
+      </a>
+    </li>
+    <li class="tab">
+      <a target="_self"
+         href="/inventory/categories">
+        Categories
+      </a>
+    </li>
+    <li class="tab">
+      <a target="_self"
+         href="/inventory/brands">
+        Brands
+      </a>
+    </li>
+    <li class="tab">
+      <a target="_self"
+         href="/inventory/suppliers">
+        Suppliers
+      </a>
+    </li>
+  </ul>
+</div>

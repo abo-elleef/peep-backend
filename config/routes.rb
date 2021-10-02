@@ -45,18 +45,9 @@ Rails.application.routes.draw do
       get :update_status
     end
   end
-  resources :orders
-  resources :product_brands
-  resources :product_categories
-  resources :payment_types
-  resources :products do
-    member do
-      get :stock_history
-    end
-  end
   resources :cancellation_reasons
-  resources :suppliers
   resources :subscriptions
+  resources :payment_types
   resources :discounts do 
     collection do 
       delete 'delete'
@@ -78,7 +69,17 @@ Rails.application.routes.draw do
   get "export/discounts", to: "export#discounts"
   post "appointments/check_hints", to: "appointments#check_hints"
   post "/checkout", to: "invoices#checkout"
-
+  namespace :inventory do 
+    resources :orders
+    resources :product_brands
+    resources :product_categories
+    resources :products do
+      member do
+        get :stock_history
+      end
+    end
+    resources :suppliers
+  end
   # Reports Routes
   namespace :reports do
     # sales routes
