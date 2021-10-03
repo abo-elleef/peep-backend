@@ -1,32 +1,19 @@
 <div class="">
   <ul class="tabs ps-3">
     <li class="tab">
-    <%# class: (acitve == "" ? "active" : ""), %>
-      <%= link_to 'Products', inventory_products_path, target: "_self" %>
+      <%= link_to 'Products', inventory_products_path, target: "_self", class: (active == "products" ? "active" : "") %>
     </li>
     <li class="tab">
-      <a target="_self"
-         href="/inventory/orders">
-        Orders
-      </a>
+      <%= link_to 'Products', inventory_orders_path, target: "_self", class: (active == "orders" ? "active" : "") %>
     </li>
     <li class="tab">
-      <a target="_self"
-         href="/inventory/product_categories">
-        Categories
-      </a>
+      <%= link_to 'categories', inventory_product_categories_path, target: "_self", class: (active == "categories" ? "active" : "") %>
     </li>
     <li class="tab">
-      <a target="_self"
-         href="/inventory/product_brands">
-        Brands
-      </a>
+      <%= link_to 'brands', inventory_product_brands_path, target: "_self", class: (active == "brands" ? "active" : "") %>
     </li>
     <li class="tab">
-      <a target="_self"
-         href="/inventory/suppliers">
-        Suppliers
-      </a>
+      <%= link_to 'Products', inventory_suppliers_path, target: "_self", class: (active == "suppliers" ? "active" : "") %>
     </li>
   </ul>
 </div>
