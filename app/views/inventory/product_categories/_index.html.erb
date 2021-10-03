@@ -1,0 +1,23 @@
+<div class="pse-4 pb-4 pt-2" >
+  <table class="sticky-table white highlight">
+    <thead>
+    <tr>
+      <th> Name </th>
+      <th> assigned products </th>
+      <th> Last updated </th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @categories.map do |category| %>
+      <tr>
+        <td>
+          <%= link_to category.name, new_inventory_product_category_path(category.id) %>
+        </td>
+        <td> <%= category.products.size %> </td>
+        <td> <%= category.updated_at.strftime("%b, %d  %Y ") %> </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <%== pagy_materialize_nav(@pagy) %>
+</div>

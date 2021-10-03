@@ -2,35 +2,35 @@
   <p class="m-0">Inventory</p>
 </header>
 <div class="tabs-container">
-  <%= render "inventory/tab_headers", active: 'products' %>
+  <%= render "inventory/tab_headers", active: 'orders' %>
   <div id="test1" class="col s12">
     <div>
       <div class="filters-row pse-4 pt-2">
         <div class="input-field">
           <i class="material-icons prefix" style="color: #999">search</i>
-          <input  id="index_search" class="width-100" placeholder="Search Product data" type="text">
+          <input  id="index_search" class="width-100" placeholder="Search order data" type="text">
         </div>
         <div class="actions">
           <a class='dropdown-trigger btn waves-effects secondary-bg ' href='#' data-target='dropdown1'>Download</a>
-          <%= link_to 'New Product', new_inventory_product_path, class: "btn waves-teal" %>
+          <%= link_to 'New order', new_inventory_order_path, class: "btn waves-teal" %>
 
           <!-- Dropdown Structure -->
           <ul id='dropdown1' class='dropdown-content'>
-            <li><a target="_blank" href="/export/products?export_type=xlsx">Excel</a></li>
-            <li><a target="_blank" href="/export/products?export_type=csv">CSV</a></li>
+            <li><a target="_blank" href="/export/orders?export_type=xlsx">Excel</a></li>
+            <li><a target="_blank" href="/export/orders?export_type=csv">CSV</a></li>
           </ul>
 
         </div>
       </div>
     </div>
     <div class="data-row">
-      <%= render "inventory/products/index" %>
+      <%= render "inventory/orders/index" %>
     </div>
   </div>
 </div>
 
 <script type="text/javascript" charset="utf-8">
   $("#index_search").keyup(function(){
-      $.get("/inventory/products.js?search=" + $(this).val());
+      $.get("/inventory/orders.js?search=" + $(this).val());
   })
 </script>

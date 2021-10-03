@@ -13,6 +13,7 @@ class Supplier < ApplicationRecord
 
   # == Scopes ===============================================================
   scope :by_name, -> (name) { where("name ilike ?", "%" + name + "%") }
+  scope :by_search, -> (search) { where("name ilike ?", "%" + search + "%") }
 
   # == Callbacks ============================================================
   # == Class Methods ========================================================

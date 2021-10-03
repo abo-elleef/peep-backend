@@ -19,6 +19,7 @@ class Order < ApplicationRecord
   # == Scopes ===============================================================
   scope :by_supplier_id, -> (supplier_id) { where(supplier_id: supplier_id) }
   scope :by_status, -> (status) {where(status: status)}
+  scope :by_search, -> (search) {joins(:location, :supplier).where("orders.id::text like ? or suppliers.name ilike ? or locations.name ilike ?", search, "%#{search}%", "%#{search}%")}
 
   # == Callbacks ============================================================
   before_validation :fill_status
