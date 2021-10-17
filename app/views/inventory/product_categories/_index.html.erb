@@ -11,7 +11,7 @@
     <% @categories.map do |category| %>
       <tr>
         <td>
-          <%= link_to category.name, new_inventory_product_category_path(category.id) %>
+          <%= link_to category.name, edit_inventory_product_category_path(category.id), remote: true %>
         </td>
         <td> <%= category.products.size %> </td>
         <td> <%= category.updated_at.strftime("%b, %d  %Y ") %> </td>

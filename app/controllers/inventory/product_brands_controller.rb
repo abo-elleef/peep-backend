@@ -1,10 +1,18 @@
 class Inventory::ProductBrandsController < ApplicationController
   layout :resolve_layout
   def index
-    @brands = ProductBrand.preload(:products).peep_filter(params.slice(:search))
+    @brands = ProductBrand.preload(:products).peep_filter(params.slice(:search)).order("product_brands.id DESC")
     @pagy, @brands = pagy(@brands, page: page_index, items: page_size)
     # serializers = ActiveModel::Serializer::ArraySerializer.new(brands, each_serializer: ProductBrandSerializer)
     # render json: {data: serializers, meta: pagy_meta_data(pagy)},  status: :ok
+  end
+
+  def new
+    @brand = ProductBrand.new
+  end
+
+  def edit
+    @brand = ProductBrand.find(params[:id])
   end
 
   def show
@@ -15,27 +23,30 @@ class Inventory::ProductBrandsController < ApplicationController
   def create
     brand = ProductBrand.new(brand_params)
     if brand.save
-      render json: {data: ProductBrandSerializer.new(brand)}, status: :created
+      redirect_to inventory_product_brands_path
     else
-      render json: brand.errors, status: :unprocessable_entity
+      # show error message with ajax reply
+      # render json: brand.errors, status: :unprocessable_entity
     end
   end
 
   def update
     brand = ProductBrand.find(params[:id])
     if brand.update(brand_params)
-      render json: {data: ProductBrandSerializer.new(brand)}, status: :ok
+      redirect_to inventory_product_brands_path
     else
-      render json: brand.errors, status: :unprocessable_entity
+      # show error message with ajax reply
+      # render json: brand.errors, status: :unprocessable_entity
     end
   end
 
   def destroy
     brand = ProductBrand.find(params[:id])
     if brand.destroy
-      render json: {}, status: :ok
+      redirect_to inventory_product_brands_path
     else
-      render json: {}, status: :bad_request
+      # show error message with ajax reply
+      # render json: brand.errors, status: :unprocessable_entity
     end
   end
 

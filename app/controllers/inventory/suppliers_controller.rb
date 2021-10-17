@@ -1,25 +1,32 @@
 class Inventory::SuppliersController < ApplicationController
 
   layout :resolve_layout
-  
+
   def index
-    @suppliers = Supplier.peep_filter(params.slice(:search))
+    @suppliers = Supplier.peep_filter(params.slice(:search)).order("suppliers.id DESC")
     @pagy, @suppliers = pagy(@suppliers,{page: page_index, items: page_size})
     # serializers = ActiveModel::Serializer::ArraySerializer.new(suppliers, each_serializer: SupplierSerializer)
     # render json: {data: serializers, meta: pagy_meta_data(pagy)}, status: :ok
   end
 
+  def new
+    @supplier = Supplier.new
+  end
+
+  def edit
+    @supplier = Supplier.find params[:id]
+  end
+
   def show
     supplier = Supplier.find(params[:id])
     render json: {data: SupplierSerializer.new(supplier)}, status: :ok
-
   end
 
   def create
     supplier = Supplier.new(supplier_params)
 
     if supplier.save
-      render json: {data: SupplierSerializer.new(supplier)}, status: :created
+      redirect_to inventory_suppliers_path
     else
       render json: supplier.errors, status: :unprocessable_entity
     end
@@ -28,7 +35,7 @@ class Inventory::SuppliersController < ApplicationController
   def update
     supplier = Supplier.find(params[:id])
     if supplier.update(supplier_params)
-      render json: {data: SupplierSerializer.new(supplier)}, status: :ok
+      redirect_to inventory_suppliers_path
     else
       render json: supplier.errors, status: :unprocessable_entity
     end
@@ -36,11 +43,12 @@ class Inventory::SuppliersController < ApplicationController
 
   def destroy
     supplier = Supplier.find(params[:id])
-    render json: {}, status: supplier.destroy ? :ok : :bad_request
+    supplier.destroy
+    redirect_to inventory_suppliers_path
   end
 
   private
-  
+
   def resolve_layout
     case action_name
     when "new", "edit", "update", "create"

@@ -13,7 +13,7 @@
     <% @suppliers.map do |supplier| %>
       <tr>
         <td>
-          <%= link_to supplier.name, inventory_supplier_path(supplier.id) %>
+          <%= link_to supplier.name, edit_inventory_supplier_path(supplier) %>
         </td>
         <td> <%= supplier.phone %> </td>
         <td> <%= supplier.email %> </td>
