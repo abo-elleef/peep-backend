@@ -1,0 +1,112 @@
+<div class="form-container">
+  <div class="form-header">
+    <%= link_to "x", inventory_orders_path, class: 'waves-effect waves-red btn-flat'%>
+    <p class="form-title"> <%= @order.id ? 'Edit order' : 'Add order' %></p>
+    <div>
+      <% if @order.id.present? %>
+        <%= link_to 'Delete', inventory_order_path(id: @order.id),
+                    data: {:confirm => 'Are you sure?'}, class: 'waves-effect waves-red btn-flat red-text', :method => :delete %>
+      <% end %>
+      <a class="waves-effect waves-blue btn" onclick="submitForm();">Save</a>
+    </div>
+
+  </div>
+  <div id="client-form">
+    <%= form_with(model: @order,url: @order.id.present? ? inventory_order_path(@order) : inventory_orders_path, html: {class: 'height-100'}) do |f| %>
+      <div class=" p-8 m-8">
+        <% if @order.errors.full_messages.any? %>
+          <div class="p-4">
+            <p class="red-text"> Please check the following errors and Save again</p>
+            <ul class="collection">
+              <% @order.errors.full_messages.map do |msg| %>
+                <li class="red-text collection-item"><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.label :name %>
+            <%= f.text_field :name %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col s12">
+            <div class="input-field col s6">
+              <%= f.select :order_brand_id, [], {selected: :value}, {class: 'browser-default select2'} %>
+              <%= f.label :brand_id %>
+            </div>
+            <div class=" input-field col s6">
+              <%= f.select :order_category_id, [], {selected: :value}, {class: 'browser-default select2'} %>
+              <%= f.label :category_id %>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <div class="row">
+          <div class="input-field col s12">
+            <div class="switch">
+              <label>
+                <%= f.check_box :retail %>
+                <span class="lever"></span>
+                Enable Retail Sales
+              </label>
+            </div>
+          </div>
+          <div class="input-field col s6">
+            <%= f.label :retail_price %>
+            <%= f.number_field :retail_price %>
+          </div>
+        </div>
+      </div>
+
+      <div class="left-border"></div>
+
+      <div class=" p-8 m-8">
+        <div class="row">
+          <div class="input-field col s6">
+            <%= f.text_field :sku  %>
+            <%= f.label :sku  %>
+          </div>
+          <div class="input-field col s6">
+            <%= f.text_field :barcode %>
+            <%= f.label :barcode %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.text_area :description %>
+            <%= f.label :description %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <div class="switch">
+              <label>
+                <%= f.check_box :stock_control %>
+                <span class="lever"></span>
+                Stock Control
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class=" input-field col s6">
+            <%= f.select :supplier_id, @suppliers, {selected: f.object.supplier_id}, {class: 'browser-default select2'} %>
+            <%= f.label :supplier_id %>
+          </div>
+          <div class=" input-field col s6">
+            <%= f.label :supply_price %>
+            <%= f.number_field :supply_price %>  
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+    function submitForm(){
+        $("#client-form form").submit();
+    }
+</script>
