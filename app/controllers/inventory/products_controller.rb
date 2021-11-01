@@ -4,7 +4,7 @@ class Inventory::ProductsController < ApplicationController
   def index
     @products = Product.preload(locations_products: :location).peep_filter(params.slice(
         :search, :product_category_ids, :product_brand_ids, :location_ids, :supplier_ids
-        ))
+        )).order("products.id DESC")
     @pagy, @products = pagy(@products, page: page_index, items: page_size)
   end
 
@@ -18,6 +18,20 @@ class Inventory::ProductsController < ApplicationController
     render json: {data: ProductSerializer.new(product)}, status: :ok
   end
 
+  def new 
+    @product = Product.new
+    @suppliers = Supplier.all.map {|b| [b.name, b.id]}
+    @brands = ProductBrand.all.map {|b| [b.name, b.id]}
+    @categories = ProductCategory.all.map {|b| [b.name, b.id]}
+  end
+
+  def edit 
+    @product = Product.find params[:id]
+    @suppliers = Supplier.all.map {|b| [b.name, b.id]}
+    @brands = ProductBrand.all.map {|b| [b.name, b.id]}
+    @categories = ProductCategory.all.map {|b| [b.name, b.id]}
+  end
+
   def stock_history
     product = Product.find(params[:id])
     lines = Line.where(sellable_id: product.id, sellable_type: 'Product')
@@ -27,30 +41,33 @@ class Inventory::ProductsController < ApplicationController
   end
 
   def create
-    product = Product.new(product_params)
-    if product.save
-      render json: {data: ProductSerializer.new(product)}, status: :created
+    @product = Product.new(product_params)
+    if @product.save
+      redirect_to inventory_products_path
     else
-      render json: product.errors, status: :unprocessable_entity
+      @suppliers = Supplier.all.map {|b| [b.name, b.id]}
+      @brands = ProductBrand.all.map {|b| [b.name, b.id]}
+      @categories = ProductCategory.all.map {|b| [b.name, b.id]}
+      render :new, status: :unprocessable_entity
     end
   end
 
   def update
-    product = Product.find(params[:id])
-    if product.update(product_params)
-      render json: {data: ProductSerializer.new(product)}, status: :ok
+    @product = Product.find(params[:id])
+    if @product.update(product_params)
+      redirect_to inventory_products_path
     else
-      render json: product.errors, status: :unprocessable_entity
+      @suppliers = Supplier.all.map {|b| [b.name, b.id]}
+      @brands = ProductBrand.all.map {|b| [b.name, b.id]}
+      @categories = ProductCategory.all.map {|b| [b.name, b.id]}
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     product = Product.find(params[:id])
-    if product.destroy
-      render json: {}, status: :ok
-    else
-      render json: {}, status: :bad_request
-    end
+    product.destroy
+    redirect_to inventory_products_path
   end
 
   private
