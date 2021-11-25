@@ -9,13 +9,13 @@ class Inventory::ProductsController < ApplicationController
   end
 
   def show
-    product = Product.preload(locations_products: :location).find(params[:id])
+    @product = Product.preload(locations_products: :location).find(params[:id])
     # TODO limit access to location based on the current user
-    missing_location_ids = Location.all.pluck(:id) - product.location_ids
+    missing_location_ids = Location.all.pluck(:id) - @product.location_ids
     missing_location_ids.map do |id|
-      product.locations_products.build({location_id: id})
+      @product.locations_products.build({location_id: id})
     end
-    render json: {data: ProductSerializer.new(product)}, status: :ok
+    render json: {data: ProductSerializer.new(@product)}, status: :ok
   end
 
   def new 

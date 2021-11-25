@@ -19,6 +19,7 @@ class Supplier < ApplicationRecord
   # == Class Methods ========================================================
   # == Instance Methods =====================================================
 
+  def address_string
+    [self.street, self.area, self.block, self.avenue, self.building].reject(&:blank?).join(", ")      
+  end
 end
-
-

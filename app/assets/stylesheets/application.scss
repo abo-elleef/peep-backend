@@ -167,6 +167,16 @@
   }
 
 }
+#order-page{
+  .data-row{
+    margin: 0;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    column-gap: 10px;
+    align-items: start;
+  }
+
+}
 .tabs-container{
   .tabs{
     z-index: 13;

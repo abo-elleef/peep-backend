@@ -24,7 +24,7 @@ class Inventory::OrdersController < ApplicationController
   def create
     @order = Order.new(order_params)
     if @order.save
-      redirect_to @order
+      redirect_to inventory_order_path(@order)
     else
       render :new
     end
@@ -33,7 +33,7 @@ class Inventory::OrdersController < ApplicationController
   def update
     @order = Order.find(params[:id])
     if @order.update(order_params)
-      redirect_to @order
+      redirect_to inventory_order_path(@order)
     else
       render :edit
     end
@@ -49,6 +49,8 @@ class Inventory::OrdersController < ApplicationController
 
   def init_form
     @suppliers = Supplier.all.map {|s| [s.name, s.id]}
+    @locations = Location.all.map {|s| [s.name, s.id]}
+    @products = Product.all.map {|s| [s.name, s.id]}
   end
 
   def resolve_layout

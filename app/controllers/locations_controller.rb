@@ -1,5 +1,6 @@
 class LocationsController < ApplicationController
   layout :resolve_layout
+  before_action :set_location, only: [:show, :order_mini_details, :edit]
   def index
     locations = Location.all
     respond_to do |format|
@@ -15,13 +16,12 @@ class LocationsController < ApplicationController
   end
 
   def show
-    location = Location.find(params[:id])
-    render json: {data: LocationSerializer.new(location)}, status: :ok
   end
 
+  def order_mini_details
+  end
 
   def edit
-    @location = Location.find params[:id]
   end
 
   def new
@@ -82,6 +82,9 @@ class LocationsController < ApplicationController
 
   private
 
+    def set_location
+      @location = Location.find(params[:id])
+    end
     def location_params
       params.require(:location).permit(
           :id, :name, :business_type, :phone, :email, :street,

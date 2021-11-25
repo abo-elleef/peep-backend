@@ -25,37 +25,17 @@
           </div>
         <% end %>
         <div class="row">
-          <div class="input-field col s12">
-            <%= f.label :name %>
-            <%= f.text_field :name %>
-          </div>
+          <%= f.fields_for :items, @order.items do |item| %>
+              <%= render 'item_fields', f: item %>
+          <% end %>
         </div>
-        <div class="row">
-          <div class="col s12">
-            <div class="input-field col s6">
-              <%= f.select :order_brand_id, [], {selected: :value}, {class: 'browser-default select2'} %>
-              <%= f.label :brand_id %>
-            </div>
-            <div class=" input-field col s6">
-              <%= f.select :order_category_id, [], {selected: :value}, {class: 'browser-default select2'} %>
-              <%= f.label :category_id %>
-            </div>
-          </div>
+        <div class="links">
+          <%= link_to_add_association 'Add Product', f, :items, class: 'btn' %>
         </div>
         <hr />
         <div class="row">
-          <div class="input-field col s12">
-            <div class="switch">
-              <label>
-                <%= f.check_box :retail %>
-                <span class="lever"></span>
-                Enable Retail Sales
-              </label>
-            </div>
-          </div>
-          <div class="input-field col s6">
-            <%= f.label :retail_price %>
-            <%= f.number_field :retail_price %>
+          <div class="col s12">
+            <p id="total-price">total price <span> 123456</span> </p>
           </div>
         </div>
       </div>
@@ -64,40 +44,25 @@
 
       <div class=" p-8 m-8">
         <div class="row">
-          <div class="input-field col s6">
-            <%= f.text_field :sku  %>
-            <%= f.label :sku  %>
-          </div>
-          <div class="input-field col s6">
-            <%= f.text_field :barcode %>
-            <%= f.label :barcode %>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12">
-            <%= f.text_area :description %>
-            <%= f.label :description %>
-          </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12">
-            <div class="switch">
-              <label>
-                <%= f.check_box :stock_control %>
-                <span class="lever"></span>
-                Stock Control
-              </label>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          <div class=" input-field col s6">
+          <div class=" input-field col s12">
             <%= f.select :supplier_id, @suppliers, {selected: f.object.supplier_id}, {class: 'browser-default select2'} %>
             <%= f.label :supplier_id %>
           </div>
-          <div class=" input-field col s6">
-            <%= f.label :supply_price %>
-            <%= f.number_field :supply_price %>  
+          <div id="order_supplier_address" class="col s12">
+            <p>
+              <%= f.object.supplier&.address_string %>
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class=" input-field col s12">
+            <%= f.select :location_id, @locations, {selected: f.object.location_id}, {class: 'browser-default select2'} %>
+            <%= f.label :location_id %>
+          </div>
+          <div id="order_location_address" class="col s12">
+            <p>
+              <%= f.object.location&.address_string %>
+            </p>
           </div>
         </div>
       </div>
@@ -109,4 +74,67 @@
     function submitForm(){
         $("#client-form form").submit();
     }
+    function supplierChanged(e){
+      $.get("/inventory/suppliers/"+$(this).val()+"/order_mini_details.js");
+    }
+    function locationChanged(e){
+      $.get("/locations/"+$(this).val()+"/order_mini_details.js");
+      // send ajax request to load location details
+    }
+    function productSelected(that){
+      $.ajax({
+        url: "/inventory/products/"+$(that).val()+".json",
+        method: "get",
+        success: function(response){
+          console.log(response);
+          let supply_price = response.data.supply_price
+          $(that).parents(".item-row").find(".requested_price").val(supply_price);
+          $(that).parents(".item-row").find(".requested_price").focus();
+          let location_id = $("#order_location_id").val();
+          let product_location = response.data.locations_products.find((item) => {item.location_id == location_id})
+          let reorder_qty = product_location ? product_location.reorder_quantity : 1
+          $(that).parents(".item-row").find(".requested_qty").val(reorder_qty);
+          $(that).parents(".item-row").find(".requested_qty").focus();
+          updateItemPrice(that);
+        }
+      });
+    }
+    
+    function updateItemPrice(that){
+      calculateItemPrice($(that).parents(".item-row"));
+    }
+    function calculateItemPrice(row){
+      let quantity = parseFloat($(row).find(".requested_qty").val());
+      let price = parseFloat($(row).find(".requested_price").val());
+      $(row).find(".item-price").html(quantity * price);
+      calculateOrderTotal();
+    }
+    function calculateOrderTotal(){
+      let price = 0;
+      $(".item-price").each(function(intex, item){
+        price += parseFloat($(item).html());
+      });
+      $("#total-price span").html(price);
+    }
+    function calculateTotalCost(e){
+      // caluldate the total cost
+    }
+    function updateTotalCost(e){
+      $("").val(calculateTotalCost(e));
+    }
+
+    $(document).on('turbolinks:load', function () {
+      $("#order_supplier_id").change(supplierChanged)
+      $("#order_location_id").change(locationChanged)
+      $("body").on("change", ".item-row select", function(e){
+        productSelected(this);
+      });
+      $("body").on("change keyup", ".requested_price", function(e){
+        updateItemPrice(this);
+      });
+      $("body").on("change keyup", ".requested_qty", function(e){
+        updateItemPrice(this);
+      })
+      
+    });
 </script>

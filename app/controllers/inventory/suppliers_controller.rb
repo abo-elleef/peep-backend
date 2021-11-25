@@ -1,6 +1,7 @@
 class Inventory::SuppliersController < ApplicationController
 
   layout :resolve_layout
+  before_action :set_supplier, only: [:edit, :order_mini_details]
 
   def index
     @suppliers = Supplier.peep_filter(params.slice(:search)).order("suppliers.id DESC")
@@ -14,7 +15,9 @@ class Inventory::SuppliersController < ApplicationController
   end
 
   def edit
-    @supplier = Supplier.find params[:id]
+  end
+
+  def order_mini_details
   end
 
   def show
@@ -48,6 +51,10 @@ class Inventory::SuppliersController < ApplicationController
   end
 
   private
+
+  def set_supplier
+    @supplier = Supplier.find params[:id]
+  end
 
   def resolve_layout
     case action_name

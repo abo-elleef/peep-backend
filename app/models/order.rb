@@ -34,10 +34,10 @@ class Order < ApplicationRecord
   end
 
   def calculate_total_cost
-    # TODO aboelleef should this be calculated based on requested or actual prices
+    # TODO: aboelleef should this be calculated based on requested or actual prices
     total_cost = items.map do |item|
       item.requested_price * item.requested_quantity
     end.sum
-    self.update_column(:total_cost,  total_cost)
+    update_column(:total_cost,  total_cost)
   end
 end

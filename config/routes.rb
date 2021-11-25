@@ -1,5 +1,6 @@
-Rails.application.routes.draw do
+# frozen_string_literal: true
 
+Rails.application.routes.draw do
   devise_for :users
   post '/auth/login', to: 'authentication#login'
   mount Rswag::Ui::Engine => '/api-docs'
@@ -9,12 +10,16 @@ Rails.application.routes.draw do
     collection do
       get :whoami
     end
-
   end
+  
   resources :shifts
   resources :blocked_times
   resources :closing_shifts
-  resources :locations
+  resources :locations do 
+    member do 
+      get :order_mini_details
+    end
+  end
   resources :invoice_sequences
   resources :staffs do
     collection do
@@ -78,7 +83,11 @@ Rails.application.routes.draw do
         get :stock_history
       end
     end
-    resources :suppliers
+    resources :suppliers do
+      member do
+        get :order_mini_details
+      end
+    end
   end
   # Reports Routes
   namespace :reports do

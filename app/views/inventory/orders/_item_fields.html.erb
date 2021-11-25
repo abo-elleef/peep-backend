@@ -1,0 +1,22 @@
+<div class="col s12 nested-fields">
+  <div class=" row item-row ">
+    <div class="input-field col s3">
+      <%= f.select :product_id, @products, {}, {class: 'browser-default select2'} %>
+      <%= f.label :product_id %>
+    </div>
+    <div class="input-field col s3">
+      <%= f.label :requested_quantity %>
+      <%= f.number_field :requested_quantity, class: 'requested_qty' %>
+    </div>
+    <div class="input-field col s3">
+      <%= f.label :requested_price %>
+      <%= f.number_field :requested_price, class: 'requested_price' %>
+    </div>
+    <div class="col s2">
+      <p class="item-price"> 123</p>
+    </div>
+    <div class="remove-link col s1">
+      <%= link_to_remove_association "x", f %>
+    </div>
+  </div>
+</div>
