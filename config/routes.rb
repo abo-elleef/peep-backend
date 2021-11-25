@@ -1,5 +1,6 @@
-Rails.application.routes.draw do
+# frozen_string_literal: true
 
+Rails.application.routes.draw do
   devise_for :users
   post '/auth/login', to: 'authentication#login'
   mount Rswag::Ui::Engine => '/api-docs'
@@ -9,12 +10,16 @@ Rails.application.routes.draw do
     collection do
       get :whoami
     end
-
   end
+  
   resources :shifts
   resources :blocked_times
   resources :closing_shifts
-  resources :locations
+  resources :locations do 
+    member do 
+      get :order_mini_details
+    end
+  end
   resources :invoice_sequences
   resources :staffs do
     collection do
@@ -45,15 +50,15 @@ Rails.application.routes.draw do
       get :update_status
     end
   end
-  resources :orders
-  resources :product_brands
-  resources :product_categories
+  resources :cancellation_reasons
+  resources :subscriptions
   resources :payment_types
-  resources :products do
-    member do
-      get :stock_history
+  resources :discounts do 
+    collection do 
+      delete 'delete'
     end
   end
+
   resources :cancellation_reasons
   resources :suppliers
   resources :subscriptions
@@ -62,6 +67,7 @@ Rails.application.routes.draw do
       delete 'delete'
     end
   end
+  
   resources :voucher_types
   resources :packages
   resources :invoices, only: [:index, :show, :update, :new, :create] do
@@ -78,7 +84,21 @@ Rails.application.routes.draw do
   get "export/discounts", to: "export#discounts"
   post "appointments/check_hints", to: "appointments#check_hints"
   post "/checkout", to: "invoices#checkout"
-
+  namespace :inventory do 
+    resources :orders
+    resources :product_brands
+    resources :product_categories
+    resources :products do
+      member do
+        get :stock_history
+      end
+    end
+    resources :suppliers do
+      member do
+        get :order_mini_details
+      end
+    end
+  end
   # Reports Routes
   namespace :reports do
     # sales routes

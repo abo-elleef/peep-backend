@@ -1,0 +1,19 @@
+<div class="">
+  <ul class="tabs ps-3">
+    <li class="tab">
+      <%= link_to 'Products', inventory_products_path, target: "_self", class: (active == "products" ? "active" : "") %>
+    </li>
+    <li class="tab">
+      <%= link_to 'Orders', inventory_orders_path, target: "_self", class: (active == "orders" ? "active" : "") %>
+    </li>
+    <li class="tab">
+      <%= link_to 'categories', inventory_product_categories_path, target: "_self", class: (active == "categories" ? "active" : "") %>
+    </li>
+    <li class="tab">
+      <%= link_to 'brands', inventory_product_brands_path, target: "_self", class: (active == "brands" ? "active" : "") %>
+    </li>
+    <li class="tab">
+      <%= link_to 'Suppliers', inventory_suppliers_path, target: "_self", class: (active == "suppliers" ? "active" : "") %>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,49 @@
+<header class="p-4">
+  <p class="m-0">Order <%= @order.id %></p>
+  <%= link_to 'Edit', edit_inventory_order_path(@order) %>
+</header>
+<div id="order-page" class="main-section">
+  <div id="filters-row">
+  </div>
+  <div class="data-row">
+    <div class="p-4 white box-shadow">
+      <p class="fs-24 bold mb-1">requested by <%= @order.staff.try(:name) || 'Member' %> with total of (<%= @order.total_cost %>) should be a drop down to changes status <%= @order.status %> </p>
+      <span class="gray"> at <%= @order.created_at %> </span>
+      <hr>
+      <div class="pse-4 pt-4">
+        <table>
+          <thead>
+            <th>product</th>
+            <th> requested QTY </th>
+            <th> requested Price </th>
+            <th>Item Price</th>
+          </thead>
+          <tbody>
+            <% @order.items.map do |item| %>
+            <tr >
+              <td> <%= item.product.name %></td>
+              <td> <%= item.requested_quantity %></td>
+              <td> <%= item.requested_price %></td>
+              <td> <%= item.requested_price.to_f * item.requested_quantity.to_f %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="p-4 white box-shadow">
+      <p class="fs-24 bold mb-4"> Requested For </p>
+      <span class="gray"> <%= @order.location.name %> | <%= @order.location.phone %> | <%= @order.location.email %> </span>
+      <br>
+      <span class="gray"> <%= @order.location.address_string %> </span>
+        
+      <hr class="mtb-8" >
+      
+      <p class="fs-24 bold mb-4"> Requested From  </p>
+      <span class="gray"> <%= @order.supplier.name %> | <%= @order.supplier.phone %> | <%= @order.supplier.email %> </span>
+      <br>
+      <span class="gray"> <%= @order.supplier.address_string %> </span>
+
+  </div>
+</div>

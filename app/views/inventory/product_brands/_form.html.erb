@@ -1,0 +1,23 @@
+<a class="waves-effect waves-light btn modal-trigger" href="#modal1">Modal</a>
+<div id="modal1" class="modal">
+  <div id="category-form">
+    <%= form_with model: @brand, url: @brand.id.present? ? inventory_product_brand_path(@brand) : inventory_product_brands_path  do |f| %>
+      <div class="modal-content">
+        <h4 class="inline-block"><%= @brand.id.present? ? 'Edit Brand' : 'Add Brand' %></h4>
+        <a href="#" class="modal-close waves-effect waves-green btn-flat right red-text"> X </a>
+        <div class="input-field width-100">
+          <%= f.text_field :name %>
+          <%= f.label :name %>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <% if @brand.id.present? %>
+          <%= link_to 'Delete', inventory_product_brand_path(@brand), method: :delete , remote: true,
+                    data: { confirm: "Are you sure?" },
+                    class: 'btn-flat red-text waves-effect waves-red waves left' %>
+        <% end %>
+        <%= f.submit :save, class: 'modal-close waves-effect waves-green btn-flat' %>
+      </div>
+    <% end %>
+  </div>
+</div>

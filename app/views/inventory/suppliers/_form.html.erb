@@ -1,0 +1,101 @@
+<div class="form-container">
+  <div class="form-header">
+    <%= link_to "x", inventory_suppliers_path, class: 'waves-effect waves-red btn-flat'%>
+    <p class="form-title"> <%= @supplier.id ? 'Edit Supplier' : 'Add Supplier' %></p>
+    <div>
+      <% if @supplier.id.present? %>
+        <%= link_to 'Delete', inventory_supplier_path(id: @supplier.id),
+                    data: {:confirm => 'Are you sure?'}, class: 'waves-effect waves-red btn-flat red-text', :method => :delete %>
+      <% end %>
+      <a class="waves-effect waves-blue btn" onclick="submitForm();">Save</a>
+    </div>
+
+  </div>
+  <div id="client-form">
+    <%= form_with(model: @supplier,url: @supplier.id.present? ? inventory_supplier_path(@supplier) : inventory_suppliers_path, html: {class: 'height-100'}) do |f| %>
+      <div class=" p-8 m-8">
+        <% if @supplier.errors.full_messages.any? %>
+          <div class="p-4">
+            <p class="red-text"> Please check the following errors and Save again</p>
+            <ul class="collection">
+              <% @supplier.errors.full_messages.map do |msg| %>
+                <li class="red-text collection-item"><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.label :name %>
+            <%= f.text_field :name %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.label :desc %>
+            <%= f.text_field :desc %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s6">
+            <%= f.label :first_name %>
+            <%= f.text_field :first_name %>
+          </div>
+          <div class="input-field col s6">
+            <%= f.label :last_name %>
+            <%= f.text_field :last_name %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s6">
+            <%= f.label :email %>
+            <%= f.text_field :email %>
+          </div>
+          <div class="input-field col s6">
+            <%= f.label :phone %>
+            <%= f.text_field :phone %>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.text_field :website %>
+            <%= f.label :website %>
+          </div>
+        </div>
+      </div>
+
+      <div class="left-border"></div>
+
+      <div class=" p-8 m-8">
+        <div class="row">
+          <div class="input-field col s6">
+            <%= f.text_field :area %>
+            <%= f.label :area %>
+          </div>
+          <div class="input-field col s6">
+            <%= f.text_field :block %>
+            <%= f.label :block %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-field col s6">
+            <%= f.text_field :avenue %>
+            <%= f.label :avenue %>
+          </div>
+          <div class="input-field col s6">
+            <%= f.text_field :streat %>
+            <%= f.label :streat %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+    function submitForm(){
+        $("#client-form form").submit();
+    }
+</script>
