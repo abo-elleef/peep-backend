@@ -19,8 +19,13 @@
     background: white;
     padding: 0 10px;
   }
-  .select-wrapper{
+  .select-wrapper, .select2{
     min-width: 200px;
+  }
+  .datepicker-calendar{
+    .select-wrapper, .select2{
+      min-width: auto;
+    }
   }
 
 }

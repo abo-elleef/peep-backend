@@ -1,28 +1,21 @@
 <header class="pse-4 ptb-0">
   <p class="m-0">Staff</p>
 </header>
+<%= render "tab_headers", active: 'staff' %>
 <div class="tabs-container">
-  <div class="">
-    <ul class="tabs ps-3">
-      <li class="tab">
-        <a  class="active" href="#test1" data-href="/staffs">Staff</a>
-      </li>
-      <li class="tab">
-        <a id="closing-shifts-tab" href="#test2" data-href="/closing_shifts">closing Dates</a>
-      </li>
-      <li class="tab">
-        <a id="shifts-tab"  href="#test3" data-href="/shifts">Shifts</a>
-      </li>
-<!--      <li class="tab"><a href="#test4" data-href="/permissions">Permission</a></li>-->
-    </ul>
-  </div>
   <div id="test1" class="col s12">
     <div class="main-section tabs-section">
       <div class="filters-row">
+      <div>
         <div class="input-field">
           <i class="material-icons prefix" style="color: #999">search</i>
           <input id="staffs_search" class="width-100" placeholder="Search staff data" type="text">
         </div>
+        <div class="input-field">    
+          <%= select_tag :location ,options_from_collection_for_select(@locations, :id, :name, selected=params[:location_id] ), {class: "select2", id: "locationSelector", include_blank: true} %>
+        </div>
+      </div>
+        
         <div class="actions">
           <a class='dropdown-trigger btn waves-effects secondary-bg ' href='#' data-target='dropdown1'>Download</a>
           <%= link_to 'New Staff', new_staff_path, class: 'btn waves-teal' %>
@@ -41,81 +34,23 @@
     </div>
 
   </div>
-  <div id="test2" class="col s12">
-    <div class="main-section tabs-section">
-      <div class="filters-row">
-        <div class="input-field">
-        </div>
-        <div class="actions">
-          <%= link_to 'New Closing Shift', new_closing_shift_path, class: 'btn waves-teal', remote: true %>
-        </div>
-      </div>
-      <div class="data-row white box-shadow">
-      </div>
-    </div>
-  </div>
-  <div id="test3" class="col s12">
-    <div class="main-section tabs-section">
-      <div class="filters-row">
-        <div class="input-field">
-          <%= select_tag :location_id, options_for_select(locations_options), {class: 'material-select'} %>
-        </div>
-        <div class="actions">
-          <div class="date-picker-container">
-<!--            <span>-->
-<!--              <i class="material-icons">navigate_before</i>-->
-<!--            </span>-->
-<!--            <span class="btn-flat"> Today </span>-->
-            <span>
-              <input id="shifts_datepicker" type="text" class="datepicker">
-            </span>
-<!--            <span>-->
-<!--              <i class="material-icons">navigate_next</i>-->
-<!--            </span>-->
-          </div>
-        </div>
-      </div>
-      <div class="data-row white box-shadow">
-      </div>
-    </div>
-  </div>
-<!--  <div id="test4" class="col s12">permissions</div>-->
-
 </div>
 
 <script type="text/javascript" charset="utf-8">
+    let search = "";
+    let location_id = "<%= params[:location_id] %>";
+    function fetch_staff(){
+      $.get("staffs.js?search=" +search+ "&location_id=" + location_id );
+    }
     $(document).on('turbolinks:load', function () {
-        $('.tab').click(function (e) {
-            let url = $(this).find('a').attr('data-href');
-            e.preventDefault();
-            $.ajax({
-                type: "GET",
-                url: url,
-                format: 'js'
-            });
-        })
         $("#staffs_search").keyup(function () {
-            $.get("staffs.js?search=" + $(this).val());
+          search = $(this).val();
+          fetch_staff();
         })
-        $("#shifts_datepicker").change(function(){
-          let date =  $(this).val();
-            $.ajax({
-                type: "GET",
-                url: '/shifts?date=' + date,
-                format: 'js'
-            });
-        })
-        $()
 
-        $("")
-    })
-    $('body').on('click', '.adding-shift', function(e){
-        e.preventDefault();
-        let location_id = $("#location_id").val();
-        let url = $(this).prop("href");
-        url += '&location_id=' + location_id;
-        console.log(url);
-        $.get(url)
-        return false
+        $("#locationSelector").change(function () {
+          location_id = $(this).val();
+          fetch_staff();
+        })
     })
 </script>

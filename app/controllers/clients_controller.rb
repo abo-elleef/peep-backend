@@ -92,7 +92,7 @@ class ClientsController < ApplicationController
   def destroy
     client = Client.find(params[:id])
     if client.destroy
-      redirect_to client_path
+      redirect_to clients_path
     else
       render json: {}, status: :bad_request
     end

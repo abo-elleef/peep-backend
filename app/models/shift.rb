@@ -10,8 +10,8 @@ class Shift < ApplicationRecord
 
   belongs_to :staff
   belongs_to :location
-  belongs_to :parent, class_name: "Shift", foreign_key: :parent_id, optional: true
-  has_many :children, class_name: "Shift", foreign_key: :parent_id, inverse_of: :parent, dependent: :nullify
+  belongs_to :parent, class_name: 'Shift', foreign_key: :parent_id, optional: true
+  has_many :children, class_name: 'Shift', foreign_key: :parent_id, inverse_of: :parent, dependent: :nullify
 
   # == Validations ==========================================================
   validate :single_day_shift, :valid_times

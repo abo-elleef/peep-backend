@@ -3,7 +3,9 @@ class StaffsController < ApplicationController
   layout :resolve_layout
 
   def index
-    @staffs = Staff.preload(:blocked_times).peep_filter(params.slice(:search)).all
+    @locations = Location.all
+    params[:location_id] ||= @locations.first.id
+    @staffs = Staff.preload(:blocked_times).peep_filter(params.slice(:search, :location_id)).all
     # serializers = ActiveModel::Serializer::ArraySerializer.new(staffs, each_serializer: StaffSerializer)
     # render json: {data: serializers},  status: :ok
   end

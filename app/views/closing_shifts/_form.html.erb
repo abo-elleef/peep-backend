@@ -19,16 +19,29 @@
           <%= f.text_field :desc%>
         </div>
       </div>
-      still missing location selection , this closing date will be applied on which locations
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
+      <div class="row">
+        <div class="input-field col s12">
+          <p>
+            <label>
+              <input type="checkbox" class="filled-in" id="select_all"  />
+              <span>Select All</span>
+            </label>
+          </p>
+          <% @locations.map do |location|%>
+            <p class="">
+              <label>
+                <input name="closing_shift[location_ids][]"
+                               type="checkbox"
+                               class="filled-in staff-option"
+                               value="<%= location.id %>"
+                               <%= 'checked' if  f.object.location_ids.include?(location.id) %>
+                          />
+                <span><%= location.name %></span>
+              </label>
+            </p>
+          <% end  %>
+        </div>
+      </div>
       <div class="row m-0 modal-footer">
         <a class="modal-close waves-effect waves-green btn-flat text-red left">cancel</a>
         <% if  @shift.id.present? %>
@@ -38,7 +51,6 @@
         <% end  %>
         <%= f.submit :save, class: 'waves-effect waves-green btn' %>
       </div>
-
     <% end %>
   </div>
 </div>

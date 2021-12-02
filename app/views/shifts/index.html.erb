@@ -1,1 +1,63 @@
-aaaaaaaa
+<header class="pse-4 ptb-0">
+  <p class="m-0">Shifts</p>
+</header>
+<%= render "staffs/tab_headers", active: 'shifts' %>
+  <div class="tabs-container">
+    <div id="test3" class="col s12">
+      <div class="main-section tabs-section">
+        <div class="filters-row">
+          <div class="input-field">
+            <%= select_tag :location ,options_from_collection_for_select(@locations, :id, :name), {class: "select2", id: "locationSelector"} %>
+          </div>
+          <div class="actions">
+            <div class="date-picker-container">
+              <!--            <span>-->
+              <!--              <i class="material-icons">navigate_before</i>-->
+              <!--            </span>-->
+              <!--            <span class="btn-flat"> Today </span>-->
+                          <span>
+                            <input id="shifts_datepicker" type="text" class="datepicker">
+                          </span>
+              <!--            <span>-->
+              <!--              <i class="material-icons">navigate_next</i>-->
+              <!--            </span>-->
+            </div>
+          </div>
+        </div>
+        <div class="data-row white box-shadow">
+          <%= render "index" %>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+<script type="text/javascript" charset="utf-8">
+    let date = Date()
+    let location_id = <%= @locations.first.id%> ;
+    $(document).on('turbolinks:load', function () {
+        $("#locationSelector").change(function () {
+            location_id = $(this).val();
+            $.get('/shifts.js?date=' + date + '&location_id=' + location_id);
+        })
+        $("#shifts_datepicker").change(function(){
+          date =  $(this).val();
+            $.ajax({
+                type: "GET",
+                url: '/shifts.js?date=' + date + '&location_id=' + location_id,
+                format: 'js'
+            });
+        })
+        $('body').on('click', '.adding-shift', function(e){
+          alert("est");
+          e.preventDefault();
+          let url = $(this).prop("href");
+          url += '&location_id=' + location_id;
+          console.log(url);
+          $.get(url)
+          return false;
+        })
+
+    });
+    
+</script>

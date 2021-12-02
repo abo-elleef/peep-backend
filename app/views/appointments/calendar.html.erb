@@ -9,21 +9,19 @@
   <div id="filters-row">
     <div>
       <div class="input-field">
-        <select id="locationSelector" class="material-select">
-          <% @locations.map.with_index do |location| %>
-            <option value="<%= location.id %>"><%= location.name %></option>
-          <% end %>
-        </select>
-        <label>Materialize Select</label>
+        
+        
+        <%= select_tag :location ,options_from_collection_for_select(@locations, :id, :name), {class: "select2", id: "locationSelector"} %>
+
       </div>
+      
       <div class="input-field">
-        <select id="staffSelector" class="material-select">
+        <select id="staffSelector" class="select2">
           <option value="all" selected>All Staff</option>
-          <% @staff.map.with_index do |staff, index| %>
+          <% @staff.map do |staff| %>
             <option value="<%= staff.id %>"><%= staff.name %></option>
           <% end %>
         </select>
-        <label>Materialize Select</label>
       </div>
     </div>
     <div></div>

@@ -82,15 +82,15 @@
       margin-left: 16px;
       margin-top: 16px;
     }
+    [type="checkbox"] + span:not(.lever):before, [type="checkbox"]:not(.filled-in) + span:not(.lever):after {
+      border-width: 0;
+      margin-top: 15px;
+    }
+    [type="checkbox"]:checked + span:not(.lever):before, [type="checkbox"]:not(.filled-in) + span:not(.lever):after {
+      border-width: 2px;
+    }
   }
-  [type="checkbox"] + span:not(.lever):before, [type="checkbox"]:not(.filled-in) + span:not(.lever):after {
-    border-width: 0;
-    margin-top: 15px;
-  }
-  [type="checkbox"]:checked + span:not(.lever):before, [type="checkbox"]:not(.filled-in) + span:not(.lever):after {
-    border-width: 2px;
-
-  }
+  
 }
 // client
 #client-profile-container{
@@ -187,4 +187,19 @@
 // overrides
 .pagination{
   float: right;
+}
+
+
+table.vertical-seperator{
+  td {
+    border-right: solid 1px $darker-gray;
+    border-left: solid 1px $darker-gray;
+  }
+  td:last-of-type {
+    border-right: 0px;
+  }
+
+  td:first-of-type {
+    border-left: 0px;
+  }
 }

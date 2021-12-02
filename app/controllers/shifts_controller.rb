@@ -1,4 +1,5 @@
 class ShiftsController < ApplicationController
+  layout :resolve_layout
 
   def index
     # TODO add index for location_id
@@ -7,8 +8,11 @@ class ShiftsController < ApplicationController
     params[:starts_at] = Time.zone.parse(params[:date]).beginning_of_week
     params[:ends_at] = Time.zone.parse(params[:date]).end_of_week
     @start_date = Time.zone.parse(params[:date]).beginning_of_week
-    @staff = Staff.all
+    @locations = Location.all
+    params[:location_id] ||= @locations.first.id
     @shifts = Shift.includes(:staff).peep_filter(params.slice(:location_id, :staff_id, :starts_at, :ends_at))
+    @staff = Staff.all
+    
     respond_to do |format|
       format.js
       format.html
@@ -57,12 +61,8 @@ class ShiftsController < ApplicationController
   end
 
   def destroy
-    shift = Shift.find(params[:id])
-    if shift.destroy
-      render json: {}, status: :ok
-    else
-      render json: {}, status: :bad_request
-    end
+    @shift = Shift.find(params[:id])
+    @shift.destroy
   end
 
   private
@@ -74,6 +74,10 @@ class ShiftsController < ApplicationController
     )
   end
 
+  def resolve_layout
+    "dash"
+  end
+
   def time_slots(time, period)
     finish_line = time.end_of_day
     start_line = time.beginning_of_day
@@ -83,7 +87,6 @@ class ShiftsController < ApplicationController
       iterator =iterator + period.minute
       options.push(iterator)
     end
-    p "aaaaa"
     options
   end
 end

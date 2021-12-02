@@ -117,19 +117,19 @@
           <div class="row">
             <div class="col s12">
               <div class="input-field width-100">
-                <div id=staff-options-container>
+                <div id=location-options-container>
                   <p>
                     <label>
-                      <input type="checkbox" class="filled-in" id="select_all"  />
+                      <input type="checkbox" class="filled-in" id="select_all_locations"  />
                       <span>Select All</span>
                     </label>
                   </p>
                   <% @locations.map do |location|%>
                     <p class="">
                       <label>
-                        <input name="service[staff_ids][]"
+                        <input name="staff[location_ids][]"
                                type="checkbox"
-                               class="filled-in staff-option"
+                               class="filled-in location-option"
                                value="<%= location.id %>"
                                <%= 'checked' if  f.object.location_ids.include?(location.id) %>
                           />
@@ -156,7 +156,7 @@
                   <% @service_prices.map do |service_price|%>
                     <p class="">
                       <label>
-                        <input name="service[staff_ids][]"
+                        <input name="staff[service_ids][]"
                                type="checkbox"
                                class="filled-in staff-option"
                                value="<%= service_price.id %>"
@@ -198,4 +198,23 @@
     function submitStaff() {
         $("#staff-form form").submit();
     }
+    $(document).on('turbolinks:load', function () {
+        $("#select_all").change(function(){
+            $("input.staff-option").prop('checked', $(this).is(":checked"))
+        })
+        $("#select_all_locations").change(function(){
+            $("input.location-option").prop('checked', $(this).is(":checked"))
+        })
+        
+        setTimeout(function(){
+          $(".color-container input").change(function(){
+              console.log('clicked');
+              if ($(this).is(":checked")){
+                  $(this).parents(".input-field").find('input').prop('checked', false);
+                  $(this).prop('checked', true)
+              }
+          })
+        }, 50)
+    })
 </script>
+    
