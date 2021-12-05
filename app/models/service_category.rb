@@ -1,5 +1,4 @@
 class ServiceCategory < ApplicationRecord
-  default_scope {order("updated_at DESC")}
   include Filterable
   include UserScoped
 

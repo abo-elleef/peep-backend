@@ -12,7 +12,7 @@ class Service < ApplicationRecord
   has_and_belongs_to_many :staffs
   belongs_to :service_category
   has_many :service_prices, inverse_of: :service, dependent: :destroy
-  accepts_nested_attributes_for :service_prices
+  accepts_nested_attributes_for :service_prices, allow_destroy: true
   has_many :packages, through: :service_prices
   has_and_belongs_to_many :voucher_types
   has_many :appointment_services
