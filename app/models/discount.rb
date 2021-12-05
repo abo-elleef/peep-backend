@@ -24,12 +24,16 @@ class Discount < ApplicationRecord
   # == Instance Methods =====================================================
 
   def status
-    # TODO this should be based on start date and end date
-    :active
+    return :invalid unless active?
+    return :expired if Time.zone.now > ends_at
+    return :starts_soon if Time.zone.now < starts_at &&  (Time.zone.now + 1.week) > starts_at
+    return :ends_soon if Time.zone.now < ends_at &&  (Time.zone.now + 1.week) >  ends_at 
+    return :future if (Time.zone.now + 1.week) < starts_at 
+    return :active if Time.zone.now > starts_at &&  Time.zone.now  < ends_at
   end
 
   def deduct_string
-    return "KWD #{deduct_value}" if deduct_type.to_s == "value"
+    return "EGP #{deduct_value}" if deduct_type.to_s == "value"
     return "% #{deduct_value}" if deduct_type.to_s == "percentage"
     ""
   end

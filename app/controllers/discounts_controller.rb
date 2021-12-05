@@ -3,9 +3,8 @@ class DiscountsController < ApplicationController
   layout :resolve_layout
 
   def index
-    @discounts = Discount.peep_filter(params.slice(:name, :search)).desc_order
-    # serializers = ActiveModel::Serializer::ArraySerializer.new(discounts, each_serializer: DiscountSerializer)
-    # render json: {data: serializers},  status: :ok
+    discounts = Discount.peep_filter(params.slice(:name, :search)).desc_order
+    @pagy, @discounts = pagy(discounts, page: page_index, items: page_size )
   end
 
   def new
