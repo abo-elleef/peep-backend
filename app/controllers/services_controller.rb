@@ -4,17 +4,8 @@ class ServicesController < ApplicationController
   def index
     filters = params.slice(:name, :search)
     services = Service.preload(:service_category, :service_prices, :staffs).peep_filter(filters)
-    respond_to do |format|
-      format.html {
-        @categories = ServiceCategory.all
-        @services = services
-      }
-      format.json {
-        serializers = ActiveModel::Serializer::ArraySerializer.new(services, each_serializer: ServiceSerializer)
-        render json: {data: serializers}, status: :ok
-      }
-    end
-
+    @categories = ServiceCategory.all.order(:name)
+    @services = services
   end
 
   def top
@@ -31,6 +22,7 @@ class ServicesController < ApplicationController
   def edit
     @staff = Staff.all
     @service = Service.find params[:id]
+    @service.service_prices.to_a.sort_by!(&:name)
     @service.service_prices.build if @service.service_prices.blank?
   end
 

@@ -1,15 +1,23 @@
 <div class="nested-fields">
-  <div class="service-price-row">
+  <div class="mb-4 mt-4">
     <div class="line">
-      <div class="input-field input-outlined">
+      <div class="input-field name input-outlined width-100">
+        <%= f.text_field :name %>
+        <%= f.label :name %>
+      </div>
+      
+    </div>
+    <div class="line">
+      <div class="inline-block ms-4  input-outlined width-30">
         <%= f.label :duration %>
         <%= f.number_field :duration, class: 'autocomplete' %>
       </div>
-      <div class="input-field">
-        <%= f.select :pricing_type, options_for_select(price_type_options), {}, class: 'material-select' %>
+      <div class="inline-block ms-4 width-30">
         <%= f.label :pricing_type %>
+        <%= f.select :pricing_type, price_type_options, {selected: f.object.pricing_type}, class: 'material-select' %>
+        
       </div>
-      <div class="input-field input-outlined">
+      <div class="inline-block input-outlined ms-4 width-30">
         <%= f.label :price %>
         <%= f.number_field :price %>
       </div>
@@ -17,14 +25,10 @@
         <%= link_to_remove_association "x", f, class: 'red-text' %>
       </div>
     </div>
-    <div class="line">
-      <div class="input-field name input-outlined">
-        <%= f.text_field :name %>
-        <%= f.label :name %>
-      </div>
-    </div>
   </div>
 </div>
+
+<div class="divider"></div>
 
 <script>
     setTimeout(function () {

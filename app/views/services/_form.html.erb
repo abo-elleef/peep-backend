@@ -11,126 +11,127 @@
     </div>
 
   </div>
-  <div class="pink-bg" id="service-form" >
-    <div class="row" style="margin-bottom: 500px;">
-      <div class="col s6 push-s3">
-        <%= form_with(model: @service) do |f| %>
-          <% if @service.errors.full_messages.any? %>
-            <div class="card p-4">
-              <p class="red-text"> Please check the following errors and Save again</p>
-              <ul class="collection">
-                <% @service.errors.full_messages.map do |msg| %>
-                  <li class="red-text collection-item"><%= msg %></li>
-                <% end %>
-              </ul>
-            </div>
-          <% end %>
-          <div class="card p-4">
-            <h5>Basic Info</h5>
-            <p>Add a service name and choose the treatment type</p>
-            <div class="divider"></div>
-            <div class="input-field input-outlined width-100">
-              <%= f.label :name %>
-              <%= f.text_field :name %>
+  <div id="form-container" >
+  
+    <%= form_with(model: @service) do |f| %>
+    <div class=" p-8 m-8">
+      <% if @service.errors.full_messages.any? %>
+        <div class="card p-4">
+          <p class="red-text"> Please check the following errors and Save again</p>
+          <ul class="collection">
+            <% @service.errors.full_messages.map do |msg| %>
+              <li class="red-text collection-item"><%= msg %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+      <div class=" ">
+        <h5>Basic Info</h5>
+        <p>Add a service name and choose the treatment type</p>
+        <div class="divider"></div>
+        <div class="input-field input-outlined width-100">
+          <%= f.label :name %>
+          <%= f.text_field :name %>
 
-            </div>
-            <div class="input-field input-outlined width-100">
-              <%= f.text_area :description %>
-              <%= f.label :description %>
-            </div>
-            <div class="input-field width-100">
-              <%= f.select :service_category_id, service_categories_options,{selected: f.object.service_category_id}, class: 'material-select'%>
-              <%= f.label :service_category_id %>
-            </div>
+        </div>
+        <div class="input-field input-outlined width-100">
+          <%= f.text_area :description %>
+          <%= f.label :description %>
+        </div>
+        <div class="input-field width-100">
+          <%= f.select :service_category_id, service_categories_options,{selected: f.object.service_category_id}, class: 'material-select'%>
+          <%= f.label :service_category_id %>
+        </div>
 
-            <div class="input-field width-100">
-              <%= f.select :available_for, service_available_for_options, {selected: f.object.available_for}, class: 'material-select'%>
-              <%= f.label :available_for %>
-            </div>
-          </div>
-          <div class="card p-4">
-            <h5>Staff</h5>
-            <p>Assign staff to the service and manage staff commission</p>
-            <div class="divider"></div>
-            <div class="input-field width-100">
-              <div id=staff-options-container>
-                <p>
-                  <label>
-                    <input type="checkbox" class="filled-in" id="select_all"  />
-                    <span>Select All</span>
-                  </label>
-                </p>
-                <% @staff.map do |staff|%>
-                  <p class="">
-                    <label>
-                      <input name="service[staff_ids][]"
-                             type="checkbox"
-                             class="filled-in staff-option"
-                             value="<%= staff.id %>"
-                             <%= 'checked' if  f.object.staff_ids.include?(staff.id) %>
-                        />
-                      <span><%= staff.name %></span>
-                    </label>
-                  </p>
-                <% end  %>
-              </div>
-            </div>
-            <h5>Staff Commission</h5>
-            <p>Calculate staff commission when the service is sold</p>
-            <div class="input-field width-100">
-              <div class="switch">
+        <div class="input-field width-100">
+          <%= f.select :available_for, service_available_for_options, {selected: f.object.available_for}, class: 'material-select'%>
+          <%= f.label :available_for %>
+        </div>
+      </div>
+      <div class="input-field width-100">
+        <h5>Staff</h5>
+        <p>Assign staff to the service and manage staff commission</p>
+        <div class="divider"></div>
+        <div class="input-field width-100">
+          <div id=staff-options-container>
+            <p>
+              <label>
+                <input type="checkbox" class="filled-in" id="select_all"  />
+                <span>Select All</span>
+              </label>
+            </p>
+            <% @staff.map do |staff|%>
+              <p class="">
                 <label>
-                  <%= f.check_box :enable_commission %>
-                  <span class="lever"></span>
-                  Enable Staff Commission
+                  <input name="service[staff_ids][]"
+                          type="checkbox"
+                          class="filled-in staff-option"
+                          value="<%= staff.id %>"
+                          <%= 'checked' if  f.object.staff_ids.include?(staff.id) %>
+                    />
+                  <span><%= staff.name %></span>
                 </label>
-              </div>
-            </div>
-
-            <div class="divider">
-            </div>
-
+              </p>
+            <% end  %>
           </div>
-          <div class="card p-4">
-            <h5>Pricing and Duration</h5>
-            <p>Add the pricing options and duration of the service</p>
-            <div>
-              <%= f.fields_for :service_prices do |price| %>
-                <%= render "service_price_fields", f: price %>
-              <% end %>
-            </div>
-            <div class="m-3 flex">
-              <%= link_to_add_association 'Add Option', f, :service_prices, class: 'btn' %>
-            </div>
-            <div class="divider"></div>
-            <h5>Extra Time</h5>
-            <p> Enable extra time after service </p>
-            <div>
-              <div class="input-field  width-100">
-                <div class="switch">
-                  <label>
-                    <%= f.check_box :extra_time %>
-                    <span class="lever"></span>
-                    Enable Extra Time
-                  </label>
-                </div>
-              </div>
-            </div>
-            <div class="row <%= 'hide ' unless  f.object.extra_time? %>" id="extra_columns">
-              <div class="input-field input-outlined col s4">
-                <%= f.label :extra_time_duration, 'Duration' %>
-                <%= f.number_field :extra_time_duration %>
-              </div>
-              <div class="input-field col s4">
-                <%= f.select :extra_time_type, extra_time_type_options, {selected: f.object.extra_time_type}, class: 'material-select' %>
-                <%= f.label :extra_time_type %>
-              </div>
-            </div>
+        </div>
+        <!-- <h5>Staff Commission</h5>
+        <p>Calculate staff commission when the service is sold</p>
+        <div class="input-field width-100">
+          <div class="switch">
+            <label>
+              <%= f.check_box :enable_commission %>
+              <span class="lever"></span>
+              Enable Staff Commission
+            </label>
           </div>
-        <% end %>
+        </div> -->
+
+        <!-- <div class="divider"> </div> -->
 
       </div>
     </div>
+    <div class="left-border"></div>
+    <div class=" p-8 m-8">
+      <div class="input-field width-100">
+        <h5>Pricing and Duration</h5>
+        <p>Add the pricing options and duration of the service</p>
+        <div>
+          <%= f.fields_for :service_prices do |price| %>
+            <%= render "service_price_fields", f: price %>
+          <% end %>
+        </div>
+        <div class="m-3 flex">
+          <%= link_to_add_association 'Add Option', f, :service_prices, class: 'btn' %>
+        </div>
+        <div class="divider"></div>
+        <h5>Extra Time</h5>
+        <p> Enable extra time after service </p>
+        <div>
+          <div class="input-field  width-100">
+            <div class="switch">
+              <label>
+                <%= f.check_box :extra_time %>
+                <span class="lever"></span>
+                Enable Extra Time
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="row <%= 'hide ' unless  f.object.extra_time? %>" id="extra_columns">
+          <div class="input-field input-outlined col s4">
+            <%= f.label :extra_time_duration, 'Duration' %>
+            <%= f.number_field :extra_time_duration %>
+          </div>
+          <div class="input-field col s4">
+            <%= f.select :extra_time_type, extra_time_type_options, {selected: f.object.extra_time_type}, class: 'material-select' %>
+            <%= f.label :extra_time_type %>
+          </div>
+        </div>
+      </div>
+    </div>
+      
+    <% end %>
   </div>
 </div>
 <script type="text/javascript" charset="utf-8">
@@ -178,6 +179,6 @@
         });
     })
     function submitForm(){
-        $("#service-form form").submit();
+        $("#form-container form").submit();
     }
 </script>

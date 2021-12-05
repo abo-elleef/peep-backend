@@ -1,0 +1,79 @@
+<div id="services-index">
+  <div class="row">
+    <div class="col s10 push-s1">
+      <% @categories.map do |category| %>
+        <div style="border: 5px solid <%= category.appointment_color %>;">
+          <div class="category-header" style="background-color:<%= category.appointment_color %>" >
+            <h5 class="main-color">
+              <%= category.name %>
+            </h5>
+            <div>
+              <a class='dropdown-trigger secondary-bg btn-small' href='#' data-target='dropdown<%= category.id %>'>
+                <i class="material-icons">menu</i>
+              </a>
+              <ul id='dropdown<%= category.id %>' class='dropdown-content auto'>
+                <li>
+                  <%= link_to 'Add Service', new_service_path(category_id: category.id) %>
+                </li>
+                <li>
+                  <%= link_to 'Edit Category', edit_service_category_path(id: category.id,format: :js), remote: true %>
+                </li>
+                <li class="divider" tabindex="-1"></li>
+                <li>
+                  <%= link_to 'Delete Category', service_category_path(id: category.id),
+                              data: {:confirm => 'Are you sure?'}, class: 'waves-effect waves-red red-text', :method => :delete%>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <% services = service_by_category(@services, category) %>
+          <% if services.any? %>
+            <ul class="collapsible" style="margin: 0px">
+              <% services.map do |service| %>
+                <li>
+                  <div class="collapsible-header">
+                    <div>
+                      <i class="material-icons">menu</i><%= service.name %>
+                    </div>
+                    <a href="/services/<%= service.id %>/edit">
+                      <i class="tiny material-icons">edit</i>
+                    </a>
+                  </div>
+                  <div class="collapsible-body">
+                    <table class="white">
+                      <thead>
+                      <tr>
+                        <th class="p-2"> Option</th>
+                        <th class="p-2"> Duration</th>
+                        <th class="p-2"> Price</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <% service.service_prices.map do |service_price| %>
+                        <tr>
+                          <td class="p-2">
+                            <%= service_price.name %>
+                          </td>
+                          <td class="p-2">
+                            <%= service_price.duration %> min
+                          </td>
+                          <td class="p-2">
+                            KWD <%= service_price.price %>
+                          </td>
+                        </tr>
+                      <% end %>
+                      </tbody>
+                    </table>
+                  </div>
+                </li>
+              <% end %>
+            </ul>
+          <% end  %>
+        </div>
+        <br>
+          <div class="divider"></div>
+        <br>
+      <% end %>
+    </div>
+  </div>
+</div>
