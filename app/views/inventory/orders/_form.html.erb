@@ -1,0 +1,140 @@
+<div class="form-container">
+  <div class="form-header">
+    <%= link_to "x", inventory_orders_path, class: 'waves-effect waves-red btn-flat'%>
+    <p class="form-title"> <%= @order.id ? 'Edit order' : 'Add order' %></p>
+    <div>
+      <% if @order.id.present? %>
+        <%= link_to 'Delete', inventory_order_path(id: @order.id),
+                    data: {:confirm => 'Are you sure?'}, class: 'waves-effect waves-red btn-flat red-text', :method => :delete %>
+      <% end %>
+      <a class="waves-effect waves-blue btn" onclick="submitForm();">Save</a>
+    </div>
+
+  </div>
+  <div id="client-form">
+    <%= form_with(model: @order,url: @order.id.present? ? inventory_order_path(@order) : inventory_orders_path, html: {class: 'height-100'}) do |f| %>
+      <div class=" p-8 m-8">
+        <% if @order.errors.full_messages.any? %>
+          <div class="p-4">
+            <p class="red-text"> Please check the following errors and Save again</p>
+            <ul class="collection">
+              <% @order.errors.full_messages.map do |msg| %>
+                <li class="red-text collection-item"><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <div class="row">
+          <%= f.fields_for :items, @order.items do |item| %>
+              <%= render 'item_fields', f: item %>
+          <% end %>
+        </div>
+        <div class="links">
+          <%= link_to_add_association 'Add Product', f, :items, class: 'btn' %>
+        </div>
+        <hr />
+        <div class="row">
+          <div class="col s12">
+            <p id="total-price">total price <span> 123456</span> </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="left-border"></div>
+
+      <div class=" p-8 m-8">
+        <div class="row">
+          <div class=" input-field col s12">
+            <%= f.select :supplier_id, @suppliers, {selected: f.object.supplier_id}, {class: 'browser-default select2'} %>
+            <%= f.label :supplier_id %>
+          </div>
+          <div id="order_supplier_address" class="col s12">
+            <p>
+              <%= f.object.supplier&.address_string %>
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class=" input-field col s12">
+            <%= f.select :location_id, @locations, {selected: f.object.location_id}, {class: 'browser-default select2'} %>
+            <%= f.label :location_id %>
+          </div>
+          <div id="order_location_address" class="col s12">
+            <p>
+              <%= f.object.location&.address_string %>
+            </p>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+    function submitForm(){
+        $("#client-form form").submit();
+    }
+    function supplierChanged(e){
+      $.get("/inventory/suppliers/"+$(this).val()+"/order_mini_details.js");
+    }
+    function locationChanged(e){
+      $.get("/locations/"+$(this).val()+"/order_mini_details.js");
+      // send ajax request to load location details
+    }
+    function productSelected(that){
+      $.ajax({
+        url: "/inventory/products/"+$(that).val()+".json",
+        method: "get",
+        success: function(response){
+          console.log(response);
+          let supply_price = response.data.supply_price
+          $(that).parents(".item-row").find(".requested_price").val(supply_price);
+          $(that).parents(".item-row").find(".requested_price").focus();
+          let location_id = $("#order_location_id").val();
+          let product_location = response.data.locations_products.find((item) => {item.location_id == location_id})
+          let reorder_qty = product_location ? product_location.reorder_quantity : 1
+          $(that).parents(".item-row").find(".requested_qty").val(reorder_qty);
+          $(that).parents(".item-row").find(".requested_qty").focus();
+          updateItemPrice(that);
+        }
+      });
+    }
+    
+    function updateItemPrice(that){
+      calculateItemPrice($(that).parents(".item-row"));
+    }
+    function calculateItemPrice(row){
+      let quantity = parseFloat($(row).find(".requested_qty").val());
+      let price = parseFloat($(row).find(".requested_price").val());
+      $(row).find(".item-price").html(quantity * price);
+      calculateOrderTotal();
+    }
+    function calculateOrderTotal(){
+      let price = 0;
+      $(".item-price").each(function(intex, item){
+        price += parseFloat($(item).html());
+      });
+      $("#total-price span").html(price);
+    }
+    function calculateTotalCost(e){
+      // caluldate the total cost
+    }
+    function updateTotalCost(e){
+      $("").val(calculateTotalCost(e));
+    }
+
+    $(document).on('turbolinks:load', function () {
+      $("#order_supplier_id").change(supplierChanged)
+      $("#order_location_id").change(locationChanged)
+      $("body").on("change", ".item-row select", function(e){
+        productSelected(this);
+      });
+      $("body").on("change keyup", ".requested_price", function(e){
+        updateItemPrice(this);
+      });
+      $("body").on("change keyup", ".requested_qty", function(e){
+        updateItemPrice(this);
+      })
+      
+    });
+</script>

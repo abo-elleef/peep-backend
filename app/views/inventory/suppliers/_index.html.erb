@@ -1,0 +1,27 @@
+<div class="pse-4 pb-4 pt-2" >
+  <table class="sticky-table white highlight">
+    <thead>
+    <tr>
+      <th> Name </th>
+      <th> phone </th>
+      <th> email </th>
+      <th> assigned products </th>
+      <th> Last updated </th>
+    </tr>
+    </thead>
+    <tbody>
+    <% @suppliers.map do |supplier| %>
+      <tr>
+        <td>
+          <%= link_to supplier.name, edit_inventory_supplier_path(supplier) %>
+        </td>
+        <td> <%= supplier.phone %> </td>
+        <td> <%= supplier.email %> </td>
+        <td> <%= supplier.products.size %> </td>
+        <td> <%= supplier.updated_at.strftime("%b, %d  %Y ") %> </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  <%== pagy_materialize_nav(@pagy) %>
+</div>

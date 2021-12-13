@@ -1,0 +1,84 @@
+<header class="pse-4 ptb-0">
+  <p class="m-0">Offers</p>
+</header>
+<div class="tabs-container">
+  <div class="">
+    <ul class="tabs ps-3">
+      <li class="tab">
+        <a  class="active" href="#test1" data-href="/discounts">Discounts</a>
+      </li>
+    </ul>
+  </div>
+  <div id="test1" class="col s12">
+    <div class="main-section tabs-section">
+      <div class="filters-row">
+        <div class="input-field">
+          <i class="material-icons prefix" style="color: #999">search</i>
+          <input id="index_search" class="width-100" placeholder="Search discount data" type="text">
+        </div>
+        <div class="actions">
+          <%= link_to 'Delete', delete_discounts_path, remote: true, method: :delete, class: 'btn waves-teal', id: :delete_anchor%>
+          <a class='dropdown-trigger btn waves-effects secondary-bg ' href='#' data-target='dropdown1'>Download</a>
+          <%= link_to 'New Discount', new_discount_path, class: 'btn waves-teal' %>
+
+          <ul id='dropdown1' class='dropdown-content'>
+            <li><a target="_blank" href="/export/discounts?export_type=xlsx">Excel</a></li>
+            <li><a target="_blank" href="/export/discounts?export_type=csv">CSV</a></li>
+          </ul>
+
+        </div>
+      </div>
+      <div class="data-row white box-shadow">
+        <%= render "index" %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+    $(document).on('turbolinks:load', function () {
+        $('.tab').click(function (e) {
+            let url = $(this).find('a').attr('data-href');
+            e.preventDefault();
+            $.ajax({
+                type: "GET",
+                url: url,
+                format: 'js'
+            });
+        })
+        $("#index_search").keyup(function () {
+            $.get("discounts.js?search=" + $(this).val());
+        })
+        $(".table_select").change(function(e){
+          value = e.target.value;
+          ids = ($("#delete_anchor").prop("href").split("?selected_ids=")[1]|| "").split(",");
+          base = $("#delete_anchor").prop("href").split("?selected_ids=")[0];
+          console.log(ids)
+          if (ids.indexOf(value) > -1){
+            ids = ids.filter(item => item !== value);
+            console.log("should remove value of" , value)
+          }else{
+            console.log("should add value of" , value)
+            ids.push(value);
+          }
+          console.log(ids);
+          new_delete_url = base + "?selected_ids=" +  ids.join(',')
+          console.log(new_delete_url);
+          $("#delete_anchor").prop("href", new_delete_url);
+
+          if ($(".table_select:checked").length > 0 ){
+            $("#delete_anchor").show();
+          }else{
+            $("#delete_anchor").hide();
+          }
+        })
+        $("#delete_anchor").hide();
+    })
+    function delete_call(){
+      $.ajax({
+        url : "discounts/destroy.js?selected_ids=" + (window.selectedIds || []),
+        type : 'DELETE',
+      });
+    }
+    
+</script>

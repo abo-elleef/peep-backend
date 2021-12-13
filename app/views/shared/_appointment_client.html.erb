@@ -2,10 +2,10 @@
   <% if client.nil? %>
     <p> Walk-in Client </p>
   <% else %>
-    <p> <%= client.name %> </p>
-    <p> <%= client.phone %> </p>
-    <p> <%= client.email %> </p>
-    <p> <%= client.notes %> </p>
+    <p> <i class="Tiny material-icons">person</i> <%= client.name %> </p>
+    <p> <i class="Tiny material-icons">phone</i> <%= client.phone %> </p>
+    <p> <i class="Tiny material-icons">email</i> <%= client.email %> </p>
+    <p> <i class="Tiny material-icons">book</i> <%= client.notes %> </p>
   <% end %>
 
 </div>

@@ -12,7 +12,7 @@ class Service < ApplicationRecord
   has_and_belongs_to_many :staffs
   belongs_to :service_category
   has_many :service_prices, inverse_of: :service, dependent: :destroy
-  accepts_nested_attributes_for :service_prices
+  accepts_nested_attributes_for :service_prices, allow_destroy: true
   has_many :packages, through: :service_prices
   has_and_belongs_to_many :voucher_types
   has_many :appointment_services
@@ -31,6 +31,7 @@ class Service < ApplicationRecord
       or(where("description ilike ?", "%" + search + "%")) }
 
   # == Callbacks ============================================================
+  before_save :set_data
   # == Class Methods ========================================================
   def self.default_data
     [
@@ -54,4 +55,12 @@ class Service < ApplicationRecord
   end
 
   # == Instance Methods =====================================================
+  private
+
+  def set_data
+    unless extra_time
+      self.extra_time_type = nil
+      self.extra_time_duration = nil
+    end
+  end
 end

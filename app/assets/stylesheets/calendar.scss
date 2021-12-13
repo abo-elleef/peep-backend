@@ -1,16 +1,47 @@
 #calendar {
-  margin: -50px 0px 0 0px;
-  height: 84em;
-
+  margin: -80px 0px 0 0px;
+  .fc-view{
+    background: #fff;
+  }
   .fc-view.fc-resourceTimeGridDay-view {
     overflow-x: scroll;
 
     table {
-      min-width: 3000px !important;
+      width: auto;
+    }
+    .fc-timegrid-col, .fc-col-header-cell{
+      width: 250px;
+      height: 50px;
     }
 
   }
+  .fc-event-main{
+    overflow: hidden;
+  }
 }
-.fc-timegrid-slot{
-  min-width: 700px !important;
+.fc-event-main{
+  padding: 5px !important;
+  *{
+    font-size: 11px;
+  }
+}
+.fc-toolbar-title{
+  margin-top: 10px !important;
+  margin-left: 0px !important;
+  font-size: 18px !important;
+}
+
+.fc-timegrid-event{
+  cursor: pointer;
+}
+
+.tooltiptopicevent{
+  width:auto;
+  height:auto;
+  background:#fff;
+  position:absolute;
+  padding:10px 10px 10px 10px;
+  line-height: 200%;
+  z-index:  10;
+  box-shadow: 10px 10px 30px grey;
 }

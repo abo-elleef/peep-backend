@@ -1,0 +1,41 @@
+<header class="pse-4 ptb-0">
+  <p class="m-0">Closing Days</p>
+</header>
+<div class="tabs-container">
+<%= render "staffs/tab_headers", active: 'closing_shifts' %>
+  <div id="test2" class="col s12">
+    <div class="main-section tabs-section">
+      <div class="filters-row">
+        <div>
+          <div class="input-field">    
+            <%= select_tag :location ,options_from_collection_for_select(@locations, :id, :name), {class: "select2", id: "locationSelector", include_blank: true} %>
+          </div>
+          <!-- <div class="input-field">
+            <i class="material-icons prefix" style="color: #999">search</i>
+            <input id="index_search" class="width-100" placeholder="Search staff data" type="text">
+          </div> -->
+        </div>    
+        <div class="actions">
+          <%= link_to 'New Closing Shift', new_closing_shift_path, class: 'btn waves-teal', remote: true %>
+        </div>
+      </div>
+      <div class="data-row white box-shadow">
+        <%= render "index" %>
+      </div>
+    </div>
+  </div>
+<!--  <div id="test4" class="col s12">permissions</div>-->
+
+</div>
+
+<script type="text/javascript" charset="utf-8">
+    $(document).on('turbolinks:load', function () {
+        $("#locationSelector").change(function (e) {
+          location_id = $(this).val();
+          $.get("/closing_shifts.js?location_id=" + location_id)
+        });
+        
+        
+        
+    });
+</script>

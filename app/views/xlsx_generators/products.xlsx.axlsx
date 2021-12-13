@@ -1,8 +1,8 @@
 xlsx_package = Axlsx::Package.new
-    xlsx_package.workbook.add_worksheet(:name => "Products") do |sheet|
-      sheet.add_row  ['Product name', 'SKU', 'Barcode', 'Description', 'Cost price', 'Full price', 'Special Price', 'Category', 'Brand', 'Supplier']
-      @products.map do |product|
-        sheet.add_row [product.name, product.sku, product.barcode, product.description, product.supply_price, product.retail_price, product.special_price,
-                                          product.product_category.name, product.product_brand.name, product.supplier.name]
-      end
-    end
+xlsx_package.workbook.add_worksheet(:name => "Products") do |sheet|
+  sheet.add_row  ['Product name', 'SKU', 'Barcode', 'Description', 'Cost price', 'Full price', 'Special Price', 'Category', 'Brand', 'Supplier']
+  @products.map do |product|
+    sheet.add_row [product.name, product.sku, product.barcode, product.description, product.supply_price, product.retail_price, product.special_price,
+                                      product.product_category.name, product.product_brand.name, product.supplier.name]
+  end
+end

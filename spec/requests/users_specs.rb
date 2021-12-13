@@ -18,7 +18,7 @@ RSpec.describe "Users API", type: :request do
         business_type: "spa"
       } }
     }
-    it "create user" do
+    xit "create user" do
       post "/users", {params: user_params, headers: headers}
       expect(response.code).to eq("201")
     end

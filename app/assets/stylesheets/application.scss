@@ -13,11 +13,30 @@
  *= require_tree .
  *= require_self
  */
-
+@import "variables";
+@import "materialize";
 @import "basic";
 .main-section{
-  padding: 20px;
+  padding: 0 20px;
+  display: grid;
+  grid-template-rows: 100px calc(100vh - 200px);
+  &.tabs-section{
+    grid-template-rows: 100px calc(100vh - 250px);
+  }
+  .data-row{
+    overflow-y: scroll;
+  }
 }
+.sticky-table{
+  th {
+    background: white;
+    position: sticky;
+    top: 0; /* Don't forget this, required for the stickiness */
+    box-shadow: 0 1px 1px -1px rgba(0, 0, 0, 0.4);
+  }
+}
+
+// invoice
 #invoice-details-wrapper {
   .line-row {
     padding: 15px 0;
@@ -32,5 +51,155 @@
     .discounted-price{
       text-decoration: line-through;
     }
+  }
+}
+// services
+#services-index {
+  height: calc(100vh - 100px);
+  overflow-y: scroll;
+  .collapsible-header,.collapsible-header > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+.category-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 30px;
+}
+
+#category-form, #staff-form{
+  .color-container {
+    display: inline-block;
+    width: 55px;
+    height: 55px;
+    margin-left: 20px;
+    border: 1px solid;
+    border-radius: 50%;
+    label {
+      margin-left: 16px;
+      margin-top: 16px;
+    }
+    [type="checkbox"] + span:not(.lever):before, [type="checkbox"]:not(.filled-in) + span:not(.lever):after {
+      border-width: 0;
+      margin-top: 15px;
+    }
+    [type="checkbox"]:checked + span:not(.lever):before, [type="checkbox"]:not(.filled-in) + span:not(.lever):after {
+      border-width: 2px;
+    }
+  }
+  
+}
+// client
+#client-profile-container{
+  height: calc(100% - 75px);
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 20px;
+  align-items: start;
+  .profile-appointment-row{
+    align-items: center;
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+  }
+  .profile-product-row{
+    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr auto;
+  }
+  #client-sales{
+    max-height: calc(100vh - 350px);
+    height: auto;
+    overflow-y: scroll;
+    .tabs{
+      position: sticky;
+      top: 0;
+    }
+  }
+  #personal-info{
+    height: auto !important;
+  }
+}
+#clients_search{
+  min-width: 300px;
+}
+
+#shift_modal{
+  .dropdown-content.select-dropdown{
+    max-height: 300px !important;
+  }
+}
+#shifts-table{
+  td {
+    .adding-shift{
+      display: none;
+    }
+  }
+  td:hover {
+    .adding-shift{
+      display: block;
+    }
+  }
+}
+#sales-container{
+  #test1{
+    .data-row{
+      display: grid;
+      grid-template-columns: auto auto;
+      column-gap: 20px;
+      align-items: start;
+    }
+  }
+  .data-row{
+    height: calc(100vh - 220px);
+    overflow-y: auto;
+  }
+}
+#settings-page{
+  .data-row{
+    margin: 0 20%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 40px;
+    align-items: start;
+  }
+
+}
+#order-page{
+  .data-row{
+    margin: 0;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    column-gap: 10px;
+    align-items: start;
+  }
+
+}
+.tabs-container{
+  .tabs{
+    z-index: 13;
+  }
+
+}
+
+// overrides
+.pagination{
+  float: right;
+}
+
+
+table.vertical-seperator{
+  td {
+    border-right: solid 1px $darker-gray;
+    border-left: solid 1px $darker-gray;
+  }
+  td:last-of-type {
+    border-right: 0px;
+  }
+
+  td:first-of-type {
+    border-left: 0px;
   }
 }

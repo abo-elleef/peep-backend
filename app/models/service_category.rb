@@ -1,5 +1,4 @@
 class ServiceCategory < ApplicationRecord
-  default_scope {order("updated_at DESC")}
   include Filterable
   include UserScoped
 
@@ -21,5 +20,11 @@ class ServiceCategory < ApplicationRecord
          appointment_color: "#00c9e1"
      }
     ]
+  end
+
+  def service_prices_options
+    service_prices.map do |service_price|
+      [service_price, {duration: service_price.duration}]
+    end
   end
 end

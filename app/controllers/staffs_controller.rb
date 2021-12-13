@@ -1,10 +1,23 @@
 class StaffsController < ApplicationController
   # before_action :peep_authenticate
+  layout :resolve_layout
 
   def index
-    staffs = Staff.preload(:blocked_times).all
-    serializers = ActiveModel::Serializer::ArraySerializer.new(staffs, each_serializer: StaffSerializer)
-    render json: {data: serializers},  status: :ok
+    @locations = Location.all
+    params[:location_id] ||= @locations.first.id
+    @staffs = Staff.preload(:blocked_times).peep_filter(params.slice(:search, :location_id)).all
+    # serializers = ActiveModel::Serializer::ArraySerializer.new(staffs, each_serializer: StaffSerializer)
+    # render json: {data: serializers},  status: :ok
+  end
+
+  def new
+    @staff = Staff.new
+    init_data
+  end
+
+  def edit
+    @staff = Staff.find params[:id]
+    init_data
   end
 
   def top
@@ -13,7 +26,9 @@ class StaffsController < ApplicationController
   end
 
   def calendar
-    data = Staff.limit(10).map do |s| {id: s.id, title: s.name} end
+    data = Staff.all.map do |s|
+      {id: s.id, title: s.name}
+    end
     render json: data, status: :ok
   end
 
@@ -26,7 +41,8 @@ class StaffsController < ApplicationController
     staff = Staff.new(staff_params)
     if staff.save
       # TODO: create working hours if staff is booking_enabled
-      render json: {data: StaffSerializer.new(staff)}, status: :created
+      redirect_to staffs_path
+      # render json: {data: StaffSerializer.new(staff)}, status: :created
     else
       render json: staff.errors, status: :unprocessable_entity
     end
@@ -35,7 +51,8 @@ class StaffsController < ApplicationController
   def update
     staff = Staff.find(params[:id])
     if staff.update(staff_params)
-      render json: {data: StaffSerializer.new(staff)}, status: :created
+      redirect_to staffs_path
+      # render json: {data: StaffSerializer.new(staff)}, status: :created
     else
       render json: staff.errors, status: :ok
     end
@@ -48,11 +65,25 @@ class StaffsController < ApplicationController
   end
 
   private
-    def staff_params
-      params.require(:staff).permit(
+
+  def staff_params
+    params.require(:staff).permit(
         :id, :first_name, :last_name, :phone, :email, :booking_enabled, :booking_color,
-        :title, :notes, :contract_start, :contract_end,:product_comm, :discount_comm,
+        :title, :notes, :contract_start, :contract_end, :product_comm, :discount_comm,
         :service_comm, service_ids: [], location_ids: []
-      )
+    )
+  end
+
+  def resolve_layout
+    case action_name
+    when "new", "edit", 'create', 'update'
+      "forms"
+    else
+      "dash"
     end
+  end
+  def init_data
+    @locations = Location.all
+    @service_prices = Service.all
+  end
 end

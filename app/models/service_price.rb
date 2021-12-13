@@ -34,6 +34,25 @@ class ServicePrice < ApplicationRecord
     service.service_category_id
   end
 
+  def duration_stringified
+    # TODO this should be string as 1 h and 3 minutes
+    duration
+  end
+
+  def full_name
+    "#{service_name} #{name}"
+  end
+
+  def full_details_html
+    "<div>
+  <div>
+    <p>#{service.name}</p>
+    <span>#{name} </span>
+  </div>
+  <div>(#{price} KWD)</div>
+</div>".html_safe
+  end
+
   def checkout_help_text(staff)
     "#{self.name} #{self.duration.to_s} with #{staff.name} "
   end

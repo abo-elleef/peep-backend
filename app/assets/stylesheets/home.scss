@@ -1,6 +1,4 @@
-.select-wrapper{
-  min-width: 200px;
-}
+
 .time {
   .select-wrapper{
     min-width: 50px;
@@ -12,8 +10,25 @@
 .input-field{
   display: inline-block;
 }
-#filters-row{
+#filters-row,
+.filters-row{
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: space-between;
+  .input-field{
+    background: white;
+    padding: 0 10px;
+  }
+  .select-wrapper, .select2{
+    min-width: 200px;
+  }
+  .datepicker-calendar{
+    .select-wrapper, .select2{
+      min-width: auto;
+    }
+  }
+
+}
+th, td {
+  padding: 15px;
 }

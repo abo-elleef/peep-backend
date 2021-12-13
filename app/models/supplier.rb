@@ -13,11 +13,13 @@ class Supplier < ApplicationRecord
 
   # == Scopes ===============================================================
   scope :by_name, -> (name) { where("name ilike ?", "%" + name + "%") }
+  scope :by_search, -> (search) { where("name ilike ?", "%" + search + "%") }
 
   # == Callbacks ============================================================
   # == Class Methods ========================================================
   # == Instance Methods =====================================================
 
+  def address_string
+    [self.street, self.area, self.block, self.avenue, self.building].reject(&:blank?).join(", ")      
+  end
 end
-
-

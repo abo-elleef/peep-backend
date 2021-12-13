@@ -24,8 +24,8 @@ class Appointment < ApplicationRecord
   scope :by_ends_at, -> (ends_at) { where("appointments.created_at::date <= ?  ", ends_at.to_date) }
   scope :by_starts_at, -> (starts_at) { where("appointments.created_at::date >= ?", starts_at.to_date) }
 
-  scope :by_location_ids, -> (location_ids) { where(location_id: location_ids) }
-  scope :by_staff_ids, -> (staff_ids) { joins(:appointment_services).where(appointment_services: {staff_id: staff_ids}) }
+  scope :by_location_id, -> (location_ids) { where(location_id: location_ids) }
+  scope :by_staff_id, -> (staff_ids) { joins(:appointment_services).where(appointment_services: {staff_id: staff_ids}) }
   scope :by_service, -> (service_ids) { joins(:appointment_services).where(service_id: service_ids) }
   scope :completed, -> { where("status = ?", 5) }
   scope :cancelled, -> { where("status = ?", 6) }
@@ -57,6 +57,6 @@ class Appointment < ApplicationRecord
   end
 
   def client_name
-    object.client&.name
+    client&.name || 'Walk-IN'
   end
 end

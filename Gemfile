@@ -90,4 +90,8 @@ gem 'pronto-rubocop', require: false
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "cocoon"
+gem 'materialize-sass', '~> 1.0.0'
+gem 'devise'
+
+
 

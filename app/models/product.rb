@@ -38,4 +38,8 @@ class Product < ApplicationRecord
     self.retail_price
   end
 
+  def duration
+    0
+  end
+
 end

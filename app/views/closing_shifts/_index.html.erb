@@ -1,0 +1,24 @@
+<table class="sticky-table">
+  <thead>
+  <tr>
+    <th> Date Range</th>
+    <th> No. of Days </th>
+    <th> Locations </th>
+    <th> Description</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @closing_shifts.map do |shift| %>
+    <tr>
+      <td>
+        <%= link_to  edit_closing_shift_path(shift), remote: true do %>
+          <%= shift.starts_at.strftime("%h, %d %Y") %> - <%= shift.ends_at.strftime("%h, %d %Y") %>
+        <% end  %>
+      </td>
+      <td> <%= shift.number_of_days %> days</td>
+      <td> <%= shift.location_names.join(', ') %> </td>
+      <td> <%= shift.desc %> </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

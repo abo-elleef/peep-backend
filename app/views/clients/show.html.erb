@@ -1,0 +1,159 @@
+<header class="p-4">
+  <p class="m-0">Client Details</p>
+</header>
+<div id="client-profile-container" class="p-4">
+  <div id="personal-info" class="p-6 white box-shadow">
+    <div class="profile-avatar">
+      <span class="capitalize"> <%= @client.name.split("").first %></span>
+    </div>
+    <div class="">
+      <p class="center capitalize"> <%= @client.name %></p>
+    </div>
+    <a class='dropdown-trigger btn width-100' href='#' data-target='dropdown1'>options</a>
+
+    <!-- Dropdown Structure -->
+    <ul id='dropdown1' class='dropdown-content'>
+      <li><a>New Appointment <span class="soon">(soon)</span></a></li>
+      <li>
+        <%= link_to "Edit", edit_client_path(@client) %>
+      </li>
+      <li class="divider" tabindex="-1"></li>
+      <li>
+        <%= link_to 'Delete', client_path(id: @client.id),
+                    data: {:confirm => 'Are you sure?'}, class: 'waves-effect waves-red btn-flat red-text', :method => :delete %>
+      </li>
+      <li><a>Block <span class="soon">(soon)</span></a></li>
+    </ul>
+    <div class="divider"></div>
+    <br>
+    <div class="">
+      <label> Phone </label>
+      <p class="mt-0">  <%= @client.phone %> </p>
+    </div>
+    <div class="">
+      <label> Email </label>
+      <p class="mt-0">  <%= @client.email %> </p>
+    </div>
+
+    <div class="">
+      <label> Gender </label>
+      <p class="mt-0 capitalize">  <%= @client.gender %> </p>
+    </div>
+
+    <div class="">
+      <label> Address </label>
+      <p class="mt-0 capitalize">  <%= @client.address_string %> </p>
+    </div>
+    <div class="">
+      <label> Notes </label>
+      <p class="mt-0 capitalize">  <%= @client.notes %> </p>
+    </div>
+  </div>
+  <div class="">
+    <div class="row white center box-shadow">
+      <div class="row mb-0 ">
+        <div class="col s6 ptb-6">
+          <p class="m-0 fs-20 bold"> KWD <%= @stats[:total_sales] %> </p>
+          <span class="gray  fs-14 capitalize"> total sales</span>
+        </div>
+        <div class="col s6 ptb-6 left-border">
+          <p class="m-0 fs-20 bold"> KWD <%= @stats[:outstanding] %> </p>
+          <span class="gray  fs-14 capitalize"> outstanding </span>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div class="row mb-0">
+        <div class="col s4 ptb-4">
+          <p class="m-0 fs-20"> <%= @stats[:bookings] %> </p>
+          <span class="gray  fs-14 bold capitalize"> all appointments </span>
+        </div>
+        <div class="col s4 ptb-4 left-border">
+          <p class="m-0 fs-20"> <%= @stats[:completed] %> </p>
+          <span class="gray  fs-14 bold capitalize"> completed </span>
+        </div>
+        <div class="col s4 ptb-4 left-border">
+          <p class="m-0 fs-20"> <%= @stats[:cancelled] %> </p>
+          <span class="gray fs-14 bold capitalize"> cancelled </span>
+        </div>
+      </div>
+    </div>
+    <div id="client-sales" class="row white box-shadow mt-4 mb-0">
+      <ul class="tabs">
+        <li class="tab col s3"><a href="#test1">Appointments</a></li>
+        <li class="tab col s2"><a class="active"  href="#test2">Products</a></li>
+        <li class="tab col s2"><a href="#test3">Invoices</a></li>
+      </ul>
+      <div class="divider"></div>
+      <div id="test1" class="col s12">
+        <% @appointments.map do |appointment_service| %>
+          <div class="profile-appointment-row">
+            <div class="p-2">
+              <p class="bold fs-14 center"><%= appointment_service.created_at.strftime("%y %h %d %H:%M") %></p>
+            </div>
+            <div class="p-2">
+              <p class="mb-1 bold fs-14"> <%= appointment_service.service_price.full_name %></p>
+              <span class="gray"><%= appointment_service.service_price.duration_stringified %> with <%= appointment_service.staff.first_name %> </span>
+            </div>
+            <div class="p-2 ">
+              <p class="bold fs-16"> KWD <%= appointment_service.service_price.price %> </p>
+            </div>
+          </div>
+          <div class="divider"></div>
+        <% end %>
+      </div>
+      <div id="test2" class="col s12">
+        <% @products.map do |line| %>
+          <div class="profile-product-row">
+            <div class="p-2">
+              <span class="gray"><%= line.quantity %> sold  </span>
+              <p class="mtb-1 bold fs-14"> <%= line.sellable&.name %></p>
+              <span class="gray"><%= line.created_at.strftime("%y %h %d %H:%M") %> </span>
+            </div>
+            <div class="p-2 ">
+              <p class="bold fs-16"> KWD <%= line.sold_price %> </p>
+            </div>
+          </div>
+          <div class="divider"></div>
+        <% end %>
+      </div>
+      <div id="test3" class="col s12">
+        <table>
+          <tr>
+            <th>Status</th>
+            <th>Invoice#</th>
+            <th>Invoice date</th>
+            <th>Location</th>
+            <th>Total</th>
+          </tr>
+          <tobdy>
+            <% @invoices.map do |invoice| %>
+              <tr>
+                <td>
+                  <%= invoice.appointment.status %>
+                </td>
+                <td>
+                  <%= link_to invoice.id, invoice_path(invoice) %>
+                </td>
+                <td>
+                  <%= invoice.created_at.strftime("%d %h %y") %>
+                </td>
+                <td>
+                  <%= invoice.location&.name %>
+                </td>
+                <td>
+                  KWD <%= invoice.total %>
+                </td>
+              </tr>
+            <% end %>
+          </tobdy>
+        </table>
+
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+</div>

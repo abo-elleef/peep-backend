@@ -1,0 +1,54 @@
+<header class="p-4">
+  <p class="m-0">Services</p>
+  <div>
+    
+  </div>
+</header>
+<div class="main-section">
+  <div id="filters-row">
+    <div class="input-field">
+      <i class="material-icons prefix" style="color: #999">search</i>
+      <input  id="index_search" class="width-100" placeholder="Search service names" type="text">
+    </div>
+    <div class="actions">
+      <a id="expan_all" class="btn" onclick="collapseAll();">
+        <i class="small material-icons">expand_more</i>
+      </a>
+      <a id="collapse_all" class="btn" onClick="expandAll();">
+        <i class="small material-icons">expand_less</i>
+      </a>
+      <a class='dropdown-trigger btn' href='#' data-target='dropdown-header'>Add New</a>
+
+      <!-- Dropdown Structure -->
+      <ul id='dropdown-header' class='dropdown-content auto'>
+        <li><%= link_to 'Service', new_service_path %></li>
+        <li class="divider" tabindex="-1"></li>
+        <li><%= link_to 'Category', new_service_category_path(format: :js), remote: true %></li>
+      </ul>
+      
+      <a class='dropdown-trigger btn waves-effects secondary-bg ' href='#' data-target='dropdown1'>Download</a>
+      <!-- Dropdown Structure -->
+      <ul id='dropdown1' class='dropdown-content'>
+        <li><a target="_blank" href="/export/services?export_type=xlsx">Excel</a></li>
+        <li><a target="_blank" href="/export/services?export_type=csv">CSV</a></li>
+      </ul>
+
+    </div>
+  </div>
+  <div class="data-row">
+    <%= render "index" %>
+  </div>
+</div>
+
+
+<script type="text/javascript" charset="utf-8">
+    function expandAll() {
+        $('.collapsible').collapsible('close');
+    }
+    function collapseAll() {
+        $('.collapsible').collapsible('open');
+    }  
+    $("#index_search").keyup(function(){
+        $.get("services.js?search=" + $(this).val());
+    })
+</script>

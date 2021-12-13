@@ -42,7 +42,10 @@ class Location < ApplicationRecord
   # == Instance Methods =====================================================
 
   def closing?(starts_at, ends_at)
-    closing_shifts.where("starts_at <= ? AND ? <= ends_at", ends_at, starts_at).any?
+    closing_shifts.where('starts_at <= ? AND ? <= ends_at', ends_at, starts_at).any?
   end
 
+  def address_string
+    [street, area, block, avenue, building].reject(&:blank?).join(', ')
+  end
 end

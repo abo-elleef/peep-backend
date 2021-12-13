@@ -22,6 +22,7 @@ class AppointmentService < ApplicationRecord
   }
 
   # == Callbacks ============================================================
+  before_save :set_data
   # == Class Methods ========================================================
   # == Instance Methods =====================================================
   def service
@@ -30,5 +31,13 @@ class AppointmentService < ApplicationRecord
 
   def duration
     Time.at((ends_at - starts_at)).utc.strftime("%H:%M:%S")
+  end
+
+
+
+  private
+
+  def set_data
+    self.ends_at = self.starts_at + service_price.duration.minutes
   end
 end

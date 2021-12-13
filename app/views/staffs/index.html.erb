@@ -1,0 +1,56 @@
+<header class="pse-4 ptb-0">
+  <p class="m-0">Staff</p>
+</header>
+<%= render "tab_headers", active: 'staff' %>
+<div class="tabs-container">
+  <div id="test1" class="col s12">
+    <div class="main-section tabs-section">
+      <div class="filters-row">
+      <div>
+        <div class="input-field">
+          <i class="material-icons prefix" style="color: #999">search</i>
+          <input id="staffs_search" class="width-100" placeholder="Search staff data" type="text">
+        </div>
+        <div class="input-field">    
+          <%= select_tag :location ,options_from_collection_for_select(@locations, :id, :name, selected=params[:location_id] ), {class: "select2", id: "locationSelector", include_blank: true} %>
+        </div>
+      </div>
+        
+        <div class="actions">
+          <a class='dropdown-trigger btn waves-effects secondary-bg ' href='#' data-target='dropdown1'>Download</a>
+          <%= link_to 'New Staff', new_staff_path, class: 'btn waves-teal' %>
+
+          <!-- Dropdown Structure -->
+          <ul id='dropdown1' class='dropdown-content'>
+            <li><a target="_blank" href="/export/staffs?export_type=xlsx">Excel</a></li>
+            <li><a target="_blank" href="/export/staffs?export_type=csv">CSV</a></li>
+          </ul>
+
+        </div>
+      </div>
+      <div class="data-row white box-shadow">
+        <%= render "index" %>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/javascript" charset="utf-8">
+    let search = "";
+    let location_id = "<%= params[:location_id] %>";
+    function fetch_staff(){
+      $.get("staffs.js?search=" +search+ "&location_id=" + location_id );
+    }
+    $(document).on('turbolinks:load', function () {
+        $("#staffs_search").keyup(function () {
+          search = $(this).val();
+          fetch_staff();
+        })
+
+        $("#locationSelector").change(function () {
+          location_id = $(this).val();
+          fetch_staff();
+        })
+    })
+</script>

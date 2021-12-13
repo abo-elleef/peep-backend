@@ -1,10 +1,17 @@
 class InvoicesController < ApplicationController
-  layout "forms", only: :new
+  layout :resolve_layout
   def index
     invoices = Invoice.preload(:location).peep_filter(params.slice(:location_id, :starts_at, :ends_at, :search))
     pagy, invoices = pagy(invoices, page: page_index, items: page_size)
     serializers = ActiveModel::Serializer::ArraySerializer.new(invoices, each_serializer: InvoiceSerializer)
     render json: {data: serializers, meta: pagy_meta_data(pagy)}, status: :ok
+  end
+
+
+  def send_email
+    invoice = Invoice.find params[:id]
+    #  send email include invoice details to email provided params[:email]
+    redirect_to invoice_path(invoice)
   end
 
   def show
@@ -15,29 +22,33 @@ class InvoicesController < ApplicationController
         render json: {data: InvoiceSerializer.new(invoice)}, status: :ok
       }
     end
-
   end
 
   def new
     @appointment = Appointment.find params[:appointment_id]
-    @staff = Staff.all.map{|s| [s.name, s.id]}
-    @discounts = Discount.all.map{|s| [s.name, s.id]}.unshift(['No Discount', nil])
-    @invoice = Invoice.new({
-                               location_id: @appointment.location_id,
-                               client_id: @appointment.client_id
-                           })
+    # if @appointment.invoice.present?
+    #   redirect_to @appointment.invoice
+    # else
+      @staff = Staff.all.map{|s| [s.name, s.id]}
+    @products = Product.all
+      @discounts = Discount.all
+      @invoice = Invoice.new({
+                                 location_id: @appointment.location_id,
+                                 client_id: @appointment.client_id
+                             })
 
-    @appointment.appointment_services.map do |appointment_service|
-      line = @invoice.lines.build({sellable_type: 'ServicePrice', sellable_id: appointment_service.service_price_id, staff_id: appointment_service.staff_id, unit_price: appointment_service.service_price.price, original_unit_price: appointment_service.service_price.price, quantity: 1, starts_at: appointment_service.starts_at, ends_at: appointment_service.ends_at })
-      line.build_discount_usage
-    end
-
+      @appointment.appointment_services.map do |appointment_service|
+        line = @invoice.lines.build({sellable_type: 'ServicePrice', sellable_id: appointment_service.service_price_id, staff_id: appointment_service.staff_id, unit_price: appointment_service.service_price.price, original_unit_price: appointment_service.service_price.price, quantity: 1, starts_at: appointment_service.starts_at, ends_at: appointment_service.ends_at })
+        # line.build_discount_usage
+      end
+    @invoice.balance = @invoice.total = @invoice.sub_total = @appointment.total_price
+    # end
   end
 
   def checkout
     invoice_values = Checkout::InvoiceCalculation.perform(invoice_params)
     invoice = Invoice.new(invoice_params.merge(
-        sequence: Invoice.next_sequence(invoice_params[:location_id]), sub_total: invoice_values[:total],
+        sequence: Invoice.next_sequence(invoice_params[:location_id]), sub_total: invoice_values[:sub_total],
         total: invoice_values[:total], balance: invoice_values[:balance])
     )
     if invoice.save!
@@ -58,6 +69,7 @@ class InvoicesController < ApplicationController
 
   alias :create :checkout
 
+  # TODO: remove it after remove FE completely
   # update just in case of the new payment
   def update
     invoice = Invoice.find(params[:id])
@@ -87,6 +99,15 @@ class InvoicesController < ApplicationController
     new_payments = payments.select { |payment| !payment[:id].present? }
     new_payments.map do |payment|
       Payment.create!(invoice_id: invoice_id, payment_type_id: payment[:payment_type_id], amount: payment[:amount], staff_id: payment[:staff_id])
+    end
+  end
+
+  def resolve_layout
+    case action_name
+    when "new"
+      "forms"
+    else
+      "dash"
     end
   end
 end

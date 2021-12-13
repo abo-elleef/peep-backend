@@ -5,8 +5,8 @@
 </div>
 <div class="form-wrapper" id="checkout-page">
   <%= form_with model: @invoice, html: {class: 'height-100'} do |f| %>
-    <div class="row height-100">
-      <div class="col s9 pink-bg p-4 height-100">
+    <div class="row height-100 ">
+      <div class="col s9 pink-bg p-4 height-100 scroll-y">
         <div class="row">
           <div class="col s8 push-s2">
             <%= f.hidden_field :location_id %>
@@ -16,7 +16,54 @@
               <%= f.fields_for :lines, f.object.lines do |line| %>
                 <%= render 'line_fields', f: line %>
               <% end %>
+              <li><%= link_to_add_association 'Add Line', f, :lines, class: 'hide', id: "add-lines" %></li>
             </ul>
+
+            <div class="row">
+              <div class="col s6">
+                <a class=" white-text waves-effect waves-light btn modal-trigger" href="#modal1">Add Product</a>
+              </div>
+              <div id="numbers" class="col s6 ">
+                <div class="row">
+                  <div class="col s9">
+                    <p>Sub Total</p>
+                  </div>
+                  <div class="col s3">
+                    <p> <%= @invoice.sub_total %> KWD </p>
+                  </div>
+                </div>
+                <div>
+                  <%= f.fields_for :tips, f.object.tips do |tip| %>
+                    <%= render 'tip_fields', f: tip %>
+                  <% end %>
+                  <div>
+                    <%= link_to_add_association 'Add Tip', f, :tips, class: 'btn' %>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="divider"></div>
+                </div>
+                <div>
+                  <%= f.fields_for :payments, f.object.payments do |tip| %>
+                    <%= render 'payment_fields', f: tip %>
+                  <% end %>
+                  <div>
+                    <%= link_to_add_association 'Add payment', f, :payments, class: 'hide', id: 'add-payment' %>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="divider"></div>
+                </div>
+                <div class="row">
+                  <div class="col s9">
+                    <p>Balance</p>
+                  </div>
+                  <div class="col s3">
+                    <p id="balanceValue"> <%= @invoice.balance %> KWD </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -25,51 +72,166 @@
         <%= render "shared/appointment_client", client: @appointment.client %>
         <div class="row">
           <div class="input-field col s12">
-            <input placeholder="Placeholder" id="pay" type="number" class="validate">
+            <input placeholder="Placeholder" id="pay" type="number" class="validate" value="<%= @invoice.total  %>">
             <label for="pay">Pay</label>
           </div>
         </div>
         <div id="payment-types-container">
-<!--          content load as ajax will replace this -->
+          <!--          content load as ajax will replace this -->
         </div>
-        <div id="payment-types-container">
-          <%= f.submit :complete_sale, class: 'payment_type main-bg mb-4 p-3' %>
-          <div class="payment_type secondary-bg mb-4 p-3">
-            Reset  Payments
+        <div id="sale-actions" class="hide">
+          <%= f.submit "Complete Sale", class: 'payment_type main-bg flat-btn mb-4 p-3' %>
+          <div id="reset-payment" class="payment_type secondary-bg mb-4 p-3">
+            Reset Payments
           </div>
         </div>
         <div class="action">
           <!-- Dropdown Trigger -->
-          <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Drop Me!</a>
+          <!--          <a class='dropdown-trigger btn' href='#' data-target='dropdown1'>Drop Me!</a>-->
 
-          <!-- Dropdown Structure -->
-          <ul id='dropdown1' class='dropdown-content'>
-            <li><a href="#!">Invoice Details</a></li>
-          </ul>
+          <!--          <ul id='dropdown1' class='dropdown-content'>-->
+          <!--            <li><a href="#!">Invoice Details</a></li>-->
+          <!--          </ul>-->
         </div>
 
       </div>
+
+      <!-- Modal Structure -->
+      <div id="modal1" class="modal">
+        <div class="modal-content">
+          <h5 class="center">Select Product</h5>
+          <div>
+            <ul class="collection">
+              <% @products.map do |product| %>
+                <li
+                  class="collection-item product"
+                  data-product-id="<%= product.id %>"
+                  data-product-price="<%= product.price %>"
+                  data-product-barcode="<%= product.barcode %>"
+                  data-product-name="<%= product.name %>"
+                >
+                  <%= product.name %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <a href="#!" class="modal-close waves-effect waves-green btn-flat">Dismiss</a>
+        </div>
+      </div>
     </div>
+
+
   <% end %>
 </div>
 
 <script>
+    function calculateSums(){
+        let totalTips = 0;
+        let totalPayments = 0;
+        let totalWanted = 0;
+        $('.tip_field').each(function (){ totalTips += parseFloat($(this).val()) || 0 } );
+        $('.amount').each(function (){ totalPayments += parseFloat($(this).val()) || 0 } );
+        $('.discounted_price').each(function (){ totalWanted += parseFloat($(this).text()) || 0} );
+        let stillToPay = totalWanted - totalPayments + totalTips
+        $("#pay").val(stillToPay)
+        $("#balanceValue").text(stillToPay + ' KWD');
+        if(stillToPay === 0 ){
+            $("#payment-types-container").addClass('hide');
+            $("#sale-actions").removeClass('hide');
+        }else{
+            $("#payment-types-container").removeClass('hide');
+            $("#sale-actions").addClass('hide');
+        }
+    }
+    function addPayment(that){
+        $('#add-payment').click();
+        let paymentTypeId = parseInt($(that).attr('data'));
+        let paymentTypeName = $(that).text();
+        setTimeout(function(){
+            $('.payment-row').last().find('.type_id').val(paymentTypeId)
+            $('.payment-row').last().find('.amount').val($("#pay").val())
+
+            $('.payment-row').last().find('.paymentTypeName').html(paymentTypeName)
+            $('.payment-row').last().find('.amountValue').html($("#pay").val() + ' KWD')
+            calculateSums();
+        },50)
+
+    }
+    function applyDiscount(that){
+        let type = $(that).find(":selected").attr('deduct_type')
+        let value = parseFloat($(that).find(":selected").attr('deduct_value')) || 0;
+        let price =parseFloat($(that).closest('.nested-line').find('.original_unit_price').val());
+        let quantity =parseFloat($(that).closest('.nested-line').find('.quantity').val());
+        price = price * quantity;
+        if (type === 'value'){
+            new_price = price - value;
+        }
+        if (type === 'percentage'){
+            new_price = price - price * value / 100 ;
+        }
+        $(that).closest('.nested-line').find('.unit_price').val(new_price / quantity);
+        $(that).closest('.nested-line').find('.discounted-price-span').text(new_price);
+        $(that).closest('.nested-line').find('.discounted-price-container').removeClass('hide');
+        $(that).closest('.nested-line').find('.price-container').addClass('strike');
+        calculateSums();
+
+    }
+    function quantityChanged(that){
+        let quantity = parseFloat($(that).val());
+        console.log(quantity);
+        if(quantity < 1){
+            $(that).val(1)
+            quantity = 1;
+        }
+        let unitPrice = $(that).parents('.nested-line').find('.original_unit_price').val();
+        let newPrice = unitPrice * quantity
+        $(that).parents('.nested-line').find('.price-span').text(newPrice)
+        $(that).parents('.nested-line').find('.discounted-price-span').text(newPrice)
+        calculateSums();
+    }
     function registerEvents() {
         $("#client-details").click(function () {
-            document.location.href = '/clients/<%= @appointment.client.id %>';
+            document.location.href = 'http://peep-staging-front.herokuapp.com/dash/clients/profile/<%= @appointment.client.id %>';
         })
+        $('#reset-payment').click(function(){
+            $("#numbers .remove_fields").click();
+            setTimeout(calculateSums, 100);
+            $("#payment-types-container").toggleClass('hide');
+            $("#sale-actions").toggleClass('hide');
+        })
+        $('body').on( 'click', '#payment-types-container .payment_type', function(e){ addPayment(this)})
+        $('body').on( 'change', '.discount_select', function(e){ applyDiscount(this)})
+        $('body').on( 'keyup', '.quantity', function(e){ quantityChanged(this)})
     }
-
     function loadPaymentTypes() {
         $.get('/payment_types.js')
     }
-
+    function productSelected(e){
+        $('.modal').modal('close');
+        $("#add-lines").click()
+        setTimeout(function(e){
+            $('.collapsible').collapsible('open', $('.collapsible li').length - 2);
+            $('.collapsible .nested-line').last().find('.sellable_type').val('Product')
+            $('.collapsible .nested-line').last().find('.sellable_id').val(e.target.dataset.productId)
+            $('.collapsible .nested-line').last().find('.staff_id').val();
+            let price = e.target.dataset.productPrice;
+            $('.collapsible .nested-line').last().find('.unit_price').val(price);
+            $('.collapsible .nested-line').last().find('.original_unit_price').val(price);
+            $('.collapsible .nested-line').last().find('.checkout_text').text(e.target.dataset.productName);
+            $('.collapsible .nested-line').last().find('.checkout_help_text').text(e.target.dataset.productBarcode);
+            $('.collapsible .nested-line').last().find('.discounted-price-span').text(price);
+            $('.collapsible .nested-line').last().find('.price-span').text(price);
+            calculateSums();
+        }, 50, e )
+    }
     $(document).on('turbolinks:load', function () {
         loadPaymentTypes();
         registerEvents();
+        $('.modal').modal();
+        $(".product").click(productSelected)
         $('.collapsible').collapsible();
         $('.collapsible').collapsible('open', 0);
-
-
     })
 </script>

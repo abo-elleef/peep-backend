@@ -15,11 +15,14 @@
  */
 
 @import "basic";
+@import "select2-material";
 #form-container{
   display: grid;
   margin: 0;
   height:100%;
   grid-template-rows: 80px 1fr;
+  align-items: stretch;
+  justify-items: stretch;
 }
 
 .form-header{
@@ -34,17 +37,21 @@
     font-size: 24px;
   }
 }
+
 #checkout-page{
   margin: 0;
-  #payment-types-container{
+  .pink-bg{
+    height: calc(100vh - 80px);
+  }
+  #payment-types-container, #sale-actions{
     display: grid;
     column-gap: 20px;
     grid-template-columns: 1fr 1fr;
     .payment_type {
       text-align: center !important;
-      font-size: 18px;
+      font-size: 16px;
+      font-weight: bold;
       padding: 10px;
-
     }
   }
   #client-details{
@@ -54,8 +61,8 @@
     width: 100%;
   }
 }
-
 #appointment-details{
+  height: calc(100vh - 80px);
   .service-row{
     margin: 30px auto;
     display: flex;
@@ -82,8 +89,8 @@
 
   }
 }
-
 #appointment-form{
+  height: calc(100vh - 79px);
   .service-row{
     margin: 30px auto;
   }
@@ -91,6 +98,19 @@
     display: grid;
     column-gap: 20px;
     grid-template-columns:  auto 1fr 35px;
+    .duration{
+      text-align: center;
+      font-size: 18px;
+    }
+    .remove-link{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      a{
+        color: red;
+        font-size: 16px;
+      }
+    }
   }
   .start{
     min-width: 150px;
@@ -98,5 +118,11 @@
   #side-bar{
     display: grid;
     grid-template-rows: 1fr 30px;
+  }
+}
+#client-form, #staff-form, #form-container{
+  form{
+    display: grid;
+    grid-template-columns: 1fr 2px 1fr;
   }
 }

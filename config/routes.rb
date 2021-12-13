@@ -1,5 +1,7 @@
-Rails.application.routes.draw do
+# frozen_string_literal: true
 
+Rails.application.routes.draw do
+  devise_for :users
   post '/auth/login', to: 'authentication#login'
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
@@ -8,12 +10,16 @@ Rails.application.routes.draw do
     collection do
       get :whoami
     end
-
   end
+  
   resources :shifts
   resources :blocked_times
   resources :closing_shifts
-  resources :locations
+  resources :locations do 
+    member do 
+      get :order_mini_details
+    end
+  end
   resources :invoice_sequences
   resources :staffs do
     collection do
@@ -30,6 +36,7 @@ Rails.application.routes.draw do
       get :products
       get :invoices
       get :client_sales
+      get :mini_details
     end
   end
   resources :services do
@@ -43,34 +50,59 @@ Rails.application.routes.draw do
       get :update_status
     end
   end
-  resources :orders
-  resources :product_brands
-  resources :product_categories
+  resources :cancellation_reasons
+  resources :subscriptions
   resources :payment_types
-  resources :products do
-    member do
-      get :stock_history
+  resources :discounts do 
+    collection do 
+      delete 'delete'
     end
   end
+
   resources :cancellation_reasons
   resources :suppliers
   resources :subscriptions
-  resources :discounts
+  resources :discounts do 
+    collection do 
+      delete 'delete'
+    end
+  end
+  
   resources :voucher_types
   resources :packages
-  resources :invoices, only: [:index, :show, :update, :new, :create]
+  resources :invoices, only: [:index, :show, :update, :new, :create] do
+    member do
+      get :send_email
+    end
+  end
 
   get "export/clients", to: "export#clients"
   get "export/services", to: "export#services"
   get "export/staffs", to: "export#staffs"
   get "export/products", to: "export#products"
   get "export/orders", to: "export#orders"
+  get "export/discounts", to: "export#discounts"
   post "appointments/check_hints", to: "appointments#check_hints"
   post "/checkout", to: "invoices#checkout"
-
+  namespace :inventory do 
+    resources :orders
+    resources :product_brands
+    resources :product_categories
+    resources :products do
+      member do
+        get :stock_history
+      end
+    end
+    resources :suppliers do
+      member do
+        get :order_mini_details
+      end
+    end
+  end
   # Reports Routes
   namespace :reports do
     # sales routes
+    get "/sales", to: "sales#index"
     get "sales/transaction_summary", to: "sales#transaction_summary"
     get "sales/cash_movement", to: "sales#cash_movement"
     get "sales/appointments_list", to: "sales#appointments_list"
@@ -81,6 +113,7 @@ Rails.application.routes.draw do
     get "sales/sales_by_staff", to: "sales#sales_by_staff"
     get "sales/recent_sales", to: "sales#recent_sales"
     get "sales/appointments", to: "sales#appointments"
+    get "sales/invoices", to: "sales#invoices"
     get "sales/vouchers", to: "sales#vouchers"
 
     get "dashboard/total_appointments", to: "dashboard#total_appointments"
@@ -109,6 +142,7 @@ Rails.application.routes.draw do
     get "/calendar", to: "appointments#calendar"
     get "/", to: "appointments#calendar"
     get "/calendar_events", to: "appointments#calendar_events"
+    get "/settings", to: "back/home#settings"
 
 
 

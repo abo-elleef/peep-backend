@@ -9,7 +9,7 @@ class Line < ApplicationRecord
   belongs_to :sellable, polymorphic: true
   belongs_to :invoice
   has_one :discount_usage
-  accepts_nested_attributes_for :discount_usage
+  accepts_nested_attributes_for :discount_usage, reject_if: :all_blank
 
   # == Validations ==========================================================
   # validates_presence_of :appointment
@@ -50,6 +50,10 @@ class Line < ApplicationRecord
 
   def cost_price
     unit_price
+  end
+
+  def sold_price
+    unit_price.to_f * quantity.to_f
   end
 
   private

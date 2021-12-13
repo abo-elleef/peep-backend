@@ -1,0 +1,37 @@
+<table id="shifts-table" class="sticky-table striped centered vertical-seperator">
+  <thead>
+  <tr>
+    <th>Staff Name</th>
+    <% week_days(@start_date).map do |date| %>
+      <th><%= date.strftime("%a, %d %h") %></th>
+    <% end %>
+  </tr>
+  </thead>
+  <tbody>
+  <% @staff.map do |staff| %>
+    <tr>
+      <td>
+        <%= link_to staff.name, edit_staff_path(staff) %>
+      </td>
+      <% week_days(@start_date).map do |date| %>
+        <td class="center">
+          <% filter_shifts(staff, date).map do |shift| %>
+            <%= link_to edit_shift_path(id: shift.id, date: date), remote: true, class: 'mt-0' do  %>
+              <p 
+              id='<%="shift_#{shift.id}"%>'
+              class="shift-span white-text p-1 mt-0 center" 
+              style="background-color: <%= staff.booking_color %>"
+              >
+                <%= shift.starts_at.strftime('%H:%M') %> - <%= shift.ends_at.strftime('%H:%M') %>
+              </p>
+            <% end %>
+          <% end %>
+          <%= link_to new_shift_path(date: date, staff_id: staff.id), remote: true, class: 'adding-shift' do  %>
+            <i class="material-icons">add</i>
+          <% end %>
+        </td>
+      <% end %>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

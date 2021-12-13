@@ -1,0 +1,22 @@
+<table class="sticky-table">
+  <thead>
+  <tr>
+    <th> Name</th>
+    <th> Phone</th>
+    <th> Email</th>
+    <th> Booking Enabled</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @staffs.map do |staff| %>
+    <tr>
+      <td>
+        <%= link_to staff.name, edit_staff_path(staff) %>
+      </td>
+      <td> <%= staff.phone %> </td>
+      <td> <%= staff.email %> </td>
+      <td> <%= staff.booking_enabled %> </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
