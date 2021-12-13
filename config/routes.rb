@@ -148,4 +148,7 @@ Rails.application.routes.draw do
 
 
 
+  get "salon", to: "salons#salon_locations"
+  get "salon/location_services", to: "salons#location_services", as: "location_services"
+  post "salon/location_staffs", to: "salons#location_staffs", as: "location_staffs"
 end

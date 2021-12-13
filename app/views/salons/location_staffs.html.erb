@@ -1,0 +1,13 @@
+<h4> Select Staff </h4>
+<div class="salon_location">
+  <% @staffs.each do |staff| %>
+    <h5><%= staff[:staff_name] %></h5>
+    <h6><%= staff[:service_name] %></h6>
+    <h6><%= staff[:service_duration] %></h6>
+    <h6><%= staff[:service_price] %></h6>
+    <h5><%= link_to "change", location_services_path(service_id: staff[:service_id]) %></h5>
+<% end %>
+  <div>
+    <%= link_to "Confirm Staff", location_services_path, class: "waves-effect waves-light btn-small" %>
+  </div>
+</div>

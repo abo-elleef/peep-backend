@@ -1,0 +1,39 @@
+<h4> Select Service </h4>
+<%= form_tag location_staffs_path(:location_id => @location.id), method: :post do %>
+  <div class="row">
+    <div class="col s12">
+      <ul class="tabs tabs-fixed-width tab-demo z-depth-1">
+        <% @categories.map do |category| %>
+          <li class="tab col s3"><a href="#category_<%= category.id %>"><%= category.name %></a></li>
+        <% end %>
+      </ul>
+    </div>
+    <% @categories.map do |category| %>
+      <div id="category_<%= category.id %>" class="col s12">
+        <% category.services.map do |service| %>
+          <% service.service_prices.map do |price| %>
+            <p>
+              <label>
+                <%= check_box_tag "prices[]", price.id, false %>
+                <span><%= service.name %></span>
+                <span><%= service.description %></span>
+                <span><%= price.duration %></span>
+                <span><%= price.price %></span>
+              </label>
+            </p>
+          <% end %>
+
+        <% end %>
+      </div>
+    <% end %>
+    <a class="waves-effect waves-light btn-small"><%= submit_tag 'select items' %></a>
+  </div>
+
+<% end %>
+
+<script>
+    $(document).ready(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
