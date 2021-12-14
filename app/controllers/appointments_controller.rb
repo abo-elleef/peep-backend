@@ -41,9 +41,10 @@ class AppointmentsController < ApplicationController
   end
 
   def new
-    params[:date] = (params[:date].present? ? Date.parse(params[:date]) : Date.today).to_date
+    @time = Time.find_zone("Cairo").parse(params[:date]) if params[:date].present?
+    params[:date] = (@time || Time.zone.now).to_date
     @appointment = Appointment.new(location_id: params[:location_id])
-    @appointment.appointment_services.build(starts_at: params[:date] || Time.zone.now)
+    @appointment.appointment_services.build(starts_at: @time || Time.zone.now, staff_id: params[:staff_id])
     init_selections
   end
 
