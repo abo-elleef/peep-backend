@@ -192,9 +192,6 @@
         calculateSums();
     }
     function registerEvents() {
-        $("#client-details").click(function () {
-            document.location.href = 'http://peep-staging-front.herokuapp.com/dash/clients/profile/<%= @appointment.client.id %>';
-        })
         $('#reset-payment').click(function(){
             $("#numbers .remove_fields").click();
             setTimeout(calculateSums, 100);

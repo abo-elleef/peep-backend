@@ -1,7 +1,9 @@
 <div id="client-details" class="row">
+
   <% if client.nil? %>
     <p> Walk-in Client </p>
   <% else %>
+    <%= link_to "client profile", client_path(client.id)  %>
     <p> <i class="Tiny material-icons">person</i> <%= client.name %> </p>
     <p> <i class="Tiny material-icons">phone</i> <%= client.phone %> </p>
     <p> <i class="Tiny material-icons">email</i> <%= client.email %> </p>

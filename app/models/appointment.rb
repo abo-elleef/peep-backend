@@ -32,6 +32,8 @@ class Appointment < ApplicationRecord
 
 
   # == Callbacks ============================================================
+
+  after_create :set_serving_date
   # == Class Methods ========================================================
   # == Instance Methods =====================================================
 
@@ -58,5 +60,11 @@ class Appointment < ApplicationRecord
 
   def client_name
     client&.name || 'Walk-IN'
+  end
+
+  private
+
+  def set_serving_date
+    update_column(:date, appointment_services.first.try(:starts_at))
   end
 end
