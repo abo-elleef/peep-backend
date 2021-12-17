@@ -6,7 +6,7 @@ class Invoice < ApplicationRecord
   enum status: {not_paid: 1, part_paid: 2, completed: 3, voided: 4}
 
   # == Relationships ========================================================
-  belongs_to :client
+  belongs_to :client, optional: true
   belongs_to :location
   has_many :vouchers
   has_one :appointment

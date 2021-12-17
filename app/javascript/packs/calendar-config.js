@@ -13,10 +13,13 @@ function dateHandler(info) {
     // // change the day's background color just for fun
     //
     // info.dayEl.style.backgroundColor = 'red';
+    // console.log(info)
     let url = '/appointments/new?location_id=' + window.location_id;
     if (info) {
         url += '&date=' + info.date.toISOString();
+        url += "&staff_id="+ info.resource._resource.id ;
     }
+    // console.log(url)
     window.location.href = url;
 }
 

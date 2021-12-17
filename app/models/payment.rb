@@ -14,6 +14,6 @@ class Payment < ApplicationRecord
   # == Class Methods ========================================================
   # == Instance Methods =====================================================
   def name
-    payment_type.name
+    payment_type.try :name
   end
 end

@@ -65,14 +65,14 @@
         let duration = $(that).find(':selected').attr('duration');
         $(that).parents('.nested-fields').find('.duration').text(duration + '  min')
     }
-  function registerEventsAppointmentForm(){
-      $('.select2').select2();
-      $("#appointment_client_id").change(function(e){
-         let clientID = e.target.value;
-         $.get('/clients/' + clientID + '/mini_details')
-      });
-      $('body').on( 'change', '.service_price_selection', function(e){ serviceSelected(this)})
-  }
+    function registerEventsAppointmentForm(){
+        $('.select2').select2();
+        $("#appointment_client_id").change(function(e){
+          let clientID = e.target.value;
+          $.get('/clients/' + clientID + '/mini_details')
+        });
+        $('body').on( 'change', '.service_price_selection', function(e){ serviceSelected(this)})
+    }
     $(document).on('turbolinks:load', function () {
         registerEventsAppointmentForm()
     });
