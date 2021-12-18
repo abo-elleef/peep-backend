@@ -1,0 +1,34 @@
+{
+  "application.js": "/packs/js/application-1907b5b007f769d2b234.js",
+  "application.js.map": "/packs/js/application-1907b5b007f769d2b234.js.map",
+  "calendar-config.js": "/packs/js/calendar-config-c7ffe32d83c83b724428.js",
+  "calendar-config.js.map": "/packs/js/calendar-config-c7ffe32d83c83b724428.js.map",
+  "entrypoints": {
+    "application": {
+      "js": [
+        "/packs/js/application-1907b5b007f769d2b234.js"
+      ],
+      "js.map": [
+        "/packs/js/application-1907b5b007f769d2b234.js.map"
+      ]
+    },
+    "calendar-config": {
+      "js": [
+        "/packs/js/calendar-config-c7ffe32d83c83b724428.js"
+      ],
+      "js.map": [
+        "/packs/js/calendar-config-c7ffe32d83c83b724428.js.map"
+      ]
+    },
+    "main": {
+      "js": [
+        "/packs/js/main-16703155a61d68cc567d.js"
+      ],
+      "js.map": [
+        "/packs/js/main-16703155a61d68cc567d.js.map"
+      ]
+    }
+  },
+  "main.js": "/packs/js/main-16703155a61d68cc567d.js",
+  "main.js.map": "/packs/js/main-16703155a61d68cc567d.js.map"
+}
