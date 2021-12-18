@@ -1,0 +1,37 @@
+/* line 3, app/assets/stylesheets/home.scss */
+.time .select-wrapper {
+  min-width: 50px;
+  width: 50px;
+  display: inline-block;
+}
+
+/* line 10, app/assets/stylesheets/home.scss */
+.input-field {
+  display: inline-block;
+}
+
+/* line 13, app/assets/stylesheets/home.scss */
+#filters-row,
+.filters-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* line 18, app/assets/stylesheets/home.scss */
+#filters-row .input-field,
+.filters-row .input-field {
+  background: white;
+  padding: 0 10px;
+}
+
+/* line 22, app/assets/stylesheets/home.scss */
+#filters-row .select-wrapper,
+.filters-row .select-wrapper {
+  min-width: 200px;
+}
+
+/* line 27, app/assets/stylesheets/home.scss */
+th, td {
+  padding: 15px;
+}

@@ -1,0 +1,39 @@
+@font-face {
+  font-family: 'Cairo';
+  src: url("fonts/Cairo-Regular.ttf") format("ttf");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Arvo';
+  src: url("fonts/Arvo-Regular.ttf") format("ttf"), url("fonts/Arvo-Bold.ttf") format("tff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url("fonts/Mulish-Regular.ttf") format("ttf"), url("fonts/Mulish-Bold.ttf") format("tff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* line 26, app/assets/stylesheets/scaffolds.scss */
+body, p, ol, ul, td {
+  font-family: Cairo, sans-serif !important;
+  font-size: 16px;
+  line-height: 20px;
+}
+
+/* line 31, app/assets/stylesheets/scaffolds.scss */
+pre {
+  background-color: #eee;
+  padding: 10px;
+  font-size: 11px;
+}
+
+/* line 36, app/assets/stylesheets/scaffolds.scss */
+a {
+  color: #586997;
+}
