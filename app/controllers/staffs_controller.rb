@@ -70,7 +70,7 @@ class StaffsController < ApplicationController
     params.require(:staff).permit(
         :id, :first_name, :last_name, :phone, :email, :booking_enabled, :booking_color,
         :title, :notes, :contract_start, :contract_end, :product_comm, :discount_comm,
-        :service_comm, service_ids: [], location_ids: []
+        :service_comm, :avatar, service_ids: [], location_ids: []
     )
   end
 

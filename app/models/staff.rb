@@ -10,6 +10,7 @@ class Staff < ApplicationRecord
   has_many :lines
   #has_many :appointments, through: :lines
   has_many :blocked_times
+  has_one_attached :avatar
   # == Validations ==========================================================
   # == Scopes ===============================================================
   scope :by_search, -> (search) { search.present? ?  where("first_name ilike ?", "%" + search + "%").

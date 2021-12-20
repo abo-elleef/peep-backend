@@ -110,6 +110,17 @@
                   <%= f.label :contract_end %>
                 </div>
               </div>
+              <div class="row">
+                <div class="input-field col s6">
+                  <i class="material-icons prefix">person_add</i>
+                  <%= f.label :avatar %>
+                  <%= f.file_field :avatar %>
+                </div>
+                <div class="input-field col s6">
+                  <label>Current Avatar</label>
+                  <img src="<%= url_for(f.object.avatar) %>" width="100%;">
+                </div>  
+              </div>
             </div>
           </div>
         </div>
