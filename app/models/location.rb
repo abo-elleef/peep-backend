@@ -21,6 +21,8 @@ class Location < ApplicationRecord
 
   include UserScoped
   # == Relationships ========================================================
+  has_many_attached :images
+
   has_and_belongs_to_many :staffs
   has_and_belongs_to_many :services
   has_and_belongs_to_many :closing_shifts
