@@ -99,6 +99,10 @@ Rails.application.routes.draw do
       end
     end
   end
+  namespace :customer do 
+    resources :locations
+  end
+
   # Reports Routes
   namespace :reports do
     # sales routes
