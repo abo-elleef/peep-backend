@@ -1,0 +1,12 @@
+<div id="locations-cards-container">
+  <% @locations.map do |location| %>
+    <div class="p-4">
+      <img class="lazy-loaded" src="//via.placeholder.com/400x200" data-lazy-type="image" data-src="//via.placeholder.com/350x150">
+      <h5><%= link_to location.name, customer_location_path(location.id) %></h5>
+      <p> <%= location.address_string %> </p>
+      <p> <%= location.phone %> </p>
+      <%= link_to 'Show on Map', "https://maps.google.com" %>
+    </div>
+  <% end %>
+
+</div>

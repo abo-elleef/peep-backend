@@ -18,6 +18,7 @@ class Location < ApplicationRecord
       "gym_&_fitness": 9,
       "other": 14
   }
+  enum available_for: {everyone: 0, males: 1, females: 2}
 
   include UserScoped
   # == Relationships ========================================================

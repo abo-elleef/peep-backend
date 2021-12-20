@@ -55,6 +55,9 @@ class Service < ApplicationRecord
   end
 
   # == Instance Methods =====================================================
+  def full_name
+    "#{service_category.try(:name)} #{name}"
+  end
   private
 
   def set_data

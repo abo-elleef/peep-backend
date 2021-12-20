@@ -1,0 +1,57 @@
+
+<div class="row pink-bg">
+  <div class="col s4">
+    <h5><%= link_to @location.name, customer_location_path(@location.id) %></h5>
+    <p> <%= @location.address_string %> </p>
+    <p> <%= @location.phone %> </p>
+    
+  </div>
+  <div class="col s8" >
+    <img class="lazy-loaded" src="//via.placeholder.com/400x200" data-lazy-type="image" data-src="//via.placeholder.com/350x150" style="width: 100%;">
+  </div>
+</div>
+
+<div class="row" style="display: grid; grid-template-columns: 2fr 1fr;column-gap: 20px;">
+  <div class="col pink-bg inline-block">
+    <h5>About <%= @location.name %> test <%= User.current_user_id %> </h5>
+    <p> <%= @location.available_for%></p>
+    <p> <%= @location.about %></p>
+  </div>
+  <div class="col pink-bg inline-block">
+    <h5> Location </h5>
+    <p> <%= @location.address_string %></p>
+    <i class="material-icons">place</i> <%= link_to 'Show on Map', "https://maps.google.com", target: '_blank' %>
+  </div>
+</div>
+
+<div class="row pink-bg">
+  <h5 class="col s12"> Services (<%=@location.services.size %>) </h5>
+  <div class="col s10 push-s1">  
+    <ul class="collapsible">
+      <% @location.services.each_with_index do |service, index| %>
+        <li class='<%= index.zero? ? "active" : "" %>'>
+          <div class="collapsible-header"><i class="material-icons">filter_drama</i><%=service.full_name%></div>
+          <div class="collapsible-body">
+            <div>
+              <% service.service_prices.map do |price| %>
+                <p> <%= price.name %> </p>
+              <% end %>
+            </div>  
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<div class="row pink-bg">
+  <h5 class="col s12"> book with any of (<%=@location.staffs.size %>) staff members  </h5>
+  <div>
+    <% @location.staffs.map do |staff| %>
+      <div class="inline-block center col s3">
+        <img class="lazy-loaded" src="//via.placeholder.com/100x100" data-lazy-type="image" data-src="//via.placeholder.com/100x100">  
+        <p> <%= staff.name %> </p>
+      </div>
+    <% end %>
+  </div>
+</div>
