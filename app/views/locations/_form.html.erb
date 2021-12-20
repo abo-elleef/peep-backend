@@ -52,6 +52,19 @@
             <%= f.text_field :email %>
           </div>
         </div>
+
+        <div class="row">
+          <div class="input-field col s12">
+            <%= f.label :images %>
+            <%= f.file_field :images, multiple: true %>
+          </div>
+        </div>
+
+        <% f.object.images.map do |image| %>
+          <%= image_tag url_for(image), width: "100%" %>
+        <% end %>
+        
+
       </div>
       <div class="left-border"></div>
       <div class=" p-8 m-8">
