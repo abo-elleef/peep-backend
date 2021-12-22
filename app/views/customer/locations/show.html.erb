@@ -7,7 +7,11 @@
     
   </div>
   <div class="col s8" >
-    <img class="lazy-loaded" src="//via.placeholder.com/400x200" data-lazy-type="image" data-src="//via.placeholder.com/350x150" style="width: 100%;">
+    <div class="carousel">
+    <% @location.images.map do |image| %>
+      <a class="carousel-item" href="#<%= image.id %>"><img src="<%=url_for(image)%>"></a>
+    <% end %>
+  </div>
   </div>
 </div>
 
